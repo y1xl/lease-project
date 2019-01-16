@@ -7,8 +7,7 @@
 				  v-model="loading"
 				  :finished="finished"
 				  @load="onLoad"
-				>
-			  
+				>			  
 			  	<div v-for="item in list":key="item":title="item">
 					<div class="item">
 						<div class="flex-jc-between">
@@ -73,24 +72,38 @@ export default{
 	width: 100%;
 	height: 44px;
 	line-height: 44px;
+	font-size: 16px;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
 }
 .shoplist{
-	margin-top: 54px;
+	margin-top: 44px;
+	margin-bottom: 60px;
+	padding-top: 2px;
+	background: #FBFBFB;
+	
+}
+.item{
+	background: #fff;
+	padding:10px 20px;
+	margin: 12px 14px 0 14px;
 }
 .shop_title{
-	font-size: 16px;
+	font-size: 15px;
 	color: #7A7A7A;
 	
 }
 .txt{
+	width: 220px;
 	color: #DCDDDF;
+	margin-top: 5px;
 }
 .ck_img{
 	width:10px;
 	height:12px;
 }
 .dt{
-	
+	margin-top: 15px;
 }
 .img_r{
 	width: 12px;

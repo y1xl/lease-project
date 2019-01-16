@@ -1,8 +1,10 @@
 <template>
     <div> 
     	<div class="text-c border-b top"> 产品列表</div>
-    	<div style="width: 100%;" class="text-c">
-    		<img class="top_img" src="https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99"/>
+    	<div class="flex-jc-center">
+	    	<div class="img_b">
+	    		<img class="top_img" src="https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99"/>
+	    	</div>
     	</div>
     	<div>
 			<van-list
@@ -13,12 +15,14 @@
 				>
 			  	<div v-for="item in list":key="item":title="item" >
 					<div class="item text-c">
-					
-						<img class="img" src="../../assets/tab/zhuans.png">
-						
-                        <div class="text-line pro_title">日本 instax 拍日本 instax 拍</div>
+						<div class="flex-jc-center">
+							<div class="img_b1">
+								<img class="img" src="../../assets/tab/zhuans.png">
+							</div>
+						</div>
+                        <div class="text-line pro_title f14">日本 instax拍立得日本 instax拍立得</div>
                         <div>
-                            <span class="price">¥3.08</span>/日
+                            <span class="price f14">¥3.08</span>/日
                         </div>
 					</div>
 					
@@ -76,27 +80,40 @@ export default{
 	height: 44px;
 	line-height: 44px;
 }
-.top_img{
+.img_b{
+	width: 92%;
+	height: 120px;
 	margin-top: 57px;
-	width: 305px;
-	height: 116px;
+}
+.top_img{
+	width: 100%;
+	height: 100%;
 	border-radius: 10px;
 }
 
 .item{
-	width: 139px;
-	height: 200px;
-	background: #f7f7f7;
+	width: 140px;
+	height: 204px;
+	/*background: #f7f7f7;*/
+	background: indianred;
+	border-radius: 5px;
 	margin: 13px 0 0 13px;
 	
 }
-.img{
-	width: 111px;
-	height: 111px;
+.img_b1{
+	width: 60px;
+	height: 80px;
+	margin-top: 33px;
 }
-
+.img{
+	width: 100%;
+	height: 100%;
+	
+}
+.pro_title{
+	padding: 0 20px;
+}
 .price {
-  font-size: 14px;
   color: #f21e1e;
 }
 .no_more{
