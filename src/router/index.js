@@ -1,15 +1,17 @@
-import Vue from 'vue'
+import Vue from 'vue' 
 import Router from 'vue-router'
 
-import Index from '@/pages/index'
-import Me from '@/pages/me/me'
-import Order from '@/pages/order/orderList'
-import Shop from '@/pages/shop/shopList'
+import Index from'@/pages/index' 
+import Me from '@/pages/me/me' 
+import Order from'@/pages/order/orderList'
+import Shop from '@/pages/shop/shopList'  
+
+import Goods from'@/pages/home/index_more'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
 
-Vue.use(Router)
+Vue.use(Router) 
 
 export default new Router({
   routes: [
@@ -20,6 +22,8 @@ export default new Router({
     //订单
     { path: '/comments',component: Comments,meta:{title:'评价'} },
     { path: '/orderDetail',component: OrderDetail,meta:{title:'订单详情'} },
+    //
+    { path:'/goods',component: Goods},
   ],
 
   scrollBehavior (to, from, savedPosition) {
@@ -29,4 +33,5 @@ export default new Router({
       return { x: 0, y: 0 }
     }
   }
+
 })
