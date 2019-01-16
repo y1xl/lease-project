@@ -22,7 +22,7 @@ html,body,.app{
 	overflow-x: hidden;
 }
 body {
-    /* background-color: #f6f5f5; */
+    background-color: #f6f6f6;
     font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 :focus {
