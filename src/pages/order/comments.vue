@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="header bgc mar-b-10">评价</div>
+    <div class="header bgc mar-b-10 flex-jc-between">
+      <div>
+        <div>日本 instax拍立得</div>
+        <div>黑色</div>
+      </div>
+      <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
+    </div>
 
     <div class="border-b text-c bgc">
       <van-rate v-model="value" @change="onRating"/>
@@ -41,6 +47,10 @@ export default {
 </script>
 
 <style scoped>
+.header img{
+  width: 90px;
+  height: 90px;
+}
 .textarea textarea{
     width: 100%;
 }

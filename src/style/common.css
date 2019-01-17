@@ -95,6 +95,9 @@
 .mar-b-10{
 	margin-bottom: 10px;
 }
+.pd-lr-15{
+	padding: 0 15px
+}
 
 .text-line {
 	overflow: hidden;

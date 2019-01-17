@@ -92,7 +92,9 @@
         </div>
 
         <div class="tools bgc">
-            <div class="text-c border-blue">支付</div>
+            <div class="text-c border-blue fc-blue"><router-link v-bind="{to: '/comments'}">评价</router-link></div>
+            <div class="text-c border"><router-link v-bind="{to: '/shopping'}">购买</router-link></div>
+            <div class="text-c border"><router-link v-bind="{to: '/refund'}">退租</router-link></div>
         </div>
     </div>
 </template>

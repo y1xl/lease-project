@@ -14,7 +14,15 @@
         </router-link>
         <div class="tools">
             <div class="text-c border" @click="showmodel = true">取消支付</div>
+            <div class="text-c border" @click="getcode">取货码</div>
+            <div class="text-c border" ><router-link v-bind="{to: '/relet'}">续租</router-link></div>
         </div>
+    </div>
+
+    <div class="model full flex-column-center position" v-show="showcode" @click="showcode = false">
+        <img src="../assets/tab/indexs.png" alt="关闭" class="closeimg">
+        <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="QRcode" class="codeimg">
+        <div style="color:#fff">请出示此二维码供门店扫码取货</div>
     </div>
 
     <div class="model full" v-show="showmodel">
@@ -44,11 +52,14 @@ export default {
         return{
             radio: 1,
             canceltext: [{id:1,text:'我不想租了'},{id:2,text:'其他'}],
-            showmodel: false
+            showmodel: false,
+            showcode:false
         }
     },
     methods:{
-
+        getcode(){
+            this.showcode = true
+        }
     }
 }
 </script>
@@ -72,6 +83,7 @@ export default {
         min-width: 82px;
         border-radius: 20px;
     }
+
    .model {
       position: fixed;
       top: 0;
@@ -92,5 +104,16 @@ export default {
     border-radius: 20px;
     color: #fff;
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
+}
+.codeimg {
+    width: 180px;
+    height: 180px;
+}
+.closeimg {
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    right:20px;
+    top: 100px;
 }
 </style>

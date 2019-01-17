@@ -65,7 +65,6 @@ export default {
   color: #666;
 }
 .nav .selected {
-  color: #ff6666;
   color: #000;
 }
 
