@@ -55,7 +55,7 @@ export default {
 <style>
 #nav .van-tabs__line {
     background-color: #fff;
-    background-image: linear-gradient(90deg, #6C76ED 0%, #74D2FF 100%)
+    background-image: linear-gradient(90deg, #6C76ED 0%, #74D2FF 100%);
 }
 </style>
 
