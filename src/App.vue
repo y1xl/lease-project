@@ -7,28 +7,28 @@
         <router-link to="/">
           <div class="img" v-if="selected=='index'"><img src="./assets/tab/indexs.png" ></div>
           <div class="img" v-else><img src="./assets/tab/index.png" ></div>
-          <p>首页</p>
+          <p :class="{ 'fc-blue': selected=='index' }">首页</p>
         </router-link>
       </div>
       <div>
         <router-link to="/shop">
           <div class="img" v-if="selected=='shop'"><img src="./assets/tab/zhuans.png" ></div>
           <div class="img" v-else><img src="./assets/tab/zhuan.png" ></div>
-          <p>门店</p>
+          <p :class="{ 'fc-blue': selected=='shop' }">门店</p>
         </router-link>
       </div>
       <div>
         <router-link to="/order">
           <div class="img" v-if="selected=='order'"><img src="./assets/tab/xiaos.png" ></div>
           <div class="img" v-else><img src="./assets/tab/xiao.png" ></div>
-          <p>订单</p>
+          <p :class="{ 'fc-blue': selected=='order' }">订单</p>
         </router-link>
       </div>
       <div>
         <router-link to="/me">
           <div class="img" v-if="selected=='me'"><img src="./assets/tab/mys.png" ></div>
           <div class="img" v-else><img src="./assets/tab/my.png" ></div>
-          <p>我的</p>
+          <p :class="{ 'fc-blue': selected=='me' }">我的</p>
         </router-link>
       </div>
     </div>

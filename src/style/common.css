@@ -4,7 +4,10 @@
 /*color*/
 
 .fc-red {
-	color: #ff6666;
+	color: #FF2A2A 
+}
+.fc-blue{
+	color: #4EA9F9
 }
 
 /*background-color*/
@@ -12,17 +15,23 @@
 .bgc {
 	background-color: #fff;
 }
+.bgc-grey{
+	background-color: #979797
+}
 
 /* border */
 
+.border-blue {
+	border: 1px solid #4EA9F9;
+}
 .border{
-	border: 1px solid #D0D0D0;
+	border: 1px solid #979797;
 }
 .border-b{
-	border-bottom: 1px solid #D0D0D0;
+	border-bottom: 1px solid #979797;
 }
 .border-t{
-	border-top: 1px solid #D0D0D0;
+	border-top: 1px solid #979797;
 }
 
 /* position */
@@ -35,7 +44,6 @@
 /* flexbox */
 
 .flexbox {
-	overflow: hidden;
 	display: flex;
 }
 .flex-column {
@@ -83,6 +91,10 @@
 }
 
 /*text*/
+
+.mar-b-10{
+	margin-bottom: 10px;
+}
 
 .text-line {
 	overflow: hidden;
