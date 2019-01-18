@@ -102,9 +102,9 @@ export default {
 
 
 <style>
-  /* .fsz {
-    font-size: 12px
-  } */
+  .fsz {
+    font-size: 14px
+  }
   .mar-bottom {
     margin-bottom: 50px;
   }

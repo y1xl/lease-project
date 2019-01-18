@@ -15,6 +15,7 @@ import Shopping  from '@/pages/order/shopping'
 import People  from '@/pages/order/people'
 import LocationList  from '@/pages/order/locationList'
 import Refund  from '@/pages/order/refund'
+import TimeQuantum  from '@/pages/order/timeQuantum'
 //个人中心
 import MyInformation from '@/pages/me/myInformation'
 import ReceInformation from '@/pages/me/receInformation'
@@ -36,6 +37,7 @@ export default new Router({
     { path: '/people',component: People,meta:{title:'自取联系人'} },
     { path: '/locationList',component: LocationList,meta:{title:'选择地点'} },
     { path: '/refund',component: Refund,meta:{title:'退租'} },
+    { path: '/timeQuantum',component: TimeQuantum,meta:{title:'选择时间段'} },
     //
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
 
