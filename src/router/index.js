@@ -7,6 +7,8 @@ import Order from '@/pages/order/orderList'
 import Shop from '@/pages/shop/shopList'
 //产品
 import Goods from '@/pages/home/index_more'
+import Trusteeship from '@/pages/home/trusteeship'
+import WelfareAgency from '@/pages/home/welfareAgency'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -15,12 +17,17 @@ import Shopping from '@/pages/order/shopping'
 import People from '@/pages/order/people'
 import LocationList from '@/pages/order/locationList'
 import Refund from '@/pages/order/refund'
+import TimeQuantum from '@/pages/order/timeQuantum'
 //个人中心
 import MyInformation from '@/pages/me/myInformation'
+import AddInformation from '@/pages/me/addInformation'
 import ReceInformation from '@/pages/me/receInformation'
 import DetaInformation from '@/pages/me/detaInformation'
 import AccountSecurity from '@/pages/me/accountSecurity'
 import Modify from '@/pages/me/modify'
+import Coupon from '@/pages/me/coupon'
+//门店
+import ShopDetail from '@/pages/shop/shopDetail'
 
 Vue.use(Router)
 
@@ -38,16 +45,23 @@ export default new Router({
     { path: '/people', component: People, meta: { title: '自取联系人' } },
     { path: '/locationList', component: LocationList, meta: { title: '选择地点' } },
     { path: '/refund', component: Refund, meta: { title: '退租' } },
+    { path: '/timeQuantum', component: TimeQuantum, meta: { title: '选择时间段' } },
     //
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
+    { path: '/trusteeship', component: Trusteeship, meta: { title: '我要推广' } },
+    { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
 
     //个人中心
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
     { path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
+    { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
     { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
     { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
-    { path: '/modify', component: Modify, meta: { title: '账号安全' } },
+    { path: '/modify', component: Modify, meta: { title: '修改绑定账号' } },
+    { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
 
+    //门店
+    { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
 
   ],
 

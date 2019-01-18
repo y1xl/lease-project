@@ -2,14 +2,14 @@
   <div>
     <div class="text-c border-b top bgc">
       <div class="fh_img" @click="routerback">
-        <img src alt="返">
+        <img src="../../assets/tab/fhimg.png">
       </div>修改绑定手机号
     </div>
 
     <div class="modify text-c">
       <div class="tel_num">您当前绑定手机号138xxxx4586</div>
       <div class="flex-jc-center">
-        <div class="btn text-c">获取验证码</div>
+        <div class="btn text-c" @click="countDown">{{content}}</div>
       </div>
     </div>
   </div>
@@ -17,9 +17,32 @@
 
 <script>
 export default {
+  data() {
+    return {
+      content: "获取验证码",
+      totalTime: 60, //倒计时
+      canClick: true
+    };
+  },
   methods: {
     routerback() {
       this.$router.back(-1);
+    },
+    //倒计时
+    countDown() {
+      if (!this.canClick) return;
+      this.canClick = false;
+      this.content = this.totalTime + "s后重新发送";
+      let clock = window.setInterval(() => {
+        this.totalTime--;
+        this.content = this.totalTime + "s后重新发送";
+        if (this.totalTime < 0) {
+          window.clearInterval(clock);
+          this.content = "重新发送验证码";
+          this.totalTime = 60;
+          this.canClick = true;
+        }
+      }, 1000);
     }
   }
 };
@@ -37,15 +60,15 @@ export default {
   font-weight: 500;
 }
 .fh_img {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 16px;
   position: absolute;
   left: 10px;
   top: 2px;
 }
 .fh_img img {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 16px;
 }
 .tx {
   padding: 10px 0;
@@ -61,7 +84,7 @@ export default {
   line-height: 100px;
 }
 .btn {
-  width: 292px;
+  width: 298px;
   height: 40px;
   line-height: 40px;
   background: linear-gradient(90deg, #60c0fd, #4ea9f9);

@@ -2,7 +2,7 @@
   <div>
     <div class="text-c border-b top bgc">
       <div class="fh_img" @click="routerback">
-        <img src alt="返">
+        <img src="../../assets/tab/fhimg.png">
       </div>账号安全
     </div>
 
@@ -44,15 +44,15 @@ export default {
   line-height: 44px;
 }
 .fh_img {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 16px;
   position: absolute;
   left: 10px;
-  top: 2px;
+  top: 3px;
 }
 .fh_img img {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 16px;
 }
 .tx {
   padding: 10px 0;

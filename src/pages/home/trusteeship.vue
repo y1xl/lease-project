@@ -1,0 +1,197 @@
+<template>
+  <div>
+    <div class="text-c border-b top bgc">
+      <div class="fh_img" @click="routerback">
+        <img src="../../assets/tab/fhimg.png">
+      </div>我要推广
+    </div>
+    <div class="flex-jc-center">
+      <div class="trust_box text-c">
+        <div class="flex-jc-around">
+          <div>
+            <div class="grey_f">推广佣金</div>
+            <div>
+              <img class="yuan_img" src="../../assets/tab/qian.png">
+              <span class="money">230</span>
+            </div>
+          </div>
+          <div>
+            <div class="grey_f">订单佣金</div>
+            <div>
+              <img class="yuan_img" src="../../assets/tab/qian.png">
+              <span class="money">230</span>
+            </div>
+          </div>
+          <div>
+            <div class="grey_f">未结算佣金</div>
+            <div>
+              <img class="yuan_img" src="../../assets/tab/qian.png">
+              <span class="money">230</span>
+            </div>
+          </div>
+        </div>
+        <div class="grey_f padding_tb">总佣金</div>
+        <div class>
+          <img class="all_img" src="../../assets/tab/qicon.png">
+          <span class="all_money">2300</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-jc-center" style=" margin-top: 15px;">
+      <div class="tg_yq_box text-c">
+        <div class="flex-jc-between tg_yq">
+          <div class="flex-align-items">
+            <div class="wode flex-center">
+              <img src="../../assets/tab/wode.png">
+            </div>
+            <div>
+              <div class="yq">邀请好友</div>
+              <div class="grey_f">去邀请</div>
+            </div>
+          </div>
+          <div>
+            <img class="img_r" src="../../assets/tab/right.png">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-jc-center">
+      <div class="tg_yq_box text-c">
+        <div class="flex-jc-between tg_yq">
+          <div class="flex-align-items">
+            <div class="saoma flex-center">
+              <img src="../../assets/tab/saoma.png">
+            </div>
+            <div>
+              <div class="yq">推广二维码</div>
+              <div class="grey_f ck">查看</div>
+            </div>
+          </div>
+          <div>
+            <img class="img_r" src="../../assets/tab/right.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    routerback() {
+      this.$router.back(-1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+.top {
+  position: fixed;
+  top: 0;
+  background: #fff;
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.fh_img {
+  width: 13px;
+  height: 16px;
+  position: absolute;
+  left: 10px;
+  top: 2px;
+}
+.fh_img img {
+  width: 13px;
+  height: 16px;
+}
+
+.trust_box {
+  width: 300px;
+  height: 170px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+  margin-top: 55px;
+  padding-top: 30px;
+}
+.grey_f {
+  color: #bfbfbf;
+  font-size: 12px;
+  line-height: 25px;
+}
+.yuan_img {
+  width: 8px;
+  height: 12px;
+}
+.all_img {
+  width: 20px;
+  height: 30px;
+}
+.padding_tb {
+  padding: 20px 0 5px 0;
+}
+
+.money {
+  color: #4ea9f9;
+  font-size: 19px;
+}
+.all_money {
+  color: #4ea9f9;
+  font-size: 50px;
+  font-weight: 200;
+}
+
+.tg_yq_box {
+  width: 300px;
+  height: 80px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.tg_yq {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 80px;
+}
+.img_r {
+  width: 5px;
+  height: 10px;
+  margin-right: 13px;
+}
+
+.wode,
+.saoma {
+  width: 85px;
+  height: 81px;
+  background: linear-gradient(0deg, #a1c4fd, #bbe5f9);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.saoma > img {
+  width: 24px;
+  height: 24px;
+}
+.yq {
+  padding-left: 20px;
+}
+
+.ck {
+  padding-right: 25px;
+}
+.wode > img {
+  width: 21px;
+  height: 24px;
+}
+</style>
