@@ -16,15 +16,15 @@
         </div>
 
         <div class="hang" @click="detaInfoem">
-          <van-cell is-link center to>
+          <van-cell is-link center to="/DetaInformation">
             <template slot="title">
               <div>详细信息</div>
             </template>
           </van-cell>
         </div>
 
-        <div class="hang" @click="receInform">
-          <van-cell is-link center to>
+        <div class="hang">
+          <van-cell is-link center to="/ReceInformation">
             <template slot="title">
               <div>收货信息</div>
             </template>
@@ -33,21 +33,17 @@
       </div>
 
       <div class="me bgc" style="margin-top: 15px;">
-        <div class="hang">
-          <van-cell is-link center to>
-            <template slot="title">
-              <div>账号安全</div>
-            </template>
-          </van-cell>
-        </div>
+        <van-cell is-link center to="/accountSecurity">
+          <template slot="title">
+            <div>账号安全</div>
+          </template>
+        </van-cell>
 
-        <div class="hang">
-          <van-cell is-link center to>
-            <template slot="title">
-              <div>绑定账号</div>
-            </template>
-          </van-cell>
-        </div>
+        <van-cell is-link center to>
+          <template slot="title">
+            <div>绑定账号</div>
+          </template>
+        </van-cell>
       </div>
     </div>
   </div>
@@ -56,15 +52,6 @@
 <script>
 export default {
   methods: {
-    //详细信息
-    detaInfoem() {
-      this.$router.push({ path: "/DetaInformation" });
-    },
-    //收货信息
-    receInform() {
-      this.$router.push({ path: "/ReceInformation" });
-    },
-
     routerback() {
       this.$router.back(-1);
     }

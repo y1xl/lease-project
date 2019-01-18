@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="text-c border-b top">
-      <div class="fh_img">
-        <img src="../../assets/tab/right.png">
+      <div class="fh_img" @click="routerback">
+        <img src alt="返">
       </div>产品列表
     </div>
     <div class="flex-jc-center">
@@ -46,6 +46,9 @@ export default {
     };
   },
   methods: {
+    routerback() {
+      this.$router.back(-1);
+    },
     onLoad() {
       // 异步更新数据
       setTimeout(() => {

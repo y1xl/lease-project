@@ -22,6 +22,7 @@
         </template>
       </van-cell>
     </div>
+    <div class="btn text-c">添加</div>
   </div>
 </template>
 <script>
@@ -76,5 +77,14 @@ export default {
   width: 17px;
   height: 17px;
   padding-right: 5px;
+}
+.btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background: linear-gradient(90deg, #60c0fd, #4ea9f9);
+  color: #fff;
 }
 </style>
