@@ -116,7 +116,7 @@
           <div class="info">
             <!-- 租转售 -->
             <div class="flexbox">
-              <span></span>
+              <span>租金可抵额度</span>
               <span class="flex-1">¥1000.00</span>
             </div>
             <!-- 租转售  end-->

@@ -15,7 +15,7 @@
     <div class="mebox">
       <div class="position me">
         <div style="padding-top: 10px;" class="myzf">
-          <van-cell is-link center to>
+          <van-cell is-link center to="/certification">
             <template slot="icon">
               <img src="../../assets/tab/myrz.png" alt="图标" class="left_img">
             </template>

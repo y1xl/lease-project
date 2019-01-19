@@ -1,23 +1,23 @@
 <template>
     <div>
-        <div class="bgc">自取联系人</div>
+        <div class="bgc pd-15">自取联系人</div>
         <div class="nav bgc">
             <div :class="{ 'fc-blue selected': selected==0 }" @click="selected=0">本人</div>
             <div :class="{ 'fc-blue selected': selected==1 }" @click="selected=1">朋友代取</div>
         </div>
 
         <div class="bgc">
-            <div class="border-b inputbox">
+            <div class="border-b inputbox pd-15">
                 <span>姓名</span>
                 <input type="text" v-model="nameval">
             </div>
-            <div class="inputbox">
+            <div class="inputbox pd-15">
                 <span>手机号码</span>
                 <input type="number" v-model="phoneval" maxlength="11">
             </div>
         </div>
 
-        <div style="padding:0 10px"><div class="btn text-c" @click="onbtn">确认</div></div>
+        <div class="pd-t-100"><div class="btn text-c" @click="onbtn">确认</div></div>
     </div>
 </template>
 
@@ -70,7 +70,10 @@ export default {
 .nav .selected {
     box-shadow: 0 1px 7px 1px #DEF4FD;
 }
-
+.pd-t-100{
+    padding: 0 15px;
+    padding-top: 100px;
+}
 .btn{
     height: 42px;
     line-height: 42px;

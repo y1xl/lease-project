@@ -18,7 +18,7 @@
         </div>
 
         <template v-if="selected==0">
-            <van-cell title="选择规格参数" is-link value="黑色,1件" />
+            <van-cell title="选择规格参数" is-link value="黑色,1件" @click="onshowinfo"/>
 
             <div class="bgc">
                 <div class="pd-15">取货方式</div>
@@ -45,10 +45,10 @@
                             <div>深圳市龙华新区龙华街道九方A座1001号</div>
                         </template>
                     </van-cell>
-                    <van-cell is-link center to="">
+                    <van-cell is-link center to="/calendar">
                         <template slot="title">
                             <div>自取时间</div>
-                            <div>2019年1月9日</div>
+                            <div>{{datechoose}}</div>
                         </template>
                     </van-cell>
                     <van-cell title="时间点" is-link center @click="onshowtime" :value="timetext"></van-cell>
@@ -102,6 +102,39 @@
             />
             </div>
         </div>
+
+        <div class="model full" v-show="showinfo">
+            <div class="main bgc">
+                <div class="goods1 flexbox pd-15">
+                    <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
+                    <div class="flex-1">
+                        <div class="mar-b-10 position title">
+                            日本 instax拍立得日本 instax拍立得
+                            <div class="closeicon" @click="onshowinfo"><van-icon name="close"/></div>
+                        </div>
+                        <div class="mar-b-10"><span class="fc-red">¥1.08</span><span class="fsz10">/日</span></div>
+                        <div class="fsz10">请选择规格属性</div>
+                    </div>
+                </div>
+                <div class="pd-lr-15">
+                    <div class="mar-b-10 fsz12">颜色</div>
+                    <div class="items mar-b-10">
+                        <div class="border-blue fc-blue">黑色</div>
+                        <div class="border">褐色</div>
+                    </div>
+
+                    <div class="mar-b-10 fsz12">型号</div>
+                    <div class="items mar-b-10">
+                        <div class="border">型号1</div>
+                        <div class="border">型号2</div>
+                    </div>
+
+                    <div class="mar-b-10 fsz12">数量</div>
+                    <div><van-stepper v-model="numval" /></div>
+                </div>
+                <div class="pd-15"><div class="btn text-c">确认</div></div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -114,20 +147,25 @@ export default {
             typenum:0,
             showtime:false,
             timetext:'',
-            people:''
+            people:'',
+            numval:'',
+            showinfo:false,
+            datechoose: ''
         }
     },
     created(){
         this.people = JSON.parse(window.sessionStorage.getItem("people"))||''
+        this.datechoose = window.sessionStorage.getItem("datechoose")||''
     },
     methods:{
         onshowtime(){
             if(this.showtime){
-                document.documentElement.style.position = 'static';
+                // document.documentElement.style.position = 'static';
                 document.body.style.overflow = ''; //出现滚动条
                 this.showtime = false
             }else{
-                document.documentElement.style.position = 'fixed';
+                // document.documentElement.style.position = 'fixed';
+                document.documentElement.style.width = '100%';
                 document.body.style.overflow = 'hidden'; //隐藏滚动条
                 this.showtime = true
             } 
@@ -139,6 +177,18 @@ export default {
             document.body.style.overflow = ''; //出现滚动条
             this.showtime = false
         },
+        onshowinfo(){
+            if(this.showinfo){
+                document.documentElement.style.position = 'static';
+                document.body.style.overflow = ''; //出现滚动条
+                this.showinfo = false
+            }else{
+                document.documentElement.style.position = 'fixed';
+                document.documentElement.style.width = '100%';
+                document.body.style.overflow = 'hidden'; //隐藏滚动条
+                this.showinfo = true
+            } 
+        },
     }
 }
 </script>
@@ -146,6 +196,12 @@ export default {
 <style scoped>
 .fsz14{
     font-size: 14px
+}
+.fsz12{
+    font-size: 12px
+}
+.fsz10{
+    font-size: 10px
 }
 .nav {
     /* padding: 15px; */
@@ -178,6 +234,16 @@ export default {
     background-color: #fff;
     margin-right: 10px;
 }
+
+.goods1 img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    background-color: #f6f6f6;
+}
+.goods1 .title {
+    padding-right: 10px;
+}
 .price {
     padding: 10px 0;
 }
@@ -204,5 +270,17 @@ export default {
     position: fixed;
     bottom: 0;
     left: 0;
+}
+.model .items > div{
+    padding: 2px 10px;
+    display: inline-block;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+.model .closeicon{
+  position: absolute;
+  right:-5px;
+  top:-5px;
+  font-size:18px
 }
 </style>

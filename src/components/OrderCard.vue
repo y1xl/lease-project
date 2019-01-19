@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="bgc card pd-15 ">
+    <div class="bgc card pd-15 mar-b-10">
         <router-link v-bind="{to: '/orderDetail'}">
             <div class="flex-jc-between border-b mar-b-10" style="padding-bottom:10px"><span>订单号:11901910265079</span><span class="fc-blue">待确认</span></div>
             <div class="flexbox">
@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
     .card {
-        border-radius: 8px
+        border-radius: 8px;
     }
     .card .goodsimg {
         width: 80px;

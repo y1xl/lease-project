@@ -5,14 +5,16 @@ import App from './App'
 import './style/reset.css'
 import './style/common.css'
 import router from './router'
+
 Vue.use(require('vue-wechat-title'))
+
 import axios from "axios"
 import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
 import Vant from 'vant'
 import 'vant/lib/index.css'
-
 Vue.use(Vant);
-Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
 

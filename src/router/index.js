@@ -20,6 +20,7 @@ import Refund  from '@/pages/order/refund'
 import TimeQuantum  from '@/pages/order/timeQuantum'
 import AppointmentExpress  from '@/pages/order/appointmentExpress'
 import Deny  from '@/pages/order/deny'
+import Calendar  from '@/pages/order/calendar'
 //个人中心
 import MyInformation from '@/pages/me/myInformation'
 import AddInformation from '@/pages/me/addInformation'
@@ -30,6 +31,10 @@ import Modify from '@/pages/me/modify'
 import Coupon from '@/pages/me/coupon'
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
+
+//免押认证
+import Certification from '@/pages/certification/index'
+import School from '@/pages/certification/school'
 
 Vue.use(Router)
 
@@ -50,7 +55,8 @@ export default new Router({
     { path: '/timeQuantum',component: TimeQuantum,meta:{title:'选择时间段'} },
     { path: '/appointmentExpress',component: AppointmentExpress,meta:{title:'预约快递'} },
     { path: '/deny',component: Deny,meta:{title:'否认'} },
-    //订单
+    { path: '/calendar',component: Calendar,meta:{title:'时间'} },
+    //产品
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
@@ -67,6 +73,9 @@ export default new Router({
     //门店
     { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
 
+    //免押认证
+    { path: '/certification', component: Certification, meta: { title: '认证中心' } },
+    { path: '/school', component: School, meta: { title: '学籍认证' } },
   ],
 
   scrollBehavior(to, from, savedPosition) {
