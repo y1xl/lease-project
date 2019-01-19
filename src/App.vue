@@ -108,4 +108,13 @@ export default {
   .mar-bottom {
     margin-bottom: 50px;
   }
+  .mar-b-10{
+    margin-bottom: 10px;
+  }
+  .pd-15{
+    padding: 15px;
+  }
+  .pd-lr-15{
+    padding: 0 15px
+  }
 </style>

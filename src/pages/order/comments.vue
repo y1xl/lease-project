@@ -1,30 +1,31 @@
 <template>
   <div>
-    <div class="header bgc mar-b-10 flex-jc-between">
-      <div>
-        <div>日本 instax拍立得</div>
+    <div class="goods bgc mar-b-10 flex-align-items box-sizing">
+      <div class="flex-1">
+        <div style="font-weight: bold;" class="mar-b-10">日本 instax拍立得</div>
         <div>黑色</div>
       </div>
       <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
     </div>
 
-    <div class="border-b text-c bgc">
-      <van-rate v-model="value" @change="onRating"/>
+    <div class="border-b text-c bgc ratebox">
+      <van-rate v-model="value" @change="onRating" size="27"/>
     </div>
 
-    <div class="textarea"><textarea name="" id="" cols="30" rows="10" placeholder="写下商品使用体会，可以更好的帮助其他小伙伴哦~"></textarea></div>
+    <div class="textarea bgc"><textarea name="" id="" rows="6" placeholder="分享使用体验，有机会上我们的头版哦！分享视频内容，更有机会上New Bee官方抖音并拿大奖！"></textarea></div>
     <div class="bgc imglist">
-        <img :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index">
+        <img @click="onImagePreview(index)" :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index">
       <van-uploader :after-read="onRead" accept="image/gif, image/jpeg" multiple>
         <van-icon name="photograph"/>
       </van-uploader>
     </div>
 
-    <div style="padding:0 10px"><div class="btn text-c">提交</div></div>
+    <div class="pd-15"><div class="btn text-c" @click="submit">提交</div></div>
   </div>
 </template>
 
 <script>
+import { ImagePreview } from 'vant';
 export default {
   data() {
     return {
@@ -41,22 +42,49 @@ export default {
     onRead(file) {
       console.log(file)
       this.imgarr.push(file)
+    },
+    //预览
+        onImagePreview(index){
+            let arr = []
+            for(let v of this.imgarr){
+                arr.push(v.content)
+            }
+            ImagePreview({
+                images: arr,
+                startPosition: index,
+            });
+        },
+    submit(){
+      
     }
   }
 };
 </script>
 
 <style scoped>
-.header img{
+.goods{
+  padding: 10px;
+}
+.goods img{
   width: 90px;
   height: 90px;
+}
+.ratebox {
+  padding: 10px 0;
+}
+.textarea {
+  padding: 10px;
 }
 .textarea textarea{
     width: 100%;
 }
+.imglist{
+  padding: 10px 0;
+}
 .imglist img {
     width: 77px;
     height: 77px;
+    padding-left: 10px;
 }
 .btn{
     margin-top: 76px;

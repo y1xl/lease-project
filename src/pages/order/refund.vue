@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="bgc">选择退租方式</div>
+        <div class="bgc pd-15">选择退租方式</div>
         <div class="nav bgc">
             <div :class="{ 'fc-blue selected': selected==0 }" @click="selected=0">自还</div>
             <div :class="{ 'fc-blue selected': selected==1 }" @click="selected=1">快递</div>
@@ -8,39 +8,49 @@
         </div>
 
         <div v-show="selected==0">
-            <div class="choose bgc flex-jc-around">
+            <div class="choose bgc flex-jc-around pd-15">
                 <div class="border" :class="{ 'fc-blue border-blue': typenum==0 }" @click="typenum=0">本人</div>
                 <div class="border" :class="{ 'fc-blue border-blue': typenum==1 }" @click="typenum=1">朋友代还</div>
             </div>
-            <div style="font-size:12px" class="text-c">温馨提示:选择朋友代还您需要发送给朋友小程序打开才能还</div>
+            <div class="text-c tip">温馨提示:选择朋友代还您需要发送给朋友小程序打开才能还</div>
 
-            <div style="padding:0 10px"><div class="btn text-c">确定</div></div>
+            <div class="pd-t-100"><div class="btn text-c">确定</div></div>
         </div>
 
         <div v-show="selected==1">
             <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>    
-            <div class="bgc">
+            <div class="bgc pd-15">
                 <span>快递单号</span>
                 <input type="text" placeholder="请输入" >
             </div>
 
-            <div style="font-size:12px" class="text-c">温馨提示:如果未经平台预约寄送,请直接填写快递单号</div>
-            <div style="padding:0 10px"><div class="btn1 text-c">快捷预约顺丰上门取件入口</div></div>
-            <div style="padding:0 10px"><div class="btn text-c">确定</div></div>
+            <div class="text-c tip">温馨提示:如果未经平台预约寄送,请直接填写快递单号</div>
+            <div class="pd-15"><router-link to="/appointmentExpress"><div class="btn1 text-c">快捷预约顺丰上门取件入口</div></router-link></div>
+            <div class="pd-15"><div class="btn text-c">确定</div></div>
         </div>
 
         <div v-show="selected==2">
             <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>  
+            <van-cell title="时间点" is-link center @click="onshowtime" :value="timetext"></van-cell>  
             <van-cell is-link center to="" >
                 <template slot="title">
                     <div>收货地址</div>
-                    <div>曾小姐  18822815757 <span>默认</span></div>
+                    <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
                     <div>深圳市龙华新区龙华街道九方A座1001号</div>
                 </template>
             </van-cell>
-            <div style="padding:0 10px"><div class="btn text-c">提交</div></div>
+            <div class="pd-t-100"><div class="btn text-c">提交</div></div>
         </div>
-
+        <div v-show="showtime" class="model full">
+            <div class="main">
+            <van-datetime-picker
+            type="time"
+            show-toolbar
+            @cancel="onshowtime"
+            @confirm="onConfirm"
+            />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -50,13 +60,44 @@ export default {
         return{
             selected:0,
             typenum:0,
-            datetext:''
+            showtime:false,
+            datetext:'',
+            timetext:''
         }
+    },
+    methods:{
+        onshowtime(){
+            if(this.showtime){
+                document.documentElement.style.position = 'static';
+                document.body.style.overflow = ''; //出现滚动条
+                this.showtime = false
+            }else{
+                document.documentElement.style.position = 'fixed';
+                document.body.style.overflow = 'hidden'; //隐藏滚动条
+                this.showtime = true
+            } 
+        },
+        onConfirm(value) {
+            console.log(`当前值：${value}`);
+            this.timetext = value
+            document.documentElement.style.position = 'static';
+            document.body.style.overflow = ''; //出现滚动条
+            this.showtime = false
+        },
     }
 }
 </script>
 
 <style scoped>
+.tip{
+    font-size: 10px;
+    color: #666;
+    padding-top: 15px;
+}
+.pd-t-100{
+    padding: 0 15px;
+    padding-top: 100px;
+}
 .btn{
     height: 42px;
     line-height: 42px;
@@ -64,16 +105,22 @@ export default {
     color: #fff;
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
 }
+.nav {
+    padding: 15px;
+}
 .nav > div {
-  width: 103px;
-  height: 37px;
-  line-height: 37px;
+  width: 80px;
+  height: 30px;
+  line-height: 30px;
   /* color: #666; */
   display: inline-block;
   box-shadow: 0 1px 7px 1px #E8E9EA;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   border-radius: 20px;
   text-align: center;
+  box-sizing: border-box;
+  font-size: 13px;
+  margin-right: 10px;
 }
 .nav .selected {
     box-shadow: 0 1px 7px 1px #DEF4FD;
@@ -95,5 +142,20 @@ export default {
     line-height: 42px;
     border-radius: 20px;
     color: #fff;
+}
+
+.model {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1;
+}
+.model .main {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 </style>

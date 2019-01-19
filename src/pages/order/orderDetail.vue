@@ -1,124 +1,317 @@
 <template>
-    <div>
-        <div class="header text-c">
-            <div>待付款</div>
-            <div>29分钟36秒的支付时间</div>
-        </div>
-
-        <div style="padding:0 15px">
-        <div class="bgc">
-            <div class="goods flexbox">
-                <div class="flex-1">
-                    <div>日本 instax拍立得</div>
-                </div>
-                <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
-            </div>
-            <div>
-                <div class="title">租赁信息</div>
-                <div class="info">
-                    <div class="flexbox">
-                        <span>订单号</span>
-                        <span class="flex-1">11901910265079</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>下单时间</span>
-                        <span class="flex-1">2018.05.12 15:26:36</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>租期</span>
-                        <span class="flex-1">6个小时</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>期望收到的日期</span>
-                        <span class="flex-1">2018.5.15</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>取货方式</span>
-                        <span class="flex-1">自取;本人</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>自取地点</span>
-                        <span class="flex-1">深圳市龙华新区龙华街道九方A座
-1001号</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>自取时间</span>
-                        <span class="flex-1">2018.05.14</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>时间点</span>
-                        <span class="flex-1">09:00-11:00  </span>
-                    </div>
-                    <div class="flexbox">
-                        <span>自取联系人</span>
-                        <span class="flex-1">曾小姐 </span>
-                    </div>
-                    <div class="flexbox">
-                        <span>自取手机号码</span>
-                        <span class="flex-1">18822815757</span>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="title flex-jc-between"><span>应付总金额</span><span class="fc-red">¥1170.00</span></div>
-                <div class="info">
-                    <div class="flexbox">
-                        <span>押金</span>
-                        <span class="flex-1">¥1000.00</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>租金</span>
-                        <span class="flex-1">¥1000.00</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>享受优惠</span>
-                        <span class="flex-1">-¥50.00</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>保险费</span>
-                        <span class="flex-1">¥1000.00</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>优惠券</span>
-                        <span class="flex-1">-¥50.00</span>
-                    </div>
-                    <div class="flexbox">
-                        <span>免押额度</span>
-                        <span class="flex-1">-¥50.00</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-
-        <div class="tools bgc">
-            <div class="text-c border-blue fc-blue"><router-link v-bind="{to: '/comments'}">评价</router-link></div>
-            <div class="text-c border"><router-link v-bind="{to: '/shopping'}">购买</router-link></div>
-            <div class="text-c border"><router-link v-bind="{to: '/refund'}">退租</router-link></div>
-        </div>
+  <div>
+    <div class="header text-c">
+      <div class="mar-b-10 fsz18">待付款</div>
+      <div class="fc-blue fsz13">29分钟36秒的支付时间</div>
+      <div class="fsz13 fc-grey">取消订单原因</div>
     </div>
+
+    <div class="pd-lr-15">
+      <div class="bgc main">
+        <div class="goods flexbox box-sizing">
+          <div class="flex-1">
+            <div class="mar-b-10">日本 instax拍立得</div>
+            <div class="spec mar-b-10">
+              <span>1件</span>
+              <span>黑色</span>
+            </div>
+          </div>
+          <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+        </div>
+        <div>
+          <div class="title position">租赁信息
+            <div class="l dot"></div>
+            <div class="r dot"></div>
+          </div>
+          <div class="info">
+            <div class="flexbox">
+              <span>订单号</span>
+              <span class="flex-1">11901910265079</span>
+            </div>
+            <div class="flexbox">
+              <span>下单时间</span>
+              <span class="flex-1">2018.05.12 15:26:36</span>
+            </div>
+            <div class="flexbox">
+              <span>租期</span>
+              <span class="flex-1">6个小时</span>
+            </div>
+            <div class="flexbox">
+              <span>期望收到的日期</span>
+              <span class="flex-1">2018.5.15</span>
+            </div>
+            <div class="flexbox">
+              <span>取货方式</span>
+              <span class="flex-1">自取;本人</span>
+            </div>
+            <!-- 待付-取货方式快递 start-->
+            <div class="flexbox">
+              <span>收货地址</span>
+              <span class="flex-1">
+                深圳市龙华新区龙华街道九方A座
+                1001号
+              </span>
+            </div>
+            <div class="flexbox">
+              <span>取货时间</span>
+              <span class="flex-1">
+                2018
+              </span>
+            </div>
+            <div class="flexbox">
+              <span>收货人</span>
+              <span class="flex-1">
+                某
+              </span>
+            </div>
+            <div class="flexbox">
+              <span>收货人手机号码</span>
+              <span class="flex-1">
+                11111111
+              </span>
+            </div>
+            <!-- 待付-取货方式快递 end-->
+            <!-- 待付-取货方式配送 start-->
+            <div class="flexbox">
+              <span>收货时间</span>
+              <span class="flex-1">
+                2018
+              </span>
+            </div>
+            <!-- 待付-取货方式配送 end-->
+            <!-- 待付-取货方式自取 start-->
+            <div class="flexbox">
+              <span>自取地点</span>
+              <span class="flex-1">
+                深圳市龙华新区龙华街道九方A座
+                1001号
+              </span>
+            </div>
+            <div class="flexbox">
+              <span>自取时间</span>
+              <span class="flex-1">2018.05.14</span>
+            </div>
+            <div class="flexbox">
+              <span>时间点</span>
+              <span class="flex-1">09:00-11:00</span>
+            </div>
+            <div class="flexbox">
+              <span>自取联系人</span>
+              <span class="flex-1">曾小姐</span>
+            </div>
+            <div class="flexbox">
+              <span>自取手机号码</span>
+              <span class="flex-1">18822815757</span>
+            </div>
+            <!-- 待付-取货方式自取 end-->
+          </div>
+        </div>
+        <div>
+          <div class="title flex-jc-between position">
+            <span>应付总金额</span>
+            <span class="fc-red">¥1170.00</span>
+            <div class="l dot"></div>
+            <div class="r dot"></div>
+          </div>
+          <div class="info">
+            <!-- 租转售 -->
+            <div class="flexbox">
+              <span></span>
+              <span class="flex-1">¥1000.00</span>
+            </div>
+            <!-- 租转售  end-->
+            <div class="flexbox">
+              <span>押金</span>
+              <span class="flex-1">¥1000.00</span>
+            </div>
+            <div class="flexbox">
+              <span>租金</span>
+              <span class="flex-1">¥1000.00</span>
+            </div>
+            <div class="flexbox">
+              <span>享受优惠</span>
+              <span class="flex-1">-¥50.00</span>
+            </div>
+            <div class="flexbox">
+              <span>保险费</span>
+              <span class="flex-1">¥1000.00</span>
+            </div>
+            <div class="flexbox">
+              <span>优惠券</span>
+              <span class="flex-1">-¥50.00</span>
+            </div>
+            <div class="flexbox">
+              <span>配送运费</span>
+              <span class="flex-1">-¥50.00</span>
+            </div>
+            <div class="flexbox">
+              <span>已收定金</span>
+              <span class="flex-1">-¥50.00</span>
+            </div>
+            <div class="flexbox">
+              <span>免押额度</span>
+              <span class="flex-1">-¥50.00</span>
+            </div>
+          </div>
+        </div>
+        <!-- 售后中 -->
+        <div>
+          <div class="title position">
+            协商信息
+            <div class="l dot"></div>
+            <div class="r dot"></div>
+          </div>
+          <div>平台:边角有磨损、裂痕</div>
+          <div class="imglist flex-jc-between">
+            <img @click="onImagePreview()" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+            <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+            <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+          </div>
+          <div class="reason">我 :理由理由理由理由理由理由理由理由</div>
+        </div>
+        <!-- 租转售 -->
+        <div>
+          <div class="title position">
+            订单信息
+            <div class="l dot"></div>
+            <div class="r dot"></div>
+          </div>
+          <div class="info">
+            <div class="flexbox">
+              <span>可拿到货时间</span>
+              <span class="flex-1">1-3天</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="height"></div>
+
+    <div class="tools bgc border-t">
+      <div class="flex-center border-blue fc-blue">
+        <router-link v-bind="{to: '/comments'}">评价</router-link>
+      </div>
+      <div class="flex-center border">
+        <router-link v-bind="{to: '/shopping'}">购买</router-link>
+      </div>
+      <div class="flex-center border">
+        <router-link v-bind="{to: '/refund'}">退租</router-link>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import { ImagePreview } from 'vant';
 export default {
-    
-}
+  data(){
+    return {
+      
+    }
+  },
+  methods:{
+    onImagePreview(){
+      ImagePreview([
+        'http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg',
+      ]);
+    }
+  }
+};
 </script>
 
 <style scoped>
+.fsz18 {
+  font-size: 18px;
+}
+.fsz13 {
+  font-size: 13px;
+}
+.fsz16 {
+  font-size: 16px;
+}
+.height {
+  height: 55px;
+}
+.header {
+  padding: 15px 0;
+}
+.main {
+  border-radius: 10px;
+  padding: 15px;
+}
+.main .title {
+  font-weight: bold;
+  padding: 15px 0;
+  border-top: 1px dashed #b7b7b7;
+}
+.dot {
+  width: 14px;
+  height: 14px;
+  background-color: #f6f6f6;
+  border-radius: 50%;
+}
+.title .l {
+  position: absolute;
+  top: -7px;
+  left: -20px;
+}
+.title .r {
+  position: absolute;
+  top: -7px;
+  right: -20px;
+}
+.goods {
+  padding-bottom: 15px;
+}
 .goods img {
-    width: 72px;
-    height: 72px;
+  width: 72px;
+  height: 72px;
+}
+.spec > span {
+  display: inline-block;
+  background-color: #f2f1f1;
+  font-size: 12px;
+  padding: 1px 5px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+.imglist {
+  padding-top: 15px;
+  font-size: 0;
+}
+.imglist > img {
+  width: 85px;
+  height: 85px;
+}
+.reason {
+  padding-top: 15px;
 }
 
-.info div > span:nth-of-type(1) {
-    width: 110px;
+.info div {
+  padding-bottom: 10px;
 }
-.tools > div{
-        display: inline-block;
-        height: 30px;
-        line-height: 30px;
-        min-width: 82px;
-        border-radius: 20px;
-    }
+.info div > span:nth-of-type(1) {
+  width: 110px;
+}
+
+.tools {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 15px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.tools > div {
+  height: 25px;
+  min-width: 70px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin-left: 10px;
+  font-size: 13px;
+}
 </style>

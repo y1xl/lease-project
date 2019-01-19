@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="bgc mar-b-10">
-            <div class="border-b flex-jc-between">
+            <div class="border-b flex-jc-between header flex-align-items">
                 <span>选择续租的时间</span>
                 <div class="time">
                     <div class="border text-line" @click="isshow = true">{{timetext}}</div>
@@ -10,28 +10,28 @@
                     </div>
                 </div>
             </div>
-            <div>租金:<span class="fc-red">¥100.00</span></div>
+            <div class="pd-15">租金:<span class="fc-red">¥100.00</span></div>
         </div>
 
         <div class="bgc">
-            <div class="border-b">请选择支付方式</div>
+            <div class="border-b pd-15">请选择支付方式</div>
             <van-radio-group v-model="radio">
-                <div class="flex-jc-between border-b" @click="radio = '1'">
+                <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
                     <div>微信</div>
                     <van-radio name="1" checked-color="#2DBBF1"></van-radio>
                 </div>
-                <div class="flex-jc-between border-b" @click="radio = '2'">
+                <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
                     <div>支付宝</div>
                     <van-radio name="2" checked-color="#2DBBF1"></van-radio>
                 </div>
-                <div class="flex-jc-between " @click="radio = '3'">
+                <div class="flex-jc-between pd-15" @click="radio = '3'">
                     <div>余额<span class="fc-red">¥2.00</span></div>
                     <van-radio name="3" checked-color="#2DBBF1"></van-radio>
                 </div>
             </van-radio-group>
         </div>
 
-        <div style="padding:0 10px"><div class="btn text-c">提交</div></div>
+        <div class="pd-t-100"><div class="btn text-c">提交</div></div>
 
         <div v-show="isshow" class="model full">
             <div class="main"><van-picker :columns="columns" show-toolbar @confirm="onConfirm" @cancel="isshow = false"/></div>
@@ -60,20 +60,31 @@ export default {
 </script>
 
 <style scoped>
+.header{
+    height: 53px;
+    padding: 0 15px;
+}
 .time > div{
     display: inline-block;
-    width: 82px;
-    height: 29px;
+    width: 70px;
+    height: 28px;
     line-height: 29px;
     border-radius: 5px;
     overflow: hidden;
     text-align: center;
+    font-size: 12px;
+}
+.time > div:nth-of-type(1){
+    margin-right: 5px;
 }
 .time input {
     width: 100%;
     text-align: center;
 }
-
+.pd-t-100{
+    padding: 0 15px;
+    padding-top: 100px;
+}
 .btn{
     height: 42px;
     line-height: 42px;
