@@ -1,16 +1,8 @@
 <template>
   <div>
-    <div class="text-c border-b top">
-      <div class="fh_img" @click="routerback">
-        <img src alt="返">
-      </div>产品列表
-    </div>
-    <div class="flex-jc-center">
+    <div class="flex-jc-center bgc">
       <div class="img_b">
-        <img
-          class="top_img"
-          src="https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99"
-        >
+        <img class="top_img" src="../../assets/tab/2.png">
       </div>
     </div>
     <div>
@@ -22,13 +14,13 @@
                 <img class="img" src="../../assets/tab/zhuans.png">
               </div>
             </div>
-            <div class="text-line pro_title f14">日本 instax拍立得日本 instax拍立得</div>
+            <div class="text-line pro_title">日本 instax拍立得日本 instax拍立得</div>
             <div>
-              <span class="price f14">¥3.08</span>/日
+              <span class="price">¥3.08</span>/日
             </div>
           </div>
         </div>
-        <div class="text-c f14 no_more">
+        <div class="text-c no_more">
           <span>没有更多了</span>
         </div>
       </van-list>
@@ -72,33 +64,10 @@ export default {
 .f12 {
   font-size: 12px;
 }
-.f14 {
-  font-size: 14px;
-}
-.top {
-  position: fixed;
-  top: 0;
-  z-index: 99;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-}
-.fh_img {
-  width: 12px;
-  height: 12px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 12px;
-  height: 12px;
-}
 .img_b {
   width: 92%;
   height: 120px;
-  margin-top: 57px;
+  margin-top: 13px;
 }
 .top_img {
   width: 100%;

@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div class="text-c border-b top bgc">
-      <div class="fh_img" @click="routerback">
-        <img src="../../assets/tab/fhimg.png">
-      </div>修改绑定手机号
-    </div>
-
     <div class="modify text-c">
       <div class="tel_num">您当前绑定手机号138xxxx4586</div>
       <div class="flex-jc-center">
@@ -49,34 +43,12 @@ export default {
 </script>
 
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  font-size: 16px;
-  font-weight: 500;
-}
-.fh_img {
-  width: 13px;
-  height: 16px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 13px;
-  height: 16px;
-}
 .tx {
   padding: 10px 0;
   font-size: 12px;
 }
 
 .modify {
-  margin-top: 44px;
   width: 100%;
 }
 .tel_num {

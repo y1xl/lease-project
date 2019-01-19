@@ -1,6 +1,5 @@
 <template>
   <div class="bgc">
-    <div class="text-c border-b top">首页</div>
     <div class="flex-jc-between top_sear">
       <div class="dw">附近门店：</div>
       <div class="sear">
@@ -43,6 +42,7 @@
                   class="item"
                   v-for="(item, index) in prolist"
                   style="margin-right:10px;border-radius:4px;"
+                  @click="toDetail"
                 >
                   <div class="img_box1 flex-center">
                     <img class="img" src="../assets/tab/mys.png">
@@ -197,9 +197,15 @@ export default {
     more() {
       this.$router.push({ path: "/Goods" });
     },
+    //产品详情
+    toDetail() {
+      this.$router.push({ path: "/ProductDetail" });
+    },
+    //我要推广
     toTrust() {
       this.$router.push({ path: "/Trusteeship" });
     },
+    //福利社
     toWelfare() {
       this.$router.push({ path: "/WelfareAgency" });
     }
@@ -218,24 +224,9 @@ export default {
   font-size: 12px;
 }
 
-.f14 {
-  font-size: 14px;
-}
-
-.top {
-  position: fixed;
-  top: 0;
-  z-index: 99;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-}
-
 .top_sear {
   width: 100%;
   height: 44px;
-  margin-top: 44px;
 }
 
 .sear {

@@ -1,13 +1,7 @@
 <template>
   <div>
-    <div class="text-c border-b top bgc">
-      <div class="fh_img" @click="routerback">
-        <img src="../../assets/tab/fhimg.png">
-      </div>我的资料
-    </div>
-
     <div class="myinfor">
-      <div class="me bgc" style="margin-top: 70px;">
+      <div class="me bgc" style="margin-top: 12px;">
         <div class="flex-jc-between flex-align-items tx">
           <div style="padding-left: 13px;">我的头像</div>
           <div class="head_img">
@@ -20,26 +14,30 @@
             <div>详细信息</div>
           </template>
         </van-cell>
-
-        <van-cell is-link center to="/ReceInformation">
-          <template slot="title">
-            <div>收货信息</div>
-          </template>
-        </van-cell>
+        <div class="shxx">
+          <van-cell is-link center to="/ReceInformation">
+            <template slot="title">
+              <div>收货信息</div>
+            </template>
+          </van-cell>
+        </div>
       </div>
 
       <div class="me bgc" style="margin-top: 15px;">
-        <van-cell is-link center to="/accountSecurity">
-          <template slot="title">
-            <div>账号安全</div>
-          </template>
-        </van-cell>
-
-        <van-cell is-link center to>
-          <template slot="title">
-            <div>绑定账号</div>
-          </template>
-        </van-cell>
+        <div class="zhaq">
+          <van-cell is-link center to="/accountSecurity">
+            <template slot="title">
+              <div>账号安全</div>
+            </template>
+          </van-cell>
+        </div>
+        <div class="bdzh">
+          <van-cell is-link center to>
+            <template slot="title">
+              <div>绑定账号</div>
+            </template>
+          </van-cell>
+        </div>
       </div>
     </div>
   </div>
@@ -55,26 +53,19 @@ export default {
 };
 </script>
 
+<style>
+.zhaq .van-cell {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.bdzh .van-cell,
+.shxx .van-cell {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+</style>
+
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-}
-.fh_img {
-  width: 13px;
-  height: 16px;
-  position: absolute;
-  left: 10px;
-  top: 3px;
-}
-.fh_img img {
-  width: 13px;
-  height: 16px;
-}
 .tx {
   padding: 10px 0;
   font-size: 12px;
@@ -90,7 +81,6 @@ export default {
   height: 45px;
 }
 .myinfor {
-  margin-top: 44px;
   width: 100%;
 }
 

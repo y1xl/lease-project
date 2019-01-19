@@ -1,76 +1,73 @@
 <template>
   <div>
-    <div class="text-c border-b top bgc">
-      <div class="fh_img" @click="routerback">
-        <img src="../../assets/tab/fhimg.png">
-      </div>我要推广
-    </div>
-    <div class="flex-jc-center">
-      <div class="trust_box text-c">
-        <div class="flex-jc-around">
-          <div>
-            <div class="grey_f">推广佣金</div>
+    <div class="bgc">
+      <div class="flex-jc-center">
+        <div class="trust_box text-c">
+          <div class="flex-jc-around">
             <div>
-              <img class="yuan_img" src="../../assets/tab/qian.png">
-              <span class="money">230</span>
-            </div>
-          </div>
-          <div>
-            <div class="grey_f">订单佣金</div>
-            <div>
-              <img class="yuan_img" src="../../assets/tab/qian.png">
-              <span class="money">230</span>
-            </div>
-          </div>
-          <div>
-            <div class="grey_f">未结算佣金</div>
-            <div>
-              <img class="yuan_img" src="../../assets/tab/qian.png">
-              <span class="money">230</span>
-            </div>
-          </div>
-        </div>
-        <div class="grey_f padding_tb">总佣金</div>
-        <div class>
-          <img class="all_img" src="../../assets/tab/qicon.png">
-          <span class="all_money">2300</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex-jc-center" style=" margin-top: 15px;">
-      <div class="tg_yq_box text-c">
-        <div class="flex-jc-between tg_yq">
-          <div class="flex-align-items">
-            <div class="wode flex-center">
-              <img src="../../assets/tab/wode.png">
+              <div class="grey_f">推广佣金</div>
+              <div>
+                <img class="yuan_img" src="../../assets/tab/qian.png">
+                <span class="money">230</span>
+              </div>
             </div>
             <div>
-              <div class="yq">邀请好友</div>
-              <div class="grey_f">去邀请</div>
+              <div class="grey_f">订单佣金</div>
+              <div>
+                <img class="yuan_img" src="../../assets/tab/qian.png">
+                <span class="money">230</span>
+              </div>
+            </div>
+            <div>
+              <div class="grey_f">未结算佣金</div>
+              <div>
+                <img class="yuan_img" src="../../assets/tab/qian.png">
+                <span class="money">230</span>
+              </div>
             </div>
           </div>
-          <div>
-            <img class="img_r" src="../../assets/tab/right.png">
+          <div class="grey_f padding_tb">总佣金</div>
+          <div class>
+            <img class="all_img" src="../../assets/tab/qicon.png">
+            <span class="all_money">2300</span>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="flex-jc-center">
-      <div class="tg_yq_box text-c">
-        <div class="flex-jc-between tg_yq">
-          <div class="flex-align-items">
-            <div class="saoma flex-center">
-              <img src="../../assets/tab/saoma.png">
+      <div class="flex-jc-center" style="padding-top: 15px;">
+        <div class="tg_yq_box text-c">
+          <div class="flex-jc-between tg_yq">
+            <div class="flex-align-items">
+              <div class="wode flex-center">
+                <img src="../../assets/tab/wode.png">
+              </div>
+              <div>
+                <div class="yq">邀请好友</div>
+                <div class="grey_f">去邀请</div>
+              </div>
             </div>
             <div>
-              <div class="yq">推广二维码</div>
-              <div class="grey_f ck">查看</div>
+              <img class="img_r" src="../../assets/tab/right.png">
             </div>
           </div>
-          <div>
-            <img class="img_r" src="../../assets/tab/right.png">
+        </div>
+      </div>
+
+      <div class="flex-jc-center">
+        <div class="tg_yq_box text-c">
+          <div class="flex-jc-between tg_yq">
+            <div class="flex-align-items">
+              <div class="saoma flex-center">
+                <img src="../../assets/tab/saoma.png">
+              </div>
+              <div>
+                <div class="yq">推广二维码</div>
+                <div class="grey_f ck">查看</div>
+              </div>
+            </div>
+            <div>
+              <img class="img_r" src="../../assets/tab/right.png">
+            </div>
           </div>
         </div>
       </div>
@@ -92,35 +89,13 @@ export default {
 </script>
 
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  font-size: 16px;
-  font-weight: 500;
-}
-.fh_img {
-  width: 13px;
-  height: 16px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 13px;
-  height: 16px;
-}
-
 .trust_box {
   width: 300px;
   height: 170px;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
-  margin-top: 55px;
+  margin-top: 11px;
   padding-top: 30px;
 }
 .grey_f {

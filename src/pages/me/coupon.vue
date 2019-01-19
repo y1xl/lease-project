@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div class="text-c top bgc">
-      <div class="fh_img" @click="routerback">
-        <img src="../../assets/tab/fhimg.png">
-      </div>优惠券
-    </div>
-
-    <div id="nav" style="margin-top:46px;">
+    <div id="nav">
       <van-tabs @click="ontab">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
           <div class="coupon_box position" v-for="(item,index) in couponlist" :key="index">
@@ -49,9 +43,7 @@ export default {
     return {
       navtitle: ["未使用", "已使用", "已失效", "领取/兑换"],
       couponlist: [{}, {}, {}],
-      show: true,
-      username: "",
-      password: ""
+      show: true
     };
   },
   methods: {
@@ -86,25 +78,6 @@ export default {
 </style>
 
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-}
-.fh_img {
-  width: 13px;
-  height: 16px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 13px;
-  height: 16px;
-}
 .coupon_con {
   position: absolute;
   top: 0px;

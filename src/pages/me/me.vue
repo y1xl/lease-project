@@ -54,7 +54,7 @@
           </template>
         </van-cell>
 
-        <van-cell is-link center to>
+        <van-cell is-link center to="/MyBalance">
           <template slot="icon">
             <img src="../../assets/tab/ye.png" alt="图标" class="left_img">
           </template>
