@@ -1,18 +1,25 @@
 <template>
   <div>
-    <div class="text-c border-b top bgc">
-      <div class="fh_img" @click="routerback">
-        <img src="../../assets/tab/fhimg.png">
-      </div>龙华区油松店
-    </div>
-    <div class="flex-jc-center">
-      <div class="shopimg_b">
-        <img src="../../assets/tab/qd.png">
+    <div class="bgc">
+      <div class="flex-jc-center">
+        <div class="shopimg_b">
+          <img src="../../assets/tab/qd.png">
+        </div>
+      </div>
+      <div class="dt text-c">
+        <img class="dw_img" src="../../assets/tab/mddw.png">
+        <span class="txt">广东省深圳市龙华新区油松路158号油富商城门店</span>
       </div>
     </div>
-    <div class="dt text-c">
-      <img class="dw_img" src="../../assets/tab/mddw.png">
-      <span class="txt">广东省深圳市龙华新区油松路158号油富商城门店</span>
+
+    <div class="bgc flex-jc-center miaosu_b">
+      <div class="miaosu">
+        <div class="shop_name">店铺名称</div>
+        <div class="shop_intro">
+          店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍
+          店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -31,45 +38,44 @@ export default {
 </script>
 
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  font-size: 16px;
-  font-weight: 500;
-}
-.fh_img {
-  width: 13px;
-  height: 16px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 13px;
-  height: 16px;
-}
-
 .shopimg_b {
-  margin-top: 55px;
-  width: 94%;
+  margin-top: 15px;
+  width: 92%;
   height: 170px;
   border-radius: 5px;
   background: rebeccapurple;
 }
+.shopimg_b img {
+  width: 100%;
+  height: 100%;
+}
 .txt {
   font-size: 12px;
   color: #dcdddf;
-  margin-top: 5px;
 }
 .dw_img {
   width: 10px;
   height: 12px;
 }
 .dt {
-  margin-top: 15px;
+  line-height: 40px;
+}
+.miaosu_b {
+  margin-top: 12px;
+}
+.miaosu {
+  width: 92%;
+}
+.shop_name {
+  font-size: 15px;
+  font-weight: 700;
+  height: 50px;
+  line-height: 55px;
+}
+
+.shop_intro {
+  font-size: 12px;
+  color: #808080;
+  padding-bottom: 20px;
 }
 </style>

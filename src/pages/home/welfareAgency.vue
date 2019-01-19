@@ -1,28 +1,24 @@
 <template>
-  <div class="bgc">
-    <div class="qd_b">
-      <div class="text-c top">
-        <div class="fh_img" @click="routerback">
-          <img src="../../assets/tab/writefhimg.png">
-        </div>福利社
-      </div>
-      <div class="text-c qd_box">
-        <div class="flex-jc-center">
-          <div class="bor"></div>
-          <div class="lxqd">已连续签到</div>
-          <div class="bor"></div>
-        </div>
+  <div>
+    <div class="bgc">
+      <div class="qd_b">
+        <div class="text-c qd_box">
+          <div class="flex-jc-center">
+            <div class="bor"></div>
+            <div class="lxqd">已连续签到</div>
+            <div class="bor"></div>
+          </div>
 
-        <div class="time">
-          <span class="day">4</span>
-          <span>天</span>
-        </div>
-        <div class="flex-jc-center">
-          <div class="btn text-c">立即签到</div>
+          <div class="time">
+            <span class="day">4</span>
+            <span>天</span>
+          </div>
+          <div class="flex-jc-center">
+            <div class="btn text-c">立即签到</div>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- <div class="flexbox qdjl">
+      <!-- <div class="flexbox qdjl">
       <div class="yiqd_box">
         <img class="yiqd" src="../../assets/tab/yiqd.png">
       </div>
@@ -62,77 +58,78 @@
       <div class="yiqd_box6">
         <img class="yiqd" src="../../assets/tab/yiqd.png">
       </div>
-    </div>-->
-    <div class="qd_img text-c">
-      <img src="../../assets/tab/qd.png">
-    </div>
-    <div class="every_work">每日任务</div>
-    <div class="flex-jc-center">
-      <div class="word flex-jc-between flex-align-items">
-        <div class="flex-align-items">
-          <img src="../../assets/tab/tupian.png" class="tupian">
-          晒图分享
-        </div>
-        <div>
-          <div class="btn1 text-c">领奖励</div>
-          <!-- <div class="btn2 text-c">已领取</div> -->
-          <!-- <div class="btn3 text-c">去完成</div> -->
+      </div>-->
+      <div class="qd_img text-c">
+        <img src="../../assets/tab/qd.png">
+      </div>
+      <div class="every_work">每日任务</div>
+      <div class="flex-jc-center">
+        <div class="word flex-jc-between flex-align-items">
+          <div class="flex-align-items">
+            <img src="../../assets/tab/tupian.png" class="tupian">
+            晒图分享
+          </div>
+          <div>
+            <div class="btn1 text-c">领奖励</div>
+            <!-- <div class="btn2 text-c">已领取</div> -->
+            <!-- <div class="btn3 text-c">去完成</div> -->
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="flex-jc-center">
-      <div class="word flex-jc-between flex-align-items">
-        <div class="flex-align-items">
-          <img src="../../assets/tab/pinglun.png" class="pinglun">
-          优质评论
-        </div>
-        <div>
-          <!-- <div class="btn1 text-c">领奖励</div> -->
-          <div class="btn2 text-c">已领取</div>
-          <!-- <div class="btn3 text-c">去完成</div> -->
+      <div class="flex-jc-center">
+        <div class="word flex-jc-between flex-align-items">
+          <div class="flex-align-items">
+            <img src="../../assets/tab/pinglun.png" class="pinglun">
+            优质评论
+          </div>
+          <div>
+            <!-- <div class="btn1 text-c">领奖励</div> -->
+            <div class="btn2 text-c">已领取</div>
+            <!-- <div class="btn3 text-c">去完成</div> -->
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="flex-jc-center">
-      <div class="word flex-jc-between flex-align-items">
-        <div class="flex-align-items">
-          <img src="../../assets/tab/wenjuan.png" class="wenjuan">
-          问卷调查
-        </div>
-        <div>
-          <!-- <div class="btn1 text-c">领奖励</div> -->
-          <!-- <div class="btn2 text-c">已领取</div> -->
-          <div class="btn3 text-c">去完成</div>
+      <div class="flex-jc-center">
+        <div class="word flex-jc-between flex-align-items">
+          <div class="flex-align-items">
+            <img src="../../assets/tab/wenjuan.png" class="wenjuan">
+            问卷调查
+          </div>
+          <div>
+            <!-- <div class="btn1 text-c">领奖励</div> -->
+            <!-- <div class="btn2 text-c">已领取</div> -->
+            <div class="btn3 text-c">去完成</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="flex-jc-center">
-      <div class="word flex-jc-between flex-align-items">
-        <div class="flex-align-items">
-          <img src="../../assets/tab/haoyou_.png" class="haoyou_">
-          唤醒好友
-        </div>
-        <div>
-          <!-- <div class="btn1 text-c">领奖励</div> -->
-          <!-- <div class="btn2 text-c">已领取</div> -->
-          <div class="btn3 text-c">去完成</div>
+      <div class="flex-jc-center">
+        <div class="word flex-jc-between flex-align-items">
+          <div class="flex-align-items">
+            <img src="../../assets/tab/haoyou_.png" class="haoyou_">
+            唤醒好友
+          </div>
+          <div>
+            <!-- <div class="btn1 text-c">领奖励</div> -->
+            <!-- <div class="btn2 text-c">已领取</div> -->
+            <div class="btn3 text-c">去完成</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="flex-jc-center">
-      <div class="word flex-jc-between flex-align-items">
-        <div class="flex-align-items">
-          <img src="../../assets/tab/xiangji.png" class="xiangji">
-          租赁商品
-        </div>
-        <div>
-          <!-- <div class="btn1 text-c">领奖励</div> -->
-          <!-- <div class="btn2 text-c">已领取</div> -->
-          <div class="btn3 text-c">去完成</div>
+      <div class="flex-jc-center">
+        <div class="word flex-jc-between flex-align-items">
+          <div class="flex-align-items">
+            <img src="../../assets/tab/xiangji.png" class="xiangji">
+            租赁商品
+          </div>
+          <div>
+            <!-- <div class="btn1 text-c">领奖励</div> -->
+            <!-- <div class="btn2 text-c">已领取</div> -->
+            <div class="btn3 text-c">去完成</div>
+          </div>
         </div>
       </div>
     </div>
@@ -141,47 +138,22 @@
 
 <script>
 export default {
-  methods: {
-    routerback() {
-      this.$router.back(-1);
-    }
-  }
+  methods: {}
 };
 </script>
 
 
 
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-}
-.fh_img {
-  width: 13px;
-  height: 16px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 13px;
-  height: 16px;
-}
 .qd_b {
   align-items: center;
   width: 100%;
-  height: 260px;
+  height: 200px;
   background: url(../../assets/tab/fls_bg.png) no-repeat;
   background-size: 100% 100%;
 }
 .qd_box {
-  padding-top: 90px;
+  padding-top: 50px;
   color: #fff;
 }
 

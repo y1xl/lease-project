@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div class="text-c border-b top bgc">
-      <div class="fh_img" @click="routerback">
-        <img src alt="返">
-      </div>收货信息
-    </div>
-
     <div class="add_address">
       <div class="add_addresscon bgc">
         <div class="me" style="margin-top: 70px;">
@@ -51,28 +45,7 @@ export default {
 </script>
 
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-}
-.fh_img {
-  width: 12px;
-  height: 12px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 12px;
-  height: 12px;
-}
-
 .add_address {
-  margin-top: 44px;
   width: 100%;
 }
 .add_addresscon {

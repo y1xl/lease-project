@@ -1,7 +1,5 @@
 <template>
   <div>
-    <div class="text-c border-b top">门店</div>
-
     <div class="shoplist">
       <van-list v-model="loading" :finished="finished" @load="onLoad">
         <div v-for="item in list" :key="item" :title="item">
@@ -62,20 +60,8 @@ export default {
 .f12 {
   font-size: 12px;
 }
-.top {
-  position: fixed;
-  top: 0;
-  z-index: 99;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  font-size: 16px;
-  font-family: PingFangSC-Medium;
-  font-weight: 500;
-}
+
 .shoplist {
-  margin-top: 44px;
   margin-bottom: 60px;
   padding-top: 2px;
   background: #fbfbfb;

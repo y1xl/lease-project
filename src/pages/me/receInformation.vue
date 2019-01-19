@@ -1,10 +1,5 @@
 <template>
   <div>
-    <div class="text-c border-b top bgc">
-      <div class="fh_img" @click="routerback">
-        <img src="../../assets/tab/fhimg.png">
-      </div>收货信息
-    </div>
     <div class="addresslist">
       <div class="hang bgc" v-for="(address,index) in addresslist">
         <van-cell is-link center to>
@@ -43,29 +38,17 @@ export default {
   }
 };
 </script>
+
+<style>
+.hang .van-cell {
+  border-radius: 5px;
+}
+</style>
+
 <style scoped>
-.top {
-  position: fixed;
-  top: 0;
-  background: #fff;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-}
-.fh_img {
-  width: 13px;
-  height: 15px;
-  position: absolute;
-  left: 10px;
-  top: 2px;
-}
-.fh_img img {
-  width: 13px;
-  height: 16px;
-}
 .addresslist {
   width: 100%;
-  margin-top: 55px;
+  margin-top: 12px;
   margin-left: 4%;
 }
 .hang {
