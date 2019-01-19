@@ -14,7 +14,6 @@ import ProductDetail from '@/pages/home/productDetail'
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
 import Relet from '@/pages/order/relet'
-<<<<<<< HEAD
 import Shopping  from '@/pages/order/shopping'
 import People  from '@/pages/order/people'
 import LocationList  from '@/pages/order/locationList'
@@ -23,15 +22,6 @@ import TimeQuantum  from '@/pages/order/timeQuantum'
 import AppointmentExpress  from '@/pages/order/appointmentExpress'
 import Deny  from '@/pages/order/deny'
 import Calendar  from '@/pages/order/calendar'
-=======
-import Shopping from '@/pages/order/shopping'
-import People from '@/pages/order/people'
-import LocationList from '@/pages/order/locationList'
-import Refund from '@/pages/order/refund'
-import TimeQuantum from '@/pages/order/timeQuantum'
-import AppointmentExpress from '@/pages/order/appointmentExpress'
-import Deny from '@/pages/order/deny'
->>>>>>> a86d827fe7b5064dade2ff3758eece7458f5feaf
 //个人中心
 import MyInformation from '@/pages/me/myInformation'
 import AddInformation from '@/pages/me/addInformation'
@@ -53,7 +43,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     { path: '/', component: Index, meta: { title: '首页' } },
-    { path: '/shop', component: Shop, meta: { title: '门店' } },
+    { path: '/shop', component: Shop, meta: { title: '门店' } }, 
     { path: '/order', component: Order, meta: { title: '订单' } },
     { path: '/me', component: Me, meta: { title: '我的' } },
     //订单
