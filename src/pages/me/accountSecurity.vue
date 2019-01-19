@@ -3,32 +3,20 @@
     <div class="text-c border-b top bgc">
       <div class="fh_img" @click="routerback">
         <img src="../../assets/tab/fhimg.png">
-      </div>详细信息
+      </div>账号安全
     </div>
 
-    <div class="myinfor">
-      <div class="me bgc" style="margin-top: 70px;">
-        <van-cell center value="DORO_THY" to>
+    <div class="account_sec">
+      <div class="tel bgc" style="margin-top: 70px;">
+        <van-cell center value="138xxxx4568" to>
           <template slot="title">
-            <div>昵称</div>
+            <div>绑定手机号</div>
           </template>
         </van-cell>
 
-        <van-cell is-link center value="女" to>
+        <van-cell is-link center value="修改" to="/Modify">
           <template slot="title">
-            <div>性别</div>
-          </template>
-        </van-cell>
-
-        <van-cell is-link center value="广东省  深圳市" to>
-          <template slot="title">
-            <div>位置</div>
-          </template>
-        </van-cell>
-
-        <van-cell is-link center value="1998-11－25" to>
-          <template slot="title">
-            <div>生日</div>
+            <div>登陆密码</div>
           </template>
         </van-cell>
       </div>
@@ -70,22 +58,13 @@ export default {
   padding: 10px 0;
   font-size: 12px;
 }
-.head_img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-.head_img > img {
-  width: 45px;
-  height: 45px;
-}
-.myinfor {
+
+.account_sec {
   margin-top: 44px;
   width: 100%;
 }
 
-.me {
+.tel {
   width: 300px;
   height: 100%;
   margin: 0 auto;
