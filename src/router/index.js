@@ -14,13 +14,14 @@ import ProductDetail from '@/pages/home/productDetail'
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
 import Relet from '@/pages/order/relet'
-import Shopping from '@/pages/order/shopping'
-import People from '@/pages/order/people'
-import LocationList from '@/pages/order/locationList'
-import Refund from '@/pages/order/refund'
-import TimeQuantum from '@/pages/order/timeQuantum'
-import AppointmentExpress from '@/pages/order/appointmentExpress'
-import Deny from '@/pages/order/deny'
+import Shopping  from '@/pages/order/shopping'
+import People  from '@/pages/order/people'
+import LocationList  from '@/pages/order/locationList'
+import Refund  from '@/pages/order/refund'
+import TimeQuantum  from '@/pages/order/timeQuantum'
+import AppointmentExpress  from '@/pages/order/appointmentExpress'
+import Deny  from '@/pages/order/deny'
+import Calendar  from '@/pages/order/calendar'
 //个人中心
 import MyInformation from '@/pages/me/myInformation'
 import AddInformation from '@/pages/me/addInformation'
@@ -33,26 +34,31 @@ import MyBalance from '@/pages/me/myBalance'
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
 
+//免押认证
+import Certification from '@/pages/certification/index'
+import School from '@/pages/certification/school'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     { path: '/', component: Index, meta: { title: '首页' } },
-    { path: '/shop', component: Shop, meta: { title: '门店' } },
+    { path: '/shop', component: Shop, meta: { title: '门店' } }, 
     { path: '/order', component: Order, meta: { title: '订单' } },
     { path: '/me', component: Me, meta: { title: '我的' } },
     //订单
-    { path: '/comments', component: Comments, meta: { title: '评价' } },
-    { path: '/orderDetail', component: OrderDetail, meta: { title: '订单详情' } },
-    { path: '/relet', component: Relet, meta: { title: '续租' } },
-    { path: '/shopping', component: Shopping, meta: { title: '购买' } },
-    { path: '/people', component: People, meta: { title: '自取联系人' } },
-    { path: '/locationList', component: LocationList, meta: { title: '选择地点' } },
-    { path: '/refund', component: Refund, meta: { title: '退租' } },
-    { path: '/timeQuantum', component: TimeQuantum, meta: { title: '选择时间段' } },
-    { path: '/appointmentExpress', component: AppointmentExpress, meta: { title: '预约快递' } },
-    { path: '/deny', component: Deny, meta: { title: '否认' } },
-    //订单
+    { path: '/comments',component: Comments,meta:{title:'评价'} },
+    { path: '/orderDetail',component: OrderDetail,meta:{title:'订单详情'} },
+    { path: '/relet',component: Relet,meta:{title:'续租'} },
+    { path: '/shopping',component: Shopping,meta:{title:'购买'} },
+    { path: '/people',component: People,meta:{title:'自取联系人'} },
+    { path: '/locationList',component: LocationList,meta:{title:'选择地点'} },
+    { path: '/refund',component: Refund,meta:{title:'退租'} },
+    { path: '/timeQuantum',component: TimeQuantum,meta:{title:'选择时间段'} },
+    { path: '/appointmentExpress',component: AppointmentExpress,meta:{title:'预约快递'} },
+    { path: '/deny',component: Deny,meta:{title:'否认'} },
+    { path: '/calendar',component: Calendar,meta:{title:'时间'} },
+    //产品
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
@@ -71,6 +77,9 @@ export default new Router({
     //门店
     { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
 
+    //免押认证
+    { path: '/certification', component: Certification, meta: { title: '认证中心' } },
+    { path: '/school', component: School, meta: { title: '学籍认证' } },
   ],
 
   scrollBehavior(to, from, savedPosition) {

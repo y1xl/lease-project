@@ -6,7 +6,7 @@
     </div>
 
     <div id="nav">
-      <van-tabs @click="ontag">
+      <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item" v-for="(item,index) in navarr" :key="index"></van-tab>
       </van-tabs>
     </div>
@@ -14,7 +14,7 @@
     <div class="list">
       <OrderCard>
         <!-- <div class="flex-center border-blue fc-blue">支付</div> -->
-        <div class="flex-center border" @click="showmodel = true">取消订单</div>
+        <div class="flex-center border" @click="onshowmodel">取消订单</div>
         <!-- <div class="flex-center border" >重新下单</div> -->
         <!-- <div class="flex-center border-blue fc-blue" >确认收货</div> -->
         <!-- <div class="flex-center border-blue fc-blue" >支付</div> -->
@@ -24,11 +24,11 @@
           <router-link v-bind="{to: '/deny'}">否认</router-link>
         </div> -->
         <!-- <div class="flex-center border-blue fc-blue">确认</div> -->
-        <!-- <div class="flex-center border" @click="getcode">取货码</div> -->
+        <div class="flex-center border" @click="getcode">取货码</div>
         <!-- <div class="flex-center border" @click="getcode">自还码</div> -->
-        <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div>
+        <!-- <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div> -->
         <!-- <div class="flex-center border-blue fc-blue">
-          <router-link v-bind="{to: '/comments'}">去评价</router-link>
+          <router-link v-bind="{to: '/comments'}">评价</router-link>
         </div> -->
         <!-- <div class="flex-center border">
           <router-link v-bind="{to: '/refund'}">退租</router-link>
@@ -39,8 +39,10 @@
       </OrderCard>  
     </div>
 
+    <div class="height"></div>
+
     <div class="model full flex-column-center position" v-show="showcode">
-      <div class="closeimg" @click="showcode = false"><van-icon name="close" color="#fff"/></div>
+      <div class="closeimg" @click="getcode"><van-icon name="close" color="#fff"/></div>
       <img
         src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
         alt="QRcode"
@@ -53,7 +55,7 @@
       <div class="main bgc">
         <div class="text-c position title" >
           取消订单
-          <div class="closeicon"><van-icon name="close" @click="showmodel = false"/></div>
+          <div class="closeicon"><van-icon name="close" @click="onshowmodel"/></div>
         </div>
         <div class="pd-lr-15">
           <div style="padding:20px 0">请选择取消订单的原因,帮助我们改进(必选):</div>
@@ -86,7 +88,7 @@ export default {
   data() {
     return {
       selected: 0,
-      index: 0,
+      active: 0,
       navarr: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价"],
       navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价"],
       navarr1: ["待付款", "待发货", "待收货", "待评价", "已完成"],
@@ -101,18 +103,41 @@ export default {
       this.selected = n;
       if (n == 0) {
         this.navarr = this.navarr0;
+        this.active = 0
       }
       if (n == 1) {
         this.navarr = this.navarr1;
+        this.active = 0
       }
     },
     ontag(index, title) {
       console.log(index, title);
-      this.index = index;
+      this.active = index;
+    },
+    onshowmodel(){
+      if(this.showmodel){
+          // document.documentElement.style.position = 'static';
+          // document.body.style.overflow = ''; //出现滚动条
+          this.showmodel = false
+      }else{
+          // document.documentElement.style.position = 'fixed';
+          // document.documentElement.style.width = '100%';
+          // document.body.style.overflow = 'hidden'; //隐藏滚动条
+          this.showmodel = true
+      } 
     },
     getcode() {
-      this.showcode = true;
-    }
+      if(this.showcode){
+          // document.documentElement.style.position = 'static';
+          // document.body.style.overflow = ''; //出现滚动条
+          this.showcode = false
+      }else{
+          // document.documentElement.style.position = 'fixed';
+          // document.documentElement.style.width = '100%';
+          // document.body.style.overflow = 'hidden'; //隐藏滚动条
+          this.showcode = true
+      } 
+    },
   }
 };
 </script>
@@ -125,6 +150,9 @@ export default {
 </style>
 
 <style scoped>
+.height{
+  height: 50px;
+}
 .nav {
   height: 42px;
   line-height: 42px;
