@@ -2,15 +2,13 @@
   <div>
     <div class="bgc flex-jc-center">
       <div class="login_box">
-        <div class="login_title text-c">密码登陆</div>
-        <div class="border-b tel">
+        <div class="tip_title text-c" style=" padding-top: 50px;">Hi!</div>
+        <div class="tip_title text-c">欢迎加入</div>
+
+        <div class="border-b">
           <van-field v-model="value" placeholder="请输入手机号" input-align="center" border="false"/>
         </div>
-        <div class="border-b password">
-          <van-field v-model="value" placeholder="请输入密码" input-align="center" border="false"/>
-        </div>
-        <div class="text-r forget" @click="forget">忘记密码</div>
-        <div class="btn text-c">登录</div>
+        <button class="btn text-c" @click="forget">确认并登陆</button>
       </div>
     </div>
   </div>
@@ -18,8 +16,13 @@
 
 <script>
 export default {
+  data() {
+    return {
+      value: ""
+    };
+  },
   methods: {
-    //登陆
+    //下一步
     forget() {
       this.$router.push({ path: "/ForgetPassword" });
     }
@@ -31,16 +34,16 @@ export default {
 .login_box {
   width: 250px;
 }
-.login_title {
-  padding-top: 30px;
+.tip_title {
   font-size: 20px;
-  line-height: 80px;
+  line-height: 40px;
 }
-.forget {
+.tel {
   color: #aeaeae;
   font-size: 12px;
   line-height: 40px;
 }
+
 .btn {
   width: 100%;
   height: 40px;
@@ -48,6 +51,6 @@ export default {
   color: #fff;
   background: rgba(191, 191, 191, 1);
   border-radius: 20px;
-  margin-top: 50px;
+  margin-top: 80px;
 }
 </style>
