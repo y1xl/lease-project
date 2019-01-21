@@ -36,7 +36,11 @@ import MyBalance from '@/pages/me/myBalance'
 import BankCard from '@/pages/me/bankCard'
 
 //登录
+import Login from '@/pages/login/login'
 import PasswordLogin from '@/pages/login/passwordLogin'
+import ForgetPassword from '@/pages/login/forgetPassword'
+import ResetPassword from '@/pages/login/resetPassword'
+import InputCode from '@/pages/login/inputCode'
 
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
@@ -75,22 +79,26 @@ export default new Router({
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy', component: Buy, meta: { title: '下单' } },
 
-    //个人中心
-    { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
-    { path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
-    { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
-    { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
-    { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
-    { path: '/modify', component: Modify, meta: { title: '修改绑定手机号' } },
-    { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
-    { path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
-    { path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
+//个人中心
+{ path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
+{ path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
+{ path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
+{ path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
+{ path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
+{ path: '/modify', component: Modify, meta: { title: '修改绑定手机号' } },
+{ path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
+{ path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
+{ path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
 
-    //登录
-    { path: '/passwordLogin', component: PasswordLogin, meta: { title: '密码登录' } },
+//登录
+{ path: '/login', component: Login, meta: { title: '登录' } },
+{ path: '/passwordLogin', component: PasswordLogin, meta: { title: '密码登录' } },
+{ path: '/forgetPassword', component: ForgetPassword, meta: { title: '忘记密码' } },
+{ path: '/resetPassword', component: ResetPassword, meta: { title: '重置密码' } },
+{ path: '/inputCode', component: InputCode, meta: { title: '输入验证码' } },
 
-    //门店
-    { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
+//门店
+{ path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
 
     //免押认证
     { path: '/certification', component: Certification, meta: { title: '认证中心' } },
@@ -99,12 +107,12 @@ export default new Router({
     { path: '/addPeople', component: AddPeople },
   ],
 
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  }
+scrollBehavior(to, from, savedPosition) {
+if (savedPosition) {
+return savedPosition
+} else {
+return { x: 0, y: 0 }
+}
+}
 
 })
