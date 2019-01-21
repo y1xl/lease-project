@@ -32,6 +32,11 @@ import AccountSecurity from '@/pages/me/accountSecurity'
 import Modify from '@/pages/me/modify'
 import Coupon from '@/pages/me/coupon'
 import MyBalance from '@/pages/me/myBalance'
+import BankCard from '@/pages/me/bankCard'
+
+//登录
+import PasswordLogin from '@/pages/login/passwordLogin'
+
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
 
@@ -75,6 +80,10 @@ export default new Router({
     { path: '/modify', component: Modify, meta: { title: '修改绑定手机号' } },
     { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
     { path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
+    { path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
+
+    //登录
+    { path: '/passwordLogin', component: PasswordLogin, meta: { title: '密码登录' } },
 
     //门店
     { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },

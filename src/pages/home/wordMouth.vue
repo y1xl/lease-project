@@ -1,124 +1,46 @@
 <template>
   <div>
-    <div class="bgc" style="margin-top:10px;">
-      <van-cell is-link>
-        <template slot="title">
-          <span class="lab">活动</span>
-          <span class="custom-text">新人下单立减50元</span>
-        </template>
-      </van-cell>
-      <div class="flex-jc-around duo_mian">
-        <div class="grey_12 flex-align-items">
-          <img class="img_zq" src="../../assets/tab/my.png" alt>多门店自取
-        </div>
-        <div class="grey_12 flex-align-items">
-          <img class="img_myj" src="../../assets/tab/my.png" alt>免押金
-        </div>
-      </div>
-    </div>
-
-    <div class="bgc process">
-      <div class="rule">租赁流程和规则</div>
-
-      <div class="flex-jc-around position process_det">
-        <div class="text-c">
-          <div>
-            <img class="img_xdlc" src="../../assets/tab/my.png" alt>
-          </div>
-          <div class="fsize13">下单</div>
-        </div>
-        <div class="grey_line1"></div>
-        <div class="text-c">
-          <div>
-            <img class="img_xdlc" src="../../assets/tab/my.png" alt>
-          </div>
-          <div class="fsize13">送货</div>
-        </div>
-        <div class="grey_line2"></div>
-        <div class="text-c">
-          <div>
-            <img class="img_xdlc" src="../../assets/tab/my.png" alt>
-          </div>
-          <div class="fsize13">归还</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bgc flex-jc-center word_mouth_box">
-      <div class="word_mouth">
-        <div class="flex-jc-between border-b word_num">
-          <div>
-            <span>口碑</span>
-            <span>(999+)</span>
-          </div>
-          <div>
-            <span>97.6%</span>
-            <img class="img_r" src="../../assets/tab/right.png" alt>
-          </div>
-        </div>
-        <div class v-for="(item,index ) in wordlist">
-          <div class="flex-align-items head_name">
-            <img class="head_img" src="../../assets/tab/my.png" alt>
-            <span>李***莉</span>
-            <span>
-              <van-rate v-model="value" disabled disabled-color="#FFB10E" size="12"/>
-            </span>
-          </div>
-          <div>
-            <span class="grey_12">2018-12-5 15:00</span>
-            <span class="grey_12">租期:1年</span>
-          </div>
-          <div class="com_det">
-            很优秀哦 相机很好看 拍出来的照片也很好看 总体都很优秀 超
-            级喜欢 加上水晶壳就更优秀了 很多模式可以玩 适合爱拍照的
-            人 如果只是想记录生活的话 我觉得mini9就够了 总之很喜欢！
-          </div>
-          <div class="imglist" v-for="(item,index) in imglist">
-            <!-- <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt> -->
-            <img class="itemimg" src="item">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="bgc flex-jc-center" style="margin-top:10px">
-      <div class="product_det">
-        <div class="dettail">产品详情</div>
-        <div>
-          <span class="grey_12">商品名称</span>
-          <span>INSTAXmini90</span>
-        </div>
-        <div class="weight">
-          <span class="grey_12">商品毛重</span>
-          <span>0.58kg</span>
+    <div class="bgc">
+      <div class="border-b word_num">
+        <div class="flexbox xx_comment">
+          <span>评分</span>
+          <span class="wuxing">
+            <van-rate v-model="value" disabled disabled-color="#FFB10E"/>
+          </span>
+          <span>97.6%</span>
         </div>
         <div>
-          <span class="grey_12">使用相纸尺寸</span>
-          <span>富士小尺寸</span>
+          <span class="border-blue all_comment">全部(1230)</span>
+          <span class="border comment">好评(869)</span>
+          <span class="border comment">一般(69)</span>
+          <span class="border comment">不好(0)</span>
         </div>
-        <img
-          class="pro_img"
-          src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-          alt
-        >
       </div>
-    </div>
-
-    <div class="bgc footer flex-align-items">
-      <div class="flex-jc-between">
-        <div class="text-c margin_left">
-          <div>
-            <img class="img_kf" src="../../assets/tab/my.png" alt>
+      <div class="flex-jc-center">
+        <div class="word_mouth">
+          <div class="border-b" v-for="(item,index ) in wordlist">
+            <div class="flex-align-items head_name">
+              <img class="head_img" src="../../assets/tab/my.png" alt>
+              <span>李***莉</span>
+              <span>
+                <van-rate v-model="value" disabled disabled-color="#FFB10E" size="12"/>
+              </span>
+            </div>
+            <div>
+              <span class="grey_12">2018-12-5 15:00</span>
+              <span class="grey_12">租期:1年</span>
+            </div>
+            <div class="com_det">
+              很优秀哦 相机很好看 拍出来的照片也很好看 总体都很优秀 超
+              级喜欢 加上水晶壳就更优秀了 很多模式可以玩 适合爱拍照的
+              人 如果只是想记录生活的话 我觉得mini9就够了 总之很喜欢！
+            </div>
+            <div class="imglist" v-for="(item,index) in imglist">
+              <!-- <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt> -->
+              <img class="itemimg" src="item">
+            </div>
           </div>
-          <div class="f10_col">在线客服</div>
         </div>
-        <div class="text-c margin_left">
-          <div>
-            <img class="img_kf" src="../../assets/tab/my.png" alt>
-          </div>
-          <div class="f10_col">电话客服</div>
-        </div>
-        <div class="btn bcolor padding_lr margin_left">给朋友送礼</div>
-        <div class="btn bcol padding_lr margin_left">立即租赁</div>
       </div>
     </div>
   </div>
@@ -133,10 +55,7 @@ export default {
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
       ],
       wordlist: [{}, {}],
-      discountlist: [{}, {}],
-      value: 5,
-      showmodel: false,
-      discountmodel: false
+      value: 5
     };
   }
 };
@@ -150,21 +69,20 @@ export default {
   font-size: 12px;
   color: #979797;
 }
-.banner_box {
-  width: 100%;
-  padding-top: 10px;
+.all_comment {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: #4ea9f9;
 }
-.banner {
-  width: 92%;
-  height: 230px;
-  box-shadow: 0px 1px 7px 1px rgba(233, 235, 237, 1);
+.comment {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
 }
-.banner img {
-  width: 100px;
-  height: 100px;
-  border-radius: 5px;
+.wuxing {
+  padding: 0 10px 0 5px;
 }
-
 .product {
   width: 92%;
   height: 100%;
@@ -185,17 +103,7 @@ export default {
   color: #f21e1e;
   font-size: 18px;
 }
-.suggest {
-  width: 100%;
-  background-color: rgba(255, 245, 229, 1);
-  font-size: 12px;
-  color: #e97e00;
-  padding: 5px 0;
-}
-.suggest_tip {
-  width: 92%;
-  font-size: 12px;
-}
+
 .lab {
   background: #fc3434;
   color: #fff;
@@ -211,10 +119,15 @@ export default {
   width: 35px;
   height: 35px;
 }
-.duo_mian,
-.word_num {
+.duo_mian {
   height: 36px;
   line-height: 36px;
+}
+.word_num {
+  padding: 0 0 20px 15px;
+}
+.xx_comment {
+  line-height: 40px;
 }
 .img_zq {
   width: 13px;
@@ -249,13 +162,10 @@ export default {
   left: 190px;
 }
 
-.word_mouth_box {
-  margin-top: 10px;
-  padding: 10px 0;
-}
 .word_mouth {
   width: 92%;
   height: 100%;
+  margin-top: 20px;
 }
 .head_name,
 .com_det {
@@ -266,9 +176,7 @@ export default {
   height: 30px;
   border-radius: 50%;
 }
-.com_det {
-  padding-top: 5px;
-}
+
 .img_r {
   width: 7px;
   height: 11px;
@@ -335,43 +243,6 @@ export default {
 }
 .margin_left {
   margin-left: 10px;
-}
-
-.model {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-}
-.model .main {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-.s_title {
-  width: 92%;
-  height: 40px;
-  line-height: 40px;
-}
-.img_fx {
-  width: 50px;
-  height: 50px;
-}
-
-.close,
-.lineheight {
-  height: 50px;
-  line-height: 50px;
-  width: 100%;
-}
-
-.dis_clasify {
-  font-size: 12px;
-  color: #fc3434;
 }
 </style>
 

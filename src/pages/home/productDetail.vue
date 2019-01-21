@@ -18,7 +18,7 @@
               <div class="grey_12">一次成像相机</div>
             </div>
             <div class="flexbox">
-              <div class="text-c" @click="discountmodel = true">
+              <div class="text-c">
                 <div>
                   <img class="img_sc" src="../../assets/tab/my.png" alt>
                 </div>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="bgc" style="margin-top:10px;">
-      <van-cell is-link>
+      <van-cell is-link @click="discountmodel = true">
         <template slot="title">
           <span class="lab">活动</span>
           <span class="custom-text">新人下单立减50元</span>
@@ -95,7 +95,7 @@
 
     <div class="bgc flex-jc-center word_mouth_box">
       <div class="word_mouth">
-        <div class="flex-jc-between border-b word_num">
+        <div class="flex-jc-between border-b word_num" @click="toMouthw">
           <div>
             <span>口碑</span>
             <span>(999+)</span>
@@ -105,7 +105,7 @@
             <img class="img_r" src="../../assets/tab/right.png" alt>
           </div>
         </div>
-        <div class v-for="(item,index ) in wordlist">
+        <div class="border-b" v-for="(item,index ) in wordlist">
           <div class="flex-align-items head_name">
             <img class="head_img" src="../../assets/tab/my.png" alt>
             <span>李***莉</span>
@@ -151,8 +151,8 @@
         >
       </div>
     </div>
-
-    <div class="bgc footer flex-align-items">
+    <div style=" height: 50px;"></div>
+    <div class="bgc footer flex-align-items border-t">
       <div class="flex-jc-between">
         <div class="text-c margin_left">
           <div>
@@ -242,6 +242,12 @@ export default {
       showmodel: false,
       discountmodel: false
     };
+  },
+  methods: {
+    //口碑
+    toMouthw() {
+      this.$router.push({ path: "/WordMouth" });
+    }
   }
 };
 </script>
