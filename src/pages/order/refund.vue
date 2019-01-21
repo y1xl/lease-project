@@ -19,10 +19,12 @@
 
         <div v-show="selected==1">
             <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>    
-            <div class="bgc pd-15">
-                <span>快递单号</span>
-                <input type="text" placeholder="请输入" >
-            </div>
+            <van-cell center :border="false">
+                <div class="bgc flex-align-items" slot="title">
+                    <span>快递单号</span>
+                    <input type="text" placeholder="请输入" >
+                </div>
+            </van-cell>    
 
             <div class="text-c tip">温馨提示:如果未经平台预约寄送,请直接填写快递单号</div>
             <div class="pd-15"><router-link to="/appointmentExpress"><div class="btn1 text-c">快捷预约顺丰上门取件入口</div></router-link></div>
@@ -31,8 +33,8 @@
 
         <div v-show="selected==2">
             <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>  
-            <van-cell title="时间点" is-link center @click="onshowtime" :value="timetext"></van-cell>  
-            <van-cell is-link center to="" >
+            <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext"></van-cell>  
+            <van-cell is-link center to="" :border="false">
                 <template slot="title">
                     <div>收货地址</div>
                     <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
@@ -41,16 +43,15 @@
             </van-cell>
             <div class="pd-t-100"><div class="btn text-c">提交</div></div>
         </div>
-        <div v-show="showtime" class="model full">
-            <div class="main">
+
+        <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
             <van-datetime-picker
             type="time"
             show-toolbar
-            @cancel="onshowtime"
+            @cancel="showtime=false"
             @confirm="onConfirm"
             />
-            </div>
-        </div>
+        </van-popup>
     </div>
 </template>
 
@@ -66,22 +67,9 @@ export default {
         }
     },
     methods:{
-        onshowtime(){
-            if(this.showtime){
-                document.documentElement.style.position = 'static';
-                document.body.style.overflow = ''; //出现滚动条
-                this.showtime = false
-            }else{
-                document.documentElement.style.position = 'fixed';
-                document.body.style.overflow = 'hidden'; //隐藏滚动条
-                this.showtime = true
-            } 
-        },
         onConfirm(value) {
             console.log(`当前值：${value}`);
             this.timetext = value
-            document.documentElement.style.position = 'static';
-            document.body.style.overflow = ''; //出现滚动条
             this.showtime = false
         },
     }
@@ -144,18 +132,4 @@ export default {
     color: #fff;
 }
 
-.model {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, .5);
-    z-index: 1;
-}
-.model .main {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}
 </style>
