@@ -2,7 +2,7 @@
   <div>
     <div class="flex-jc-center bgc">
       <div class="img_b">
-        <img class="top_img" src="../../assets/tab/2.png">
+        <img class="top_img" src="../../assets/2.png">
       </div>
     </div>
     <div>
@@ -11,7 +11,7 @@
           <div class="item text-c">
             <div class="flex-jc-center">
               <div class="img_b1">
-                <img class="img" src="../../assets/tab/zhuans.png">
+                <img class="img" src="../../assets/zhuans.png">
               </div>
             </div>
             <div class="text-line pro_title">日本 instax拍立得日本 instax拍立得</div>

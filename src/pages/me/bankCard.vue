@@ -4,7 +4,7 @@
       <div class="card_box bgc">
         <div class="card flex-jc-around flex-align-items">
           <div class="flex-align-items">
-            <img class="card_img" src="../../assets/tab/my.png">
+            <img class="card_img" src="../../assets/my.png">
             <span>中国农业银行</span>
           </div>
           <div class="f12_grey">储蓄卡</div>
@@ -16,7 +16,7 @@
     <div class="flex-jc-center">
       <div class="card_box bgc">
         <div class="flex-jc-center">
-          <img class="add_img" src="../../assets/tab/my.png">
+          <img class="add_img" src="../../assets/my.png">
         </div>
         <div class="text-c f12_grey add_card">添加银行卡</div>
       </div>

@@ -2,7 +2,9 @@
   <div>
     <div class="bgc" style="padding-bottom:10px;">
       <div class="flex-jc-center banner_box position">
-        <div class="caricon fc-red" @click="showinfocar=true"><van-icon name="shopping-cart" /></div>
+        <div class="caricon fc-red" @click="showinfocar=true">
+          <van-icon name="shopping-cart"/>
+        </div>
         <div class="banner flex-center bgc">
           <van-swipe :autoplay="3000">
             <van-swipe-item v-for="(item, index) in images" :key="index">
@@ -21,13 +23,13 @@
             <div class="flexbox">
               <div class="text-c">
                 <div>
-                  <img class="img_sc" src="../../assets/tab/my.png" alt>
+                  <img class="img_sc" src="../../assets/my.png" alt>
                 </div>
                 <div class="grey_12">收藏</div>
               </div>
               <div class="text-c margin_left" @click="showmodel = true">
                 <div>
-                  <img class="img_sc" src="../../assets/tab/my.png" alt>
+                  <img class="img_sc" src="../../assets/my.png" alt>
                 </div>
                 <div class="grey_12">分享</div>
               </div>
@@ -59,10 +61,11 @@
       </van-cell>
       <div class="flex-jc-around duo_mian">
         <div class="grey_12 flex-align-items">
-          <img class="img_zq" src="../../assets/tab/my.png" alt>多门店自取
+          <img class="img_zq" src="../../assets/my.png" alt>多门店自取
         </div>
         <div class="grey_12 flex-align-items">
-          <img class="img_myj" src="../../assets/tab/my.png" alt>免押金
+          <img class="img_myj" src="../../assets/my.png" alt>免押金
+          <img src="../../assets/"
         </div>
       </div>
     </div>
@@ -73,21 +76,22 @@
       <div class="flex-jc-around position process_det">
         <div class="text-c">
           <div>
-            <img class="img_xdlc" src="../../assets/tab/my.png" alt>
+            <img class="img_xdlc" src="../../assets/my.png" alt>
+            <img src="../../assets/1.png"
           </div>
           <div class="fsize13">下单</div>
         </div>
         <div class="grey_line1"></div>
         <div class="text-c">
           <div>
-            <img class="img_xdlc" src="../../assets/tab/my.png" alt>
+            <img class="img_xdlc" src="../../assets/my.png" alt>
           </div>
           <div class="fsize13">送货</div>
         </div>
         <div class="grey_line2"></div>
         <div class="text-c">
           <div>
-            <img class="img_xdlc" src="../../assets/tab/my.png" alt>
+            <img class="img_xdlc" src="../../assets/my.png" alt>
           </div>
           <div class="fsize13">归还</div>
         </div>
@@ -103,12 +107,12 @@
           </div>
           <div>
             <span>97.6%</span>
-            <img class="img_r" src="../../assets/tab/right.png" alt>
+            <img class="img_r" src="../../assets/right.png" alt>
           </div>
         </div>
         <div class="border-b" v-for="(item,index ) in wordlist" :key="index">
           <div class="flex-align-items head_name">
-            <img class="head_img" src="../../assets/tab/my.png" alt>
+            <img class="head_img" src="../../assets/my.png" alt>
             <span>李***莉</span>
             <span>
               <van-rate v-model="value" disabled disabled-color="#FFB10E" size="12"/>
@@ -157,13 +161,13 @@
       <div class="flex-jc-between">
         <div class="text-c margin_left">
           <div>
-            <img class="img_kf" src="../../assets/tab/my.png" alt>
+            <img class="img_kf" src="../../assets/my.png" alt>
           </div>
           <div class="f10_col">在线客服</div>
         </div>
         <div class="text-c margin_left">
           <div>
-            <img class="img_kf" src="../../assets/tab/my.png" alt>
+            <img class="img_kf" src="../../assets/my.png" alt>
           </div>
           <div class="f10_col">电话客服</div>
         </div>
@@ -173,82 +177,92 @@
     </div>
     <!-- 分享弹窗 -->
     <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
-        <div class="text-c position">
-          <div class="flex-jc-center">
-            <div class="s_title border-b fsz">分享</div>
-          </div>
-          <div class="flex-jc-around border-b" style="padding:15px 0">
-            <div class="text-c">
-              <div>
-                <img class="img_fx" src="../../assets/tab/my.png" alt>
-              </div>
-              <div class="grey_12">朋友圈</div>
-            </div>
-            <div class="text-c">
-              <div>
-                <img class="img_fx" src="../../assets/tab/my.png" alt>
-              </div>
-              <div class="grey_12">微信</div>
-            </div>
-            <div class="text-c">
-              <div>
-                <img class="img_fx" src="../../assets/tab/my.png" alt>
-              </div>
-              <div class="grey_12">微博</div>
-            </div>
-          </div>
-          <div class="close" @click="showmodel = false">取消</div>
+      <div class="text-c position">
+        <div class="flex-jc-center">
+          <div class="s_title border-b fsz">分享</div>
         </div>
+        <div class="flex-jc-around border-b" style="padding:15px 0">
+          <div class="text-c">
+            <div>
+              <img class="img_fx" src="../../assets/my.png" alt>
+            </div>
+            <div class="grey_12">朋友圈</div>
+          </div>
+          <div class="text-c">
+            <div>
+              <img class="img_fx" src="../../assets/my.png" alt>
+            </div>
+            <div class="grey_12">微信</div>
+          </div>
+          <div class="text-c">
+            <div>
+              <img class="img_fx" src="../../assets/my.png" alt>
+            </div>
+            <div class="grey_12">微博</div>
+          </div>
+        </div>
+        <div class="close" @click="showmodel = false">取消</div>
+      </div>
     </van-popup>
     <!-- 优惠活动弹窗 -->
     <van-popup v-model="discountmodel" position="bottom" :close-on-click-overlay="false">
-        <div class="position">
-          <div class="flex-jc-center">
-            <div class="s_title border-b fsz text-c">优惠活动</div>
-          </div>
-          <div class="flexbox" v-for="(item,index) in discountlist" :key="index">
-            <div class="lineheight pd-lr-15 border-b">
-              <span class="dis_clasify">[新用户]</span>
-              <span class="grey_12">新人下单立减50元</span>
-            </div>
-          </div>
-
-          <div class="close text-c" @click="discountmodel = false">取消</div>
+      <div class="position">
+        <div class="flex-jc-center">
+          <div class="s_title border-b fsz text-c">优惠活动</div>
         </div>
+        <div class="flexbox" v-for="(item,index) in discountlist" :key="index">
+          <div class="lineheight pd-lr-15 border-b">
+            <span class="dis_clasify">[新用户]</span>
+            <span class="grey_12">新人下单立减50元</span>
+          </div>
+        </div>
+
+        <div class="close text-c" @click="discountmodel = false">取消</div>
+      </div>
     </van-popup>
     <!-- 选择规格 -->
     <div class="model full" v-show="showinfo||showinfocar">
-        <div class="main bgc">
-            <div class="goods1 flexbox pd-15">
-                <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
-                <div class="flex-1">
-                    <div class="mar-b-10 position title">
-                        日本 instax拍立得日本 instax拍立得
-                        <div class="closeicon" @click="showinfo=false,showinfocar=false"><van-icon name="close"/></div>
-                    </div>
-                    <div class="mar-b-10"><span class="fc-red">¥1.08</span><span class="fsz10">/日</span></div>
-                    <div class="fsz10">请选择规格属性</div>
-                </div>
+      <div class="main bgc">
+        <div class="goods1 flexbox pd-15">
+          <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+          <div class="flex-1">
+            <div class="mar-b-10 position title">日本 instax拍立得日本 instax拍立得
+              <div class="closeicon" @click="showinfo=false,showinfocar=false">
+                <van-icon name="close"/>
+              </div>
             </div>
-            <div class="pd-lr-15">
-                <div class="mar-b-10 fsz12">颜色</div>
-                <div class="items mar-b-10">
-                    <div class="border-blue fc-blue">黑色</div>
-                    <div class="border">褐色</div>
-                </div>
-
-                <div class="mar-b-10 fsz12">型号</div>
-                <div class="items mar-b-10">
-                    <div class="border">型号1</div>
-                    <div class="border">型号2</div>
-                </div>
-
-                <div class="mar-b-10 fsz12">数量</div>
-                <div><van-stepper v-model="numval" /></div>
+            <div class="mar-b-10">
+              <span class="fc-red">¥1.08</span>
+              <span class="fsz10">/日</span>
             </div>
-            <div class="pd-15" v-show="showinfo"><div class="gbtn text-c" @click="gobuy">开始下单</div></div>
-            <div class="pd-15" v-show="showinfocar"><div class="gbtn text-c">加入购物车</div></div>
+            <div class="fsz10">请选择规格属性</div>
+          </div>
         </div>
+        <div class="pd-lr-15">
+          <div class="mar-b-10 fsz12">颜色</div>
+          <div class="items mar-b-10">
+            <div class="border-blue fc-blue">黑色</div>
+            <div class="border">褐色</div>
+          </div>
+
+          <div class="mar-b-10 fsz12">型号</div>
+          <div class="items mar-b-10">
+            <div class="border">型号1</div>
+            <div class="border">型号2</div>
+          </div>
+
+          <div class="mar-b-10 fsz12">数量</div>
+          <div>
+            <van-stepper v-model="numval"/>
+          </div>
+        </div>
+        <div class="pd-15" v-show="showinfo">
+          <div class="gbtn text-c" @click="gobuy">开始下单</div>
+        </div>
+        <div class="pd-15" v-show="showinfocar">
+          <div class="gbtn text-c">加入购物车</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -271,9 +285,9 @@ export default {
       value: 5,
       showmodel: false,
       discountmodel: false,
-      numval:'', 
-      showinfo:false,
-      showinfocar:false,
+      numval: "",
+      showinfo: false,
+      showinfocar: false
     };
   },
   methods: {
@@ -281,8 +295,8 @@ export default {
     toMouthw() {
       this.$router.push({ path: "/WordMouth" });
     },
-    gobuy(){
-      this.$router.push({ path: '/buy' })
+    gobuy() {
+      this.$router.push({ path: "/buy" });
     }
   }
 };
@@ -527,39 +541,39 @@ export default {
   font-size: 24px;
 }
 /* 选择规格 */
-.fsz12{
-    font-size: 12px
+.fsz12 {
+  font-size: 12px;
 }
-.fsz10{
-    font-size: 10px
+.fsz10 {
+  font-size: 10px;
 }
-.model .items > div{
-    padding: 2px 10px;
-    display: inline-block;
-    border-radius: 2px;
-    margin-right: 10px;
+.model .items > div {
+  padding: 2px 10px;
+  display: inline-block;
+  border-radius: 2px;
+  margin-right: 10px;
 }
-.model .closeicon{
+.model .closeicon {
   position: absolute;
-  right:-5px;
-  top:-5px;
-  font-size:18px
+  right: -5px;
+  top: -5px;
+  font-size: 18px;
 }
 .goods1 img {
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
-    background-color: #f6f6f6;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  background-color: #f6f6f6;
 }
 .goods1 .title {
-    padding-right: 10px;
+  padding-right: 10px;
 }
-.gbtn{
-    height: 42px;
-    line-height: 42px;
-    border-radius: 20px;
-    color: #fff;
-    background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
+.gbtn {
+  height: 42px;
+  line-height: 42px;
+  border-radius: 20px;
+  color: #fff;
+  background-image: linear-gradient(90deg, #2dbbf1 0%, #4ea9f9 100%);
 }
 </style>
 

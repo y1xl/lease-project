@@ -3,9 +3,14 @@
     <div id="nav">
       <van-tabs @click="ontab">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
-          <div class="coupon_box position" v-for="(item,index) in couponlist" :key="index">
+          <div
+            class="coupon_box position"
+            v-for="(item,index) in couponlist"
+            :key="index"
+            v-show="showCoupon"
+          >
             <div>
-              <img src="../../assets/tab/1.png">
+              <img src="../../assets/1.png">
             </div>
 
             <div class="coupon_con flex-jc-around flex-align-items">
@@ -22,10 +27,11 @@
               </div>
             </div>
           </div>
-          <div id="dialog" v-if>
+
+          <div id="dialog">
             <van-dialog v-model="show" show-cancel-button :before-close="beforeClose">
               <div class="mask_box text-c">
-                <img src="../../assets/tab/2.png">
+                <img src="../../assets/2.png">
                 <div class="lq_txt">领取优惠券</div>
                 <input placeholder="请输入兑换码">
               </div>
@@ -43,7 +49,9 @@ export default {
     return {
       navtitle: ["未使用", "已使用", "已失效", "领取/兑换"],
       couponlist: [{}, {}, {}],
-      show: true
+      show: false,
+      showCoupon: true,
+      index: 0
     };
   },
   methods: {
@@ -51,7 +59,11 @@ export default {
       this.$router.back(-1);
     },
     ontab(index, title) {
-      // console.log(index, title);
+      console.log(index, title);
+      if (index == 3) {
+        this.showCoupon = false;
+        this.show = true;
+      }
       this.index = index;
     },
 

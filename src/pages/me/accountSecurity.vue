@@ -1,21 +1,18 @@
 <template>
   <div>
-    <div class="account_sec">
-      <div class="tel bgc" style="margin-top: 12px;">
-        <div class="bdsjh">
-          <van-cell center value="138xxxx4568" to>
-            <template slot="title">
-              <div>绑定手机号</div>
-            </template>
-          </van-cell>
-        </div>
-        <div class="passwork">
-          <van-cell is-link center value="修改" to="/Modify">
-            <template slot="title">
-              <div>登陆密码</div>
-            </template>
-          </van-cell>
-        </div>
+    <div class="account_sec bgc">
+      <div class="tel" style="margin-top: 12px;">
+        <van-cell center value="138xxxx4568" to>
+          <template slot="title">
+            <div>绑定手机号</div>
+          </template>
+        </van-cell>
+
+        <van-cell is-link center value="修改" to="/Modify">
+          <template slot="title">
+            <div>登陆密码</div>
+          </template>
+        </van-cell>
       </div>
     </div>
   </div>
@@ -23,23 +20,10 @@
 
 <script>
 export default {
-  methods: {
-    routerback() {
-      this.$router.back(-1);
-    }
-  }
+  methods: {}
 };
 </script>
 <style>
-.bdsjh .van-cell {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.passwork .van-cell {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
 </style>
 
 <style scoped>
@@ -49,7 +33,9 @@ export default {
 }
 
 .account_sec {
-  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px;
 }
 
 .tel {

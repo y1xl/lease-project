@@ -13,7 +13,7 @@
           </template>
 
           <template slot="right-icon">
-            <img src="../../assets/tab/bj.png" alt="图标" class="left_img">
+            <img src="../../assets/bj.png" alt="图标" class="left_img">
           </template>
         </van-cell>
       </div>

@@ -20,7 +20,7 @@
         <div class="word_mouth">
           <div class="border-b" v-for="(item,index ) in wordlist">
             <div class="flex-align-items head_name">
-              <img class="head_img" src="../../assets/tab/my.png" alt>
+              <img class="head_img" src="../../assets/my.png" alt>
               <span>李***莉</span>
               <span>
                 <van-rate v-model="value" disabled disabled-color="#FFB10E" size="12"/>

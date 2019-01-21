@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="bgc flex-jc-center">
+  <div class="bgc full">
+    <div class="flex-jc-center">
       <div class="forget_box">
         <div class="tip_title text-c">请输入验证码重置密码</div>
         <div class="text-c tel">13845687896</div>

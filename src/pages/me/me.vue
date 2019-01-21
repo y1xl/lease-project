@@ -3,21 +3,21 @@
     <div class="flex-jc-between manber_b" @click="myInformat">
       <div class="flex-align-items flex_box">
         <div class="head_img">
-          <img src="../../assets/tab/mys.png">
+          <img src="../../assets/mys.png">
         </div>
         <div class>
           <div class="name">DORO_THY</div>
           <div class="manber">普通会员</div>
         </div>
       </div>
-      <img class="hg" src="../../assets/tab/hg.png">
+      <img class="hg" src="../../assets/hg.png">
     </div>
     <div class="mebox">
       <div class="position me">
         <div style="padding-top: 10px;" class="myzf">
           <van-cell is-link center to="/certification">
             <template slot="icon">
-              <img src="../../assets/tab/myrz.png" alt="图标" class="left_img">
+              <img src="../../assets/myrz.png" alt="图标" class="left_img">
             </template>
             <template slot="title">
               <div>免押认证</div>
@@ -25,9 +25,9 @@
           </van-cell>
         </div>
 
-        <van-cell is-link center to>
+        <van-cell is-link center to="/Integral">
           <template slot="icon">
-            <img src="../../assets/tab/jf.png" alt="图标" class="left_img">
+            <img src="../../assets/jf.png" alt="图标" class="left_img">
           </template>
           <template slot="title">
             <div>我的积分</div>
@@ -37,7 +37,7 @@
         <div class="hang">
           <van-cell is-link center to>
             <template slot="icon">
-              <img src="../../assets/tab/tg.png" alt="图标" class="left_img">
+              <img src="../../assets/tg.png" alt="图标" class="left_img">
             </template>
             <template slot="title">
               <div>我的托管</div>
@@ -47,7 +47,7 @@
 
         <van-cell is-link center to>
           <template slot="icon">
-            <img src="../../assets/tab/gwc.png" alt="图标" class="left_img">
+            <img src="../../assets/gwc.png" alt="图标" class="left_img">
           </template>
           <template slot="title">
             <div>购物车</div>
@@ -56,7 +56,7 @@
 
         <van-cell is-link center to="/MyBalance">
           <template slot="icon">
-            <img src="../../assets/tab/ye.png" alt="图标" class="left_img">
+            <img src="../../assets/ye.png" alt="图标" class="left_img">
           </template>
           <template slot="title">
             <div>账户余额</div>
@@ -66,7 +66,7 @@
         <div style="padding: 10px 0;border-bottom: solid 2px #F7F7F7; ">
           <van-cell is-link center to="/Coupon">
             <template slot="icon">
-              <img src="../../assets/tab/yhq.png" alt="图标" class="left_img">
+              <img src="../../assets/yhq.png" alt="图标" class="left_img">
             </template>
             <template slot="title">
               <div>优惠券</div>
@@ -75,9 +75,9 @@
         </div>
 
         <div style="padding-top: 10px;">
-          <van-cell is-link center to>
+          <van-cell is-link center to="/HelpCenter">
             <template slot="icon">
-              <img src="../../assets/tab/bz.png" alt="图标" class="left_img">
+              <img src="../../assets/bz.png" alt="图标" class="left_img">
             </template>
             <template slot="title">
               <div>帮助中心</div>
@@ -87,7 +87,7 @@
 
         <van-cell is-link center to>
           <template slot="icon">
-            <img src="../../assets/tab/sz.png" alt="图标" class="left_img">
+            <img src="../../assets/sz.png" alt="图标" class="left_img">
           </template>
           <template slot="title">
             <div>设置</div>
@@ -121,7 +121,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 180px;
-  background: url(../../assets/tab/me_bg.png) no-repeat;
+  background: url(../../assets/me_bg.png) no-repeat;
   background-size: 100% 100%;
 }
 .head_img {
