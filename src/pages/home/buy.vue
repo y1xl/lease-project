@@ -107,27 +107,33 @@
         </div>
 
         <div class="bgc pd-15">
-            <div class="mar-b-10">
-                <van-checkbox checked-color="#2DBBF1" v-model="isconsent">同意租赁协议</van-checkbox>
+            <div class="mar-b-10 flexbox">
+                <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
+                <span class="pdl10" @click="showconsent=true">同意租赁协议</span>
             </div>
             <div><div class="btn text-c">信用免押支付</div></div>
         </div>
 
         <!-- 弹框 -->
-        <div v-show="showtime" class="model full">
-            <div class="main">
+        <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
             <van-datetime-picker
             type="time"
             show-toolbar
             @cancel="onshowtime"
             @confirm="onConfirm"
             />
-            </div>
-        </div>
+        </van-popup>
 
-        <div v-show="showweek" class="model full">
-            <div class="main"><van-picker :columns="columns" show-toolbar @confirm="onConfirmWeek" @cancel="showweek = false"/></div>
-        </div>
+
+        <van-popup v-model="showweek" position="bottom" :close-on-click-overlay="false">
+            <van-picker :columns="columns" show-toolbar @confirm="onConfirmWeek" @cancel="showweek = false"/>
+        </van-popup>
+
+        <van-popup v-model="showconsent">
+            <div>一、入股面积
+入股面积以《土地承包证》所记载的面积为准，甲方将红旗村委会六组分配承包的土地全部入股乙方，其中：水田 亩，旱地 亩，从事生态农业开发项目。
+二、入股方式。股份按确定的土地扭转价格折算(1元1股)，并由乙方发给农业合作社股份登记证。</div>
+        </van-popup>
     </div>
 </template>
 
@@ -146,27 +152,15 @@ export default {
             columns: ['天', '小时', '分钟', '测试', '测试'],
             weektext: '请选择',
             checked: false,
-            isconsent:true
+            isconsent:true,//协议
+            showconsent:false,//协议
         }
     },
     methods:{
-        onshowtime(){
-            if(this.showtime){
-                // document.documentElement.style.position = 'static';
-                document.body.style.overflow = ''; //出现滚动条
-                this.showtime = false
-            }else{
-                // document.documentElement.style.position = 'fixed';
-                document.documentElement.style.width = '100%';
-                document.body.style.overflow = 'hidden'; //隐藏滚动条
-                this.showtime = true
-            } 
-        },
+
         onConfirm(value) {
             console.log(`当前值：${value}`);
             this.timetext = value
-            document.documentElement.style.position = 'static';
-            document.body.style.overflow = ''; //出现滚动条
             this.showtime = false
         },
         onConfirmWeek(value,index){
@@ -179,6 +173,9 @@ export default {
 </script>
 
 <style scoped>
+.pdl10{
+    padding-left: 10px;
+}
 .nav {
     /* padding: 15px; */
     padding-bottom: 20px;
@@ -236,21 +233,6 @@ export default {
     border-radius: 20px;
     color: #fff;
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
-}
-
-.model {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, .5);
-    z-index: 1;
-}
-.model .main {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
 }
 
 </style>

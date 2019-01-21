@@ -18,7 +18,7 @@
         </div>
 
         <template v-if="selected==0">
-            <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="onshowinfo"><span>选择规格参数</span><span class="flex-align-items fc-grey fsz12">黑色,1件<van-icon name="arrow" /></span></div>
+            <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showinfo=true"><span>选择规格参数</span><span class="flex-align-items fc-grey fsz12">黑色,1件<van-icon name="arrow" /></span></div>
 
             <div class="bgc">
                 <div class="pd-15">取货方式</div>
@@ -49,7 +49,7 @@
                         <span class="fc-grey fsz12"><van-icon name="arrow" /></span>
                     </router-link>
                     <router-link class="flex-jc-between pd-15 bgc border-b flex-align-items" to="/calendar"><span>自取时间</span><span class="flex-align-items fc-grey fsz12">{{datechoose}}<van-icon name="arrow" /></span></router-link>
-                    <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="onshowtime"><span>时间点</span><span class="flex-align-items fc-grey fsz12">{{timetext}}<van-icon name="arrow" /></span></div>
+                    <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true"><span>时间点</span><span class="flex-align-items fc-grey fsz12">{{timetext}}<van-icon name="arrow" /></span></div>
                     <router-link class="flex-jc-between flex-align-items pd-15 bgc" to="/people">
                         <div>
                             <div>自取联系人</div>
@@ -91,49 +91,47 @@
 
         <div class="pd-15"><div class="btn text-c">支付</div></div>
 
-        <div v-show="showtime" class="model full">
-            <div class="main">
+        <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
             <van-datetime-picker
             type="time"
             show-toolbar
-            @cancel="onshowtime"
+            @cancel="showtime=false"
             @confirm="onConfirm"
             />
-            </div>
-        </div>
+        </van-popup>
 
-        <div class="model full" v-show="showinfo">
-            <div class="main bgc">
-                <div class="goods1 flexbox pd-15">
-                    <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
-                    <div class="flex-1">
-                        <div class="mar-b-10 position title">
-                            日本 instax拍立得日本 instax拍立得
-                            <div class="closeicon" @click="onshowinfo"><van-icon name="close"/></div>
-                        </div>
-                        <div class="mar-b-10"><span class="fc-red">¥1.08</span><span class="fsz10">/日</span></div>
-                        <div class="fsz10">请选择规格属性</div>
+        <van-popup v-model="showinfo" position="bottom" :close-on-click-overlay="false">
+        <div class="model">
+            <div class="goods1 flexbox pd-15">
+                <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
+                <div class="flex-1">
+                    <div class="mar-b-10 position title">
+                        日本 instax拍立得日本 instax拍立得
+                        <div class="closeicon" @click="showinfo=false"><van-icon name="close"/></div>
                     </div>
+                    <div class="mar-b-10"><span class="fc-red">¥1.08</span><span class="fsz10">/日</span></div>
+                    <div class="fsz10">请选择规格属性</div>
                 </div>
-                <div class="pd-lr-15">
-                    <div class="mar-b-10 fsz12">颜色</div>
-                    <div class="items mar-b-10">
-                        <div class="border-blue fc-blue">黑色</div>
-                        <div class="border">褐色</div>
-                    </div>
-
-                    <div class="mar-b-10 fsz12">型号</div>
-                    <div class="items mar-b-10">
-                        <div class="border">型号1</div>
-                        <div class="border">型号2</div>
-                    </div>
-
-                    <div class="mar-b-10 fsz12">数量</div>
-                    <div><van-stepper v-model="numval" /></div>
-                </div>
-                <div class="pd-15"><div class="btn text-c">确认</div></div>
             </div>
+            <div class="pd-lr-15">
+                <div class="mar-b-10 fsz12">颜色</div>
+                <div class="items mar-b-10">
+                    <div class="border-blue fc-blue">黑色</div>
+                    <div class="border">褐色</div>
+                </div>
+
+                <div class="mar-b-10 fsz12">型号</div>
+                <div class="items mar-b-10">
+                    <div class="border">型号1</div>
+                    <div class="border">型号2</div>
+                </div>
+
+                <div class="mar-b-10 fsz12">数量</div>
+                <div><van-stepper v-model="numval" /></div>
+            </div>
+            <div class="pd-15"><div class="btn text-c">确认</div></div>
         </div>
+        </van-popup>
     </div>
 </template>
 
@@ -157,36 +155,10 @@ export default {
         this.datechoose = window.sessionStorage.getItem("datechoose")||''
     },
     methods:{
-        onshowtime(){
-            if(this.showtime){
-                // document.documentElement.style.position = 'static';
-                document.body.style.overflow = ''; //出现滚动条
-                this.showtime = false
-            }else{
-                // document.documentElement.style.position = 'fixed';
-                document.documentElement.style.width = '100%';
-                document.body.style.overflow = 'hidden'; //隐藏滚动条
-                this.showtime = true
-            } 
-        },
         onConfirm(value) {
             console.log(`当前值：${value}`);
             this.timetext = value
-            document.documentElement.style.position = 'static';
-            document.body.style.overflow = ''; //出现滚动条
             this.showtime = false
-        },
-        onshowinfo(){
-            if(this.showinfo){
-                document.documentElement.style.position = 'static';
-                document.body.style.overflow = ''; //出现滚动条
-                this.showinfo = false
-            }else{
-                document.documentElement.style.position = 'fixed';
-                document.documentElement.style.width = '100%';
-                document.body.style.overflow = 'hidden'; //隐藏滚动条
-                this.showinfo = true
-            } 
         },
     }
 }
@@ -256,14 +228,7 @@ export default {
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
 }
 
-.model {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, .5);
-    z-index: 1;
-}
+
 .model .main {
     width: 100%;
     position: fixed;

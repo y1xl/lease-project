@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="bgc" style="padding-bottom:10px;">
-      <div class="flex-jc-center banner_box">
+      <div class="flex-jc-center banner_box position">
+        <div class="caricon fc-red" @click="showinfocar=true"><van-icon name="shopping-cart" /></div>
         <div class="banner flex-center bgc">
           <van-swipe :autoplay="3000">
             <van-swipe-item v-for="(item, index) in images" :key="index">
@@ -18,7 +19,7 @@
               <div class="grey_12">一次成像相机</div>
             </div>
             <div class="flexbox">
-              <div class="text-c" @click="discountmodel = true">
+              <div class="text-c">
                 <div>
                   <img class="img_sc" src="../../assets/tab/my.png" alt>
                 </div>
@@ -50,7 +51,7 @@
     </div>
 
     <div class="bgc" style="margin-top:10px;">
-      <van-cell is-link>
+      <van-cell is-link @click="discountmodel = true">
         <template slot="title">
           <span class="lab">活动</span>
           <span class="custom-text">新人下单立减50元</span>
@@ -95,7 +96,7 @@
 
     <div class="bgc flex-jc-center word_mouth_box">
       <div class="word_mouth">
-        <div class="flex-jc-between border-b word_num">
+        <div class="flex-jc-between border-b word_num" @click="toMouthw">
           <div>
             <span>口碑</span>
             <span>(999+)</span>
@@ -105,7 +106,7 @@
             <img class="img_r" src="../../assets/tab/right.png" alt>
           </div>
         </div>
-        <div class v-for="(item,index ) in wordlist">
+        <div class="border-b" v-for="(item,index ) in wordlist" :key="index">
           <div class="flex-align-items head_name">
             <img class="head_img" src="../../assets/tab/my.png" alt>
             <span>李***莉</span>
@@ -122,7 +123,7 @@
             级喜欢 加上水晶壳就更优秀了 很多模式可以玩 适合爱拍照的
             人 如果只是想记录生活的话 我觉得mini9就够了 总之很喜欢！
           </div>
-          <div class="imglist" v-for="(item,index) in imglist">
+          <div class="imglist" v-for="(item,index) in imglist" :key="index">
             <!-- <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt> -->
             <img class="itemimg" src="item">
           </div>
@@ -151,8 +152,8 @@
         >
       </div>
     </div>
-
-    <div class="bgc footer flex-align-items">
+    <div style=" height: 50px;"></div>
+    <div class="bgc footer flex-align-items border-t">
       <div class="flex-jc-between">
         <div class="text-c margin_left">
           <div>
@@ -167,12 +168,11 @@
           <div class="f10_col">电话客服</div>
         </div>
         <div class="btn bcolor padding_lr margin_left">给朋友送礼</div>
-        <div class="btn bcol padding_lr margin_left">立即租赁</div>
+        <div class="btn bcol padding_lr margin_left" @click="showinfo=true">立即租赁</div>
       </div>
     </div>
     <!-- 分享弹窗 -->
-    <div class="model full" v-show="showmodel">
-      <div class="main bgc">
+    <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
         <div class="text-c position">
           <div class="flex-jc-center">
             <div class="s_title border-b fsz">分享</div>
@@ -199,17 +199,14 @@
           </div>
           <div class="close" @click="showmodel = false">取消</div>
         </div>
-      </div>
-    </div>
-
+    </van-popup>
     <!-- 优惠活动弹窗 -->
-    <div class="model full" v-show="discountmodel">
-      <div class="main bgc">
+    <van-popup v-model="discountmodel" position="bottom" :close-on-click-overlay="false">
         <div class="position">
           <div class="flex-jc-center">
             <div class="s_title border-b fsz text-c">优惠活动</div>
           </div>
-          <div class="flexbox" v-for="(item,index) in discountlist">
+          <div class="flexbox" v-for="(item,index) in discountlist" :key="index">
             <div class="lineheight pd-lr-15 border-b">
               <span class="dis_clasify">[新用户]</span>
               <span class="grey_12">新人下单立减50元</span>
@@ -218,7 +215,40 @@
 
           <div class="close text-c" @click="discountmodel = false">取消</div>
         </div>
-      </div>
+    </van-popup>
+    <!-- 选择规格 -->
+    <div class="model full" v-show="showinfo||showinfocar">
+        <div class="main bgc">
+            <div class="goods1 flexbox pd-15">
+                <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
+                <div class="flex-1">
+                    <div class="mar-b-10 position title">
+                        日本 instax拍立得日本 instax拍立得
+                        <div class="closeicon" @click="showinfo=false,showinfocar=false"><van-icon name="close"/></div>
+                    </div>
+                    <div class="mar-b-10"><span class="fc-red">¥1.08</span><span class="fsz10">/日</span></div>
+                    <div class="fsz10">请选择规格属性</div>
+                </div>
+            </div>
+            <div class="pd-lr-15">
+                <div class="mar-b-10 fsz12">颜色</div>
+                <div class="items mar-b-10">
+                    <div class="border-blue fc-blue">黑色</div>
+                    <div class="border">褐色</div>
+                </div>
+
+                <div class="mar-b-10 fsz12">型号</div>
+                <div class="items mar-b-10">
+                    <div class="border">型号1</div>
+                    <div class="border">型号2</div>
+                </div>
+
+                <div class="mar-b-10 fsz12">数量</div>
+                <div><van-stepper v-model="numval" /></div>
+            </div>
+            <div class="pd-15" v-show="showinfo"><div class="gbtn text-c" @click="gobuy">开始下单</div></div>
+            <div class="pd-15" v-show="showinfocar"><div class="gbtn text-c">加入购物车</div></div>
+        </div>
     </div>
   </div>
 </template>
@@ -240,8 +270,20 @@ export default {
       discountlist: [{}, {}],
       value: 5,
       showmodel: false,
-      discountmodel: false
+      discountmodel: false,
+      numval:'', 
+      showinfo:false,
+      showinfocar:false,
     };
+  },
+  methods: {
+    //口碑
+    toMouthw() {
+      this.$router.push({ path: "/WordMouth" });
+    },
+    gobuy(){
+      this.$router.push({ path: '/buy' })
+    }
   }
 };
 </script>
@@ -476,6 +518,48 @@ export default {
 .dis_clasify {
   font-size: 12px;
   color: #fc3434;
+}
+
+.caricon {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  font-size: 24px;
+}
+/* 选择规格 */
+.fsz12{
+    font-size: 12px
+}
+.fsz10{
+    font-size: 10px
+}
+.model .items > div{
+    padding: 2px 10px;
+    display: inline-block;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+.model .closeicon{
+  position: absolute;
+  right:-5px;
+  top:-5px;
+  font-size:18px
+}
+.goods1 img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    background-color: #f6f6f6;
+}
+.goods1 .title {
+    padding-right: 10px;
+}
+.gbtn{
+    height: 42px;
+    line-height: 42px;
+    border-radius: 20px;
+    color: #fff;
+    background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
 }
 </style>
 

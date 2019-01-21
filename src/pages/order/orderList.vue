@@ -51,8 +51,7 @@
       <div style="color:#fff">请出示此二维码供门店扫码取货</div>
     </div>
 
-    <div class="model full" v-show="showmodel">
-      <div class="main bgc">
+    <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
         <div class="text-c position title" >
           取消订单
           <div class="closeicon"><van-icon name="close" @click="onshowmodel"/></div>
@@ -71,11 +70,11 @@
             </div>
           </van-radio-group>
         </div>
-        <div style="padding:10px">
+        <div class="pd-15">
           <div class="btn text-c">提交</div>
         </div>
-      </div>
-    </div>
+    </van-popup>
+
   </div>
 </template>
 
@@ -186,7 +185,7 @@ export default {
   left: 0;
   width: 100%;
 }
-.model .btn {
+.btn {
   height: 42px;
   line-height: 42px;
   border-radius: 20px;
