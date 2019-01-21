@@ -27,12 +27,12 @@
         <router-link class="flex-jc-between pd-15 border-b" to="">
             <div>邀请好友</div>
             <div class="flex-align-items">
-                <span class="fc-blue mr">去认证</span>
-                <span class="fc-grey mr">已认证</span>
+                <!-- <span class="fc-blue mr">去认证</span>
+                <span class="fc-grey mr">已认证</span> -->
                 <van-icon name="arrow" />
             </div>
         </router-link>
-        <router-link class="flex-jc-between pd-15" to="">
+        <router-link class="flex-jc-between pd-15" to="/cpeople">
             <div>添加紧急联系人</div>
             <div class="flex-align-items">
                 <van-icon name="arrow" />

@@ -19,10 +19,12 @@
 
         <div v-show="selected==1">
             <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>    
-            <div class="bgc pd-15">
-                <span>快递单号</span>
-                <input type="text" placeholder="请输入" >
-            </div>
+            <van-cell center :border="false">
+                <div class="bgc flex-align-items" slot="title">
+                    <span>快递单号</span>
+                    <input type="text" placeholder="请输入" >
+                </div>
+            </van-cell>    
 
             <div class="text-c tip">温馨提示:如果未经平台预约寄送,请直接填写快递单号</div>
             <div class="pd-15"><router-link to="/appointmentExpress"><div class="btn1 text-c">快捷预约顺丰上门取件入口</div></router-link></div>
@@ -32,7 +34,7 @@
         <div v-show="selected==2">
             <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>  
             <van-cell title="时间点" is-link center @click="onshowtime" :value="timetext"></van-cell>  
-            <van-cell is-link center to="" >
+            <van-cell is-link center to="" :border="false">
                 <template slot="title">
                     <div>收货地址</div>
                     <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>

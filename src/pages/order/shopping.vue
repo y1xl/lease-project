@@ -18,7 +18,7 @@
         </div>
 
         <template v-if="selected==0">
-            <van-cell title="选择规格参数" is-link value="黑色,1件" @click="onshowinfo"/>
+            <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="onshowinfo"><span>选择规格参数</span><span class="flex-align-items fc-grey fsz12">黑色,1件<van-icon name="arrow" /></span></div>
 
             <div class="bgc">
                 <div class="pd-15">取货方式</div>
@@ -30,34 +30,33 @@
             </div>
 
             <div class="mar-b-10 main">
-                <van-cell is-link center to="" v-show="typenum==1||typenum==2">
-                    <div slot="title">
+                <router-link class="flex-jc-between flex-align-items pd-15 bgc" to="" v-show="typenum==1||typenum==2">
+                    <div>
                         <div>收货地址</div>
-                        <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
-                        <div>深圳市龙华新区龙华街道九方A座1001号</div>
+                        <div class="fsz12">曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
+                        <div class="fsz12">深圳市龙华新区龙华街道九方A座1001号</div>
                     </div>
-                </van-cell>
+                    <span class="fc-grey fsz12"><van-icon name="arrow" /></span>
+                </router-link>
+
                 <template v-if="typenum==0">
-                    <van-cell is-link center to="/locationList">
-                        <template slot="title">
+                    <router-link class="flex-jc-between flex-align-items pd-15 bgc border-b" to="/locationList">
+                        <div>
                             <div>自取地点</div>
-                            <div>深圳龙华九方店</div>
-                            <div>深圳市龙华新区龙华街道九方A座1001号</div>
-                        </template>
-                    </van-cell>
-                    <van-cell is-link center to="/calendar">
-                        <template slot="title">
-                            <div>自取时间</div>
-                            <div>{{datechoose}}</div>
-                        </template>
-                    </van-cell>
-                    <van-cell title="时间点" is-link center @click="onshowtime" :value="timetext"></van-cell>
-                    <van-cell is-link center to="/people">
-                        <template slot="title">
+                            <div class="fsz12">深圳龙华九方店</div>
+                            <div class="fsz12">深圳市龙华新区龙华街道九方A座1001号</div>
+                        </div>
+                        <span class="fc-grey fsz12"><van-icon name="arrow" /></span>
+                    </router-link>
+                    <router-link class="flex-jc-between pd-15 bgc border-b flex-align-items" to="/calendar"><span>自取时间</span><span class="flex-align-items fc-grey fsz12">{{datechoose}}<van-icon name="arrow" /></span></router-link>
+                    <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="onshowtime"><span>时间点</span><span class="flex-align-items fc-grey fsz12">{{timetext}}<van-icon name="arrow" /></span></div>
+                    <router-link class="flex-jc-between flex-align-items pd-15 bgc" to="/people">
+                        <div>
                             <div>自取联系人</div>
-                            <div>{{people.name}}  {{people.phone}}</div>
-                        </template>
-                    </van-cell>
+                            <div class="fsz12">{{people.name}}  {{people.phone}}</div>
+                        </div>
+                        <span class="fc-grey fsz12"><van-icon name="arrow" /></span>
+                    </router-link>
                 </template>
             </div>
         </template>
@@ -69,7 +68,7 @@
             <div class="flex-jc-between border-b pd-15"><span>享受优惠</span><span>-¥50.00</span></div>
             </template>
             <div class="flex-jc-between border-b pd-15" v-show="selected==1"><span>租金可抵消费额度</span><span>¥2050.00</span></div>
-            <div class="flex-jc-between border-b pd-15"><span>应付总额</span><span class="fc-red">¥2050.00</span></div>
+            <div class="flex-jc-between pd-15"><span>应付总额</span><span class="fc-red">¥2050.00</span></div>
         </div>
 
         <div class="bgc">

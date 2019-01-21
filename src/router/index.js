@@ -10,6 +10,7 @@ import Goods from '@/pages/home/index_more'
 import Trusteeship from '@/pages/home/trusteeship'
 import WelfareAgency from '@/pages/home/welfareAgency'
 import ProductDetail from '@/pages/home/productDetail'
+import Buy from '@/pages/home/buy'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -37,6 +38,8 @@ import ShopDetail from '@/pages/shop/shopDetail'
 //免押认证
 import Certification from '@/pages/certification/index'
 import School from '@/pages/certification/school'
+import cPeople from '@/pages/certification/people'
+import AddPeople from '@/pages/certification/addPeople'
 
 Vue.use(Router)
 
@@ -62,7 +65,8 @@ export default new Router({
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
-    { path: '/productDetail', component: ProductDetail, meta: { title: '    SKU信息' } },
+    { path: '/productDetail', component: ProductDetail, meta: { title: 'SKU信息' } },
+    { path: '/buy', component: Buy, meta: { title: '下单' } },
 
     //个人中心
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
@@ -80,6 +84,8 @@ export default new Router({
     //免押认证
     { path: '/certification', component: Certification, meta: { title: '认证中心' } },
     { path: '/school', component: School, meta: { title: '学籍认证' } },
+    { path: '/cpeople', component: cPeople, meta: { title: '添加紧急联系人' } },
+    { path: '/addPeople', component: AddPeople },
   ],
 
   scrollBehavior(to, from, savedPosition) {
