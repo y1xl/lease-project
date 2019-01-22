@@ -44,7 +44,7 @@ export default {
 input {
   width: 100%;
   text-align: center;
-  line-height: 30px;
+  line-height: 40px;
 }
 .forget {
   color: #aeaeae;

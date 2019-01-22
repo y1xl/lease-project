@@ -5,7 +5,7 @@
         <div class="tip_title text-c" style=" padding-top: 50px;">Hi!</div>
         <div class="tip_title text-c">欢迎加入</div>
         <div class="border-b" style="margin-top: 50px;">
-          <input v-model="newPhone" placeholder="请输入手机号" input-align="center">
+          <input v-model="newPhone" placeholder="请输入手机号" type="text">
         </div>
         <div class="text-r pw_login" @click="password">使用密码登陆</div>
         <button class="btn text-c" @click="toNext">下一步</button>
@@ -16,9 +16,9 @@
             <div class="line"></div>
           </div>
           <div class="flex-jc-around">
-            <img src="../../assets/bj.png" alt="图标" class="icon_img">
-            <img src="../../assets/bj.png" alt="图标" class="icon_img">
-            <img src="../../assets/bj.png" alt="图标" class="icon_img">
+            <img src="../../assets/l_zhifubao.png" alt="图标" class="icon_img">
+            <img src="../../assets/l_weixin.png" alt="图标" class="icon_img">
+            <img src="../../assets/l_weibo.png" alt="图标" class="icon_img">
           </div>
         </div>
       </div>
@@ -36,6 +36,9 @@ export default {
   methods: {
     //下一步
     toNext() {
+      console.log(this.newPhone);
+      if (this.newPhone != "" || this.newPhone != undefined) {
+      }
       this.$router.push({ path: "/InputCode" });
     },
     //密码登录
@@ -62,7 +65,7 @@ export default {
 input {
   width: 100%;
   text-align: center;
-  line-height: 30px;
+  line-height: 40px;
 }
 .pw_login,
 .disan {
@@ -86,13 +89,13 @@ input {
   background: linear-gradient(90deg, #60c0fd, #4ea9f9);
 }
 .line {
-  width: 40px;
+  width: 50px;
   height: 1px;
-  background: #aeaeae;
+  border-bottom: 1px solid #aeaeae;
 }
 .icon_img {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
 }
 </style>

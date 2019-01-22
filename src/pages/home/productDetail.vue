@@ -18,18 +18,18 @@
           <div class="flex-jc-between">
             <div>
               <div class="product_title">日本 instax拍立得</div>
-              <div class="grey_12">一次成像相机</div>
+              <div class="grey_12 camera">一次成像相机</div>
             </div>
             <div class="flexbox">
               <div class="text-c">
                 <div>
-                  <img class="img_sc" src="../../assets/my.png" alt>
+                  <img class="img_sc" src="../../assets/shoucang.png" alt>
                 </div>
                 <div class="grey_12">收藏</div>
               </div>
-              <div class="text-c margin_left" @click="showmodel = true">
+              <div class="text-c fenxiang_l" @click="showmodel = true">
                 <div>
-                  <img class="img_sc" src="../../assets/my.png" alt>
+                  <img class="img_fen" src="../../assets/fenxiang.png" alt>
                 </div>
                 <div class="grey_12">分享</div>
               </div>
@@ -61,10 +61,10 @@
       </van-cell>
       <div class="flex-jc-around duo_mian">
         <div class="grey_12 flex-align-items">
-          <img class="img_zq" src="../../assets/my.png" alt>多门店自取
+          <img class="img_zq" src="../../assets/ziti.png" alt>多门店自取
         </div>
         <div class="grey_12 flex-align-items">
-          <img class="img_myj" src="../../assets/my.png" alt>免押金
+          <img class="img_myj" src="../../assets/tuikuan.png" alt>免押金
           <img src="../../assets/"
         </div>
       </div>
@@ -76,7 +76,7 @@
       <div class="flex-jc-around position process_det">
         <div class="text-c">
           <div>
-            <img class="img_xdlc" src="../../assets/my.png" alt>
+            <img class="img_xdlc" src="../../assets/chenggong.png" alt>
             <img src="../../assets/1.png"
           </div>
           <div class="fsize13">下单</div>
@@ -84,14 +84,14 @@
         <div class="grey_line1"></div>
         <div class="text-c">
           <div>
-            <img class="img_xdlc" src="../../assets/my.png" alt>
+            <img class="img_xdlc" src="../../assets/chenggong_c.png" alt>
           </div>
           <div class="fsize13">送货</div>
         </div>
         <div class="grey_line2"></div>
         <div class="text-c">
           <div>
-            <img class="img_xdlc" src="../../assets/my.png" alt>
+            <img class="img_xdlc" src="../../assets/chenggong_copy.png" alt>
           </div>
           <div class="fsize13">归还</div>
         </div>
@@ -105,7 +105,7 @@
             <span>口碑</span>
             <span>(999+)</span>
           </div>
-          <div>
+          <div class="flex-align-items">
             <span>97.6%</span>
             <img class="img_r" src="../../assets/right.png" alt>
           </div>
@@ -161,13 +161,13 @@
       <div class="flex-jc-between">
         <div class="text-c margin_left">
           <div>
-            <img class="img_kf" src="../../assets/my.png" alt>
+            <img class="img_kf" src="../../assets/kefu.png" alt>
           </div>
           <div class="f10_col">在线客服</div>
         </div>
         <div class="text-c margin_left">
           <div>
-            <img class="img_kf" src="../../assets/my.png" alt>
+            <img class="img_kf" src="../../assets/tel.png" alt>
           </div>
           <div class="f10_col">电话客服</div>
         </div>
@@ -184,19 +184,19 @@
         <div class="flex-jc-around border-b" style="padding:15px 0">
           <div class="text-c">
             <div>
-              <img class="img_fx" src="../../assets/my.png" alt>
+              <img class="img_fx" src="../../assets/f_friend.png" alt>
             </div>
             <div class="grey_12">朋友圈</div>
           </div>
           <div class="text-c">
             <div>
-              <img class="img_fx" src="../../assets/my.png" alt>
+              <img class="img_fx" src="../../assets/f_weixin.png" alt>
             </div>
             <div class="grey_12">微信</div>
           </div>
           <div class="text-c">
             <div>
-              <img class="img_fx" src="../../assets/my.png" alt>
+              <img class="img_fx" src="../../assets/f_weibo.png" alt>
             </div>
             <div class="grey_12">微博</div>
           </div>
@@ -334,12 +334,19 @@ export default {
   font-size: 17px;
   font-weight: 500;
 }
+.camera {
+  line-height: 20px;
+}
 .img_sc {
+  width: 20px;
+  height: 19px;
+}
+.img_fen {
   width: 19px;
-  height: 20px;
+  height: 19px;
 }
 .price_box {
-  padding: 15px 0;
+  padding: 10px 0;
 }
 .price {
   color: #f21e1e;
@@ -357,7 +364,9 @@ export default {
   font-size: 12px;
 }
 .lab {
+  font-size: 10px;
   background: #fc3434;
+  border-radius: 10px;
   color: #fff;
   padding: 2px 5px;
 }
@@ -431,7 +440,8 @@ export default {
 }
 .img_r {
   width: 7px;
-  height: 11px;
+  height: 13px;
+  margin-left: 10px;
 }
 .imglist {
   display: inline-block;
@@ -496,7 +506,12 @@ export default {
 .margin_left {
   margin-left: 10px;
 }
-
+.fenxiang_l {
+  height: 35px;
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid #b7b7b7;
+}
 .model {
   position: fixed;
   top: 0;

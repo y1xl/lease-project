@@ -18,7 +18,25 @@
           </div>
         </div>
       </div>
+      <div class="flex-center jd_box">
+        <img src="../../assets/yiqd.png" class="true_img">
+        <!-- <div class="oneday text-c fc-blue">1</div> -->
+        <div class="yxian_blue"></div>
+        <!-- <div class="xian_blue"></div> -->
+        <!-- <div class="oneday text-c fc-blue">2</div> -->
+        <img src="../../assets/yiqd.png" class="true_img">
 
+        <div class="xian_blue"></div>
+        <div class="oneday text-c fc-blue">3</div>
+        <div class="xian_blue"></div>
+        <div class="oneday text-c fc-blue">4</div>
+        <div class="xian_blue"></div>
+        <div class="oneday text-c fc-blue">5</div>
+        <div class="xian_blue"></div>
+        <div class="oneday text-c fc-blue">6</div>
+        <div class="xian_blue"></div>
+        <div class="oneday text-c fc-blue">7</div>
+      </div>
       <div class="qd_img text-c">
         <img src="../../assets/qd.png">
       </div>
@@ -108,7 +126,7 @@ export default {
 .qd_b {
   align-items: center;
   width: 100%;
-  height: 200px;
+  height: 230px;
   background: url(../../assets/fls_bg.png) no-repeat;
   background-size: 100% 100%;
 }
@@ -144,26 +162,31 @@ export default {
   color: #8bd0db;
   font-size: 16px;
 }
-.qdjl {
-  width: 100%;
-  height: 100px;
-  background: #fff;
-  margin-top: 20px;
-  position: relative;
+.jd_box {
+  margin: 15px;
 }
-.yiqd {
-  width: 22px;
-  height: 22px;
-  position: absolute;
-  top: 10px;
+.true_img {
+  width: 25px;
+  height: 25px;
 }
-.xixian {
-  width: 22px;
-  height: 1.5px;
-  position: absolute;
-  top: 10px;
+.oneday {
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  background: #bfe8ff;
+  font-size: 12px;
+  border-radius: 50%;
 }
-
+.xian_blue {
+  width: 20px;
+  height: 2px;
+  background: #bfe8ff;
+}
+.yxian_blue {
+  width: 20px;
+  height: 2px;
+  background: #54b1fa;
+}
 .qd_img > img {
   width: 240px;
   height: 60px;

@@ -9,20 +9,20 @@
     </div>
     <div class="banner text-c">
       <van-swipe :autoplay="3000" @change="onChange">
-        <van-swipe-item v-for="(image, index) in images" :key="index">
-          <img :src="image">
+        <van-swipe-item v-for="(item, index) in images" :key="index">
+          <img :src="item">
         </van-swipe-item>
       </van-swipe>
     </div>
     <div class="flex-jc-around">
       <div class="tg">
-        <img src="../assets/mys.png"> 我要托管
+        <img src="../assets/wytg.png"> 我要托管
       </div>
-      <div class="tg" @click="toTrust">
-        <img src="../assets/mys.png"> 我要推广
+      <div class="tg" @click="toExtension">
+        <img src="../assets/tuoguan.png"> 我要推广
       </div>
       <div class="tg" @click="toWelfare">
-        <img src="../assets/mys.png"> 福利社
+        <img src="../assets/fls.png"> 福利社
       </div>
     </div>
     <div id="nav">
@@ -202,8 +202,8 @@ export default {
       this.$router.push({ path: "/ProductDetail" });
     },
     //我要推广
-    toTrust() {
-      this.$router.push({ path: "/Trusteeship" });
+    toExtension() {
+      this.$router.push({ path: "/Extension" });
     },
     //福利社
     toWelfare() {
@@ -214,8 +214,12 @@ export default {
 </script>
 <style>
 #nav .van-tabs__line {
+  height: 3px;
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
+}
+#nav .van-tab span {
+  font-size: 14px;
 }
 </style>
 

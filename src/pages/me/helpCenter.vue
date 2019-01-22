@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bgc box">
-      <van-cell title="常见问题" is-link/>
+      <van-cell title="常见问题" is-link to="CommonProblem"/>
       <van-cell title="租赁规则" is-link/>
       <van-cell title="在线客服" is-link/>
       <van-cell title="电话客服" is-link/>
