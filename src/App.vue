@@ -12,15 +12,15 @@
       </div>
       <div>
         <router-link to="/shop">
-          <div class="img" v-if="selected=='shop'"><img src="./assets/tab/zhuans.png" ></div>
-          <div class="img" v-else><img src="./assets/tab/zhuan.png" ></div>
+          <div class="img" v-if="selected=='shop'"><img src="./assets/tab/shops.png" ></div>
+          <div class="img" v-else><img src="./assets/tab/shop.png" ></div>
           <p :class="{ 'fc-blue': selected=='shop' }">门店</p>
         </router-link>
       </div>
       <div>
         <router-link to="/order">
-          <div class="img" v-if="selected=='order'"><img src="./assets/tab/xiaos.png" ></div>
-          <div class="img" v-else><img src="./assets/tab/xiao.png" ></div>
+          <div class="img" v-if="selected=='order'"><img src="./assets/tab/orders.png" ></div>
+          <div class="img" v-else><img src="./assets/tab/order.png" ></div>
           <p :class="{ 'fc-blue': selected=='order' }">订单</p>
         </router-link>
       </div>

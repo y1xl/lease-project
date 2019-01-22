@@ -73,7 +73,7 @@
                 </template>
             </van-cell>
             <van-cell title="配送时间段" center value="" is-link v-show="typenum==2" to="/timeQuantum"></van-cell>
-            <van-cell title="时间点" is-link center @click="onshowtime" :value="timetext" v-show="typenum==0"></van-cell>
+            <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext" v-show="typenum==0"></van-cell>
         </div>
 
         <div class="mar-b-10">
@@ -111,7 +111,7 @@
                 <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
                 <span class="pdl10" @click="showconsent=true">同意租赁协议</span>
             </div>
-            <div><div class="btn text-c">信用免押支付</div></div>
+            <div><div class="btn text-c" @click="nextface">信用免押支付</div></div>
         </div>
 
         <!-- 弹框 -->
@@ -119,14 +119,14 @@
             <van-datetime-picker
             type="time"
             show-toolbar
-            @cancel="onshowtime"
+            @cancel="showtime=false"
             @confirm="onConfirm"
             />
         </van-popup>
 
 
         <van-popup v-model="showweek" position="bottom" :close-on-click-overlay="false">
-            <van-picker :columns="columns" show-toolbar @confirm="onConfirmWeek" @cancel="showweek = false"/>
+            <van-picker :columns="columns" show-toolbar @cancel="showweek = false" @confirm="onConfirmWeek"/>
         </van-popup>
 
         <van-popup v-model="showconsent">
@@ -167,6 +167,9 @@ export default {
             console.log(`当前值：${value}, 当前索引：${index}`);
             this.weektext = value
             this.showweek = false
+        },
+        nextface(){
+            this.$router.push({ path: '/face' })
         }
     }
 }

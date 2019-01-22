@@ -26,7 +26,7 @@
         <!-- <div class="flex-center border-blue fc-blue">确认</div> -->
         <div class="flex-center border" @click="getcode">取货码</div>
         <!-- <div class="flex-center border" @click="getcode">自还码</div> -->
-        <!-- <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div> -->
+        <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div>
         <!-- <div class="flex-center border-blue fc-blue">
           <router-link v-bind="{to: '/comments'}">评价</router-link>
         </div> -->

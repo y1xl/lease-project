@@ -3,8 +3,8 @@
         <div class="textarea bgc"><textarea name="" id="" rows="6" placeholder="输入否认的理由"></textarea></div>
         <div class="bgc imglist">
             <img @click="onImagePreview(index)" :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index">
-            <van-uploader :after-read="onRead" accept="image/gif, image/jpeg" multiple>
-                <van-icon name="photograph"/>
+            <van-uploader :after-read="onRead" accept="image/png, image/jpeg" multiple>
+                <img src="../../assets/uploadimg.png" alt="">
             </van-uploader>
         </div>
 
@@ -58,6 +58,7 @@ export default {
     width: 77px;
     height: 77px;
     padding-left: 10px;
+    padding-bottom: 10px;
 }
 .btn{
     margin-top: 76px;

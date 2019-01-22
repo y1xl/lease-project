@@ -8,7 +8,7 @@
         </div>
 
         <div class="pd-15 border-b">认证免押金方式</div>
-        <router-link class="flex-jc-between pd-15 border-b" to="">
+        <router-link class="flex-jc-between pd-15 border-b" to="/realname">
             <div>实名认证</div>
             <div class="flex-align-items">
                 <span class="fc-blue mr">去认证</span>

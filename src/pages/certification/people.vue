@@ -14,8 +14,8 @@
                 <div>联系人姓名:xxx</div>
             </div>
             <div class="tools">
-                <img src="../../assets/tab/index.png" alt="编辑">
-                <img src="../../assets/tab/index.png" alt="删除" @click="del(item.id,$event)">
+                <img src="../../assets/icon-editor.png" alt="编辑">
+                <img src="../../assets/icon-del.png" alt="删除" @click="del(item.id,$event)">
             </div>
         </div>
     </van-radio-group>

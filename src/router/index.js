@@ -12,6 +12,7 @@ import WelfareAgency from '@/pages/home/welfareAgency'
 import ProductDetail from '@/pages/home/productDetail'
 import WordMouth from '@/pages/home/wordMouth'
 import Buy from '@/pages/home/buy'
+import Pay from '@/pages/home/pay'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -50,6 +51,8 @@ import Certification from '@/pages/certification/index'
 import School from '@/pages/certification/school'
 import cPeople from '@/pages/certification/people'
 import AddPeople from '@/pages/certification/addPeople'
+import Realname from '@/pages/certification/realname'
+import Face from '@/pages/certification/face'
 
 Vue.use(Router)
 
@@ -78,41 +81,44 @@ export default new Router({
     { path: '/productDetail', component: ProductDetail, meta: { title: 'SKU信息' } },
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy', component: Buy, meta: { title: '下单' } },
+    { path: '/pay', component: Pay, meta: { title: '额度' } },
 
-//个人中心
-{ path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
-{ path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
-{ path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
-{ path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
-{ path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
-{ path: '/modify', component: Modify, meta: { title: '修改绑定手机号' } },
-{ path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
-{ path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
-{ path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
+    //个人中心
+    { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
+    { path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
+    { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
+    { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
+    { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
+    { path: '/modify', component: Modify, meta: { title: '修改绑定手机号' } },
+    { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
+    { path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
+    { path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
 
-//登录
-{ path: '/login', component: Login, meta: { title: '登录' } },
-{ path: '/passwordLogin', component: PasswordLogin, meta: { title: '密码登录' } },
-{ path: '/forgetPassword', component: ForgetPassword, meta: { title: '忘记密码' } },
-{ path: '/resetPassword', component: ResetPassword, meta: { title: '重置密码' } },
-{ path: '/inputCode', component: InputCode, meta: { title: '输入验证码' } },
+    //登录
+    { path: '/login', component: Login, meta: { title: '登录' } },
+    { path: '/passwordLogin', component: PasswordLogin, meta: { title: '密码登录' } },
+    { path: '/forgetPassword', component: ForgetPassword, meta: { title: '忘记密码' } },
+    { path: '/resetPassword', component: ResetPassword, meta: { title: '重置密码' } },
+    { path: '/inputCode', component: InputCode, meta: { title: '输入验证码' } },
 
-//门店
-{ path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
+    //门店
+    { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
 
     //免押认证
     { path: '/certification', component: Certification, meta: { title: '认证中心' } },
     { path: '/school', component: School, meta: { title: '学籍认证' } },
     { path: '/cpeople', component: cPeople, meta: { title: '添加紧急联系人' } },
     { path: '/addPeople', component: AddPeople },
+    { path: '/realname', component: Realname,meta: { title: '实名认证' } },
+    { path: '/face', component: Face,meta: { title: '人脸识别' } },
   ],
 
-scrollBehavior(to, from, savedPosition) {
-if (savedPosition) {
-return savedPosition
-} else {
-return { x: 0, y: 0 }
-}
-}
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 
 })

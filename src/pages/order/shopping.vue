@@ -75,15 +75,15 @@
             <div class="border-b pd-15">请选择支付方式</div>
             <van-radio-group v-model="radio">
                 <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
-                    <div>微信</div>
+                    <div><img src="../../assets/weixin.png" alt="微信" class="payimg">微信</div>
                     <van-radio name="1" checked-color="#2DBBF1"></van-radio>
                 </div>
                 <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
-                    <div>支付宝</div>
+                    <div><img src="../../assets/ali.png" alt="支付宝" class="payimg">支付宝</div>
                     <van-radio name="2" checked-color="#2DBBF1"></van-radio>
                 </div>
                 <div class="flex-jc-between pd-15" @click="radio = '3'">
-                    <div>余额<span class="fc-red">¥2.00</span></div>
+                    <div><img src="../../assets/balance.png" alt="余额" class="payimg">余额<span class="fc-red"> ¥2.00</span></div>
                     <van-radio name="3" checked-color="#2DBBF1"></van-radio>
                 </div>
             </van-radio-group>
@@ -165,6 +165,12 @@ export default {
 </script>
 
 <style scoped>
+.payimg{
+    width: 20px;
+    height: 20px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
 .fsz14{
     font-size: 14px
 }
