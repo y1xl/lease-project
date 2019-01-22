@@ -40,7 +40,6 @@
         </template>
       </van-cell>
 
-<<<<<<< HEAD
         <van-cell is-link center to="/cart">
           <template slot="icon">
             <img src="../../assets/gwc.png" alt="图标" class="left_img">
@@ -49,16 +48,6 @@
             <div>购物车</div>
           </template>
         </van-cell>
-=======
-      <van-cell is-link center to>
-        <template slot="icon">
-          <img src="../../assets/gwc.png" alt="图标" class="left_img">
-        </template>
-        <template slot="title">
-          <div>购物车</div>
-        </template>
-      </van-cell>
->>>>>>> db10d69554dce9f4b88eaecd3368f2352631a15a
 
       <van-cell is-link center to="/MyBalance">
         <template slot="icon">

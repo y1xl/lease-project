@@ -17,11 +17,11 @@
     <div class="flex-jc-around">
       <div class="tg">
         <router-link to="/gohosting">
-          <img src="../assets/mys.png"> 我要托管
+          <img src="../assets/tuoguan.png"> 我要托管
         </router-link>
       </div>
       <div class="tg" @click="toExtension">
-        <img src="../assets/tuoguan.png"> 我要推广
+        <img src="../assets/wytg.png"> 我要推广
       </div>
       <div class="tg" @click="toWelfare">
         <img src="../assets/fls.png"> 福利社
