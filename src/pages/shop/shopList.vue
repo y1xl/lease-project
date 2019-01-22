@@ -7,13 +7,13 @@
             <div class="flex-jc-between" @click="toShopdet">
               <div class="shop_title">龙华区油松店</div>
               <div>
-                <img src="../../assets/tab/right.png" class="img_r">
+                <img src="../../assets/right.png" class="img_r">
               </div>
             </div>
 
             <div class="txt f12">广东省深圳市龙华新区油松路158号油富商城门店</div>
             <div class="dt text-c">
-              <img class="ck_img" src="../../assets/tab/mddw.png">
+              <img class="ck_img" src="../../assets/mddw.png">
               <span class="txt f12">查看地图</span>
             </div>
           </div>

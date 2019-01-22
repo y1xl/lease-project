@@ -5,8 +5,12 @@
     <div class="nav bgc flexbox" v-if="navshow">
       <div>
         <router-link to="/">
-          <div class="img" v-if="selected=='index'"><img src="./assets/tab/indexs.png" ></div>
-          <div class="img" v-else><img src="./assets/tab/index.png" ></div>
+          <div class="img" v-if="selected=='index'">
+            <img src="./assets/tab/indexs.png">
+          </div>
+          <div class="img" v-else>
+            <img src="./assets/tab/index.png">
+          </div>
           <p :class="{ 'fc-blue': selected=='index' }">首页</p>
         </router-link>
       </div>
@@ -26,8 +30,12 @@
       </div>
       <div>
         <router-link to="/me">
-          <div class="img" v-if="selected=='me'"><img src="./assets/tab/mys.png" ></div>
-          <div class="img" v-else><img src="./assets/tab/my.png" ></div>
+          <div class="img" v-if="selected=='me'">
+            <img src="./assets/tab/mys.png">
+          </div>
+          <div class="img" v-else>
+            <img src="./assets/tab/my.png">
+          </div>
           <p :class="{ 'fc-blue': selected=='me' }">我的</p>
         </router-link>
       </div>
@@ -39,82 +47,76 @@
 // import VConsole from 'vconsole/dist/vconsole.min.js'
 
 export default {
-
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   },
 
-  computed:{
-    selected(){
-      if(this.$route.path === "/"){
-        return 'index'
+  computed: {
+    selected() {
+      if (this.$route.path === "/") {
+        return "index";
       }
-      if(this.$route.path === "/shop"){
-        return 'shop'
+      if (this.$route.path === "/shop") {
+        return "shop";
       }
-      if(this.$route.path === "/order"){
-        return 'order'
+      if (this.$route.path === "/order") {
+        return "order";
       }
-      if(this.$route.path === "/me"){
-        return 'me'
+      if (this.$route.path === "/me") {
+        return "me";
       }
     },
-    navshow(){
-      let url = this.$route.path
-      if (url === "/"||url === "/shop"||url === "/order"||url === "/me") {
-        return true
+    navshow() {
+      let url = this.$route.path;
+      if (url === "/" || url === "/shop" || url === "/order" || url === "/me") {
+        return true;
       }
     }
   },
-  created(){
+  created() {
     // let vConsole = new VConsole()
   },
-  methods: {
-
-  },
-  
-}
+  methods: {}
+};
 </script>
 
 <style scoped>
-  .nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 5;
-    border-top: 1px solid #f2f2f2;
-  }
-  .nav > div {
-    flex: 1;
-    text-align: center;
-    font-size: 10px;
-    box-sizing: border-box;
-    padding: 5px;
-  }
-  .nav .img {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-  }
+.nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
+  border-top: 1px solid #f2f2f2;
+}
+.nav > div {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.nav .img {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+}
 </style>
 
 
 <style>
-  .fsz {
-    font-size: 14px
-  }
-  .mar-bottom {
-    margin-bottom: 50px;
-  }
-  .mar-b-10{
-    margin-bottom: 10px;
-  }
-  .pd-15{
-    padding: 15px;
-  }
-  .pd-lr-15{
-    padding: 0 15px
-  }
+.fsz {
+  font-size: 14px;
+}
+.mar-bottom {
+  margin-bottom: 50px;
+}
+.mar-b-10 {
+  margin-bottom: 10px;
+}
+.pd-15 {
+  padding: 15px;
+}
+.pd-lr-15 {
+  padding: 0 15px;
+}
 </style>

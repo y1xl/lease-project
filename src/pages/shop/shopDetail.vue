@@ -3,11 +3,11 @@
     <div class="bgc">
       <div class="flex-jc-center">
         <div class="shopimg_b">
-          <img src="../../assets/tab/qd.png">
+          <img src="../../assets/qd.png">
         </div>
       </div>
       <div class="dt text-c">
-        <img class="dw_img" src="../../assets/tab/mddw.png">
+        <img class="dw_img" src="../../assets/mddw.png">
         <span class="txt">广东省深圳市龙华新区油松路158号油富商城门店</span>
       </div>
     </div>

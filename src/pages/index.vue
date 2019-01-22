@@ -16,13 +16,13 @@
     </div>
     <div class="flex-jc-around">
       <div class="tg">
-        <img src="../assets/tab/mys.png"> 我要托管
+        <img src="../assets/mys.png"> 我要托管
       </div>
       <div class="tg" @click="toTrust">
-        <img src="../assets/tab/mys.png"> 我要推广
+        <img src="../assets/mys.png"> 我要推广
       </div>
       <div class="tg" @click="toWelfare">
-        <img src="../assets/tab/mys.png"> 福利社
+        <img src="../assets/mys.png"> 福利社
       </div>
     </div>
     <div id="nav">
@@ -45,7 +45,7 @@
                   @click="toDetail"
                 >
                   <div class="img_box1 flex-center">
-                    <img class="img" src="../assets/tab/mys.png">
+                    <img class="img" src="../assets/mys.png">
                   </div>
                   <div class="pro_title text-line">{{item.name}}</div>
 
@@ -67,7 +67,7 @@
           <div class="flex-jc-between border-b bgc camer_hm_box">
             <div class="camer_hm" style="margin-left: 10px;">
               <div class="img_box2 flex-center">
-                <img class="img" src="../assets/tab/mys.png">
+                <img class="img" src="../assets/mys.png">
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -78,7 +78,7 @@
 
             <div class="camer_hm">
               <div class="img_box2 flex-center">
-                <img class="img" src="../assets/tab/mys.png">
+                <img class="img" src="../assets/mys.png">
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -89,7 +89,7 @@
 
             <div class="camer_hm" style="margin-right: 10px;">
               <div class="img_box2 flex-center">
-                <img class="img" src="../assets/tab/mys.png">
+                <img class="img" src="../assets/mys.png">
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -109,7 +109,7 @@
                 <van-rate v-model="value" disabled disabled-color="#FFB10E"/>
                 <span class="f12">4.9</span>
                 <div>
-                  <img class="chat" src="../assets/tab/chat.png">
+                  <img class="chat" src="../assets/chat.png">
                   <span class="f12">999+</span>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="bgc">
     <div class="bgc text-c all_bal">
-      <div class="all_money">¥863.08</div>
+      <div class="all_money">￥863.08</div>
       <div class="kt">可提现金额</div>
       <div class="flex-center">
         <div class="btn" @click="toBankCard">提现</div>
@@ -89,6 +89,7 @@ export default {
 .time {
   font-size: 12px;
   color: #aeaeae;
+  margin-top: 5px;
 }
 </style>
 

@@ -25,6 +25,7 @@ import TimeQuantum from '@/pages/order/timeQuantum'
 import AppointmentExpress from '@/pages/order/appointmentExpress'
 import Deny from '@/pages/order/deny'
 import Calendar from '@/pages/order/calendar'
+
 //个人中心
 import MyInformation from '@/pages/me/myInformation'
 import AddInformation from '@/pages/me/addInformation'
@@ -35,6 +36,8 @@ import Modify from '@/pages/me/modify'
 import Coupon from '@/pages/me/coupon'
 import MyBalance from '@/pages/me/myBalance'
 import BankCard from '@/pages/me/bankCard'
+import HelpCenter from '@/pages/me/helpCenter'
+import Integral from '@/pages/me/integral'
 
 //登录
 import Login from '@/pages/login/login'
@@ -57,6 +60,7 @@ import Face from '@/pages/certification/face'
 Vue.use(Router)
 
 export default new Router({
+
   routes: [
     { path: '/', component: Index, meta: { title: '首页' } },
     { path: '/shop', component: Shop, meta: { title: '门店' } },
@@ -93,6 +97,8 @@ export default new Router({
     { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
     { path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
     { path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
+    { path: '/helpCenter', component: HelpCenter, meta: { title: '帮助中心' } },
+    { path: '/integral', component: Integral, meta: { title: '我的积分' } },
 
     //登录
     { path: '/login', component: Login, meta: { title: '登录' } },

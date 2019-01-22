@@ -2,7 +2,7 @@
   <div>
     <div class="add_address">
       <div class="add_addresscon bgc">
-        <div class="me" style="margin-top: 70px;">
+        <div class="me" style="margin-top: 15px;">
           <van-cell-group>
             <van-field v-model="value" placeholder="姓名"/>
           </van-cell-group>

@@ -1,6 +1,5 @@
 <template>
   <div class="pd-15">
-
     <van-radio-group v-model="radio">
         <div
             class="card bgc mar-b-10 flex-align-items"
@@ -21,60 +20,62 @@
     </van-radio-group>
 
     <router-link class="add bgc flex-center" to="/addPeople">
-        <van-icon name="add-o" />
-        <span>新增紧急联系人</span>
+      <van-icon name="add-o"/>
+      <span>新增紧急联系人</span>
     </router-link>
   </div>
 </template>
 
 <script>
-import { Dialog } from 'vant';
+import { Dialog } from "vant";
 
 export default {
-    data(){
-        return{
-            radio:1,
-            list:[{id:1},{id:2}]
-        }
-    },
-    methods:{
-        del(id,e){
-            Dialog.confirm({
-                title: '',
-                message: '是否删除?'
-            }).then(() => {
-            // on confirm
-                console.log(id,e)
-            }).catch(() => {
-            // on cancel
-            });
-        }
+  data() {
+    return {
+      radio: 1,
+      list: [{ id: 1 }, { id: 2 }]
+    };
+  },
+  methods: {
+    del(id, e) {
+      Dialog.confirm({
+        title: "",
+        message: "是否删除?"
+      })
+        .then(() => {
+          // on confirm
+          console.log(id, e);
+        })
+        .catch(() => {
+          // on cancel
+        });
     }
+  }
 };
 </script>
 
 <style scoped>
 .card {
-    padding:10px;
-    height: 135px;
-    box-sizing: border-box;
+  padding: 10px;
+  height: 135px;
+  box-sizing: border-box;
 }
 .card .tools > img {
-    width: 22px;
-    height: 22px;
+  width: 22px;
+  height: 22px;
 }
 .card .left {
-    padding-left: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 100%;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
 }
 .tools {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
 }
 
 .add {
@@ -83,7 +84,7 @@ export default {
   color: #2dbbf1;
   border-radius: 5px;
 }
-.add > span{
-    margin-left: 10px;
+.add > span {
+  margin-left: 10px;
 }
 </style>

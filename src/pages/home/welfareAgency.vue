@@ -18,55 +18,15 @@
           </div>
         </div>
       </div>
-      <!-- <div class="flexbox qdjl">
-      <div class="yiqd_box">
-        <img class="yiqd" src="../../assets/tab/yiqd.png">
-      </div>
-      <div>
-        <img class="xixian" src="../../assets/tab/lan.png">
-      </div>
-      <div class="yiqd_box1">
-        <img class="yiqd" src="../../assets/tab/yiqd.png">
-      </div>
-      <div>
-        <img class="xixian" src="../../assets/tab/lan.png">
-      </div>
-      <div class="yiqd_box2">
-        <img class="yiqd" src="../../assets/tab/yiqd.png">
-      </div>
-      <div>
-        <img class="xixian" src="../../assets/tab/lan.png">
-      </div>
-      <div class="yiqd_box3">
-        <img class="yiqd" src="../../assets/tab/yiqd.png">
-      </div>
-      <div>
-        <img class="xixian" src="../../assets/tab/lan.png">
-      </div>
-      <div class="yiqd_box4">
-        <img class="yiqd" src="../../assets/tab/yiqd.png">
-      </div>
-      <div>
-        <img class="xixian" src="../../assets/tab/lan.png">
-      </div>
-      <div class="yiqd_box5">
-        <img class="yiqd" src="../../assets/tab/yiqd.png">
-      </div>
-      <div>
-        <img class="xixian" src="../../assets/tab/lan.png">
-      </div>
-      <div class="yiqd_box6">
-        <img class="yiqd" src="../../assets/tab/yiqd.png">
-      </div>
-      </div>-->
+
       <div class="qd_img text-c">
-        <img src="../../assets/tab/qd.png">
+        <img src="../../assets/qd.png">
       </div>
       <div class="every_work">每日任务</div>
       <div class="flex-jc-center">
         <div class="word flex-jc-between flex-align-items">
           <div class="flex-align-items">
-            <img src="../../assets/tab/tupian.png" class="tupian">
+            <img src="../../assets/tupian.png" class="tupian">
             晒图分享
           </div>
           <div>
@@ -80,7 +40,7 @@
       <div class="flex-jc-center">
         <div class="word flex-jc-between flex-align-items">
           <div class="flex-align-items">
-            <img src="../../assets/tab/pinglun.png" class="pinglun">
+            <img src="../../assets/pinglun.png" class="pinglun">
             优质评论
           </div>
           <div>
@@ -94,7 +54,7 @@
       <div class="flex-jc-center">
         <div class="word flex-jc-between flex-align-items">
           <div class="flex-align-items">
-            <img src="../../assets/tab/wenjuan.png" class="wenjuan">
+            <img src="../../assets/wenjuan.png" class="wenjuan">
             问卷调查
           </div>
           <div>
@@ -108,7 +68,7 @@
       <div class="flex-jc-center">
         <div class="word flex-jc-between flex-align-items">
           <div class="flex-align-items">
-            <img src="../../assets/tab/haoyou_.png" class="haoyou_">
+            <img src="../../assets/haoyou_.png" class="haoyou_">
             唤醒好友
           </div>
           <div>
@@ -122,7 +82,7 @@
       <div class="flex-jc-center">
         <div class="word flex-jc-between flex-align-items">
           <div class="flex-align-items">
-            <img src="../../assets/tab/xiangji.png" class="xiangji">
+            <img src="../../assets/xiangji.png" class="xiangji">
             租赁商品
           </div>
           <div>
@@ -149,7 +109,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 200px;
-  background: url(../../assets/tab/fls_bg.png) no-repeat;
+  background: url(../../assets/fls_bg.png) no-repeat;
   background-size: 100% 100%;
 }
 .qd_box {

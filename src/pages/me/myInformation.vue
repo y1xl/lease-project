@@ -5,7 +5,7 @@
         <div class="flex-jc-between flex-align-items tx">
           <div style="padding-left: 13px;">我的头像</div>
           <div class="head_img">
-            <img src="../../assets/tab/mys.png">
+            <img src="../../assets/mys.png">
           </div>
         </div>
 

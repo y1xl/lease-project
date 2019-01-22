@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <div class="bgc flex-jc-center">
+  <div class="bgc full">
+    <div class="flex-jc-center">
       <div class="login_box">
         <div class="login_title text-c">密码登陆</div>
         <div class="border-b tel">
-          <van-field v-model="value" placeholder="请输入手机号" input-align="center" border="false"/>
+          <input v-model="value" placeholder="请输入手机号" input-align="center">
         </div>
         <div class="border-b password">
-          <van-field v-model="value" placeholder="请输入密码" input-align="center" border="false"/>
+          <input v-model="value" placeholder="请输入密码" input-align="center">
         </div>
         <div class="text-r forget" @click="forget">忘记密码</div>
         <div class="btn text-c">登录</div>
@@ -18,6 +18,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      value: ""
+    };
+  },
   methods: {
     //登陆
     forget() {
@@ -36,9 +41,13 @@ export default {
   font-size: 20px;
   line-height: 80px;
 }
+input {
+  width: 100%;
+  text-align: center;
+  line-height: 30px;
+}
 .forget {
   color: #aeaeae;
-  font-size: 12px;
   line-height: 40px;
 }
 .btn {

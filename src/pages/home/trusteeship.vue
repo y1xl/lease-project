@@ -7,28 +7,28 @@
             <div>
               <div class="grey_f">推广佣金</div>
               <div>
-                <img class="yuan_img" src="../../assets/tab/qian.png">
+                <img class="yuan_img" src="../../assets/qian.png">
                 <span class="money">230</span>
               </div>
             </div>
             <div>
               <div class="grey_f">订单佣金</div>
               <div>
-                <img class="yuan_img" src="../../assets/tab/qian.png">
+                <img class="yuan_img" src="../../assets/qian.png">
                 <span class="money">230</span>
               </div>
             </div>
             <div>
               <div class="grey_f">未结算佣金</div>
               <div>
-                <img class="yuan_img" src="../../assets/tab/qian.png">
+                <img class="yuan_img" src="../../assets/qian.png">
                 <span class="money">230</span>
               </div>
             </div>
           </div>
           <div class="grey_f padding_tb">总佣金</div>
           <div class>
-            <img class="all_img" src="../../assets/tab/qicon.png">
+            <img class="all_img" src="../../assets/qicon.png">
             <span class="all_money">2300</span>
           </div>
         </div>
@@ -39,7 +39,7 @@
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
               <div class="wode flex-center">
-                <img src="../../assets/tab/wode.png">
+                <img src="../../assets/wode.png">
               </div>
               <div>
                 <div class="yq">邀请好友</div>
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div>
-              <img class="img_r" src="../../assets/tab/right.png">
+              <img class="img_r" src="../../assets/right.png">
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
               <div class="saoma flex-center">
-                <img src="../../assets/tab/saoma.png">
+                <img src="../../assets/saoma.png">
               </div>
               <div>
                 <div class="yq">推广二维码</div>
@@ -66,7 +66,7 @@
               </div>
             </div>
             <div>
-              <img class="img_r" src="../../assets/tab/right.png">
+              <img class="img_r" src="../../assets/right.png">
             </div>
           </div>
         </div>

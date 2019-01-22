@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="bgc flex-jc-center">
+  <div class="bgc full">
+    <div class="flex-jc-center">
       <div class="inputcode">
         <div class="tip_title text-c">请输入验证码</div>
         <div class="text-c tel">13845687896</div>
@@ -25,9 +25,9 @@
               <input type="text" maxlength="1">
             </div>
           </div>
-          <button class="btn text-c" @click="toNext" type="submit">下一步</button>
+          <button class="btn text-c" @click="toNext" type="submit">登陆</button>
         </form>
-        <div class="text-c resent">登录</div>
+        <div class="text-c resent">重新发送</div>
       </div>
     </div>
   </div>
