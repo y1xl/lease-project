@@ -16,7 +16,9 @@
     </div>
     <div class="flex-jc-around">
       <div class="tg">
-        <img src="../assets/mys.png"> 我要托管
+        <router-link to="/gohosting">
+          <img src="../assets/mys.png"> 我要托管
+        </router-link>
       </div>
       <div class="tg" @click="toTrust">
         <img src="../assets/mys.png"> 我要推广
@@ -41,6 +43,7 @@
                 <div
                   class="item"
                   v-for="(item, index) in prolist"
+                  :key="index"
                   style="margin-right:10px;border-radius:4px;"
                   @click="toDetail"
                 >
@@ -100,7 +103,7 @@
           </div>
           <div class="hb">
             <div class="title">所有产品</div>
-            <div class="fl_pro_list bgc" v-for="(item, index) in flprolist">
+            <div class="fl_pro_list bgc" v-for="(item, index) in flprolist" :key="index">
               <div class="img_box">
                 <img class="sy_img" src="item.imgurl">
               </div>

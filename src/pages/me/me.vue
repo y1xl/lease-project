@@ -45,7 +45,7 @@
           </van-cell>
         </div>
 
-        <van-cell is-link center to>
+        <van-cell is-link center to="/cart">
           <template slot="icon">
             <img src="../../assets/gwc.png" alt="图标" class="left_img">
           </template>

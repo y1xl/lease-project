@@ -38,6 +38,7 @@ import MyBalance from '@/pages/me/myBalance'
 import BankCard from '@/pages/me/bankCard'
 import HelpCenter from '@/pages/me/helpCenter'
 import Integral from '@/pages/me/integral'
+import Cart from '@/pages/me/cart'
 
 //登录
 import Login from '@/pages/login/login'
@@ -56,6 +57,11 @@ import cPeople from '@/pages/certification/people'
 import AddPeople from '@/pages/certification/addPeople'
 import Realname from '@/pages/certification/realname'
 import Face from '@/pages/certification/face'
+//托管
+import Gohosting from '@/pages/hosting/gohosting/index'
+import Steps2 from '@/pages/hosting/gohosting/steps2'
+import Fittings from '@/pages/hosting/gohosting/fittings'
+import Uploadimg from '@/pages/hosting/gohosting/uploadimg'
 
 Vue.use(Router)
 
@@ -99,6 +105,7 @@ export default new Router({
     { path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
     { path: '/helpCenter', component: HelpCenter, meta: { title: '帮助中心' } },
     { path: '/integral', component: Integral, meta: { title: '我的积分' } },
+    { path: '/cart', component: Cart, meta: { title: '购物车' } },
 
     //登录
     { path: '/login', component: Login, meta: { title: '登录' } },
@@ -117,6 +124,12 @@ export default new Router({
     { path: '/addPeople', component: AddPeople },
     { path: '/realname', component: Realname,meta: { title: '实名认证' } },
     { path: '/face', component: Face,meta: { title: '人脸识别' } },
+
+    //托管
+    { path: '/gohosting', component: Gohosting, meta: { title: '我要托管' } },
+    { path: '/steps2', component: Steps2, meta: { title: '我要托管' } },
+    { path: '/fittingsConfirm', component: Fittings, meta: { title: '配件确认' } },
+    { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片' } },
   ],
 
   scrollBehavior(to, from, savedPosition) {

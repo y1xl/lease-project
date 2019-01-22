@@ -11,6 +11,11 @@
       </van-tabs>
     </div>
 
+      <!-- <div class="ordernull">
+        <img src="../../assets/order-null.png" alt="" class="mar-b-10">
+        <div class="text-c">暂无订单</div>
+      </div> -->
+
     <div class="list">
       <OrderCard>
         <!-- <div class="flex-center border-blue fc-blue">支付</div> -->
@@ -149,6 +154,13 @@ export default {
 </style>
 
 <style scoped>
+.ordernull {
+  width: 85px;
+  height: 66px;
+  margin: 0 auto;
+  margin-top:110px;
+}
+
 .height{
   height: 50px;
 }

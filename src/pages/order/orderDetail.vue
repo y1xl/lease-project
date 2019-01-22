@@ -18,8 +18,26 @@
           </div>
           <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
         </div>
+
         <div>
-          <div class="title position">租赁信息
+          <div class="title position">
+            快递信息
+            <div class="l dot"></div>
+            <div class="r dot"></div>
+          </div>
+          <div class="mar-b-10 fsz13">顺丰快递 运单号：1234568987</div>
+          <div class="flex-align-items mar-b-10" @click="showlogistics=true">
+            <div class="flex-1">
+              <div class="fc-blue mar-b-10">订单已发货</div>
+              <div class="fsz12">2018-11-11</div>
+            </div>
+            <van-icon name="arrow" />
+          </div>
+        </div>
+
+        <div>
+          <div class="title position">
+            租赁信息
             <div class="l dot"></div>
             <div class="r dot"></div>
           </div>
@@ -41,6 +59,10 @@
               <span class="flex-1">2018.5.15</span>
             </div>
             <div class="flexbox">
+              <span>预约期望档期</span>
+              <span class="flex-1">2018.5.15</span>
+            </div>
+            <div class="flexbox">
               <span>取货方式</span>
               <span class="flex-1">自取;本人</span>
             </div>
@@ -50,6 +72,12 @@
               <span class="flex-1">
                 深圳市龙华新区龙华街道九方A座
                 1001号
+              </span>
+            </div>
+            <div class="flexbox">
+              <span>配送时间段</span>
+              <span class="flex-1">
+                11:00-13:00
               </span>
             </div>
             <div class="flexbox">
@@ -93,19 +121,20 @@
             </div>
             <div class="flexbox">
               <span>时间点</span>
-              <span class="flex-1">09:00-11:00</span>
+              <span class="flex-1">09:00</span>
             </div>
             <div class="flexbox">
-              <span>自取联系人</span>
+              <span>联系人</span>
               <span class="flex-1">曾小姐</span>
             </div>
             <div class="flexbox">
-              <span>自取手机号码</span>
+              <span>手机号码</span>
               <span class="flex-1">18822815757</span>
             </div>
             <!-- 待付-取货方式自取 end-->
           </div>
         </div>
+
         <div>
           <div class="title flex-jc-between position">
             <span>应付总金额</span>
@@ -116,7 +145,11 @@
           <div class="info">
             <!-- 租转售 -->
             <div class="flexbox">
-              <span>租金可抵额度</span>
+              <span>商品价格</span>
+              <span class="flex-1">¥1000.00</span>
+            </div>
+            <div class="flexbox">
+              <span>租金抵扣</span>
               <span class="flex-1">¥1000.00</span>
             </div>
             <!-- 租转售  end-->
@@ -142,6 +175,10 @@
             </div>
             <div class="flexbox">
               <span>配送运费</span>
+              <span class="flex-1">-¥50.00</span>
+            </div>
+            <div class="flexbox">
+              <span>快递费</span>
               <span class="flex-1">-¥50.00</span>
             </div>
             <div class="flexbox">
@@ -178,13 +215,29 @@
           </div>
           <div class="info">
             <div class="flexbox">
-              <span>可拿到货时间</span>
+              <span>到货时间</span>
               <span class="flex-1">1-3天</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <van-popup v-model="showlogistics" >
+      <div class="text-c pd-15">
+        快递信息
+        <div class="fr"><van-icon name="close" @click="showlogistics=false"/></div>
+      </div>
+      <div class='progress position'>
+        <div v-for="(item,index) in wuliu" :key="index">
+          <div class='time text-c'>
+            <div>07:45</div>
+          </div>
+          <div class='sdot'></div>
+          <div>[深圳] 快件已到达深圳快件已到达深圳</div>
+        </div>
+      </div>
+    </van-popup>
 
     <div class="height"></div>
 
@@ -207,7 +260,8 @@ import { ImagePreview } from 'vant';
 export default {
   data(){
     return {
-      
+      showlogistics:false,
+      wuliu:[1,2,3]
     }
   },
   methods:{
@@ -226,6 +280,9 @@ export default {
 }
 .fsz13 {
   font-size: 13px;
+}
+.fsz12 {
+  font-size: 12px;
 }
 .fsz16 {
   font-size: 16px;
@@ -313,5 +370,38 @@ export default {
   box-sizing: border-box;
   margin-left: 10px;
   font-size: 13px;
+}
+
+.progress{
+  width: 285px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.progress > div {
+  margin-left: 50px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-left: 1px solid #ccc;
+  position: relative;
+}
+
+.progress .time {
+  position: absolute;
+  left: -50px;
+  top: 10px;
+  font-size: 12px;
+}
+
+.progress .sdot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 12px;
+  left: -5px;
+  overflow: hidden;
+  background-color: #E0E0E0;
+  display: inline-block;
 }
 </style>

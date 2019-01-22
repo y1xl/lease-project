@@ -63,11 +63,11 @@
 
         <div class="bgc mar-b-10">
             <template v-if="selected==0">
-            <div class="flex-jc-between border-b pd-15"><span>租金可抵消费额度</span><span>¥3000.00</span></div>
-            <div class="flex-jc-between border-b pd-15"><span>可拿到货时间</span><span>1-3天</span></div>
+            <div class="flex-jc-between border-b pd-15"><span>租金抵扣</span><span>¥3000.00</span></div>
+            <div class="flex-jc-between border-b pd-15"><span>到货时间</span><span>1-3天</span></div>
             <div class="flex-jc-between border-b pd-15"><span>享受优惠</span><span>-¥50.00</span></div>
             </template>
-            <div class="flex-jc-between border-b pd-15" v-show="selected==1"><span>租金可抵消费额度</span><span>¥2050.00</span></div>
+            <div class="flex-jc-between border-b pd-15" v-show="selected==1"><span>租金抵扣</span><span>¥2050.00</span></div>
             <div class="flex-jc-between pd-15"><span>应付总额</span><span class="fc-red">¥2050.00</span></div>
         </div>
 

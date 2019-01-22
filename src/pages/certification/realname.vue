@@ -4,19 +4,19 @@
             <div class="pd-15" style="padding-bottom:0">身份证拍照示例</div>
             <div class="sample flex-jc-between pd-15" >
                 <div>
-                    <div><img src="../../assets/idcard1.png" alt=""></div>
+                    <div class="mar-b-10 position"><img src="../../assets/idcard1.png" alt=""><img src="../../assets/icon-true.png" alt="" class="icons"></div>
                     <div class="fsz12 text-c">居中清晰</div>
                 </div>
                 <div>
-                    <div><img src="../../assets/idcard1.png" alt=""></div>
+                    <div class="mar-b-10 position"><img src="../../assets/idcard2.png" alt=""><img src="../../assets/icon-false.png" alt="" class="icons"></div>
                     <div class="fsz12 text-c">边框缺失</div>
                 </div>
                 <div>
-                    <div><img src="../../assets/idcard1.png" alt=""></div>
+                    <div class="mar-b-10 position"><img src="../../assets/idcard3.png" alt=""><img src="../../assets/icon-false.png" alt="" class="icons"></div>
                     <div class="fsz12 text-c">照片模糊</div>
                 </div>
                 <div>
-                    <div><img src="../../assets/idcard1.png" alt=""></div>
+                    <div class="mar-b-10 position"><img src="../../assets/idcard4.png" alt=""><img src="../../assets/icon-false.png" alt="" class="icons"></div>
                     <div class="fsz12 text-c">闪光强烈</div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="bgc box-sizing">
-            <div class="pd-lr-15">上传身份证 人像面</div>
+            <div class="pd-lr-15">上传身份证 国徽面</div>
             <div class="flex-center box">
                 <van-uploader :after-read="onRead2" accept="image/png, image/jpeg" multiple>
                     <div class="upload flex-center"><img src="../../assets/icon-camera.png" alt=""></div>
@@ -109,6 +109,14 @@ export default {
 .sample img {
     width: 68px;
     height: 52px;
+}
+.sample .icons {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%)
 }
 
 .box {

@@ -52,7 +52,10 @@
         <div class="mar-b-10">
             <van-cell title="租期" center >
                 <div class="time">
-                    <div class="border text-line flex-center" @click="showweek = true">{{weektext}}</div>
+                    <div class="border text-line flex-center" @click="showweek = true">
+                        {{weektext}}
+                        <img src="../../assets/icon-triangle.png" class="triangleimg">
+                    </div>
                     <div class="border flex-center">
                         <input type="text">
                     </div>
@@ -109,7 +112,7 @@
         <div class="bgc pd-15">
             <div class="mar-b-10 flexbox">
                 <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
-                <span class="pdl10" @click="showconsent=true">同意租赁协议</span>
+                <span class="pdl10">同意租赁协议</span>
             </div>
             <div><div class="btn text-c" @click="nextface">信用免押支付</div></div>
         </div>
@@ -124,15 +127,8 @@
             />
         </van-popup>
 
-
         <van-popup v-model="showweek" position="bottom" :close-on-click-overlay="false">
             <van-picker :columns="columns" show-toolbar @cancel="showweek = false" @confirm="onConfirmWeek"/>
-        </van-popup>
-
-        <van-popup v-model="showconsent">
-            <div>一、入股面积
-入股面积以《土地承包证》所记载的面积为准，甲方将红旗村委会六组分配承包的土地全部入股乙方，其中：水田 亩，旱地 亩，从事生态农业开发项目。
-二、入股方式。股份按确定的土地扭转价格折算(1元1股)，并由乙方发给农业合作社股份登记证。</div>
         </van-popup>
     </div>
 </template>
@@ -153,7 +149,6 @@ export default {
             weektext: '请选择',
             checked: false,
             isconsent:true,//协议
-            showconsent:false,//协议
         }
     },
     methods:{
@@ -212,6 +207,12 @@ export default {
     margin-right: 10px;
 }
 
+.triangleimg {
+    width: 10px;
+    height: 6px;
+    vertical-align: middle;
+    margin-left: 2px;
+}
 .time {
     display: flex;
 }

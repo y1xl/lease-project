@@ -4,7 +4,10 @@
             <div class="border-b flex-jc-between header flex-align-items">
                 <span>选择续租的时间</span>
                 <div class="time">
-                    <div class="border text-line" @click="isshow = true">{{timetext}}</div>
+                    <div class="border text-line" @click="isshow = true">
+                        {{timetext}}
+                        <img src="../../assets/icon-triangle.png" class="triangleimg">
+                    </div>
                     <div class="border">
                         <input type="text">
                     </div>
@@ -39,9 +42,9 @@
 
         <div class="pd-t-100"><div class="btn text-c">提交</div></div>
 
-        <div v-show="isshow" class="model full">
-            <div class="main"><van-picker :columns="columns" show-toolbar @confirm="onConfirm" @cancel="isshow = false"/></div>
-        </div>
+        <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
+            <van-picker :columns="columns" show-toolbar @cancel="isshow = false" @confirm="onConfirm"/>
+        </van-popup>
     </div>
 </template>
 
@@ -70,6 +73,11 @@ export default {
     width: 20px;
     height: 20px;
     padding-right: 10px;
+    vertical-align: middle;
+}
+.triangleimg {
+    width: 10px;
+    height: 6px;
     vertical-align: middle;
 }
 .header{
@@ -105,18 +113,4 @@ export default {
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
 }
 
-.model {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, .5);
-    z-index: 1;
-}
-.main {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}
 </style>
