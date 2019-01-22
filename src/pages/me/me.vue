@@ -1,5 +1,5 @@
 <template>
-  <div class="bgc">
+  <div>
     <div class="flex-jc-between manber_b" @click="myInformat">
       <div class="flex-align-items flex_box">
         <div class="head_img">
@@ -12,39 +12,35 @@
       </div>
       <img class="hg" src="../../assets/hg.png">
     </div>
-    <div class="mebox">
-      <div class="position me">
-        <div style="padding-top: 10px;" class="myzf">
-          <van-cell is-link center to="/certification">
-            <template slot="icon">
-              <img src="../../assets/myrz.png" alt="图标" class="left_img">
-            </template>
-            <template slot="title">
-              <div>免押认证</div>
-            </template>
-          </van-cell>
-        </div>
+    <div class="mebox bgc">
+      <van-cell is-link center to="/certification">
+        <template slot="icon">
+          <img src="../../assets/myrz.png" alt="图标" class="left_img">
+        </template>
+        <template slot="title">
+          <div>免押认证</div>
+        </template>
+      </van-cell>
 
-        <van-cell is-link center to="/Integral">
-          <template slot="icon">
-            <img src="../../assets/jf.png" alt="图标" class="left_img">
-          </template>
-          <template slot="title">
-            <div>我的积分</div>
-          </template>
-        </van-cell>
+      <van-cell is-link center to="/Integral">
+        <template slot="icon">
+          <img src="../../assets/jf.png" alt="图标" class="left_img">
+        </template>
+        <template slot="title">
+          <div>我的积分</div>
+        </template>
+      </van-cell>
 
-        <div class="hang">
-          <van-cell is-link center to>
-            <template slot="icon">
-              <img src="../../assets/tg.png" alt="图标" class="left_img">
-            </template>
-            <template slot="title">
-              <div>我的托管</div>
-            </template>
-          </van-cell>
-        </div>
+      <van-cell is-link center to="Trusteeship">
+        <template slot="icon">
+          <img src="../../assets/tg.png" alt="图标" class="left_img">
+        </template>
+        <template slot="title">
+          <div>我的托管</div>
+        </template>
+      </van-cell>
 
+<<<<<<< HEAD
         <van-cell is-link center to="/cart">
           <template slot="icon">
             <img src="../../assets/gwc.png" alt="图标" class="left_img">
@@ -53,47 +49,53 @@
             <div>购物车</div>
           </template>
         </van-cell>
+=======
+      <van-cell is-link center to>
+        <template slot="icon">
+          <img src="../../assets/gwc.png" alt="图标" class="left_img">
+        </template>
+        <template slot="title">
+          <div>购物车</div>
+        </template>
+      </van-cell>
+>>>>>>> db10d69554dce9f4b88eaecd3368f2352631a15a
 
-        <van-cell is-link center to="/MyBalance">
+      <van-cell is-link center to="/MyBalance">
+        <template slot="icon">
+          <img src="../../assets/ye.png" alt="图标" class="left_img">
+        </template>
+        <template slot="title">
+          <div>账户余额</div>
+        </template>
+      </van-cell>
+      <div class="coupon">
+        <van-cell is-link center to="/Coupon">
           <template slot="icon">
-            <img src="../../assets/ye.png" alt="图标" class="left_img">
+            <img src="../../assets/yhq.png" alt="图标" class="left_img">
           </template>
           <template slot="title">
-            <div>账户余额</div>
-          </template>
-        </van-cell>
-
-        <div style="padding: 10px 0;border-bottom: solid 2px #F7F7F7; ">
-          <van-cell is-link center to="/Coupon">
-            <template slot="icon">
-              <img src="../../assets/yhq.png" alt="图标" class="left_img">
-            </template>
-            <template slot="title">
-              <div>优惠券</div>
-            </template>
-          </van-cell>
-        </div>
-
-        <div style="padding-top: 10px;">
-          <van-cell is-link center to="/HelpCenter">
-            <template slot="icon">
-              <img src="../../assets/bz.png" alt="图标" class="left_img">
-            </template>
-            <template slot="title">
-              <div>帮助中心</div>
-            </template>
-          </van-cell>
-        </div>
-
-        <van-cell is-link center to>
-          <template slot="icon">
-            <img src="../../assets/sz.png" alt="图标" class="left_img">
-          </template>
-          <template slot="title">
-            <div>设置</div>
+            <div>优惠券</div>
           </template>
         </van-cell>
       </div>
+      <div class="hcenter">
+        <van-cell is-link center to="/HelpCenter">
+          <template slot="icon">
+            <img src="../../assets/bz.png" alt="图标" class="left_img">
+          </template>
+          <template slot="title">
+            <div>帮助中心</div>
+          </template>
+        </van-cell>
+      </div>
+      <van-cell is-link center to="Setup">
+        <template slot="icon">
+          <img src="../../assets/sz.png" alt="图标" class="left_img">
+        </template>
+        <template slot="title">
+          <div>设置</div>
+        </template>
+      </van-cell>
     </div>
   </div>
 </template>
@@ -109,12 +111,6 @@ export default {
 };
 </script>
 
-<style>
-.myzf .van-cell {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-</style>
 
 <style scoped>
 .manber_b {
@@ -150,20 +146,22 @@ export default {
   margin-bottom: 10px;
 }
 .hg {
-  margin: 0 12px 12px 0;
+  margin: 0 15px 15px 0;
   width: 20px;
   height: 17px;
 }
 .mebox {
-  width: 100%;
+  margin: -50px 15px 15px 15px;
+  overflow: hidden;
+  border-radius: 10px;
 }
-.me {
-  width: 296px;
-  height: 380px;
-  top: -60px;
-  margin: 0 auto;
+.coupon {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
 }
-
+.hcenter {
+  padding-top: 15px;
+}
 .left_img {
   width: 17px;
   height: 17px;

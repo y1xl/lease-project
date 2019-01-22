@@ -55,9 +55,6 @@ export default {
     };
   },
   methods: {
-    routerback() {
-      this.$router.back(-1);
-    },
     ontab(index, title) {
       console.log(index, title);
       if (index == 3) {

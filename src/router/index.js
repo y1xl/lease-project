@@ -7,7 +7,7 @@ import Order from '@/pages/order/orderList'
 import Shop from '@/pages/shop/shopList'
 //产品
 import Goods from '@/pages/home/index_more'
-import Trusteeship from '@/pages/home/trusteeship'
+import Extension from '@/pages/home/extension'
 import WelfareAgency from '@/pages/home/welfareAgency'
 import ProductDetail from '@/pages/home/productDetail'
 import WordMouth from '@/pages/home/wordMouth'
@@ -39,6 +39,10 @@ import BankCard from '@/pages/me/bankCard'
 import HelpCenter from '@/pages/me/helpCenter'
 import Integral from '@/pages/me/integral'
 import Cart from '@/pages/me/cart'
+import CommonProblem from '@/pages/me/commonProblem'
+import Setup from '@/pages/me/setup'
+import Trusteeship from '@/pages/me/trusteeship'
+
 
 //登录
 import Login from '@/pages/login/login'
@@ -63,6 +67,11 @@ import Steps2 from '@/pages/hosting/gohosting/steps2'
 import Fittings from '@/pages/hosting/gohosting/fittings'
 import Uploadimg from '@/pages/hosting/gohosting/uploadimg'
 
+import HostDetail from '@/pages/hosting/myhosting/hostDetail'
+import HostCancel from '@/pages/hosting/myhosting/hostCancel'
+import PlatformDeli from '@/pages/hosting/myhosting/platformDeli'
+import PostDeli from '@/pages/hosting/myhosting/postDeli'
+
 Vue.use(Router)
 
 export default new Router({
@@ -86,7 +95,7 @@ export default new Router({
     { path: '/calendar', component: Calendar, meta: { title: '时间' } },
     //产品
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
-    { path: '/trusteeship', component: Trusteeship, meta: { title: '我要推广' } },
+    { path: '/extension', component: Extension, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
     { path: '/productDetail', component: ProductDetail, meta: { title: 'SKU信息' } },
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
@@ -106,6 +115,10 @@ export default new Router({
     { path: '/helpCenter', component: HelpCenter, meta: { title: '帮助中心' } },
     { path: '/integral', component: Integral, meta: { title: '我的积分' } },
     { path: '/cart', component: Cart, meta: { title: '购物车' } },
+    { path: '/commonProblem', component: CommonProblem, meta: { title: '常见问题' } },
+    { path: '/setup', component: Setup, meta: { title: '设置' } },
+    { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管' } },
+
 
     //登录
     { path: '/login', component: Login, meta: { title: '登录' } },
@@ -130,6 +143,14 @@ export default new Router({
     { path: '/steps2', component: Steps2, meta: { title: '我要托管' } },
     { path: '/fittingsConfirm', component: Fittings, meta: { title: '配件确认' } },
     { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片' } },
+    { path: '/realname', component: Realname, meta: { title: '实名认证' } },
+    { path: '/face', component: Face, meta: { title: '人脸识别' } },
+
+    { path: '/hostDetail', component: HostDetail, meta: { title: '托管详情' } },
+    { path: '/hostCancel', component: HostCancel, meta: { title: '取消托管' } },
+    { path: '/platformDeli', component: PlatformDeli, meta: { title: '平台配送' } },
+    { path: '/postDeli', component: PostDeli, meta: { title: '快递交付' } },
+
   ],
 
   scrollBehavior(to, from, savedPosition) {

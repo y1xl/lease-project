@@ -70,7 +70,7 @@ export default {
   font-size: 13px;
 }
 .btn {
-  width: 100px;
+  width: 99px;
   height: 25px;
   line-height: 25px;
   background: linear-gradient(90deg, #60c0fd, #4ea9f9);

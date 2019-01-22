@@ -1,0 +1,39 @@
+<template>
+  <div class="bgc full">
+    <div class="flex-jc-between flex-align-items box border-b">
+      <div>通知设置</div>
+
+      <van-switch v-model="checked" active-color="#4EA9F9" inactive-color="#fff"/>
+    </div>
+
+    <div class="btn text-c">退出登陆</div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      checked: false
+    };
+  },
+
+  methods: {}
+};
+</script>
+
+<style scoped>
+.box {
+  margin: 0 15px;
+  height: 40px;
+}
+.btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  background: #4ea9f9;
+}
+</style>

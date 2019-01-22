@@ -2,13 +2,12 @@
   <div>
     <div class="myinfor">
       <div class="me bgc">
-        <div class="nick_name">
-          <van-cell center value="DORO_THY" to>
-            <template slot="title">
-              <div>昵称</div>
-            </template>
-          </van-cell>
-        </div>
+        <van-cell center value="DORO_THY" to>
+          <template slot="title">
+            <div>昵称</div>
+          </template>
+        </van-cell>
+
         <van-cell is-link center value="女" to>
           <template slot="title">
             <div>性别</div>
@@ -42,20 +41,17 @@ export default {
 };
 </script>
 
-<style>
-.nick_name .van-cell {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.bri_day .van-cell {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-</style>
-
-
 <style scoped>
+.myinfor {
+  margin: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.me {
+  width: 300px;
+  height: 100%;
+}
 .tx {
   padding: 10px 0;
   font-size: 12px;
@@ -69,16 +65,5 @@ export default {
 .head_img > img {
   width: 45px;
   height: 45px;
-}
-.myinfor {
-  width: 100%;
-}
-
-.me {
-  width: 300px;
-  height: 100%;
-  margin: 0 auto;
-  border-radius: 5px;
-  margin-top: 12px;
 }
 </style>

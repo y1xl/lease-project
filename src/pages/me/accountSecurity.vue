@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="account_sec bgc">
-      <div class="tel" style="margin-top: 12px;">
-        <van-cell center value="138xxxx4568" to>
+      <div class="tel">
+        <van-cell center is-link value="138xxxx4568" to>
           <template slot="title">
             <div>绑定手机号</div>
           </template>
