@@ -7,12 +7,16 @@
         <span>搜索你想要的商品</span>
       </div>
     </div>
-    <div class="banner text-c">
-      <van-swipe :autoplay="3000" @change="onChange">
-        <van-swipe-item v-for="(item, index) in images" :key="index">
-          <img :src="item">
-        </van-swipe-item>
-      </van-swipe>
+    <div class="flex-jc-center">
+      <div class="banner bgc">
+        <van-swipe :autoplay="3000">
+          <van-swipe-item v-for="(item, index) in images" :key="index">
+            <div class="img_box">
+              <img :src="item">
+            </div>
+          </van-swipe-item>
+        </van-swipe>
+      </div>
     </div>
     <div class="flex-jc-around">
       <div class="tg">
@@ -141,10 +145,9 @@ export default {
       lat: "",
       lag: "",
       images: [
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99"
+        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
+        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
+        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
       ],
       prolist: [
         { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
@@ -258,12 +261,16 @@ export default {
 }
 
 .banner {
-  width: 100%;
+  width: 290px;
   height: 160px;
 }
-.banner img {
-  width: 93.3%;
+.img_box {
+  width: 290px;
   height: 160px;
+}
+.img_box img {
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
 }
 .tg {

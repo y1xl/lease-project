@@ -4,7 +4,7 @@
       <div class="all_money">￥863.08</div>
       <div class="kt">可提现金额</div>
       <div class="flex-center">
-        <div class="btn" @click="toBankCard">提现</div>
+        <div class="btn" @click="toCash">提现</div>
       </div>
     </div>
 
@@ -41,9 +41,9 @@ export default {
       this.active = index;
     },
 
-    //提现银行卡
-    toBankCard() {
-      this.$router.push({ path: "/BankCard" });
+    //提现
+    toCash() {
+      this.$router.push({ path: "/Cash" });
     }
   }
 };

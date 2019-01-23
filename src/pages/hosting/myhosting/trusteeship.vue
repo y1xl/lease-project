@@ -16,13 +16,15 @@
                 <div class="goods_title newline">蚂蚁摄影Canon/佳能EOS200D 单反相机入门级入门级</div>
                 <div class="flex-jc-between flex-align-items">
                   <div class="state">
-                    <span>审核中</span>
-
-                    <!-- <span>在库</span>
-                    <span>出租中</span>
-                    <span>已退回</span>-->
+                    <span v-if="ind==1">审核中</span>
+                    
+                    <span v-if="ind==2">在库</span>
+                    <!-- <span>出租中</span> -->
+                    <span v-if="ind==3">已退回</span>
                   </div>
-                  <div class="btn border-blue">取消托管</div>
+                  <div>
+                    <div class="btn border-blue" v-if="ind==2" @click="cancelTg">取消托管</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -38,17 +40,23 @@ export default {
   data() {
     return {
       navtitle: ["全部", "审核中", "托管中", "已退回"],
-      couponlist: [{}, {}, {}]
+      couponlist: [{}, {}, {}],
+      ind: ""
     };
   },
   methods: {
     ontab(index, title) {
       console.log(index, title);
-      this.index = index;
+      var ind = index;
+      this.ind = ind;
     },
     //托管详情
     toDetail() {
       this.$router.push({ path: "/HostDetail" });
+    },
+    //取消托管
+    cancelTg() {
+      this.$router.push({ path: "/HostCancel" });
     }
   }
 };

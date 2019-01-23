@@ -19,9 +19,6 @@ export default {
     };
   },
   methods: {
-    routerback() {
-      this.$router.back(-1);
-    },
     //倒计时
     countDown() {
       if (!this.canClick) return;

@@ -5,10 +5,12 @@
         <div class="caricon fc-red" @click="showinfocar=true">
           <van-icon name="shopping-cart"/>
         </div>
-        <div class="banner flex-center bgc">
+        <div class="banner bgc">
           <van-swipe :autoplay="3000">
             <van-swipe-item v-for="(item, index) in images" :key="index">
-              <img :src="item">
+              <div class="img_box">
+                <img :src="item">
+              </div>
             </van-swipe-item>
           </van-swipe>
         </div>
@@ -312,16 +314,20 @@ export default {
 }
 .banner_box {
   width: 100%;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 .banner {
-  width: 92%;
+  width: 290px;
   height: 230px;
   box-shadow: 0px 1px 7px 1px rgba(233, 235, 237, 1);
 }
-.banner img {
-  width: 100px;
-  height: 100px;
+.img_box {
+  width: 290px;
+  height: 230px;
+}
+.img_box img {
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
 }
 
