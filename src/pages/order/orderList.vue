@@ -5,7 +5,7 @@
       <div :class="{ selected: selected==1 }" @click="nav(1)">租转售</div>
     </div>
 
-    <div id="nav">
+    <div id="ordernav">
       <van-tabs @click="ontag" v-model="active">
         <!-- <van-tab :title="item" v-for="(item,index) in navarr" :key="index"></van-tab> -->
         <van-tab :title="item" v-for="(item,index) in navarr" :key="index">
@@ -153,11 +153,11 @@ export default {
 </script>
 
 <style>
-#nav .van-tabs__line {
+#ordernav .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
-#nav .van-tab span {
+#ordernav .van-tab span {
   font-size: 8px;
 }
 </style>

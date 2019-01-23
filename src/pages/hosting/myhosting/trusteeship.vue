@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="nav">
-      <van-tabs @click="ontab">
+      <van-tabs @click="ontab" v-model="ind">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
           <div class="position" v-for="(item,index) in couponlist" :key="index">
             <div class="box flex-jc-around bgc" @click="toDetail">
@@ -16,13 +16,15 @@
                 <div class="goods_title newline">蚂蚁摄影Canon/佳能EOS200D 单反相机入门级入门级</div>
                 <div class="flex-jc-between flex-align-items">
                   <div class="state">
-                    <span>审核中</span>
-
-                    <!-- <span>在库</span>
-                    <span>出租中</span>
-                    <span>已退回</span>-->
+                    <span v-if="ind==1">审核中</span>
+                    
+                    <span v-if="ind==2">在库</span>
+                    <!-- <span>出租中</span> -->
+                    <span v-if="ind==3">已退回</span>
                   </div>
-                  <div class="btn border-blue">取消托管</div>
+                  <div>
+                    <div class="btn border-blue" v-if="ind==2" @click.stop="cancelTg">取消托管</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -38,17 +40,21 @@ export default {
   data() {
     return {
       navtitle: ["全部", "审核中", "托管中", "已退回"],
-      couponlist: [{}, {}, {}]
+      couponlist: [{}, {}, {}],
+      ind: 0
     };
   },
   methods: {
     ontab(index, title) {
       console.log(index, title);
-      this.index = index;
     },
     //托管详情
     toDetail() {
       this.$router.push({ path: "/HostDetail" });
+    },
+    //取消托管
+    cancelTg() {
+      this.$router.push({ path: "/HostCancel" });
     }
   }
 };
@@ -56,13 +62,8 @@ export default {
 
 <style>
 #nav .van-tabs__line {
-  height: 5px;
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
-}
-
-#nav .van-tab {
-  font-size: 14px;
 }
 </style>
 

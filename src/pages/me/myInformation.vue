@@ -32,7 +32,7 @@
           </van-cell>
         </div>
         <div class="bdzh">
-          <van-cell is-link center to>
+          <van-cell is-link center to="/accountBinding">
             <template slot="title">
               <div>绑定账号</div>
             </template>

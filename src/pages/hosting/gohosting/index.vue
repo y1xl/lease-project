@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="nav" class="border-b">
+        <div id="nav" >
             <van-tabs v-model="active">
                 <van-tab title="有硬件"></van-tab>
                 <van-tab title="无硬件"></van-tab>

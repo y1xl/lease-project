@@ -4,14 +4,14 @@
       <div class="all_money">￥863.08</div>
       <div class="kt">可提现金额</div>
       <div class="flex-center">
-        <div class="btn" @click="toBankCard">提现</div>
+        <div class="btn" @click="toCash">提现</div>
       </div>
     </div>
 
     <div id="nav">
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
-          <div v-for="(item,index) in 5">
+          <div v-for="(item,index) in 5" :key="index">
             <div class="flex-center bgc">
               <div class="flex-jc-between flex-align-items pd-15 bala_deta border-b">
                 <div>
@@ -41,9 +41,9 @@ export default {
       this.active = index;
     },
 
-    //提现银行卡
-    toBankCard() {
-      this.$router.push({ path: "/BankCard" });
+    //提现
+    toCash() {
+      this.$router.push({ path: "/Cash" });
     }
   }
 };

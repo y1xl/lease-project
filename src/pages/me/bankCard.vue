@@ -14,12 +14,14 @@
     </div>
 
     <div class="flex-jc-center">
-      <div class="card_box bgc">
-        <div class="flex-jc-center">
-          <img class="add_img" src="../../assets/my.png">
+      <router-link to="BindingCard">
+        <div class="card_box bgc">
+          <div class="flex-jc-center">
+            <img class="add_img" src="../../assets/jiahao.png">
+          </div>
+          <div class="text-c f12_grey add_card">添加银行卡</div>
         </div>
-        <div class="text-c f12_grey add_card">添加银行卡</div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

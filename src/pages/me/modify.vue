@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bgc full">
     <div class="modify text-c">
       <div class="tel_num">您当前绑定手机号138xxxx4586</div>
       <div class="flex-jc-center">
@@ -19,9 +19,6 @@ export default {
     };
   },
   methods: {
-    routerback() {
-      this.$router.back(-1);
-    },
     //倒计时
     countDown() {
       if (!this.canClick) return;

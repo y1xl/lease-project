@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="bgc">
-      <div class="border-b word_num">
-        <div class="flexbox xx_comment">
+      <!-- <div class="border-b word_num">
+        <div class="flex-align-items xx_comment">
           <span>评分</span>
           <span class="wuxing">
             <van-rate v-model="value" disabled disabled-color="#FFB10E"/>
@@ -15,10 +15,10 @@
           <span class="border comment">一般(69)</span>
           <span class="border comment">不好(0)</span>
         </div>
-      </div>
+      </div> -->
       <div class="flex-jc-center">
         <div class="word_mouth">
-          <div class="border-b" v-for="(item,index ) in wordlist">
+          <div class="border-b" v-for="(item,index ) in wordlist" :key="index">
             <div class="flex-align-items head_name">
               <img class="head_img" src="../../assets/my.png" alt>
               <span>李***莉</span>
@@ -35,8 +35,7 @@
               级喜欢 加上水晶壳就更优秀了 很多模式可以玩 适合爱拍照的
               人 如果只是想记录生活的话 我觉得mini9就够了 总之很喜欢！
             </div>
-            <div class="imglist" v-for="(item,index) in imglist">
-              <!-- <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt> -->
+            <div class="imglist" v-for="(item,index) in imglist" :key="index">
               <img class="itemimg" :src="item">
             </div>
           </div>
@@ -165,7 +164,7 @@ export default {
 .word_mouth {
   width: 92%;
   height: 100%;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 .head_name,
 .com_det {

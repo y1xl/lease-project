@@ -36,14 +36,17 @@ import DetaInformation from '@/pages/me/detaInformation'
 import AccountSecurity from '@/pages/me/accountSecurity'
 import Modify from '@/pages/me/modify'
 import Coupon from '@/pages/me/coupon'
+import Cash from '@/pages/me/cash'
 import MyBalance from '@/pages/me/myBalance'
 import BankCard from '@/pages/me/bankCard'
+import BindingCard from '@/pages/me/bindingCard'
 import HelpCenter from '@/pages/me/helpCenter'
 import Integral from '@/pages/me/integral'
 import Cart from '@/pages/me/cart'
 import CommonProblem from '@/pages/me/commonProblem'
 import Setup from '@/pages/me/setup'
-import Trusteeship from '@/pages/me/trusteeship'
+import Rules from '@/pages/me/rules'
+import AccountBinding from '@/pages/me/accountBinding'
 
 
 //登录
@@ -70,10 +73,14 @@ import Fittings from '@/pages/hosting/gohosting/fittings'
 import Uploadimg from '@/pages/hosting/gohosting/uploadimg'
 import Gsuccessful from '@/pages/hosting/gohosting/successful'
 
+import Trusteeship from '@/pages/hosting/myhosting/trusteeship'
 import HostDetail from '@/pages/hosting/myhosting/hostDetail'
 import HostCancel from '@/pages/hosting/myhosting/hostCancel'
 import PlatformDeli from '@/pages/hosting/myhosting/platformDeli'
 import PostDeli from '@/pages/hosting/myhosting/postDeli'
+import SceneDeli from '@/pages/hosting/myhosting/sceneDeli'
+
+
 
 Vue.use(Router)
 
@@ -113,16 +120,20 @@ export default new Router({
     { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
     { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
     { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
-    { path: '/modify', component: Modify, meta: { title: '修改绑定手机号' } },
+    { path: '/modify', component: Modify, meta: { title: '修改密码' } },
     { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
     { path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
+    { path: '/cash', component: Cash, meta: { title: '提现' } },
     { path: '/bankCard', component: BankCard, meta: { title: '银行卡' } },
+    { path: '/bindingCard', component: BindingCard, meta: { title: '绑定银行卡' } },
     { path: '/helpCenter', component: HelpCenter, meta: { title: '帮助中心' } },
     { path: '/integral', component: Integral, meta: { title: '我的积分' } },
     { path: '/cart', component: Cart, meta: { title: '购物车' } },
     { path: '/commonProblem', component: CommonProblem, meta: { title: '常见问题' } },
+    { path: '/rules', component: Rules, meta: { title: '租赁规则' } },
     { path: '/setup', component: Setup, meta: { title: '设置' } },
-    { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管' } },
+    { path: '/accountBinding', component: AccountBinding, meta: { title: '账号绑定' } },
+
 
 
     //登录
@@ -140,8 +151,8 @@ export default new Router({
     { path: '/school', component: School, meta: { title: '学籍认证' } },
     { path: '/cpeople', component: cPeople, meta: { title: '添加紧急联系人' } },
     { path: '/addPeople', component: AddPeople },
-    { path: '/realname', component: Realname,meta: { title: '实名认证' } },
-    { path: '/face', component: Face,meta: { title: '人脸识别' } },
+    { path: '/realname', component: Realname, meta: { title: '实名认证' } },
+    { path: '/face', component: Face, meta: { title: '人脸识别' } },
 
     //托管
     { path: '/gohosting', component: Gohosting, meta: { title: '我要托管' } },
@@ -150,10 +161,13 @@ export default new Router({
     { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片' } },
     { path: '/gsuccessful', component: Gsuccessful, meta: { title: '提交成功' } },
 
+    { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管' } },
     { path: '/hostDetail', component: HostDetail, meta: { title: '托管详情' } },
     { path: '/hostCancel', component: HostCancel, meta: { title: '取消托管' } },
+    { path: '/sceneDeli', component: SceneDeli, meta: { title: '现场交付' } },
     { path: '/platformDeli', component: PlatformDeli, meta: { title: '平台配送' } },
     { path: '/postDeli', component: PostDeli, meta: { title: '快递交付' } },
+
 
   ],
 

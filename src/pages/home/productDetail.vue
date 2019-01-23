@@ -5,10 +5,12 @@
         <div class="caricon fc-red" @click="showinfocar=true">
           <van-icon name="shopping-cart"/>
         </div>
-        <div class="banner ">
+        <div class="banner bgc">
           <van-swipe :autoplay="3000">
             <van-swipe-item v-for="(item, index) in images" :key="index">
-              <img :src="item">
+              <div class="img_box">
+                <img :src="item">
+              </div>
             </van-swipe-item>
           </van-swipe>
         </div>
@@ -126,7 +128,6 @@
             人 如果只是想记录生活的话 我觉得mini9就够了 总之很喜欢！
           </div>
           <div class="imglist" v-for="(item,index) in imglist" :key="index">
-            <!-- <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt> -->
             <img class="itemimg" :src="item">
           </div>
         </div>
@@ -154,7 +155,8 @@
         >
       </div>
     </div>
-    <div style=" height: 50px;"></div>
+
+    <div class="height"></div>
     <div class="bgc footer flex-align-items border-t">
       <div class="flex-jc-between">
         <div class="text-c margin_left">
@@ -301,6 +303,9 @@ export default {
 </script>
 
 <style scoped>
+.height {
+  height: 50px;
+}
 .fsize13 {
   font-size: 13px;
 }
@@ -310,16 +315,20 @@ export default {
 }
 .banner_box {
   width: 100%;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 .banner {
-  width: 92%;
+  width: 290px;
   height: 230px;
   box-shadow: 0px 1px 7px 1px rgba(233, 235, 237, 1);
 }
-.banner img {
-  width: 100px;
-  height: 100px;
+.img_box {
+  width: 290px;
+  height: 230px;
+}
+.img_box img {
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
 }
 

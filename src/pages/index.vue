@@ -1,22 +1,25 @@
 <template>
-  <div class="bgc">
-    <div class="flex-jc-between top_sear">
-      <div class="dw">附近门店：</div>
+  <div>
+    <div class="flex-jc-between top_sear bgc">
+      <div class="dw">附近门店：<span class="fc-blue">深圳龙华</span></div>
       <router-link class="sear flex-align-items" to="/search">
         <van-icon name="search"/>
         <span>搜索你想要的商品</span>
       </router-link>
     </div>
-
-    <div class="banner text-c" >
-      <van-swipe :autoplay="3000" >
-        <van-swipe-item v-for="(item, index) in images" :key="index">
-          <img :src="item">
-        </van-swipe-item>
-      </van-swipe>
+    <div class="flex-jc-center bgc" >
+      <div class="banner bgc">
+        <van-swipe :autoplay="3000">
+          <van-swipe-item v-for="(item, index) in images" :key="index">
+            <div class="img_box">
+              <img :src="item">
+            </div>
+          </van-swipe-item>
+        </van-swipe>
+      </div>
     </div>
 
-    <div class="flex-jc-around" v-show="active==0">
+    <div class="flex-jc-around bgc" v-show="active==0">
       <div class="tg">
         <router-link to="/gohosting">
           <img src="../assets/tuoguan.png"> 我要托管
@@ -34,42 +37,54 @@
       </div>
     </div>
 
-    <div id="nav">
+    <div id="nav" class="bgc">
       <van-tabs v-model="active">
         <van-tab title="热门">
-          <div class="flex-jc-between hb">
-            <div class="title">热门租赁</div>
-            <div class="m_txt" @click="more">更多
-              <van-icon name="arrow"/>
+
+          <div v-for="index in 3" :key="index"> 
+            <div class="flex-jc-between hb">
+              <div class="title">热门租赁</div>
+              <div class="m_txt flex-align-items" @click="more">
+                更多
+                <van-icon name="arrow"/>
+              </div>
             </div>
-          </div>
-
-          <div class="cp_box">
-            <div class="content">
-              <div class="redPacket">
-                <div
-                  class="item"
-                  v-for="(item, index) in prolist"
-                  :key="index"
-                  style="margin-right:10px;border-radius:4px;"
-                  @click="toDetail"
-                >
-                  <div class="img_box1 flex-center">
-                    <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
-                  </div>
-                  <div class="pro_title text-line">{{item.name}}</div>
-
-                  <div class="f12 price_box">
-                    <span style="color: #F21E1E;">¥</span>
-                    <span class="price">{{item.price}}</span>/日
-                  </div>
+            <div class="flex-jc-between border-b bgc camer_hm_box" >
+              <div class="camer_hm" style="margin-left: 10px;" @click="toDetail">
+                <div class="img_box2 flex-center">
+                  <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                </div>
+                <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
+                <div class="f12">
+                  <span style="color: #F21E1E;">¥</span>
+                  <span class="price">3.08</span>/日
+                </div>
+              </div>
+              <div class="camer_hm">
+                <div class="img_box2 flex-center">
+                  <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                </div>
+                <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
+                <div class="f12">
+                  <span style="color: #F21E1E;">¥</span>
+                  <span class="price">3.08</span>/日
+                </div>
+              </div>
+              <div class="camer_hm" style="margin-right: 10px;">
+                <div class="img_box2 flex-center">
+                  <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                </div>
+                <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
+                <div class="f12">
+                  <span style="color: #F21E1E;">¥</span>
+                  <span class="price">3.08</span>/日
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="em"></div>
         </van-tab>
+
         <van-tab title="相机">
           <div class="hb">
             <div class="title">热门推荐</div>
@@ -108,6 +123,7 @@
               </div>
             </div>
           </div>
+
           <div class="hb">
             <div class="title">所有产品</div>
             <div class="fl_pro_list bgc" v-for="(item, index) in flprolist" :key="index">
@@ -131,12 +147,15 @@
             </div>
           </div>
         </van-tab>
+
         <van-tab title="游戏">游戏</van-tab>
         <van-tab title="手机">手机</van-tab>
         <van-tab title="影音">影音</van-tab>
         <van-tab title="酷玩">酷玩</van-tab>
       </van-tabs>
     </div>
+    
+    <div class="em"></div>
   </div>
 </template>
 
@@ -212,12 +231,8 @@ export default {
 </script>
 <style>
 #nav .van-tabs__line {
-  height: 3px;
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
-}
-#nav .van-tab span {
-  font-size: 14px;
 }
 </style>
 
@@ -252,12 +267,16 @@ export default {
 }
 
 .banner {
-  width: 100%;
+  width: 290px;
   height: 160px;
 }
-.banner img {
-  width: 93.3%;
+.img_box {
+  width: 290px;
   height: 160px;
+}
+.img_box img {
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
 }
 .tg {
@@ -292,7 +311,7 @@ export default {
 
 .m_txt {
   font-size: 12px;
-  color: d0d0d0;
+  color: #d0d0d0;
   margin-right: 13px;
 }
 
@@ -366,7 +385,9 @@ export default {
 .fl_pro_list {
   width: 100%;
   padding-bottom: 20px;
-  padding-left: 10px;
+  /* padding-left: 10px; */
+  padding:0 10px;
+  box-sizing:border-box
 }
 .fl_pro_list:last-child {
   margin-bottom: 48px;
