@@ -3,9 +3,8 @@
     <div class="flex-jc-center">
       <div class="inputcode">
         <div class="tip_title text-c">请输入验证码</div>
-        <div class="text-c tel">13845687896</div>
-        <form>
-          <div class="border input_box flexbox">
+        <div class="text-c tel">{{phone}}</div>
+          <!-- <div class="border input_box flexbox">
             <div class="border_right">
               <input type="text" maxlength="1">
             </div>
@@ -24,21 +23,49 @@
             <div>
               <input type="text" maxlength="1">
             </div>
-          </div>
-          <button class="btn text-c" @click="toNext" type="submit">登陆</button>
-        </form>
+          </div> -->
+
+          <van-password-input :value="value" @focus="showKeyboard = true" :length="lengths"/>
+          <button class="btn text-c" @click="login" :class="value==''?'btn-grey':'bgc-blue'">登陆</button>
+
         <div class="text-c resent">重新发送</div>
       </div>
     </div>
+
+        <!-- 数字键盘 -->
+    <van-number-keyboard
+      :show="showKeyboard"
+      @input="onInput"
+      @delete="onDelete"
+      @blur="showKeyboard = false"
+    />
   </div>
 </template>
 
 <script>
 export default {
+  data(){
+    return{
+      phone: this.$route.params.phone,
+      value: '',
+      lengths: 4,
+      showKeyboard: true
+    }
+  },
   methods: {
-    //下一步
-    toNext() {
-      this.$router.push({ path: "/ResetPassword" });
+    onInput(key) {
+      this.value = (this.value + key).slice(0, this.lengths);
+    },
+    onDelete() {
+      this.value = this.value.slice(0, this.value.length - 1);
+    },
+    //登录
+    login() {
+      console.log(this.value)
+      if(this.value==''){
+        return
+      }
+      this.$router.replace({ path: "/" })
     }
   }
 };
@@ -78,8 +105,11 @@ export default {
   height: 40px;
   line-height: 40px;
   color: #fff;
-  background: rgba(191, 191, 191, 1);
+  /* background: rgba(191, 191, 191, 1); */
   border-radius: 20px;
   margin-top: 80px;
+}
+.btn-grey {
+  background: rgba(191, 191, 191, 1);
 }
 </style>

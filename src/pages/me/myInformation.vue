@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="myinfor">
-      <div class="me bgc" style="margin-top: 12px;">
+      <div class="me bgc">
         <div class="flex-jc-between flex-align-items tx">
-          <div style="padding-left: 13px;">我的头像</div>
+          <div>我的头像</div>
           <div class="head_img">
-            <img src="../../assets/mys.png">
+            <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
           </div>
         </div>
 
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="me bgc" style="margin-top: 15px;">
+      <div class="me bgc">
         <div class="zhaq">
           <van-cell is-link center to="/accountSecurity">
             <template slot="title">
@@ -70,11 +70,15 @@ export default {
   padding: 10px 0;
   font-size: 12px;
 }
+.tx > div:nth-of-type(1){
+  padding-left:12px;
+}
 .head_img {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   margin-right: 10px;
+  overflow: hidden;
 }
 .head_img > img {
   width: 45px;
@@ -82,6 +86,7 @@ export default {
 }
 .myinfor {
   width: 100%;
+  padding-top:12px;
 }
 
 .me {
@@ -89,5 +94,6 @@ export default {
   height: 100%;
   margin: 0 auto;
   border-radius: 5px;
+  margin-bottom:15px;
 }
 </style>

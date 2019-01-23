@@ -6,7 +6,7 @@
       <van-switch v-model="checked" active-color="#4EA9F9" inactive-color="#fff"/>
     </div>
 
-    <div class="btn text-c">退出登陆</div>
+    <div class="btn text-c" @click="logout">退出登陆</div>
   </div>
 </template>
 
@@ -15,10 +15,14 @@ export default {
   data() {
     return {
       checked: false
-    };
+    }
   },
 
-  methods: {}
+  methods: {
+    logout(){
+      this.$router.push({ path: '/login' })
+    }
+  }
 };
 </script>
 

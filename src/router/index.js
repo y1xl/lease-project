@@ -13,6 +13,8 @@ import ProductDetail from '@/pages/home/productDetail'
 import WordMouth from '@/pages/home/wordMouth'
 import Buy from '@/pages/home/buy'
 import Pay from '@/pages/home/pay'
+import Agreement from '@/pages/home/agreement'
+import Search from '@/pages/home/search'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -66,6 +68,7 @@ import Gohosting from '@/pages/hosting/gohosting/index'
 import Steps2 from '@/pages/hosting/gohosting/steps2'
 import Fittings from '@/pages/hosting/gohosting/fittings'
 import Uploadimg from '@/pages/hosting/gohosting/uploadimg'
+import Gsuccessful from '@/pages/hosting/gohosting/successful'
 
 import HostDetail from '@/pages/hosting/myhosting/hostDetail'
 import HostCancel from '@/pages/hosting/myhosting/hostCancel'
@@ -101,6 +104,8 @@ export default new Router({
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy', component: Buy, meta: { title: '下单' } },
     { path: '/pay', component: Pay, meta: { title: '额度' } },
+    { path: '/zagreement', component: Agreement, meta: { title: '协议' } },
+    { path: '/search', component: Search, meta: { title: '搜索' } },
 
     //个人中心
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
@@ -124,8 +129,8 @@ export default new Router({
     { path: '/login', component: Login, meta: { title: '登录' } },
     { path: '/passwordLogin', component: PasswordLogin, meta: { title: '密码登录' } },
     { path: '/forgetPassword', component: ForgetPassword, meta: { title: '忘记密码' } },
-    { path: '/resetPassword', component: ResetPassword, meta: { title: '重置密码' } },
-    { path: '/inputCode', component: InputCode, meta: { title: '输入验证码' } },
+    { path: '/resetPassword/:phone', component: ResetPassword, meta: { title: '重置密码' } },
+    { path: '/inputCode/:phone', component: InputCode, meta: { title: '输入验证码' } },
 
     //门店
     { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
@@ -143,8 +148,7 @@ export default new Router({
     { path: '/steps2', component: Steps2, meta: { title: '我要托管' } },
     { path: '/fittingsConfirm', component: Fittings, meta: { title: '配件确认' } },
     { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片' } },
-    { path: '/realname', component: Realname, meta: { title: '实名认证' } },
-    { path: '/face', component: Face, meta: { title: '人脸识别' } },
+    { path: '/gsuccessful', component: Gsuccessful, meta: { title: '提交成功' } },
 
     { path: '/hostDetail', component: HostDetail, meta: { title: '托管详情' } },
     { path: '/hostCancel', component: HostCancel, meta: { title: '取消托管' } },

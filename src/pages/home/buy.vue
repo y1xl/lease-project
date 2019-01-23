@@ -112,7 +112,7 @@
         <div class="bgc pd-15">
             <div class="mar-b-10 flexbox">
                 <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
-                <span class="pdl10">同意租赁协议</span>
+                <router-link to="/zagreement" class="pdl10">同意租赁协议</router-link>
             </div>
             <div><div class="btn text-c" @click="nextface">信用免押支付</div></div>
         </div>

@@ -16,7 +16,7 @@
       </div>
       <div>
         <router-link to="/shop">
-          <div class="img" v-if="selected=='shop'"><img src="./assets/tab/shops.png" ></div>
+          <div class="shops" v-if="selected=='shop'"><img src="./assets/tab/shops.png" ></div>
           <div class="img" v-else><img src="./assets/tab/shop.png" ></div>
           <p :class="{ 'fc-blue': selected=='shop' }">门店</p>
         </router-link>
@@ -98,6 +98,11 @@ export default {
 .nav .img {
   display: inline-block;
   width: 22px;
+  height: 22px;
+}
+.shops {
+  display: inline-block;
+  width: 18px;
   height: 22px;
 }
 </style>

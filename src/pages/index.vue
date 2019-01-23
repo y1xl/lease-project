@@ -2,31 +2,38 @@
   <div class="bgc">
     <div class="flex-jc-between top_sear">
       <div class="dw">附近门店：</div>
-      <div class="sear">
+      <router-link class="sear flex-align-items" to="/search">
         <van-icon name="search"/>
         <span>搜索你想要的商品</span>
-      </div>
+      </router-link>
     </div>
-    <div class="banner text-c">
-      <van-swipe :autoplay="3000" @change="onChange">
+
+    <div class="banner text-c" >
+      <van-swipe :autoplay="3000" >
         <van-swipe-item v-for="(item, index) in images" :key="index">
           <img :src="item">
         </van-swipe-item>
       </van-swipe>
     </div>
-    <div class="flex-jc-around">
+
+    <div class="flex-jc-around" v-show="active==0">
       <div class="tg">
         <router-link to="/gohosting">
           <img src="../assets/tuoguan.png"> 我要托管
         </router-link>
       </div>
-      <div class="tg" @click="toExtension">
+      <div class="tg">
+        <router-link to="/Extension">
         <img src="../assets/wytg.png"> 我要推广
+        </router-link>
       </div>
-      <div class="tg" @click="toWelfare">
+      <div class="tg">
+        <router-link to="/WelfareAgency">
         <img src="../assets/fls.png"> 福利社
+        </router-link>
       </div>
     </div>
+
     <div id="nav">
       <van-tabs v-model="active">
         <van-tab title="热门">
@@ -48,7 +55,7 @@
                   @click="toDetail"
                 >
                   <div class="img_box1 flex-center">
-                    <img class="img" src="../assets/mys.png">
+                    <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
                   </div>
                   <div class="pro_title text-line">{{item.name}}</div>
 
@@ -70,7 +77,7 @@
           <div class="flex-jc-between border-b bgc camer_hm_box">
             <div class="camer_hm" style="margin-left: 10px;">
               <div class="img_box2 flex-center">
-                <img class="img" src="../assets/mys.png">
+                <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -81,7 +88,7 @@
 
             <div class="camer_hm">
               <div class="img_box2 flex-center">
-                <img class="img" src="../assets/mys.png">
+                <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -92,7 +99,7 @@
 
             <div class="camer_hm" style="margin-right: 10px;">
               <div class="img_box2 flex-center">
-                <img class="img" src="../assets/mys.png">
+                <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -105,7 +112,7 @@
             <div class="title">所有产品</div>
             <div class="fl_pro_list bgc" v-for="(item, index) in flprolist" :key="index">
               <div class="img_box">
-                <img class="sy_img" src="item.imgurl">
+                <img class="sy_img" :src="item.imgurl">
               </div>
               <div class="f14 pro_name">{{item.name1}}</div>
               <div class="com_like">
@@ -141,10 +148,8 @@ export default {
       lat: "",
       lag: "",
       images: [
+        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
         "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99"
       ],
       prolist: [
         { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
@@ -155,7 +160,7 @@ export default {
       flprolist: [
         {
           imgurl:
-            "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
+            "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
           price1: "3.08",
           name1: "Canon/佳能 PowerShot SX720 HS "
         },
@@ -193,9 +198,6 @@ export default {
         Toast("浏览器不支持地理定位");
       }
     },
-    onChange(index) {
-      this.current = index;
-    },
     //更多
     more() {
       this.$router.push({ path: "/Goods" });
@@ -204,14 +206,7 @@ export default {
     toDetail() {
       this.$router.push({ path: "/ProductDetail" });
     },
-    //我要推广
-    toExtension() {
-      this.$router.push({ path: "/Extension" });
-    },
-    //福利社
-    toWelfare() {
-      this.$router.push({ path: "/WelfareAgency" });
-    }
+
   }
 };
 </script>
@@ -241,7 +236,6 @@ export default {
   height: 32px;
   margin: 5px 12px 0 0;
   border-radius: 15px;
-  line-height: 33px;
   background: #f6f5f5;
 }
 
@@ -279,11 +273,11 @@ export default {
   height: 50px;
 }
 
-.img {
+/* .img {
   display: block;
   width: 50px;
   height: 75px;
-}
+} */
 
 .hb {
   height: 44px;
@@ -402,6 +396,8 @@ export default {
 .chat {
   width: 16px;
   height: 14px;
+  padding-left:15px;
+  vertical-align: middle;
 }
 
 .em {

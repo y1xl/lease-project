@@ -2,49 +2,51 @@
   <div class="bgc full">
     <div class="flex-jc-center">
       <div class="forget_box">
-        <div class="tip_title text-c">请输入验证码重置密码</div>
-        <div class="text-c tel">13845687896</div>
-        <form>
-          <div class="border input_box flexbox">
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div>
-              <input type="text" maxlength="1">
-            </div>
-          </div>
-          <button class="btn text-c" @click="toNext" type="submit">下一步</button>
-        </form>
-        <div class="text-c resent">重新发送</div>
+        <div class="tip_title text-c mar-b-10">请输入验证码重置密码</div>
+        
+        <div class="border-b tel">
+          <input v-model="phoneval" placeholder="请输入手机号" input-align="center" type="number" maxlength="11">
+        </div>
+        <div class="border-b password">
+          <input v-model="codeval" placeholder="请输入验证码" input-align="center" >
+        </div>
+
+        <button class="btn text-c" :class="phoneval!=''&&codeval!=''?'bgc-blue':'btn-grey'" @click="toNext" >下一步</button>
+        <div class="text-c resent">发送验证码</div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 export default {
+  data(){
+    return{
+      phoneval:'',
+      codeval:''
+    }
+  },
   methods: {
+
     //下一步
     toNext() {
-      this.$router.push({ path: "/ResetPassword" });
+      if (this.phoneval == ""||this.codeval == '') {
+        return
+      }
+
+      this.$router.replace({ path: "/ResetPassword/" + this.phoneval });
     }
   }
 };
 </script>
 
 <style scoped>
+input {
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+}
 .forget_box {
   width: 250px;
 }
@@ -52,7 +54,6 @@ export default {
   padding-top: 70px;
   font-size: 20px;
 }
-.tel,
 .resent {
   color: #aeaeae;
   font-size: 12px;
@@ -78,8 +79,11 @@ export default {
   height: 40px;
   line-height: 40px;
   color: #fff;
-  background: rgba(191, 191, 191, 1);
+  /* background: rgba(191, 191, 191, 1); */
   border-radius: 20px;
   margin-top: 80px;
+}
+.btn-grey {
+  background: rgba(191, 191, 191, 1);
 }
 </style>

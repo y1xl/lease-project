@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="flex-jc-between flex-align-items bgc pd-15" @click="showbuytime=true">
+        <div class="flex-jc-between flex-align-items bgc pd-15" @click="showdate=true">
             <div class="flex-1">
                 <div class="mar-b-10 fc-grey">购买时间</div>
-                <div class="fc-grey" v-if="buytimetext==''">请选择购买时间</div>
-                <div v-else>{{buytimetext}}</div>
+                <div class="fc-grey" v-if="datetext==''">请选择购买时间</div>
+                <div v-else>{{`${datetext[0]}-${datetext[1]}-${datetext[2]}`}}</div>
             </div>
             <van-icon name="arrow" />
         </div>
@@ -39,8 +39,15 @@
                 <div class="btn text-c" @click="next">下一步</div>
             </div>
 
-        <van-popup v-model="showbuytime" position="bottom" :close-on-click-overlay="false">
-            <van-picker :columns="buytimearr" show-toolbar @cancel="showbuytime = false" @confirm="onConfirmType1"/>
+        <van-popup v-model="showdate" position="bottom" :close-on-click-overlay="false">
+            <van-datetime-picker
+            v-model="dateval"
+            type="date"
+            :min-date="startDate"
+            :max-date="endDate"
+            @cancel="showdate = false"
+            @confirm="onConfirmDate"
+            />
         </van-popup>
         <van-popup v-model="showcolour" position="bottom" :close-on-click-overlay="false">
             <van-picker :columns="colourarr" show-toolbar @cancel="showcolour = false" @confirm="onConfirmColour"/>
@@ -55,10 +62,12 @@
 export default {
     data(){
         return{
-            //品类1
-            showbuytime: false,
-            buytimetext: '',
-            buytimearr: ['时间1', '时间2'],
+            //购买时间
+            dateval:new Date(),
+            datetext:'',
+            showdate:false,
+            startDate: new Date('1899/01/01 00:00'),
+            endDate: new Date(),
             //外观成色
             showcolour: false,
             colourtext: '',
@@ -72,9 +81,11 @@ export default {
         }
     },
     methods:{
-       onConfirmType1(value, index){
-            this.buytimetext = value
-            this.showbuytime = false
+       onConfirmDate(val){
+        console.log(val.getFullYear(),val.getMonth()+1,val.getDate());
+        this.dateval = val
+        this.datetext = [val.getFullYear(),val.getMonth()+1,val.getDate()]
+        this.showdate = false
         },
        onConfirmColour(value, index){
             this.colourtext = value

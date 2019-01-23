@@ -9,14 +9,12 @@
       <van-list v-model="loading" :finished="finished" @load="onLoad" class="flex-wrap bgc">
         <div v-for="item in list" :key="item" :title="item">
           <div class="item text-c">
-            <div class="flex-jc-center">
-              <div class="img_b1">
-                <img class="img" src="../../assets/zhuans.png">
-              </div>
+            <div class="flex-jc-center img_b1">
+                <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
             </div>
-            <div class="text-line pro_title">日本 instax拍立得日本 instax拍立得</div>
+            <div class="text-line pro_title mar-b-10">日本 instax拍立得日本 instax拍立得</div>
             <div>
-              <span class="price">¥3.08</span>/日
+              <span class="price">¥3.08</span><span class="f12">/日</span>
             </div>
           </div>
         </div>
@@ -83,9 +81,9 @@ export default {
   margin: 13px 0 0 13px;
 }
 .img_b1 {
-  width: 60px;
-  height: 80px;
-  margin-top: 33px;
+  font-size: 0;
+  height: 120px;
+  width: 100%;;
 }
 .img {
   width: 100%;

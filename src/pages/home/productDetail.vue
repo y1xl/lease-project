@@ -5,7 +5,7 @@
         <div class="caricon fc-red" @click="showinfocar=true">
           <van-icon name="shopping-cart"/>
         </div>
-        <div class="banner flex-center bgc">
+        <div class="banner ">
           <van-swipe :autoplay="3000">
             <van-swipe-item v-for="(item, index) in images" :key="index">
               <img :src="item">
@@ -65,7 +65,6 @@
         </div>
         <div class="grey_12 flex-align-items">
           <img class="img_myj" src="../../assets/tuikuan.png" alt>免押金
-          <img src="../../assets/"
         </div>
       </div>
     </div>
@@ -77,7 +76,6 @@
         <div class="text-c">
           <div>
             <img class="img_xdlc" src="../../assets/chenggong.png" alt>
-            <img src="../../assets/1.png"
           </div>
           <div class="fsize13">下单</div>
         </div>
@@ -129,7 +127,7 @@
           </div>
           <div class="imglist" v-for="(item,index) in imglist" :key="index">
             <!-- <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt> -->
-            <img class="itemimg" src="item">
+            <img class="itemimg" :src="item">
           </div>
         </div>
       </div>
@@ -169,7 +167,7 @@
           <div>
             <img class="img_kf" src="../../assets/tel.png" alt>
           </div>
-          <div class="f10_col">电话客服</div>
+          <div class="f10_col"><a href="tel:400-0000-688">电话客服</a></div>
         </div>
         <div class="btn bcolor padding_lr margin_left">给朋友送礼</div>
         <div class="btn bcol padding_lr margin_left" @click="showinfo=true">立即租赁</div>
@@ -272,12 +270,12 @@ export default {
     return {
       images: [
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
+        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
       ],
       imglist: [
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
+        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
       ],
       wordlist: [{}, {}],

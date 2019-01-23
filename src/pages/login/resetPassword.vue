@@ -2,12 +2,12 @@
   <div class="bgc full">
     <div class="flex-jc-center">
       <div class="login_box">
-        <div class="tip_title text-c">请输入验证码重置密码</div>
-        <div class="text-c tel">13845687896</div>
+        <div class="tip_title text-c">请设置新密码</div>
+        <div class="text-c tel">{{phone}}</div>
         <div class="border-b">
           <input v-model="value" placeholder="请输入新密码" input-align="center" border="false">
         </div>
-        <button class="btn text-c" @click="forget">确认并登陆</button>
+        <button class="btn text-c" :class="value==''?'btn-grey':'bgc-blue'" @click="login">确认并登陆</button>
       </div>
     </div>
   </div>
@@ -17,13 +17,17 @@
 export default {
   data() {
     return {
-      value: ""
+      value: "",
+      phone: this.$route.params.phone,
     };
   },
   methods: {
-    //下一步
-    forget() {
-      this.$router.push({ path: "/ForgetPassword" });
+
+    login() {
+      if (this.value == "") {
+        return
+      }
+      this.$router.replace({ path: "/" });
     }
   }
 };
@@ -52,8 +56,11 @@ input {
   height: 40px;
   line-height: 40px;
   color: #fff;
-  background: rgba(191, 191, 191, 1);
+  /* background: rgba(191, 191, 191, 1); */
   border-radius: 20px;
   margin-top: 80px;
+}
+.btn-grey {
+  background: rgba(191, 191, 191, 1);
 }
 </style>

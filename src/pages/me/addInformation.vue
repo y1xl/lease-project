@@ -4,15 +4,19 @@
       <div class="add_addresscon bgc">
         <div class="me" style="margin-top: 15px;">
           <van-cell-group>
-            <van-field v-model="value" placeholder="姓名"/>
+            <van-field v-model="nameval" placeholder="姓名"/>
           </van-cell-group>
 
           <van-cell-group>
-            <van-field v-model="value" placeholder="手机号"/>
+            <van-field v-model="phoneval" placeholder="手机号"/>
           </van-cell-group>
-          <van-cell title="请选择所在地区" is-link/>
+          <van-cell 
+          :title="areaval==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name" 
+          is-link 
+          @click="showarea=true"
+          />
           <van-cell-group>
-            <van-field v-model="value" placeholder="请输入详细地址"/>
+            <van-field v-model="detailval" placeholder="请输入详细地址"/>
           </van-cell-group>
           <div class="flexbox moren">
             <van-checkbox v-model="checked" checked-color="#4EA9F9"></van-checkbox>
@@ -23,22 +27,40 @@
     </div>
 
     <div class="flex-jc-center">
-      <div class="btn text-c">保存</div>
+      <div class="btn text-c" @click="submit">保存</div>
     </div>
+
+    <van-popup v-model="showarea" position="bottom" :close-on-click-overlay="false">
+      <van-area :area-list="areaList" @cancel="showarea=false" @confirm="onconfirm"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
+import area from '@/utils/area.js'
 export default {
   data() {
     return {
-      value: "",
-      checked: true
+      nameval: "",
+      phoneval: "",
+      detailval: "",
+      checked: false,
+      showarea:false,
+      areaval:'',
+      areaList: area
     };
   },
+  created(){
+
+  },
   methods: {
-    routerback() {
-      this.$router.back(-1);
+    onconfirm(val){
+      console.log(val);
+      this.areaval = val
+      this.showarea = false
+    },
+    submit(){
+
     }
   }
 };

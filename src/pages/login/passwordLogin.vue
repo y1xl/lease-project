@@ -4,13 +4,13 @@
       <div class="login_box">
         <div class="login_title text-c">密码登陆</div>
         <div class="border-b tel">
-          <input v-model="value" placeholder="请输入手机号" input-align="center">
+          <input v-model="phoneval" placeholder="请输入手机号" input-align="center" type="number" maxlength="11">
         </div>
         <div class="border-b password">
-          <input v-model="value" placeholder="请输入密码" input-align="center">
+          <input v-model="pwval" placeholder="请输入密码" input-align="center" type="password">
         </div>
-        <div class="text-r forget" @click="forget">忘记密码</div>
-        <div class="btn text-c">登录</div>
+        <div class="text-r forget" ><router-link to="/ForgetPassword">忘记密码</router-link></div>
+        <div class="btn text-c" :class="phoneval!=''&&pwval!=''?'bgc-blue':'btn-grey'" @click="login">登录</div>
       </div>
     </div>
   </div>
@@ -20,14 +20,20 @@
 export default {
   data() {
     return {
-      value: ""
+      phoneval: "",
+      pwval: "",
     };
   },
   methods: {
     //登陆
-    forget() {
-      this.$router.push({ path: "/ForgetPassword" });
-    }
+    login(){
+      if (this.phoneval == ""||this.pwval == '') {
+        // Notify('不能为空');
+        return
+      }
+      this.$router.replace({ path: "/" })
+
+    },
   }
 };
 </script>
@@ -55,8 +61,11 @@ input {
   height: 40px;
   line-height: 40px;
   color: #fff;
-  background: rgba(191, 191, 191, 1);
+  /* background: rgba(191, 191, 191, 1); */
   border-radius: 20px;
   margin-top: 50px;
+}
+.btn-grey {
+  background: rgba(191, 191, 191, 1);
 }
 </style>

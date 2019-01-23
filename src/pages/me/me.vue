@@ -3,7 +3,7 @@
     <div class="flex-jc-between manber_b" @click="myInformat">
       <div class="flex-align-items flex_box">
         <div class="head_img">
-          <img src="../../assets/mys.png">
+          <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
         </div>
         <div class>
           <div class="name">DORO_THY</div>
@@ -86,6 +86,7 @@
         </template>
       </van-cell>
     </div>
+    <div class="height"></div>
   </div>
 </template>
 
@@ -102,6 +103,9 @@ export default {
 
 
 <style scoped>
+.height {
+  height: 50px;
+}
 .manber_b {
   align-items: center;
   width: 100%;
@@ -115,6 +119,7 @@ export default {
   border-radius: 50%;
   border: 1px solid #fff;
   margin-left: 14px;
+  overflow: hidden;
 }
 .head_img > img {
   width: 60px;

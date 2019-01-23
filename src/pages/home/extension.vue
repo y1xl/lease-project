@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="flex-jc-center">
+      <div class="flex-jc-center" @click="showcode=true">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
@@ -72,13 +72,19 @@
         </div>
       </div>
     </div>
+
+    <van-popup v-model="showcode">
+      <div style="font-size:0"><img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="" class="codeimg"></div>
+    </van-popup>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      showcode:false
+    };
   },
   methods: {
     routerback() {
@@ -168,5 +174,10 @@ export default {
 .wode > img {
   width: 21px;
   height: 24px;
+}
+
+.codeimg {
+  width: 200px;
+  height: 200px;
 }
 </style>

@@ -7,7 +7,13 @@
 
     <div id="nav">
       <van-tabs @click="ontag" v-model="active">
-        <van-tab :title="item" v-for="(item,index) in navarr" :key="index"></van-tab>
+        <!-- <van-tab :title="item" v-for="(item,index) in navarr" :key="index"></van-tab> -->
+        <van-tab :title="item" v-for="(item,index) in navarr" :key="index">
+          <div slot="title" class="position tag">
+            <div class="dot"><van-tag plain round color="#4EA9F9">1</van-tag></div>
+            {{item}}
+          </div>
+        </van-tab>
       </van-tabs>
     </div>
 
@@ -151,6 +157,9 @@ export default {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
+#nav .van-tab span {
+  font-size: 8px;
+}
 </style>
 
 <style scoped>
@@ -178,6 +187,12 @@ export default {
 .nav .selected {
   color: #000;
   font-weight: bold;
+}
+
+.tag .dot{
+  position: absolute;
+  top:0;
+  right:0;
 }
 
 .list {

@@ -37,7 +37,7 @@
             </div>
             <div class="imglist" v-for="(item,index) in imglist">
               <!-- <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt> -->
-              <img class="itemimg" src="item">
+              <img class="itemimg" :src="item">
             </div>
           </div>
         </div>
