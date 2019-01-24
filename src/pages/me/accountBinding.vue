@@ -21,14 +21,17 @@
             </div>
         </router-link>
     </div>
+  </div>
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
 <style scoped>
-
+.box {
+  margin: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
 </style>

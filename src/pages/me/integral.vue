@@ -1,5 +1,5 @@
 <template>
-  <div class="bgc full">
+  <div class="bgc">
     <div class="header">
       <div class="text-c">500</div>
       <div class="text-c">当前可用积分</div>
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="mx">积分明细</div>
-    <div class="box">
+    <div class="box bgc">
       <div v-for="(item,index) in 5">
         <div class="flex-center bgc">
           <div class="flex-jc-between flex-align-items inte_deta border-b">
@@ -57,10 +57,11 @@ export default {
   padding-top: 30px;
 }
 .box {
-  margin: 15px;
+  margin: 0 15px;
 }
 .mx {
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   background: #fbfbfb;
   padding-left: 15px;
 }
