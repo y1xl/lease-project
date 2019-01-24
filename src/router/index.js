@@ -34,7 +34,6 @@ import AddInformation from '@/pages/me/addInformation'
 import ReceInformation from '@/pages/me/receInformation'
 import DetaInformation from '@/pages/me/detaInformation'
 import AccountSecurity from '@/pages/me/accountSecurity'
-import Modify from '@/pages/me/modify'
 import Coupon from '@/pages/me/coupon'
 import Cash from '@/pages/me/cash'
 import MyBalance from '@/pages/me/myBalance'
@@ -47,7 +46,10 @@ import CommonProblem from '@/pages/me/commonProblem'
 import Setup from '@/pages/me/setup'
 import Rules from '@/pages/me/rules'
 import AccountBinding from '@/pages/me/accountBinding'
-
+import Modify from '@/pages/me/security/modify'
+import Sendcode from '@/pages/me/security/sendcode'
+import Newphone from '@/pages/me/security/newphone'
+import Newpassword from '@/pages/me/security/newpassword'
 
 //登录
 import Login from '@/pages/login/login'
@@ -79,6 +81,8 @@ import HostCancel from '@/pages/hosting/myhosting/hostCancel'
 import PlatformDeli from '@/pages/hosting/myhosting/platformDeli'
 import PostDeli from '@/pages/hosting/myhosting/postDeli'
 import SceneDeli from '@/pages/hosting/myhosting/sceneDeli'
+import HostingDetail from '@/pages/hosting/myhosting/hostingDetail'
+import HostingExpress from '@/pages/hosting/myhosting/hostingExpress'
 
 
 
@@ -120,7 +124,7 @@ export default new Router({
     { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
     { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
     { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
-    { path: '/modify', component: Modify, meta: { title: '修改密码' } },
+    { path: '/modify/:type', component: Modify, meta: { title: '当前绑定手机号' } },
     { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
     { path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
     { path: '/cash', component: Cash, meta: { title: '提现' } },
@@ -133,6 +137,9 @@ export default new Router({
     { path: '/rules', component: Rules, meta: { title: '租赁规则' } },
     { path: '/setup', component: Setup, meta: { title: '设置' } },
     { path: '/accountBinding', component: AccountBinding, meta: { title: '账号绑定' } },
+    { path: '/Sendcode/:type/:phone', component: Sendcode, meta: { title: '发送验证码' } },
+    { path: '/newphone', component: Newphone, meta: { title: '绑定新手机号' } },
+    { path: '/newpassword', component: Newpassword, meta: { title: '修改密码' } },
 
 
 
@@ -162,11 +169,13 @@ export default new Router({
     { path: '/gsuccessful', component: Gsuccessful, meta: { title: '提交成功' } },
 
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管' } },
-    { path: '/hostDetail', component: HostDetail, meta: { title: '托管详情' } },
+    { path: '/hostDetail', component: HostDetail, meta: { title: '审核详情' } },
     { path: '/hostCancel', component: HostCancel, meta: { title: '取消托管' } },
     { path: '/sceneDeli', component: SceneDeli, meta: { title: '现场交付' } },
     { path: '/platformDeli', component: PlatformDeli, meta: { title: '平台配送' } },
     { path: '/postDeli', component: PostDeli, meta: { title: '快递交付' } },
+    { path: '/hostingDetail', component: HostingDetail, meta: { title: '托管详情' } },
+    { path: '/hostingExpress', component: HostingExpress, meta: { title: '审核详情' } },
 
 
   ],

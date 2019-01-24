@@ -29,6 +29,25 @@
       <span>退回运费</span>
       <span>36</span>
     </div>
+
+    <div class="bgc mar-b-10">
+        <div class="border-b pd-15">请选择支付方式</div>
+        <van-radio-group v-model="radio">
+            <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
+                <div><img src="../../../assets/weixin.png" alt="微信" class="payimg">微信</div>
+                <van-radio name="1" checked-color="#2DBBF1"></van-radio>
+            </div>
+            <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
+                <div><img src="../../../assets/ali.png" alt="支付宝" class="payimg">支付宝</div>
+                <van-radio name="2" checked-color="#2DBBF1"></van-radio>
+            </div>
+            <div class="flex-jc-between pd-15" @click="radio = '3'">
+                <div><img src="../../../assets/balance.png" alt="余额" class="payimg">余额<span class="fc-red"> ¥2.00</span></div>
+                <van-radio name="3" checked-color="#2DBBF1"></van-radio>
+            </div>
+        </van-radio-group>
+    </div>
+
     <div class="flex-jc-center bgc btn_box">
       <div class="btn text-c">立即支付</div>
     </div>
@@ -37,13 +56,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return{
+      radio:1,
+    }
+  }
+};
 </script>
 
 <style scoped>
-div {
-  font-size: 14px;
-}
+
 .custom-text {
   color: #aeaeae;
   font-size: 14px;
@@ -59,10 +82,6 @@ div {
   margin: 15px;
 }
 
-.btn_box {
-  width: 100%;
-  margin-top: 290px;
-}
 .btn {
   width: 280px;
   height: 40px;
@@ -70,6 +89,13 @@ div {
   background: linear-gradient(90deg, #60c0fd, #4ea9f9);
   border-radius: 20px;
   color: #fff;
+}
+
+.payimg{
+    width: 20px;
+    height: 20px;
+    padding-right: 10px;
+    vertical-align: middle;
 }
 </style>
 

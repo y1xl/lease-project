@@ -2,13 +2,13 @@
   <div>
     <div class="account_sec bgc">
       <div class="tel">
-        <van-cell center is-link value="138xxxx4568" to>
+        <van-cell center is-link value="138xxxx4568" to="/Modify/phone">
           <template slot="title">
             <div>绑定手机号</div>
           </template>
         </van-cell>
 
-        <van-cell is-link center value="修改" to="/Modify">
+        <van-cell is-link center value="修改" to="/Modify/password">
           <template slot="title">
             <div>登陆密码</div>
           </template>

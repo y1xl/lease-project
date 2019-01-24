@@ -1,19 +1,20 @@
 <template>
   <div class="bgc full">
-    <div class>
-      <div class="flex-jc-between pd-15">
+    <div >
+      <router-link class="flex-jc-between pd-15" to="/locationList">
         <div>选择交付门店</div>
         <div class="flex-align-items fc-grey">
           <van-icon name="arrow"/>
         </div>
-      </div>
+      </router-link>
 
       <div class="box">
-        <div class="flex-jc-between" @click="toShopdet">
-          <div class="shop_title pd-15">龙华区油松店</div>
+        <div @click="toShopdet">
+          <div class="flex-jc-between" >
+            <div class="shop_title pd-15">龙华区油松店</div>
+          </div>
+          <div class="txt pd-lr-15">广东省深圳市龙华新区油松路158号油富商城门店</div>
         </div>
-
-        <div class="txt pd-lr-15">广东省深圳市龙华新区油松路158号油富商城门店</div>
         <div class="dt text-c">
           <img class="ck_img" src="../../../assets/mddw.png">
           <span class="txt">查看地图</span>
@@ -21,7 +22,7 @@
       </div>
     </div>
 
-    <van-cell>
+    <van-cell to="/calendar">
       <template slot="title">
         <div class="flex-jc-between flex-align-items" style="margin-top: 30px;">
           <div>

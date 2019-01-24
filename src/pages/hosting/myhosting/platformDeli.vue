@@ -1,18 +1,19 @@
 <template>
   <div class="bgc full">
-    <div class="flex-jc-between flex-align-items border-b pd-15 box">
+
+    <router-link class="flex-jc-between flex-align-items border-b pd-15 box" to="/calendar">
       <diV>
-        <div>交付日期</div>
+        <div class="mar-b-10">交付日期</div>
         <div class="time">2019-01-20</div>
       </diV>
       <div class="flex-align-items fc-grey">
         <van-icon name="arrow"/>
       </div>
-    </div>
+    </router-link>
 
     <div class="flex-jc-between flex-align-items border-b pd-15 box" @click="isshow = true">
       <diV>
-        <div>交付时间</div>
+        <div class="mar-b-10">交付时间</div>
         <div>{{text}}</div>
       </diV>
       <div class="flex-align-items fc-grey">
@@ -20,8 +21,7 @@
       </div>
     </div>
 
-    <div v-show="isshow" class="model full">
-      <div class="main">
+      <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
         <van-picker
           :columns="columns"
           @change="onChange"
@@ -29,8 +29,8 @@
           @confirm="onConfirm"
           @cancel="isshow = false"
         />
-      </div>
-    </div>
+      </van-popup>
+
     <div class="flex-jc-center bgc btn_box">
       <div class="btn text-c">下一步</div>
     </div>

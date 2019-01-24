@@ -7,7 +7,7 @@
         <span>搜索你想要的商品</span>
       </router-link>
     </div>
-    <div class="flex-jc-center bgc" >
+    <div class="flex-jc-center bgc" v-show="active==0">
       <div class="banner bgc">
         <van-swipe :autoplay="3000">
           <van-swipe-item v-for="(item, index) in images" :key="index">
@@ -124,9 +124,10 @@
             </div>
           </div>
 
-          <div class="hb">
+          <div class="bgc">
             <div class="title">所有产品</div>
-            <div class="fl_pro_list bgc" v-for="(item, index) in flprolist" :key="index">
+
+            <div class="fl_pro_list mar-b-10" v-for="(item, index) in flprolist" :key="index">
               <div class="img_box">
                 <img class="sy_img" :src="item.imgurl">
               </div>
@@ -306,7 +307,7 @@ export default {
 .title {
   font-size: 17px;
   font-weight: 600;
-  margin-left: 10px;
+  padding: 10px;
 }
 
 .m_txt {
@@ -384,13 +385,11 @@ export default {
 /*分类 所有产品*/
 .fl_pro_list {
   width: 100%;
-  padding-bottom: 20px;
-  /* padding-left: 10px; */
   padding:0 10px;
   box-sizing:border-box
 }
 .fl_pro_list:last-child {
-  margin-bottom: 48px;
+  /* margin-bottom: 48px; */
 }
 .img_box {
   width: 100%;

@@ -1,19 +1,20 @@
 <template>
   <div class="bgc full">
     <div class>
-      <div class="flex-jc-between pd-15">
+      <router-link class="flex-jc-between pd-15" to="/locationList">
         <div>选择交付门店</div>
         <div class="flex-align-items fc-grey">
           <van-icon name="arrow"/>
         </div>
-      </div>
+      </router-link>
 
       <div class="box">
-        <div class="flex-jc-between" @click="toShopdet">
-          <div class="shop_title pd-15">龙华区油松店</div>
+        <div @click="toShopdet">
+          <div class="flex-jc-between" >
+            <div class="shop_title pd-15">龙华区油松店</div>
+          </div>
+          <div class="txt pd-lr-15">广东省深圳市龙华新区油松路158号油富商城门店</div>
         </div>
-
-        <div class="txt pd-lr-15">广东省深圳市龙华新区油松路158号油富商城门店</div>
         <div class="dt text-c">
           <img class="ck_img" src="../../../assets/mddw.png">
           <span class="txt">查看地图</span>
@@ -26,16 +27,13 @@
       <div :class="{ 'fc-blue selected': typenum==1 }" @click="typenum=1">已寄出</div>
     </div>
     <div v-if="typenum==0">
-      <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showdatetime=true">
+      <router-link class="flex-jc-between pd-15 bgc border-b flex-align-items" to="/calendar">
         <span class="custom-text">期望揽收日期</span>
         <span class="flex-align-items fc-grey fsz12">
           {{datetext}}
           <van-icon name="arrow"/>
         </span>
-      </div>
-      <van-popup v-model="showdatetime" position="bottom" :close-on-click-overlay="false">
-        <van-datetime-picker type="date" @cancel="showdatetime=false" @confirm="onConfirmdata"/>
-      </van-popup>
+      </router-link>
       <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true">
         <span class="custom-text">时间</span>
         <span class="flex-align-items fc-grey fsz12">
@@ -62,16 +60,11 @@
       </div>
     </div>
     <div v-if="typenum==1">
-      <div class="border-b" style="margin-top: 50px;">
         <input v-model="postnum" placeholder="请输入顺丰单号" type="text">
-      </div>
-
-      <div v-for="item in 6">
-        <div class="logist">12.08 物流信息</div>
-      </div>
     </div>
+
     <div class="flex-jc-center bgc btn_box">
-      <div class="btn text-c">提交</div>
+      <div class="btn text-c" @click="submit">提交</div>
     </div>
   </div>
 </template>
@@ -84,7 +77,6 @@ export default {
       postnum: "",
       timetext: "",
       datetext: "",
-      showdatetime: false,
       showtime: false
     };
   },
@@ -97,10 +89,9 @@ export default {
       this.timetext = value;
       this.showtime = false;
     },
-    onConfirmdata(value) {
-      console.log(`当前值：${value}`);
-      this.datetext = value;
-      this.showdatetime = false;
+
+    submit(){
+      this.$router.push({ path: "/Trusteeship" });
     }
   }
 };
