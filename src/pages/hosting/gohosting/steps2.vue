@@ -25,6 +25,7 @@
             type="textarea"
             placeholder="请输入外观成色描述"
             autosize
+            :border="false"
         />
         <div class="flex-jc-between flex-align-items bgc pd-15" @click="showstate=true">
             <div class="flex-1">

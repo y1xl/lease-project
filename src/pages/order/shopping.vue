@@ -200,7 +200,7 @@
 export default {
   data() {
     return {
-      radio: 1,
+      radio:'1',
       selected: 0,
       typenum: 0,
       showtime: false,

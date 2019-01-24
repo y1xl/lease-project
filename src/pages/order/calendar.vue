@@ -66,6 +66,7 @@ export default {
 .pd-t-100{
     padding: 0 15px;
     padding-top: 100px;
+    padding-bottom:15px;
 }
 .btn{
     height: 42px;

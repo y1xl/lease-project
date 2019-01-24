@@ -126,25 +126,15 @@ export default {
     },
     onshowmodel(){
       if(this.showmodel){
-          // document.documentElement.style.position = 'static';
-          // document.body.style.overflow = ''; //出现滚动条
           this.showmodel = false
       }else{
-          // document.documentElement.style.position = 'fixed';
-          // document.documentElement.style.width = '100%';
-          // document.body.style.overflow = 'hidden'; //隐藏滚动条
           this.showmodel = true
       } 
     },
     getcode() {
       if(this.showcode){
-          // document.documentElement.style.position = 'static';
-          // document.body.style.overflow = ''; //出现滚动条
           this.showcode = false
       }else{
-          // document.documentElement.style.position = 'fixed';
-          // document.documentElement.style.width = '100%';
-          // document.body.style.overflow = 'hidden'; //隐藏滚动条
           this.showcode = true
       } 
     },

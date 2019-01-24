@@ -1,5 +1,5 @@
 <template>
-  <div class="bgc full">
+  <div class="">
     <van-cell to="/calendar">
       <template slot="title">
         <div class="flex-jc-between flex-align-items" style="margin-top: 20px;">
@@ -12,7 +12,7 @@
       </template>
     </van-cell>
 
-    <van-cell>
+    <van-cell to="/addresslist">
       <template slot="title">
         <div class="flex-jc-between flex-align-items" style="padding: 10px 0;">
           <div>
@@ -25,7 +25,7 @@
       </template>
     </van-cell>
 
-    <div class="post flex-jc-between" style="margin-top: 20px;">
+    <div class="post flex-jc-between mar-b-10 bgc pd-15" >
       <span>退回运费</span>
       <span>36</span>
     </div>
@@ -59,7 +59,7 @@
 export default {
   data(){
     return{
-      radio:1,
+      radio:'1',
     }
   }
 };
@@ -78,9 +78,9 @@ export default {
 .address {
   color: #aeaeae;
 }
-.post {
+/* .post {
   margin: 15px;
-}
+} */
 
 .btn {
   width: 280px;

@@ -35,7 +35,7 @@
     </div>
 
     <div class="pd-15">
-      <div class="btn text-c">提交</div>
+      <div class="btn text-c" @click="submit">提交</div>
     </div>
 
     <van-popup v-model="showarea" position="bottom" :close-on-click-overlay="false">
@@ -98,6 +98,10 @@ export default {
       this.datetext = [val.getFullYear(),val.getMonth()+1,val.getDate()]
       this.showdate = false
     },
+
+    submit(){
+      console.log('submit:',this.username,this.sexval,this.areaval,this.datetext)
+    }
   }
 };
 </script>

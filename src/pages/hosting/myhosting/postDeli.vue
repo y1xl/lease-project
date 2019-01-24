@@ -167,6 +167,7 @@ input {
 .btn_box {
   width: 100%;
   margin-top: 30px;
+  margin-bottom: 15px;
 }
 .btn {
   width: 280px;

@@ -164,6 +164,7 @@
 import { Toast } from "vant";
 export default {
   data() {
+    let self = this;
     return {
       lat: "",
       lag: "",
@@ -198,7 +199,7 @@ export default {
         }
       ],
       active: 0,
-      value: 5
+      value: 5,
     };
   },
 
@@ -230,6 +231,7 @@ export default {
   }
 };
 </script>
+
 <style>
 #nav .van-tabs__line {
   background-color: #fff;

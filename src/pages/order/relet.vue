@@ -9,7 +9,7 @@
                         <img src="../../assets/icon-triangle.png" class="triangleimg">
                     </div>
                     <div class="border">
-                        <input type="text">
+                        <input type="text" v-model="tval">
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             </van-radio-group>
         </div>
 
-        <div class="pd-t-100"><div class="btn text-c">提交</div></div>
+        <div class="pd-t-100"><div class="btn text-c" @click="submit">提交</div></div>
 
         <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
             <van-picker :columns="columns" show-toolbar @cancel="isshow = false" @confirm="onConfirm"/>
@@ -49,13 +49,15 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 export default {
     data(){
         return{
-            radio:1,
+            radio:'1',
             isshow: false,
             columns: ['天', '小时', '分钟', '测试', '测试'],
-            timetext: '请选择'
+            timetext: '请选择',
+            tval:''
         }
     },
     methods:{
@@ -64,6 +66,16 @@ export default {
             this.timetext = value
             this.isshow = false
         },
+        submit(){
+            if(this.tval==''||this.timetext=='请选择'){
+                Toast('请填写续租时间');
+                return
+            }
+            if(this.radio==''){
+                Toast('请选择支付方式');
+                return
+            }
+        }
     }
 }
 </script>

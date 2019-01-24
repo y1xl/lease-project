@@ -9,10 +9,10 @@
     </div>
 
     <div class="border-b text-c bgc ratebox">
-      <van-rate v-model="value" @change="onRating" size="27"/>
+      <van-rate v-model="rateval" @change="onRating" size="27"/>
     </div>
 
-    <div class="textarea bgc"><textarea name="" id="" rows="6" placeholder="分享使用体验，有机会上我们的头版哦！分享视频内容，更有机会上New Bee官方抖音并拿大奖！"></textarea></div>
+    <div class="textarea bgc"><textarea rows="6" v-model="contentval" placeholder="分享使用体验，有机会上我们的头版哦！分享视频内容，更有机会上New Bee官方抖音并拿大奖！"></textarea></div>
     <div class="bgc imglist">
         <img @click="onImagePreview(index)" :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index">
       <van-uploader :after-read="onRead" accept="image/png, image/jpeg" multiple>
@@ -26,11 +26,13 @@
 
 <script>
 import { ImagePreview } from 'vant';
+import { Toast } from 'vant';
 export default {
   data() {
     return {
-      value: 0,
-      imgarr:[]
+      rateval: '',
+      contentval:'',
+      imgarr:[],
     };
   },
   methods: {
@@ -55,7 +57,14 @@ export default {
             });
         },
     submit(){
-      
+      if(this.rateval==''){
+        Toast('请先评星')
+        return
+      }
+      if(this.contentval==''){
+        Toast('请先填写内容')
+        return
+      }
     }
   }
 };

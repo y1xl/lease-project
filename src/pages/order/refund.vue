@@ -12,17 +12,17 @@
                 <div class="border" :class="{ 'fc-blue border-blue': typenum==0 }" @click="typenum=0">本人</div>
                 <div class="border" :class="{ 'fc-blue border-blue': typenum==1 }" @click="typenum=1">朋友代还</div>
             </div>
-            <div class="text-c tip">温馨提示:选择朋友代还您需要发送给朋友小程序打开才能还</div>
+            <div class="text-c tip">温馨提示:选择朋友代还您需要发送给朋友打开才能还</div>
 
             <div class="pd-t-100"><div class="btn text-c">确定</div></div>
         </div>
 
         <div v-show="selected==1">
-            <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>    
+            <van-cell title="选择退租时间" is-link center :value="datetext" to="/calendar"></van-cell>    
             <van-cell center :border="false">
                 <div class="bgc flex-align-items" slot="title">
                     <span>快递单号</span>
-                    <input type="text" placeholder="请输入" >
+                    <input type="text" placeholder="请输入" class="pdl">
                 </div>
             </van-cell>    
 
@@ -32,9 +32,9 @@
         </div>
 
         <div v-show="selected==2">
-            <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>  
+            <van-cell title="选择退租时间" is-link center :value="datetext" to="/calendar"></van-cell>  
             <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext"></van-cell>  
-            <van-cell is-link center to="" :border="false">
+            <van-cell is-link center to="/addresslist" :border="false">
                 <template slot="title">
                     <div>收货地址</div>
                     <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
@@ -77,6 +77,9 @@ export default {
 </script>
 
 <style scoped>
+.pdl{
+    padding-left: 10px
+}
 .tip{
     font-size: 10px;
     color: #666;

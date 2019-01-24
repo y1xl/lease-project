@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="mar-b-10 main">
-            <van-cell is-link center to="" v-show="typenum==1||typenum==2">
+            <van-cell is-link center to="/addresslist" v-show="typenum==1||typenum==2" >
                 <div slot="title">
                     <div>收货地址</div>
                     <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
@@ -61,15 +61,15 @@
                     </div>
                 </div>
             </van-cell>
-            <van-cell title="期望收到的日期" is-link center v-show="typenum==0"></van-cell>
-            <van-cell is-link center v-show="typenum==1||typenum==2">
+            <van-cell title="期望收到的日期" is-link center v-show="typenum==0" to="/calendar"></van-cell>
+            <van-cell is-link center v-show="typenum==1||typenum==2" to="/calendar">
                 <template slot="title">
                     <div>期望收到的日期</div>
                     <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
                 </template>
             </van-cell>
             <!-- 预租 -->
-            <van-cell is-link center v-show="typenum==1||typenum==2">
+            <van-cell is-link center v-show="typenum==1||typenum==2" to="/calendar">
                 <template slot="title">
                     <div>预约期望档期</div>
                     <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
@@ -82,11 +82,11 @@
         <div class="mar-b-10">
             <van-cell title="运费" center value="￥13" v-show="typenum==1"></van-cell>
             <van-cell title="配送运费" center value="￥13" v-show="typenum==2"></van-cell>
-            <van-cell title="优惠券" is-link center :value="couponstext"></van-cell>
+            <van-cell title="优惠券" is-link center :value="couponstext" @click="showcoupon=true"></van-cell>
             <van-cell title="保险费 ￥20" center>
                 <div class="flex-align-items" style="justify-content: flex-end"><van-switch v-model="checked" size="20px"/></div>
             </van-cell>
-            <van-cell title="享受优惠" is-link center :value="activitytext"></van-cell>
+            <van-cell title="享受优惠" is-link center :value="activitytext" @click="discountmodel=true"></van-cell>
             <van-cell center v-show="typenum==2">
                 <div slot="title">
                     <span>特殊需求备注</span>
@@ -112,7 +112,7 @@
         <div class="bgc pd-15">
             <div class="mar-b-10 flexbox">
                 <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
-                <router-link to="/zagreement" class="pdl10">同意租赁协议</router-link>
+                <div class="pdl10">同意<router-link to="/zagreement" class="fc-blue">租赁协议</router-link></div>
             </div>
             <div><div class="btn text-c" @click="nextface">信用免押支付</div></div>
         </div>
@@ -130,10 +130,51 @@
         <van-popup v-model="showweek" position="bottom" :close-on-click-overlay="false">
             <van-picker :columns="columns" show-toolbar @cancel="showweek = false" @confirm="onConfirmWeek"/>
         </van-popup>
+        <!-- 优惠活动弹窗 -->
+        <van-popup v-model="discountmodel" position="bottom" :close-on-click-overlay="false">
+        <div class="position">
+            <div class="flex-jc-center">
+            <div class="s_title border-b fsz text-c">优惠活动</div>
+            </div>
+            <div class="flexbox">
+            <div class="lineheight pd-lr-15 border-b">
+                <span class="dis_clasify">[新用户]</span>
+                <span class="grey_12">新人下单立减50元</span>
+            </div>
+            </div>
+
+            <div class="close text-c" @click="discountmodel = false">取消</div>
+        </div>
+        </van-popup>
+
+        <van-actionsheet v-model="showcoupon" title="优惠券">
+            <div>
+                <div class="coupon_box position" v-for="(item,index) in couponlist" :key="index">
+                    <div>
+                    <img src="../../assets/1.png">
+                    </div>
+
+                    <div class="coupon_con flex-jc-around flex-align-items">
+                    <div>
+                        <span class="num">10</span>
+                        <span class="yuan">元</span>
+                    </div>
+                    <div>
+                        <div class="coupon_fl">新人专享红包</div>
+                        <div class="limit">
+                        <div>有效期至2019.01.15</div>
+                        <div>满50可用</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </van-actionsheet>
     </div>
 </template>
 
 <script>
+import { Toast } from 'vant';
 export default {
     data(){
         return{
@@ -142,13 +183,16 @@ export default {
             timetext:'',
             datechoose: '',
             people:'',
-            couponstext:'无可用',//优惠券
+            couponstext:'',//优惠券
+            showcoupon:false,//优惠券
             activitytext:'',//优惠
             showweek: false,
             columns: ['天', '小时', '分钟', '测试', '测试'],
             weektext: '请选择',
             checked: false,
             isconsent:true,//协议
+            discountmodel:false,
+            couponlist: [1,2]
         }
     },
     methods:{
@@ -164,8 +208,13 @@ export default {
             this.showweek = false
         },
         nextface(){
-            this.$router.push({ path: '/face' })
-        }
+            if(this.isconsent){
+                this.$router.push({ path: '/face' })
+            }else{
+                Toast('您还未同意协议');
+            }
+            
+        },
     }
 }
 </script>
@@ -239,4 +288,49 @@ export default {
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
 }
 
+.s_title {
+  width: 92%;
+  height: 40px;
+  line-height: 40px;
+}
+.close,
+.lineheight {
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+}
+.dis_clasify {
+  font-size: 12px;
+  color: #fc3434;
+}
+.grey_12 {
+  font-size: 12px;
+  color: #979797;
+}
+
+/* 优惠券 */
+.coupon_con {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+.num {
+  font-size: 70px;
+  font-weight: lighter;
+  color: #4ea9f9;
+}
+
+.yuan {
+  font-size: 25px;
+  color: #4ea9f9;
+}
+
+.coupon_fl {
+  font-size: 15px;
+}
+.limit {
+  font-size: 12px;
+  color: #aeaeae;
+}
 </style>

@@ -16,6 +16,15 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 Vue.use(Vant);
 
+import VueAMap from 'vue-amap';
+Vue.use(VueAMap);
+VueAMap.initAMapApiLoader({
+  key: '7dd71e09ac3a903d60949151b6d53744',
+  plugin: ['AMap.Autocomplete', 'AMap.OverView', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4'
+});
+
 Vue.config.productionTip = false
 
 import qs from 'qs'

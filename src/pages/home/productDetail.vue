@@ -23,9 +23,10 @@
               <div class="grey_12 camera">一次成像相机</div>
             </div>
             <div class="flexbox">
-              <div class="text-c">
+              <div class="text-c" @click="oncollection">
                 <div>
-                  <img class="img_sc" src="../../assets/shoucang.png" alt>
+                  <img v-if="iscollection" class="img_sc" src="../../assets/shoucang-red.png" alt>
+                  <img v-else class="img_sc" src="../../assets/shoucang.png" alt>
                 </div>
                 <div class="grey_12">收藏</div>
               </div>
@@ -106,7 +107,7 @@
             <span>(999+)</span>
           </div>
           <div class="flex-align-items">
-            <span>97.6%</span>
+            <!-- <span>97.6%</span> -->
             <img class="img_r" src="../../assets/right.png" alt>
           </div>
         </div>
@@ -287,10 +288,14 @@ export default {
       discountmodel: false,
       numval: "",
       showinfo: false,
-      showinfocar: false
+      showinfocar: false,
+      iscollection: false
     };
   },
   methods: {
+    oncollection(){
+      this.iscollection = !this.iscollection
+    },
     //口碑
     toMouthw() {
       this.$router.push({ path: "/WordMouth" });

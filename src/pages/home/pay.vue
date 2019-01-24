@@ -25,7 +25,7 @@
             </van-radio-group>
         </div>
 
-        <div class="pd-t-80"><div class="btn text-c">支付</div></div>
+        <div class="pd-t-50"><div class="btn text-c">支付</div></div>
 
     </div>
 </template>
@@ -34,7 +34,7 @@
 export default {
     data(){
         return{
-            radio:1,
+            radio:'1',
         }
     },
 }
@@ -77,8 +77,9 @@ export default {
     color: #fff;
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
 }
-.pd-t-80{
+.pd-t-50{
     padding: 0 15px;
-    padding-top: 80px;
+    padding-top: 50px;
+    padding-bottom:15px;
 }
 </style>

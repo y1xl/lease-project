@@ -84,7 +84,11 @@ import SceneDeli from '@/pages/hosting/myhosting/sceneDeli'
 import HostingDetail from '@/pages/hosting/myhosting/hostingDetail'
 import HostingExpress from '@/pages/hosting/myhosting/hostingExpress'
 
+//收货地址
+import Addresslist from '@/pages/address/addresslist'
+import Addaddress from '@/pages/address/addaddress'
 
+import Map from '@/pages/map'
 
 Vue.use(Router)
 
@@ -177,6 +181,12 @@ export default new Router({
     { path: '/hostingDetail', component: HostingDetail, meta: { title: '托管详情' } },
     { path: '/hostingExpress', component: HostingExpress, meta: { title: '审核详情' } },
 
+    //收货地址
+    { path: '/addresslist', component: Addresslist, meta: { title: '收货地址' } },
+    { path: '/addaddress', component: Addaddress, meta: { title: '收货地址' } },
+
+    //地图
+    { path: '/map', component: Map, meta: { title: '地图' } },
 
   ],
 
