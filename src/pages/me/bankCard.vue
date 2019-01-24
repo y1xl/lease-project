@@ -4,7 +4,7 @@
       <div class="card_box bgc">
         <div class="card flex-jc-around flex-align-items">
           <div class="flex-align-items">
-            <img class="card_img" src="../../assets/my.png">
+            <img class="card_img" src="../../assets/bankcart.png">
             <span>中国农业银行</span>
           </div>
           <div class="f12_grey">储蓄卡</div>
@@ -49,8 +49,8 @@ export default {
   margin-top: 15px;
 }
 .card_img {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   margin-right: 25px;
 }
 .add_img {

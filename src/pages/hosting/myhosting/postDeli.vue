@@ -99,7 +99,12 @@ export default {
     },
     onConfirmdata(value) {
       console.log(`当前值：${value}`);
-      this.datetext = value;
+      this.datetext =
+        value.getFullYear() +
+        "-" +
+        (value.getMonth() + 1) +
+        "-" +
+        value.getDate();
       this.showdatetime = false;
     }
   }
