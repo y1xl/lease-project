@@ -1,22 +1,30 @@
 <template>
-    <div class="bgc full">
-        <div class="pd-15 mar-b-10">
-            <input type="text" maxlength="11" placeholder="请输入新密码">
-        </div>
-
-        <div class="flex-jc-center">
-        <div class="btn text-c">确定修改</div>
+  <div>
+    <div class="bgc box">
+      <div class="pd-15 border-b">
+        <span style=" margin-right: 10px">原密码</span>
+        <input type="text" maxlength="11" placeholder="请输入原密码">
+      </div>
+      <div class="pd-15">
+        <span style=" margin-right: 10px">原密码</span>
+        <input type="text" maxlength="11" placeholder="请输入新密码">
       </div>
     </div>
+    <div class="flex-jc-center">
+      <div class="btn text-c">确定修改</div>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
 <style scoped>
+.box {
+  margin: 15px;
+  border-radius: 10px;
+}
 .btn {
   width: 298px;
   height: 40px;
@@ -25,5 +33,4 @@ export default {
   border-radius: 20px;
   color: #fff;
 }
-
 </style>

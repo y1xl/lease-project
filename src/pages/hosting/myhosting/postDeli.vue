@@ -10,7 +10,7 @@
 
       <div class="box">
         <div @click="toShopdet">
-          <div class="flex-jc-between" >
+          <div class="flex-jc-between">
             <div class="shop_title pd-15">龙华区油松店</div>
           </div>
           <div class="txt pd-lr-15">广东省深圳市龙华新区油松路158号油富商城门店</div>
@@ -49,18 +49,18 @@
           @confirm="onConfirm"
         />
       </van-popup>
-      <van-cell is-link>
-        <template slot="title">
-          <span class="custom-text">选择发货地址</span>
-        </template>
-      </van-cell>
+      <div class="flex-jc-between pd-15 bgc border-b fc-grey flex-align-items">
+        <span class="custom-text">{{areaval}}</span>
+
+        <van-icon name="arrow"/>
+      </div>
 
       <div class="inputbox border-b">
         <input placeholder="收件地址">
       </div>
     </div>
     <div v-if="typenum==1">
-        <input v-model="postnum" placeholder="请输入顺丰单号" type="text">
+      <input v-model="postnum" placeholder="请输入顺丰单号" type="text">
     </div>
 
     <div class="flex-jc-center bgc btn_box">
@@ -77,6 +77,7 @@ export default {
       postnum: "",
       timetext: "",
       datetext: "",
+      areaval: "选择发货地址",
       showtime: false
     };
   },
@@ -90,7 +91,7 @@ export default {
       this.showtime = false;
     },
 
-    submit(){
+    submit() {
       this.$router.push({ path: "/Trusteeship" });
     }
   }

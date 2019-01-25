@@ -45,11 +45,9 @@
       <div class="btn text-c">保存</div>
     </div>
 
-
     <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
-        <van-picker :columns="columns" show-toolbar @confirm="onConfirm" @cancel="isshow = false"/>
+      <van-picker :columns="columns" show-toolbar @confirm="onConfirm" @cancel="isshow = false"/>
     </van-popup>
-
   </div>
 </template>
 
@@ -81,7 +79,7 @@ export default {
         this.content = this.totalTime + "s后重新发送";
         if (this.totalTime < 0) {
           window.clearInterval(clock);
-          this.content = "重新发送验证码";
+          this.content = "重新发送";
           this.totalTime = 60;
           this.canClick = true;
         }
@@ -112,10 +110,12 @@ input::placeholder {
   width: 100px;
 }
 .yz {
+  height: 25px;
+  line-height: 25px;
   color: #fff;
   background-color: #4ea9f9;
   border-radius: 15px;
-  padding: 5px 10px;
+  padding: 0px 10px;
   font-size: 12px;
 }
 .btn {

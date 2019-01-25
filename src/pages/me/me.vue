@@ -40,14 +40,14 @@
         </template>
       </van-cell>
 
-        <van-cell is-link center to="/cart">
-          <template slot="icon">
-            <img src="../../assets/gwc.png" alt="图标" class="left_img">
-          </template>
-          <template slot="title">
-            <div>购物车</div>
-          </template>
-        </van-cell>
+      <van-cell is-link center to="/cart">
+        <template slot="icon">
+          <img src="../../assets/gwc.png" alt="图标" class="left_img">
+        </template>
+        <template slot="title">
+          <div>购物车</div>
+        </template>
+      </van-cell>
 
       <van-cell is-link center to="/MyBalance">
         <template slot="icon">
@@ -67,7 +67,7 @@
           </template>
         </van-cell>
       </div>
-      <div class="hcenter">
+      <div class="hcenter border-b">
         <van-cell is-link center to="/HelpCenter">
           <template slot="icon">
             <img src="../../assets/bz.png" alt="图标" class="left_img">
