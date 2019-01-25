@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <div class="pd-15 border-b">认证免押金方式</div>
+    <div class="pd-15 border-b rz-style">认证免押金方式</div>
     <router-link class="flex-jc-between pd-15 border-b" to="/realname">
       <div>实名认证</div>
       <div class="flex-align-items">
@@ -55,7 +55,9 @@ export default {};
   border-radius: 5px;
   color: #fff;
 }
-
+.rz-style {
+  background: #f6f6f6;
+}
 .header > div:nth-of-type(1) {
   /* font-size: 12px; */
   padding-top: 30px;

@@ -49,6 +49,10 @@ export default {
 };
 </script>
 <style>
+#nav .van-tab {
+  background-color: #f6f6f6;
+}
+
 #nav .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);

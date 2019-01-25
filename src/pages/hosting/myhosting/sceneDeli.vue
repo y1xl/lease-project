@@ -1,6 +1,6 @@
 <template>
   <div class="bgc full">
-    <div >
+    <div>
       <div class="flex-jc-between pd-15" @click="go('/locationList/sceneDeli')">
         <div>选择交付门店</div>
         <div class="flex-align-items fc-grey">
@@ -10,7 +10,7 @@
 
       <div class="box" v-show="getlocation">
         <div @click="go(`/ShopDetail`)">
-          <div class="flex-jc-between" >
+          <div class="flex-jc-between">
             <div class="shop_title pd-15">{{getlocation.title}}</div>
           </div>
           <div class="txt pd-lr-15">{{getlocation.address}}</div>
@@ -27,7 +27,10 @@
         <div class="flex-jc-between flex-align-items" style="margin-top: 30px;">
           <div>
             <div class="custom-text fc-grey">交付日期</div>
-            <div class="custom-text f13" :class="datetext==''?'fc-grey':''">{{datetext==''?'请选择日期':datetext}}</div>
+            <div
+              class="custom-text f13"
+              :class="datetext==''?'fc-grey':''"
+            >{{datetext==''?'请选择日期':datetext}}</div>
           </div>
           <van-icon name="arrow" color="#aeaeae" size="20px"/>
         </div>
@@ -44,28 +47,32 @@
 export default {
   data() {
     return {
-      datetext:'',
-      getlocation:''
+      datetext: "",
+      getlocation: ""
     };
   },
   created() {
-        let sceneDeliSession = JSON.parse(window.sessionStorage.getItem("sceneDeliSession"));
-        if(sceneDeliSession){
-            this.datetext = sceneDeliSession.date
-            this.getlocation = sceneDeliSession.getlocation
-        }
-        //取缓存 end
-    },
+    let sceneDeliSession = JSON.parse(
+      window.sessionStorage.getItem("sceneDeliSession")
+    );
+    if (sceneDeliSession) {
+      this.datetext = sceneDeliSession.date;
+      this.getlocation = sceneDeliSession.getlocation;
+    }
+    //取缓存 end
+  },
   methods: {
-    go(url){
-        let sceneDeliSession = {
-            date: this.datetext,
-            getlocation:this.getlocation,
-        }
-        window.sessionStorage.setItem("sceneDeliSession", JSON.stringify(sceneDeliSession));
-        this.$router.push({ path: url });
-    },
-
+    go(url) {
+      let sceneDeliSession = {
+        date: this.datetext,
+        getlocation: this.getlocation
+      };
+      window.sessionStorage.setItem(
+        "sceneDeliSession",
+        JSON.stringify(sceneDeliSession)
+      );
+      this.$router.push({ path: url });
+    }
   }
 };
 </script>

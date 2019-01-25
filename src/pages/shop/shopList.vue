@@ -13,7 +13,7 @@
               </div>
               <div class="txt f12">广东省深圳市龙华新区油松路158号油富商城门店</div>
             </router-link>
-            
+
             <router-link class="dt text-c" to="/map">
               <img class="ck_img" src="../../assets/mddw.png">
               <span class="txt f12">查看地图</span>
@@ -50,7 +50,7 @@ export default {
           this.finished = true;
         }
       }, 500);
-    },
+    }
   }
 };
 </script>

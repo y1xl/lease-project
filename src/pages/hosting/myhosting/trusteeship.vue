@@ -16,7 +16,7 @@
                 <div class="goods_title newline">蚂蚁摄影Canon/佳能EOS200D 单反相机入门级入门级</div>
                 <div class="flex-jc-between flex-align-items">
                   <div class="state">
-                    <span v-if="ind==1">审核中</span>
+                    <span v-if="ind==1||ind==0">审核中</span>
                     
                     <span v-if="ind==2">在库</span>
                     <!-- <span>出租中</span> -->
@@ -50,14 +50,14 @@ export default {
     },
     //托管详情
     toDetail() {
-      if(this.ind==1){
-        this.$router.push({ path: "/HostDetail" })
+      if (this.ind == 1) {
+        this.$router.push({ path: "/HostDetail" });
       }
-      if(this.ind==2){
-        this.$router.push({ path: "/hostingDetail" })
+      if (this.ind == 2) {
+        this.$router.push({ path: "/hostingDetail" });
       }
-      if(this.ind==3){
-        this.$router.push({ path: "/hostingExpress" })
+      if (this.ind == 3) {
+        this.$router.push({ path: "/hostingExpress" });
       }
     },
     //取消托管
