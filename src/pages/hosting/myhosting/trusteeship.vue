@@ -62,6 +62,7 @@ export default {
     },
     //取消托管
     cancelTg() {
+       window.sessionStorage.removeItem('hostCancelSession');
       this.$router.push({ path: "/HostCancel" });
     }
   }

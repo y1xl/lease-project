@@ -1,20 +1,20 @@
 <template>
   <div class="bgc full">
 
-    <router-link class="flex-jc-between flex-align-items border-b pd-15 box" to="/calendar">
+    <div class="flex-jc-between flex-align-items border-b pd-15 box" @click="go('/calendar/platformDeli')">
       <diV>
         <div class="mar-b-10">交付日期</div>
-        <div class="time">2019-01-20</div>
+        <div class="" :class="datetext==''?'':'time'">{{datetext==''?'请选择日期':datetext}}</div>
       </diV>
       <div class="flex-align-items fc-grey">
         <van-icon name="arrow"/>
       </div>
-    </router-link>
+    </div>
 
     <div class="flex-jc-between flex-align-items border-b pd-15 box" @click="isshow = true">
       <diV>
         <div class="mar-b-10">交付时间</div>
-        <div>{{text}}</div>
+        <div>{{timequantum}}</div>
       </diV>
       <div class="flex-align-items fc-grey">
         <van-icon name="arrow"/>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       isshow: false,
-
+      datetext:'',
       columns: [
         {
           values: Object.keys(times),
@@ -59,10 +59,26 @@ export default {
         }
       ],
 
-      text: "请选择交付时间"
+      timequantum: "请选择交付时间"
     };
   },
+  created() {
+      let platformDeliSession = JSON.parse(window.sessionStorage.getItem("platformDeliSession"));
+      if(platformDeliSession){
+          this.datetext = platformDeliSession.date
+          this.timequantum = platformDeliSession.timequantum
+      }
+      //取缓存 end
+  },
   methods: {
+    go(url){
+        let platformDeliSession = {
+            date: this.datetext,
+            timequantum:this.timequantum,
+        }
+        window.sessionStorage.setItem("platformDeliSession", JSON.stringify(platformDeliSession));
+        this.$router.push({ path: url });
+    },
     onConfirm(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
       this.text = value;

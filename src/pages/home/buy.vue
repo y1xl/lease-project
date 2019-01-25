@@ -9,28 +9,28 @@
             </div>
         </div>
         <div class="mar-b-10 main">
-            <van-cell is-link center to="/addresslist" v-show="typenum==1||typenum==2" >
+            <van-cell is-link center @click="go('/addresslist/buy')" v-show="typenum==1||typenum==2" >
                 <div slot="title">
                     <div>收货地址</div>
-                    <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
-                    <div>深圳市龙华新区龙华街道九方A座1001号</div>
+                    <div>{{getaddress.name}}  {{getaddress.phone}} <van-tag plain v-if="getaddress.default">默认</van-tag></div>
+                    <div>{{getaddress.address}}</div>
                 </div>
             </van-cell>
             <template v-if="typenum==0">
-                <van-cell is-link center to="/locationList">
+                <van-cell is-link center @click="go('/locationList/buy')">
                     <template slot="title">
                         <div>自取地点</div>
-                        <div>深圳龙华九方店</div>
-                        <div>深圳市龙华新区龙华街道九方A座1001号</div>
+                        <div>{{getlocation.title}}</div>
+                        <div>{{getlocation.address}}</div>
                     </template>
                 </van-cell>
-                <van-cell is-link center to="/calendar">
+                <van-cell is-link center @click="go('/calendar/buy')">
                     <template slot="title">
                         <div>自取时间</div>
                         <div>{{datechoose}}</div>
                     </template>
                 </van-cell>
-                <van-cell is-link center to="/people">
+                <van-cell is-link center @click="go('/people/buy')">
                     <template slot="title">
                         <div>自取联系人</div>
                         <div>{{people.name}}  {{people.phone}}</div>
@@ -57,11 +57,11 @@
                         <img src="../../assets/icon-triangle.png" class="triangleimg">
                     </div>
                     <div class="border flex-center">
-                        <input type="text">
+                        <input type="text" v-model="weekval">
                     </div>
                 </div>
             </van-cell>
-            <van-cell title="期望收到的日期" is-link center v-show="typenum==0" to="/calendar"></van-cell>
+            <van-cell title="期望收到的日期" is-link center v-show="typenum==0" @click="go('/calendar/buy')"></van-cell>
             <van-cell is-link center v-show="typenum==1||typenum==2" to="/calendar">
                 <template slot="title">
                     <div>期望收到的日期</div>
@@ -69,13 +69,13 @@
                 </template>
             </van-cell>
             <!-- 预租 -->
-            <van-cell is-link center v-show="typenum==1||typenum==2" to="/calendar">
+            <van-cell is-link center v-show="typenum==1||typenum==2" @click="go('/calendar/buy')">
                 <template slot="title">
                     <div>预约期望档期</div>
                     <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
                 </template>
             </van-cell>
-            <van-cell title="配送时间段" center value="" is-link v-show="typenum==2" to="/timeQuantum"></van-cell>
+            <van-cell title="配送时间段" center value="" is-link v-show="typenum==2" ></van-cell>
             <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext" v-show="typenum==0"></van-cell>
         </div>
 
@@ -84,13 +84,13 @@
             <van-cell title="配送运费" center value="￥13" v-show="typenum==2"></van-cell>
             <van-cell title="优惠券" is-link center :value="couponstext" @click="showcoupon=true"></van-cell>
             <van-cell title="保险费 ￥20" center>
-                <div class="flex-align-items" style="justify-content: flex-end"><van-switch v-model="checked" size="20px"/></div>
+                <div class="flex-align-items" style="justify-content: flex-end"><van-switch v-model="isinsurance" size="20px"/></div>
             </van-cell>
             <van-cell title="享受优惠" is-link center :value="activitytext" @click="discountmodel=true"></van-cell>
             <van-cell center v-show="typenum==2">
                 <div slot="title">
                     <span>特殊需求备注</span>
-                    <input type="text" placeholder="请输入">
+                    <input type="text" placeholder="请输入" v-model="remarkval">
                 </div>       
             </van-cell>
         </div>
@@ -112,7 +112,7 @@
         <div class="bgc pd-15">
             <div class="mar-b-10 flexbox">
                 <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
-                <div class="pdl10">同意<router-link to="/zagreement" class="fc-blue">租赁协议</router-link></div>
+                <div class="pdl10">同意<span @click="go('/zagreement')" class="fc-blue">租赁协议</span></div>
             </div>
             <div><div class="btn text-c" @click="nextface">信用免押支付</div></div>
         </div>
@@ -183,20 +183,59 @@ export default {
             timetext:'',
             datechoose: '',
             people:'',
+            getlocation:'',
+            getaddress:'',
             couponstext:'',//优惠券
             showcoupon:false,//优惠券
-            activitytext:'',//优惠
-            showweek: false,
-            columns: ['天', '小时', '分钟', '测试', '测试'],
-            weektext: '请选择',
-            checked: false,
+            activitytext:'',//优惠活动
+            showweek: false,//租期
+            columns: ['天', '小时', '分钟', '测试', '测试'],//租期
+            weektext: '请选择',//租期
+            weekval:'',//租期
+            isinsurance: false,//保险
             isconsent:true,//协议
-            discountmodel:false,
-            couponlist: [1,2]
+            discountmodel:false,//优惠活动
+            couponlist: [1,2],//优惠券
+            remarkval:''
         }
     },
+    created() {
+        let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
+        if(buySession){
+            this.typenum = buySession.gettype
+            this.getlocation = buySession.getlocation
+            this.datechoose = buySession.getdate
+            this.timetext = buySession.gettime
+            this.people = buySession.getpeople
+            this.getaddress = buySession.getaddress
+            this.weektext = buySession.weektext
+            this.weekval = buySession.weekval
+            this.isinsurance = buySession.isinsurance
+            this.couponstext = buySession.couponstext
+            this.activitytext = buySession.activitytext
+            this.remarkval = buySession.remarkval
+        }
+        //取缓存 end
+    },
     methods:{
-
+        go(url){
+            let buySession = {
+                gettype: String(this.typenum), //取货方式
+                getlocation: this.getlocation, //自取地点
+                getdate: this.datechoose,
+                gettime: this.timetext,
+                getpeople: this.people,
+                getaddress:this.getaddress,
+                weektext:this.weektext,//租期
+                weekval:this.weekval,//租期
+                isinsurance:this.isinsurance,
+                couponstext:this.couponstext,
+                activitytext:this.activitytext,
+                remarkval:this.remarkval,
+            }
+            window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
+            this.$router.push({ path: url });
+        },
         onConfirm(value) {
             console.log(`当前值：${value}`);
             this.timetext = value
@@ -207,6 +246,7 @@ export default {
             this.weektext = value
             this.showweek = false
         },
+
         nextface(){
             if(this.isconsent){
                 this.$router.push({ path: '/face' })

@@ -42,10 +42,17 @@ export default {
                 return
             }
             let people = {
+                type: String(this.selected),
                 name:this.nameval,
                 phone:this.phoneval
             }
-            window.sessionStorage.setItem("people", JSON.stringify(people));
+
+            if(this.$route.params.type=='shopping'){
+                let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"))
+                shoppingSession.getpeople = people
+                window.sessionStorage.setItem("shoppingSession", JSON.stringify(shoppingSession));
+            }
+            
             this.$router.go(-1)
         }
     }

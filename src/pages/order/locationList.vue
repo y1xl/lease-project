@@ -3,12 +3,12 @@
         <div class="bgc tag"><van-tag type="success">推荐</van-tag></div>
         <div class="bgc list">
         <van-radio-group v-model="radio">
-            <div class="flex-align-items card" :class="index===list.length-1?'':'border-b'" @click="radio = item.id" v-for="(item,index) in list" :key="index">
-                <van-radio :name="item.id" checked-color="#2DBBF1"></van-radio>
-                <div class="item flex-align-items"> 
-                    <div class="left">
-                        <div>深圳龙华九方店</div>
-                        <div class="fsz12">深圳市龙华新区龙华街道九方A座1001号</div>
+            <div class="flex-align-items card" :class="index===list.length-1?'':'border-b'" @click="radio = index" v-for="(item,index) in list" :key="index">
+                <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
+                <div class="item flex-align-items flex-jc-between flex-1"> 
+                    <div class="left flex-1">
+                        <div>{{item.title}}</div>
+                        <div class="fsz12">{{item.address}}</div>
                     </div>
                     <div class="right fsz12">距您74m</div>
                 </div>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="height"></div>
-        <div class="btn text-c">完成</div>
+        <div class="btn text-c" @click="submit">完成</div>
     </div>
 </template>
 
@@ -25,10 +25,30 @@
 export default {
     data(){
         return{
-            list:[{id:1},{id:2}],
-            radio: 1,
+            list:[{id:1,title:'深圳龙华九方店',address:'深圳市龙华新区龙华街道九方A座1001号'},{id:2,title:'深圳龙华九方店',address:'深圳市'}],
+            radio: 0,
         }
     },
+    methods:{
+        submit(){
+            if(this.$route.params.type=='shopping'){
+                let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"))
+                shoppingSession.getlocation = this.list[this.radio]
+                window.sessionStorage.setItem("shoppingSession", JSON.stringify(shoppingSession));
+            }
+            if(this.$route.params.type=='buy'){
+                let buySession = JSON.parse(window.sessionStorage.getItem("buySession"))
+                buySession.getlocation = this.list[this.radio]
+                window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
+            }
+            if(this.$route.params.type=='sceneDeli'){
+                let sceneDeliSession = JSON.parse(window.sessionStorage.getItem("sceneDeliSession"))
+                sceneDeliSession.getlocation = this.list[this.radio]
+                window.sessionStorage.setItem("sceneDeliSession", JSON.stringify(sceneDeliSession));
+            }
+            this.$router.go(-1)
+        }
+    }
 
 }
 </script>

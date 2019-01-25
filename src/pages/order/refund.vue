@@ -18,27 +18,27 @@
         </div>
 
         <div v-show="selected==1">
-            <van-cell title="选择退租时间" is-link center :value="datetext" to="/calendar"></van-cell>    
+            <van-cell title="选择退租时间" is-link center :value="datetext" @click="go('/calendar/refund')"></van-cell>    
             <van-cell center :border="false">
                 <div class="bgc flex-align-items" slot="title">
                     <span>快递单号</span>
-                    <input type="text" placeholder="请输入" class="pdl">
+                    <input type="text" placeholder="请输入" class="pdl" v-model="numval">
                 </div>
             </van-cell>    
 
             <div class="text-c tip">温馨提示:如果未经平台预约寄送,请直接填写快递单号</div>
-            <div class="pd-15"><router-link to="/appointmentExpress"><div class="btn1 text-c">快捷预约顺丰上门取件入口</div></router-link></div>
+            <div class="pd-15"><div class="btn1 text-c" @click="go('/appointmentExpress')">快捷预约顺丰上门取件入口</div></div>
             <div class="pd-15"><div class="btn text-c">确定</div></div>
         </div>
 
         <div v-show="selected==2">
-            <van-cell title="选择退租时间" is-link center :value="datetext" to="/calendar"></van-cell>  
+            <van-cell title="选择退租时间" is-link center :value="datetext" @click="go('/calendar/refund')"></van-cell>  
             <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext"></van-cell>  
-            <van-cell is-link center to="/addresslist" :border="false">
+            <van-cell is-link center :border="false" @click="go('/addresslist/refund')">
                 <template slot="title">
                     <div>收货地址</div>
-                    <div>曾小姐  18822815757 <van-tag plain>默认</van-tag></div>
-                    <div>深圳市龙华新区龙华街道九方A座1001号</div>
+                    <div>{{getaddress.name}}  {{getaddress.phone}} <van-tag plain v-if="getaddress.default">默认</van-tag></div>
+                    <div>{{getaddress.address}}</div>
                 </template>
             </van-cell>
             <div class="pd-t-100"><div class="btn text-c">提交</div></div>
@@ -63,10 +63,34 @@ export default {
             typenum:0,
             showtime:false,
             datetext:'',
-            timetext:''
+            timetext:'',
+            getaddress:'',
+            numval:''
         }
     },
+    created() {
+        let refundSession = JSON.parse(window.sessionStorage.getItem("refundSession"));
+        if(refundSession){
+            this.selected = refundSession.backtype
+            this.datetext = refundSession.backdate
+            this.timetext = refundSession.backtime
+            this.getaddress = refundSession.getaddress
+            this.numval = refundSession.numval
+        }
+        //取缓存 end
+    },
     methods:{
+        go(url){
+            let refundSession = {
+                backtype: String(this.selected),
+                backdate: this.datetext,
+                backtime: this.timetext,
+                getaddress:this.getaddress,
+                numval:this.numval
+            }
+            window.sessionStorage.setItem("refundSession", JSON.stringify(refundSession));
+            this.$router.push({ path: url });
+        },
         onConfirm(value) {
             console.log(`当前值：${value}`);
             this.timetext = value

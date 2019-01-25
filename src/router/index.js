@@ -104,13 +104,13 @@ export default new Router({
     { path: '/orderDetail', component: OrderDetail, meta: { title: '订单详情' } },
     { path: '/relet', component: Relet, meta: { title: '续租' } },
     { path: '/shopping', component: Shopping, meta: { title: '购买' } },
-    { path: '/people', component: People, meta: { title: '自取联系人' } },
-    { path: '/locationList', component: LocationList, meta: { title: '选择地点' } },
+    { path: '/people/:type', component: People, meta: { title: '自取联系人' } },
+    { path: '/locationList/:type', component: LocationList, meta: { title: '选择地点' } },
     { path: '/refund', component: Refund, meta: { title: '退租' } },
     { path: '/timeQuantum', component: TimeQuantum, meta: { title: '选择时间段' } },
     { path: '/appointmentExpress', component: AppointmentExpress, meta: { title: '预约快递' } },
     { path: '/deny', component: Deny, meta: { title: '否认' } },
-    { path: '/calendar', component: Calendar, meta: { title: '时间' } },
+    { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
     //产品
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
@@ -182,7 +182,7 @@ export default new Router({
     { path: '/hostingExpress', component: HostingExpress, meta: { title: '审核详情' } },
 
     //收货地址
-    { path: '/addresslist', component: Addresslist, meta: { title: '收货地址' } },
+    { path: '/addresslist/:type', component: Addresslist, meta: { title: '收货地址' } },
     { path: '/addaddress', component: Addaddress, meta: { title: '收货地址' } },
 
     //地图

@@ -29,7 +29,36 @@ export default {
     methods:{
         clickDay(date){
             console.log(date)
-            window.sessionStorage.setItem("datechoose", date);
+            if(this.$route.params.type=='shopping'){
+                let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"))
+                shoppingSession.getdate = date
+                window.sessionStorage.setItem("shoppingSession", JSON.stringify(shoppingSession));
+            }
+            if(this.$route.params.type=='refund'){
+                let refundSession = JSON.parse(window.sessionStorage.getItem("refundSession"))
+                refundSession.backdate = date
+                window.sessionStorage.setItem("refundSession", JSON.stringify(refundSession));
+            }
+            if(this.$route.params.type=='appointmentExpress'){
+                let appointmentExpress = JSON.parse(window.sessionStorage.getItem("appointmentExpress"))
+                appointmentExpress.date = date
+                window.sessionStorage.setItem("appointmentExpress", JSON.stringify(appointmentExpress));
+            }
+            if(this.$route.params.type=='hostCancel'){
+                let hostCancelSession = JSON.parse(window.sessionStorage.getItem("hostCancelSession"))
+                hostCancelSession.date = date
+                window.sessionStorage.setItem("hostCancelSession", JSON.stringify(hostCancelSession));
+            }
+            if(this.$route.params.type=='platformDeli'){
+                let platformDeliSession = JSON.parse(window.sessionStorage.getItem("platformDeliSession"))
+                platformDeliSession.date = date
+                window.sessionStorage.setItem("platformDeliSession", JSON.stringify(platformDeliSession));
+            }
+            if(this.$route.params.type=='sceneDeli'){
+                let sceneDeliSession = JSON.parse(window.sessionStorage.getItem("sceneDeliSession"))
+                sceneDeliSession.date = date
+                window.sessionStorage.setItem("sceneDeliSession", JSON.stringify(sceneDeliSession));
+            }
             this.$router.go(-1)
         }
     }

@@ -301,6 +301,7 @@ export default {
       this.$router.push({ path: "/WordMouth" });
     },
     gobuy() {
+      window.sessionStorage.removeItem('buySession');
       this.$router.push({ path: "/buy" });
     }
   }
@@ -566,6 +567,7 @@ export default {
   bottom: 10px;
   right: 20px;
   font-size: 24px;
+  z-index: 100;
 }
 /* 选择规格 */
 .fsz12 {
