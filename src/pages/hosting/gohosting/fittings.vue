@@ -9,7 +9,7 @@
         <van-checkbox-group v-model="result">
             <div class="bgc pd-15 flex-wrap">
                 <div v-for="(item, index) in list" :key="index" class="flex-align-items item">
-                    <van-checkbox :name="item"></van-checkbox>
+                    <van-checkbox :name="item" checked-color="#2DBBF1"></van-checkbox>
                     <span class="pdl">相机</span>
                 </div>
             </div>
@@ -29,8 +29,17 @@ export default {
             result: []
         }
     },
+    created(){
+        let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+        if(gohostingSession){
+            this.result = gohostingSession.fittings
+        }
+    },
     methods:{
         next(){
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.fittings = this.result
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/uploadimg' })
         }
     }

@@ -55,7 +55,7 @@
     <div class="model full flex-column-center position" v-show="showcode">
       <div class="closeimg" @click="getcode"><van-icon name="close" color="#fff"/></div>
       <img
-        src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+        src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1016728805,4031130995&fm=26&gp=0.jpg"
         alt="QRcode"
         class="codeimg"
       >

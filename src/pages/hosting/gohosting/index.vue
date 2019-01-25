@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return{
@@ -152,10 +153,19 @@ export default {
             shownum: false,
             numtext: '',
             numarr: ['数量1', '数量2'],
+            gohostingSession: ''
         }
     },
     created(){
-
+        let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+        if(gohostingSession){
+            this.typetext = gohostingSession.typetext
+            this.brandtext = gohostingSession.brandtext
+            this.modeltext = gohostingSession.modeltext
+            this.colortext = gohostingSession.colortext
+            this.numtext = gohostingSession.numtext
+            this.gohostingSession = gohostingSession
+        }
     },
     methods:{
         onConfirmType(value, index){
@@ -184,6 +194,30 @@ export default {
         },
 
         next(){
+            if(this.typetext==''||this.brandtext==''||this.modeltext==''||this.colortext==''||this.numtext==''){
+                Toast("请先填写完整");
+                return
+            }
+
+            let gohostingSession = {
+                typetext: this.typetext,
+                brandtext:this.brandtext,
+                modeltext:this.modeltext,
+                colortext:this.colortext,
+                numtext:this.numtext,
+
+                datetext: this.gohostingSession.datetext||'',
+                colourtext:this.gohostingSession.colourtext||'',
+                colourdes: this.gohostingSession.colourdes||'',
+                statetext: this.gohostingSession.statetext||'',
+                priceval: this.gohostingSession.priceval||'',
+
+                fittings: this.gohostingSession.fittings||[],
+
+                serialnumval:this.gohostingSession.serialnumval||'',
+                telval:this.gohostingSession.telval||'',
+            }
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/steps2' })
         }
     }

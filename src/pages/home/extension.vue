@@ -74,7 +74,7 @@
     </div>
 
     <van-popup v-model="showcode">
-      <div style="font-size:0"><img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="" class="codeimg"></div>
+      <div style="font-size:0"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1016728805,4031130995&fm=26&gp=0.jpg" alt="" class="codeimg"></div>
     </van-popup>
   </div>
 </template>

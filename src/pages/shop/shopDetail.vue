@@ -3,7 +3,7 @@
     <div class="bgc">
       <div class="flex-jc-center">
         <div class="shopimg_b">
-          <img src="../../assets/qd.png">
+          <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1414761794,530721362&fm=26&gp=0.jpg">
         </div>
       </div>
       <div class="dt text-c">

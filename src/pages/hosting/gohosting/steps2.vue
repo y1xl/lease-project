@@ -10,7 +10,7 @@
         </div>
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">购买价格</div>
-            <input type="text" placeholder="请输入购买价格">
+            <input type="text" placeholder="请输入购买价格" v-model="priceval">
         </div>
         <div class="flex-jc-between flex-align-items bgc pd-15" @click="showcolour=true">
             <div class="flex-1">
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return{
@@ -78,7 +79,17 @@ export default {
             showstate: false,
             statetext: '',
             statearr: ['状况1', '状况2'],
-
+            priceval: ''
+        }
+    },
+    created(){
+        let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+        if(gohostingSession){
+            this.datetext = gohostingSession.datetext
+            this.colourtext = gohostingSession.colourtext
+            this.colourdes = gohostingSession.colourdes
+            this.statetext = gohostingSession.statetext
+            this.priceval = gohostingSession.priceval
         }
     },
     methods:{
@@ -98,6 +109,19 @@ export default {
         },
 
         next(){
+            if(this.datetext==''||this.colourtext==''||this.colourdes==''||this.statetext==''||this.priceval==''){
+                Toast("请先填写完整");
+                return
+            }
+
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.datetext = this.datetext
+            gohostingSession.colourtext = this.colourtext
+            gohostingSession.colourdes = this.colourdes
+            gohostingSession.statetext = this.statetext
+            gohostingSession.priceval = this.priceval
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+
             this.$router.push({ path: '/fittingsConfirm' })
         }
     }

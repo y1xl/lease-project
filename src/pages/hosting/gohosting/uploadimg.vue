@@ -28,11 +28,11 @@
 
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">序列号</div>
-            <input type="text" placeholder="请填写产品序列号">
+            <input type="text" placeholder="请填写产品序列号" v-model="serialnumval">
         </div>
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">联系方式</div>
-            <input type="text" placeholder="请填写联系方式">
+            <input type="text" placeholder="请填写联系方式" v-model="telval">
         </div>
 
         <div class="pd-15"><div class="btn text-c" @click="onshowmodel">提交</div></div>
@@ -53,7 +53,7 @@
                 <div class="flex-jc-between pd"><span class="fc-grey">购买价格</span><span>￥1000</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">外观成色</span><span>95新</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">功能状况</span><span>好</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">联系方式</span><span>123457890</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">联系方式</span><span>{{gohostingSession.telval}}</span></div>
                 <div class="imglist flex-jc-between pd">
                     <img :src="fileimg1.content" alt="">
                     <img :src="fileimg2.content" alt="">
@@ -72,13 +72,24 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return{
             fileimg1:'',
             fileimg2:'',
+            serialnumval:'',
+            telval:'',
             isconsent: true,
-            showmodel: false
+            showmodel: false,
+            gohostingSession: ''
+        }
+    },
+    created(){
+        let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+        if(gohostingSession){
+            this.serialnumval = gohostingSession.serialnumval
+            this.telval = gohostingSession.telval
         }
     },
     methods:{
@@ -92,11 +103,28 @@ export default {
         },
 
         onshowmodel(){
+            if(this.serialnumval==''||this.telval==''){
+                Toast("请先填写完整");
+                return
+            }
+
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.serialnumval = this.serialnumval
+            gohostingSession.telval = this.telval
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+
+            console.log(gohostingSession) 
+            this.gohostingSession = gohostingSession
             this.showmodel = true
         },
 
         submit(){
-            this.$router.push({ path: '/gsuccessful' })
+            if(this.isconsent){
+                this.$router.replace({ path: '/gsuccessful' })
+            }else{
+                Toast("您还未同意合约");
+            }
+            
         }
     }
 }

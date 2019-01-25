@@ -2,7 +2,7 @@
   <div>
     <div class="flex-jc-center bgc">
       <div class="img_b">
-        <img class="top_img" src="../../assets/2.png">
+        <img class="top_img" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1337839379,464669222&fm=26&gp=0.jpg">
       </div>
     </div>
     <div>

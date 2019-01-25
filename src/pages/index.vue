@@ -20,10 +20,8 @@
     </div>
 
     <div class="flex-jc-around bgc" v-show="active==0">
-      <div class="tg">
-        <router-link to="/gohosting">
+      <div class="tg" @click="gohosting">
           <img src="../assets/tuoguan.png"> 我要托管
-        </router-link>
       </div>
       <div class="tg">
         <router-link to="/Extension">
@@ -170,7 +168,7 @@ export default {
       lag: "",
       images: [
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
+        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
       ],
       prolist: [
         { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
@@ -187,13 +185,13 @@ export default {
         },
         {
           imgurl:
-            "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
+            "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
           price1: "1111111",
           name1: "Canon/佳能 PowerShot SX720 HS "
         },
         {
           imgurl:
-            "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
+            "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
           price1: "3.08",
           name1: "Canon/佳能 PowerShot SX720 HS "
         }
@@ -213,11 +211,16 @@ export default {
         window.navigator.geolocation.getCurrentPosition(position => {
           var lat = position.coords.latitude; //纬度
           var lag = position.coords.longitude; //经度
-          (this.lat = lat), (this.lag = lag);
+          this.lat = lat 
+          this.lag = lag
         });
       } else {
         Toast("浏览器不支持地理定位");
       }
+    },
+    gohosting() {
+      window.sessionStorage.removeItem('gohostingSession');
+      this.$router.push({ path: "/gohosting" });
     },
     //更多
     more() {

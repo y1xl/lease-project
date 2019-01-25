@@ -3,15 +3,16 @@
     <van-search placeholder="请输入搜索关键词" v-model="value" show-action>
       <div slot="action" @click="onSearch ">搜索</div>
     </van-search>
-    <div class="bgc list">
-      <div class="fl_pro_list mar-b-10" v-for="(item, index) in flprolist" :key="index">
+
+    <div class="bgc">
+      <div class="fl_pro_list" v-for="(item, index) in flprolist" :key="index">
         <div class="img_box">
           <img class="sy_img" :src="item.imgurl">
         </div>
         <div class="f14 pro_name">{{item.name1}}</div>
         <div class="com_like">
           <van-rate v-model="item.rate" disabled disabled-color="#FFB10E"/>
-          <span class="f12">4.9</span>
+          <span class="f12">4</span>
           <div>
             <img class="chat" src="../../assets/chat.png">
             <span class="f12">999+</span>
@@ -33,25 +34,13 @@ export default {
     return {
       value: "",
       flprolist: [
-        {
-          imgurl:
-            "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-          price1: "3.08",
-          name1: "Canon/佳能 PowerShot SX720 HS ",
-          rate: 4.9
-        },
-        {
-          imgurl:
-            "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-          price1: "1111111",
-          name1: "Canon/佳能 PowerShot SX720 HS "
-        },
-        {
-          imgurl:
-            "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
-          price1: "3.08",
-          name1: "Canon/佳能 PowerShot SX720 HS "
-        }
+        // {
+        //   imgurl:
+        //     "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
+        //   price1: "3.08",
+        //   name1: "Canon/佳能 PowerShot SX720 HS ",
+        //   rate: 4
+        // },
       ]
     };
   },
@@ -64,14 +53,13 @@ export default {
 </script>
 
 <style scoped>
-.list {
-  padding-top: 15px;
-}
+
 /*分类 所有产品*/
 .fl_pro_list {
   width: 100%;
   padding: 0 10px;
   box-sizing: border-box;
+  padding-top: 10px;
 }
 
 .img_box {

@@ -228,7 +228,7 @@
         快递信息
         <div class="fr"><van-icon name="close" @click="showlogistics=false"/></div>
       </div>
-      <div class='progress position'>
+      <!-- <div class='progress position'>
         <div v-for="(item,index) in wuliu" :key="index">
           <div class='time text-c'>
             <div>07:45</div>
@@ -236,6 +236,16 @@
           <div class='sdot'></div>
           <div>[深圳] 快件已到达深圳快件已到达深圳</div>
         </div>
+      </div> -->
+      <div class="express">
+          <div class="item flex-align-items">
+              <span>11:00</span>
+              <span class="flex-1">快件已到达深圳快件已到达深圳</span>
+          </div>
+          <div class="item flex-align-items">
+              <span>11:00</span>
+              <span class="flex-1">快件已到达深圳快件已到达深圳深圳</span>
+          </div>
       </div>
     </van-popup>
 
@@ -261,7 +271,6 @@ export default {
   data(){
     return {
       showlogistics:false,
-      wuliu:[1,2,3]
     }
   },
   methods:{
@@ -380,7 +389,7 @@ export default {
   font-size: 13px;
 }
 
-.progress{
+/* .progress{
   width: 285px;
   padding: 10px;
   box-sizing: border-box;
@@ -411,5 +420,17 @@ export default {
   overflow: hidden;
   background-color: #E0E0E0;
   display: inline-block;
+} */
+.express {
+  width: 285px;
+  box-sizing: border-box;
+  padding-bottom: 10px;
 }
+.express .item {
+  padding: 10px;
+}
+.express .item > span:nth-of-type(1){
+    width: 50px;
+}
+
 </style>
