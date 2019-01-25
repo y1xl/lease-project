@@ -1,21 +1,21 @@
 <template>
   <div class="bgc full">
     <div class>
-      <router-link class="flex-jc-between pd-15" to="/locationList">
+      <div class="flex-jc-between pd-15" @click="go('/locationList/postDeli')">
         <div>选择交付门店</div>
         <div class="flex-align-items fc-grey">
           <van-icon name="arrow"/>
         </div>
-      </router-link>
+      </div>
 
-      <div class="box">
-        <div @click="toShopdet">
+      <div class="box" v-show="getlocation">
+        <div @click="go(`/ShopDetail`)">
           <div class="flex-jc-between">
-            <div class="shop_title pd-15">龙华区油松店</div>
+            <div class="shop_title pd-15">{{getlocation.title}}</div>
           </div>
-          <div class="txt pd-lr-15">广东省深圳市龙华新区油松路158号油富商城门店</div>
+          <div class="txt pd-lr-15">{{getlocation.address}}</div>
         </div>
-        <div class="dt text-c">
+        <div class="dt text-c" @click="go(`/map`)">
           <img class="ck_img" src="../../../assets/mddw.png">
           <span class="txt">查看地图</span>
         </div>
@@ -27,7 +27,10 @@
       <div :class="{ 'fc-blue selected': typenum==1 }" @click="typenum=1">已寄出</div>
     </div>
     <div v-if="typenum==0">
-      <router-link class="flex-jc-between pd-15 bgc border-b flex-align-items" to="/calendar">
+      <router-link
+        class="flex-jc-between pd-15 bgc border-b flex-align-items"
+        to="/calendar/postDeli"
+      >
         <span class="custom-text">期望揽收日期</span>
         <span class="flex-align-items fc-grey fsz12">
           {{datetext}}
@@ -49,15 +52,24 @@
           @confirm="onConfirm"
         />
       </van-popup>
-      <div class="flex-jc-between pd-15 bgc border-b fc-grey flex-align-items">
-        <span class="custom-text">{{areaval}}</span>
-
+      <div
+        class="flex-jc-between pd-15 bgc border-b fc-grey flex-align-items"
+        @click="go('/addresslist/postDeli')"
+      >
+        <div>
+          <div>选择发货地址</div>
+          <div class="fsz12">
+            {{getaddress.name}} {{getaddress.phone}}
+            <van-tag plain v-if="getaddress.default">默认</van-tag>
+          </div>
+          <div class="fsz12">{{getaddress.address}}</div>
+        </div>
         <van-icon name="arrow"/>
       </div>
 
-      <div class="inputbox border-b">
+      <!-- <div class="inputbox border-b">
         <input placeholder="收件地址">
-      </div>
+      </div>-->
     </div>
     <div v-if="typenum==1">
       <input v-model="postnum" placeholder="请输入顺丰单号" type="text">
@@ -77,9 +89,18 @@ export default {
       postnum: "",
       timetext: "",
       datetext: "",
-      areaval: "选择发货地址",
-      showtime: false
+      showtime: false,
+      getaddress: "",
+      getlocation: ""
     };
+  },
+  created() {
+    let postDeliSession = JSON.parse(
+      window.sessionStorage.getItem("postDeliSession")
+    );
+    if (postDeliSession) {
+      this.getlocation = postDeliSession.getlocation;
+    }
   },
   methods: {
     toShopdet() {
@@ -93,6 +114,16 @@ export default {
 
     submit() {
       this.$router.push({ path: "/Trusteeship" });
+    },
+    go(url) {
+      let postDeliSession = {
+        getlocation: this.getlocation
+      };
+      window.sessionStorage.setItem(
+        "postDeliSession",
+        JSON.stringify(postDeliSession)
+      );
+      this.$router.push({ path: url });
     }
   }
 };
@@ -155,16 +186,17 @@ export default {
 
 input {
   width: 280px;
-  height: 40px;
-  line-height: 40px;
+  padding: 15px 0;
   margin: 0 15px;
-  color: #aeaeae;
   font-size: 14px;
 }
-
+input::placeholder {
+  color: #aeaeae;
+}
 .logist {
   margin: 15px;
 }
+
 .btn_box {
   width: 100%;
   margin-top: 30px;

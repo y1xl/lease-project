@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="mar-b-10">
-            <van-cell title="选择退租时间" is-link center :value="datetext"></van-cell>  
-            <van-cell title="时间段" is-link center :value="timetext" to="/timeQuantum"></van-cell>  
+            <van-cell title="选择退租时间" is-link center :value="datetext" @click="go('/calendar/appointmentExpress')"></van-cell>  
+            <van-cell title="时间段" is-link center :value="timequantum" ></van-cell>  
         </div>
 
-        <div class="address bgc flex-align-items pd-15">
+        <div class="address bgc flex-align-items pd-15" @click="go('/addresslist/appointmentExpress')">
             <div class="left bgc-brown flex-center">寄</div>
             <div class="flex-1 right">
-                <div class="mar-b-10">曾小姐 18822815757</div>
-                <div>深圳市龙华新区龙华街道九方A座1001号</div>
+                <div class="mar-b-10">{{getaddress.name}} {{getaddress.phone}}</div>
+                <div>{{getaddress.address}}</div>
             </div>
             <div><van-icon name="arrow" /></div>
         </div>
@@ -31,8 +31,29 @@ export default {
     data(){
         return{
             datetext:'',
-            timetext:'',
+            timequantum:'',
+            getaddress:''
         }
+    },
+    created() {
+        let appointmentExpress = JSON.parse(window.sessionStorage.getItem("appointmentExpress"));
+        if(appointmentExpress){
+            this.datetext = appointmentExpress.date
+            this.timequantum = appointmentExpress.timequantum
+            this.getaddress = appointmentExpress.getaddress
+        }
+        //取缓存 end
+    },
+    methods:{
+        go(url){
+            let appointmentExpress = {
+                date: this.datetext,
+                timequantum: this.timequantum,
+                getaddress:this.getaddress,
+            }
+            window.sessionStorage.setItem("appointmentExpress", JSON.stringify(appointmentExpress));
+            this.$router.push({ path: url });
+        },
     }
 }
 </script>

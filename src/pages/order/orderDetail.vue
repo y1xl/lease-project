@@ -245,11 +245,11 @@
       <div class="flex-center border-blue fc-blue">
         <router-link v-bind="{to: '/comments'}">评价</router-link>
       </div>
-      <div class="flex-center border">
-        <router-link v-bind="{to: '/shopping'}">购买</router-link>
+      <div class="flex-center border" @click="goshopping">
+        购买
       </div>
-      <div class="flex-center border">
-        <router-link v-bind="{to: '/refund'}">退租</router-link>
+      <div class="flex-center border" @click="gorefund">
+        退租
       </div>
     </div>
   </div>
@@ -269,6 +269,14 @@ export default {
       ImagePreview([
         'http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg',
       ]);
+    },
+    goshopping(){
+      window.sessionStorage.removeItem('shoppingSession');
+      this.$router.push({ path: "/shopping" });
+    },
+    gorefund(){
+      window.sessionStorage.removeItem('refundSession');
+      this.$router.push({ path: "/refund" });
     }
   }
 };

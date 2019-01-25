@@ -2,19 +2,19 @@
   <div>
     <div class="myinfor">
       <div class="me bgc">
-        <div class="flex-jc-between flex-align-items tx">
+        <div class="flex-jc-between flex-align-items tx border-b" >
           <div>我的头像</div>
           <div class="head_img">
             <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
           </div>
         </div>
 
-        <van-cell is-link center to="/DetaInformation">
+        <van-cell is-link center to="/DetaInformation" :border="false">
           <template slot="title">
             <div>详细信息</div>
           </template>
         </van-cell>
-        <div class="shxx">
+        <div class="shxx border-t">
           <van-cell is-link center to="/ReceInformation">
             <template slot="title">
               <div>收货信息</div>
@@ -24,7 +24,7 @@
       </div>
 
       <div class="me bgc">
-        <div class="zhaq">
+        <div class="zhaq border-b">
           <van-cell is-link center to="/accountSecurity">
             <template slot="title">
               <div>账号安全</div>

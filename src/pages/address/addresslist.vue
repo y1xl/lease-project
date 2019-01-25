@@ -1,15 +1,15 @@
 <template>
     <div>
-        <van-radio-group v-model="radio" >
+        <van-radio-group v-model="radio" @change="onchoose">
             <div v-for="(item,index) in list" :key="index" class="card">
                 <van-swipe-cell :right-width="65" :on-close="onClose">
                     <div 
                         class="bgc flex-align-items item" 
                         >
-                        <van-radio :name="item.id" checked-color="#2DBBF1"></van-radio>
+                        <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
                         <div class="flex-1 left">
-                            <div class="mar-b-10">曾小姐 123456789</div>
-                            <div><van-tag plain type="danger">默认</van-tag> 深圳深圳深圳深圳深圳深圳深圳</div>
+                            <div class="mar-b-10">{{item.name}} {{item.phone}}</div>
+                            <div><van-tag plain type="danger" v-if="item.default">默认</van-tag> {{item.address}}</div>
                         </div>
                         <img src="../../assets/icon-editor.png" alt="编辑" class="editorimg">
                     </div>
@@ -28,8 +28,8 @@ import { Dialog } from 'vant';
 export default {
     data(){
         return{
-            list:[{id:1,},{id:2}],
-            radio:1
+            list:[{id:1,name:'曾小姐',phone:'123456789',address:'深圳市龙华新区龙华街道九方A座1001号',default:true},{id:2,name:'曾小姐',phone:'123',address:'深圳市'}],
+            radio:-1
         }
     },
     methods:{
@@ -50,6 +50,36 @@ export default {
                 break;
             }
         },
+
+        onchoose(val){
+            // console.log(val)
+            if(this.$route.params.type=='shopping'){
+                let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"))
+                shoppingSession.getaddress = this.list[val]
+                window.sessionStorage.setItem("shoppingSession", JSON.stringify(shoppingSession));
+            }
+            if(this.$route.params.type=='refund'){
+                let refundSession = JSON.parse(window.sessionStorage.getItem("refundSession"))
+                refundSession.getaddress = this.list[val]
+                window.sessionStorage.setItem("refundSession", JSON.stringify(refundSession));
+            }
+            if(this.$route.params.type=='appointmentExpress'){
+                let appointmentExpress = JSON.parse(window.sessionStorage.getItem("appointmentExpress"))
+                appointmentExpress.getaddress = this.list[val]
+                window.sessionStorage.setItem("appointmentExpress", JSON.stringify(appointmentExpress));
+            }
+            if(this.$route.params.type=='buy'){
+                let buySession = JSON.parse(window.sessionStorage.getItem("buySession"))
+                buySession.getaddress = this.list[val]
+                window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
+            }
+            if(this.$route.params.type=='hostCancel'){
+                let hostCancelSession = JSON.parse(window.sessionStorage.getItem("hostCancelSession"))
+                hostCancelSession.getaddress = this.list[val]
+                window.sessionStorage.setItem("hostCancelSession", JSON.stringify(hostCancelSession));
+            }
+            this.$router.go(-1)
+        }
     }
 }
 </script>

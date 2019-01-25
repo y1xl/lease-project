@@ -5,8 +5,8 @@
         <van-cell center >
           <template slot="title">
             <span>昵称</span>
+            <input type="text" v-model="username">
           </template>
-          <input type="text" v-model="username" class="text-r">
         </van-cell>
 
         <van-cell is-link center :value="sexval" @click="showsex=true">

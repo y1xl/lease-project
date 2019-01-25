@@ -1,24 +1,24 @@
 <template>
   <div class="">
-    <van-cell to="/calendar">
+    <van-cell @click="go('/calendar/hostCancel')">
       <template slot="title">
-        <div class="flex-jc-between flex-align-items" style="margin-top: 20px;">
+        <div class="flex-jc-between flex-align-items" >
           <div>
-            <div class="custom-text mar-b-10">取消托管日期</div>
-            <div class="custom-text f13">请选择日期</div>
+            <div class="custom-text mar-b-10 fc-grey">取消托管日期</div>
+            <div class="custom-text f13" :class="datetext==''?'fc-grey':''">{{datetext==''?'请选择日期':datetext}}</div>
           </div>
           <van-icon name="arrow" color="#aeaeae" size="20px"/>
         </div>
       </template>
     </van-cell>
 
-    <van-cell to="/addresslist">
+    <van-cell @click="go('/addresslist/hostCancel')">
       <template slot="title">
         <div class="flex-jc-between flex-align-items" style="padding: 10px 0;">
           <div>
-            <div class="address">退回地址</div>
-            <div>王某 18512658942</div>
-            <div>广东省深圳市龙华新区水榭春天</div>
+            <div class="fc-grey">退回地址</div>
+            <div>{{getaddress.name}} {{getaddress.phone}}</div>
+            <div>{{getaddress.address}}</div>
           </div>
           <van-icon name="arrow" color="#aeaeae" size="20px"/>
         </div>
@@ -60,7 +60,27 @@ export default {
   data(){
     return{
       radio:'1',
+      datetext:'',
+      getaddress:''
     }
+  },
+  created() {
+        let hostCancelSession = JSON.parse(window.sessionStorage.getItem("hostCancelSession"));
+        if(hostCancelSession){
+            this.datetext = hostCancelSession.date
+            this.getaddress = hostCancelSession.getaddress
+        }
+        //取缓存 end
+    },
+  methods:{
+    go(url){
+        let hostCancelSession = {
+            date: this.datetext,
+            getaddress:this.getaddress,
+        }
+        window.sessionStorage.setItem("hostCancelSession", JSON.stringify(hostCancelSession));
+        this.$router.push({ path: url });
+    },
   }
 };
 </script>
@@ -68,16 +88,16 @@ export default {
 <style scoped>
 
 .custom-text {
-  color: #aeaeae;
+  /* color: #aeaeae; */
   font-size: 14px;
 }
 .f12 {
   font-size: 13px;
 }
 
-.address {
+/* .address {
   color: #aeaeae;
-}
+} */
 /* .post {
   margin: 15px;
 } */

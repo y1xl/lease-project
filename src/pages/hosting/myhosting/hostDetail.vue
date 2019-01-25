@@ -124,12 +124,15 @@ export default {
     },
     next(){
       if(this.typenum==0){
+        window.sessionStorage.removeItem('sceneDeliSession');
         this.$router.push({ path: "/SceneDeli" })
       }
       if(this.typenum==1){
+        window.sessionStorage.removeItem('postDeliSession');
         this.$router.push({ path: "/PostDeli" })
       }
       if(this.typenum==2){
+        window.sessionStorage.removeItem('platformDeliSession');
         this.$router.push({ path: "/platformDeli" })
       }
     }

@@ -37,44 +37,44 @@
       </div>
 
       <div class="mar-b-10 main">
-        <router-link
+        <div
           class="flex-jc-between flex-align-items pd-15 bgc"
-          to
           v-show="typenum==1||typenum==2"
+          @click="go(`/addresslist/shopping`)"
         >
           <div>
             <div>收货地址</div>
-            <div class="fsz12">曾小姐 18822815757
-              <van-tag plain>默认</van-tag>
+            <div class="fsz12">{{getaddress.name}} {{getaddress.phone}}
+              <van-tag plain v-if="getaddress.default">默认</van-tag>
             </div>
-            <div class="fsz12">深圳市龙华新区龙华街道九方A座1001号</div>
+            <div class="fsz12">{{getaddress.address}}</div>
           </div>
           <span class="fc-grey fsz12">
             <van-icon name="arrow"/>
           </span>
-        </router-link>
+        </div>
 
         <template v-if="typenum==0">
-          <router-link
+          <div
             class="flex-jc-between flex-align-items pd-15 bgc border-b"
-            to="/locationList"
+            @click="go(`/locationList/shopping`)"
           >
             <div>
               <div>自取地点</div>
-              <div class="fsz12">深圳龙华九方店</div>
-              <div class="fsz12">深圳市龙华新区龙华街道九方A座1001号</div>
+              <div class="fsz12">{{getlocation.title}}</div>
+              <div class="fsz12">{{getlocation.address}}</div>
             </div>
             <span class="fc-grey fsz12">
               <van-icon name="arrow"/>
             </span>
-          </router-link>
-          <router-link class="flex-jc-between pd-15 bgc border-b flex-align-items" to="/calendar">
+          </div>
+          <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="go('/calendar/shopping')">
             <span>自取时间</span>
             <span class="flex-align-items fc-grey fsz12">
               {{datechoose}}
               <van-icon name="arrow"/>
             </span>
-          </router-link>
+          </div>
           <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true">
             <span>时间点</span>
             <span class="flex-align-items fc-grey fsz12">
@@ -82,7 +82,7 @@
               <van-icon name="arrow"/>
             </span>
           </div>
-          <router-link class="flex-jc-between flex-align-items pd-15 bgc" to="/people">
+          <div class="flex-jc-between flex-align-items pd-15 bgc" @click="go('/people/shopping')">
             <div>
               <div>自取联系人</div>
               <div class="fsz12">{{people.name}} {{people.phone}}</div>
@@ -90,7 +90,7 @@
             <span class="fc-grey fsz12">
               <van-icon name="arrow"/>
             </span>
-          </router-link>
+          </div>
         </template>
       </div>
     </template>
@@ -208,14 +208,38 @@ export default {
       people: "",
       numval: "",
       showinfo: false,
-      datechoose: ""
+      datechoose: "",
+      getlocation:'',
+      getaddress: ''
     };
   },
+
   created() {
-    this.people = JSON.parse(window.sessionStorage.getItem("people")) || "";
-    this.datechoose = window.sessionStorage.getItem("datechoose") || "";
+    let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
+    if(shoppingSession){
+      this.typenum = shoppingSession.gettype
+      this.datechoose = shoppingSession.getdate
+      this.timetext = shoppingSession.gettime
+      this.people = shoppingSession.getpeople
+      this.getlocation = shoppingSession.getlocation
+      this.getaddress = shoppingSession.getaddress
+    }
+    //取缓存 end
   },
+
   methods: {
+    go(url){
+      let shoppingSession = {
+        gettype: String(this.typenum), //取货方式
+        getlocation: this.getlocation, //自取地点
+        getdate: this.datechoose,
+        gettime: this.timetext,
+        getpeople: this.people,
+        getaddress:this.getaddress
+      }
+      window.sessionStorage.setItem("shoppingSession", JSON.stringify(shoppingSession));
+      this.$router.push({ path: url });
+    },
     onConfirm(value) {
       console.log(`当前值：${value}`);
       this.timetext = value;

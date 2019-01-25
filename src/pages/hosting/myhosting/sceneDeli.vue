@@ -1,33 +1,36 @@
 <template>
   <div class="bgc full">
-    <div >
-      <router-link class="flex-jc-between pd-15" to="/locationList">
+    <div>
+      <div class="flex-jc-between pd-15" @click="go('/locationList/sceneDeli')">
         <div>选择交付门店</div>
         <div class="flex-align-items fc-grey">
           <van-icon name="arrow"/>
         </div>
-      </router-link>
+      </div>
 
-      <div class="box">
-        <div @click="toShopdet">
-          <div class="flex-jc-between" >
-            <div class="shop_title pd-15">龙华区油松店</div>
+      <div class="box" v-show="getlocation">
+        <div @click="go(`/ShopDetail`)">
+          <div class="flex-jc-between">
+            <div class="shop_title pd-15">{{getlocation.title}}</div>
           </div>
-          <div class="txt pd-lr-15">广东省深圳市龙华新区油松路158号油富商城门店</div>
+          <div class="txt pd-lr-15">{{getlocation.address}}</div>
         </div>
-        <div class="dt text-c">
+        <div class="dt text-c" @click="go(`/map`)">
           <img class="ck_img" src="../../../assets/mddw.png">
           <span class="txt">查看地图</span>
         </div>
       </div>
     </div>
 
-    <van-cell to="/calendar">
+    <van-cell @click="go('/calendar/sceneDeli')">
       <template slot="title">
         <div class="flex-jc-between flex-align-items" style="margin-top: 30px;">
           <div>
-            <div class="custom-text">交付日期</div>
-            <div class="custom-text f13">请选择交付日期</div>
+            <div class="custom-text fc-grey">交付日期</div>
+            <div
+              class="custom-text f13"
+              :class="datetext==''?'fc-grey':''"
+            >{{datetext==''?'请选择日期':datetext}}</div>
           </div>
           <van-icon name="arrow" color="#aeaeae" size="20px"/>
         </div>
@@ -43,11 +46,32 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      datetext: "",
+      getlocation: ""
+    };
+  },
+  created() {
+    let sceneDeliSession = JSON.parse(
+      window.sessionStorage.getItem("sceneDeliSession")
+    );
+    if (sceneDeliSession) {
+      this.datetext = sceneDeliSession.date;
+      this.getlocation = sceneDeliSession.getlocation;
+    }
+    //取缓存 end
   },
   methods: {
-    toShopdet() {
-      this.$router.push({ path: "/ShopDetail" });
+    go(url) {
+      let sceneDeliSession = {
+        date: this.datetext,
+        getlocation: this.getlocation
+      };
+      window.sessionStorage.setItem(
+        "sceneDeliSession",
+        JSON.stringify(sceneDeliSession)
+      );
+      this.$router.push({ path: url });
     }
   }
 };
@@ -74,10 +98,11 @@ export default {
 }
 .dt {
   padding: 15px;
+  display: block;
 }
 
 .custom-text {
-  color: #aeaeae;
+  /* color: #aeaeae; */
   font-size: 14px;
 }
 .f13 {
