@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="flex-jc-between top_sear bgc">
-      <div class="dw">附近门店：<span class="fc-blue">深圳龙华</span></div>
+      <div class="dw">
+        附近门店：
+        <span class="fc-blue">深圳龙华</span>
+      </div>
       <router-link class="sear flex-align-items" to="/search">
         <van-icon name="search"/>
         <span>搜索你想要的商品</span>
@@ -27,12 +30,12 @@
       </div>
       <div class="tg">
         <router-link to="/Extension">
-        <img src="../assets/wytg.png"> 我要推广
+          <img src="../assets/wytg.png"> 我要推广
         </router-link>
       </div>
       <div class="tg">
         <router-link to="/WelfareAgency">
-        <img src="../assets/fls.png"> 福利社
+          <img src="../assets/fls.png"> 福利社
         </router-link>
       </div>
     </div>
@@ -40,19 +43,20 @@
     <div id="nav" class="bgc">
       <van-tabs v-model="active">
         <van-tab title="热门">
-
-          <div v-for="index in 3" :key="index"> 
-            <div class="flex-jc-between hb">
+          <div v-for="index in 3" :key="index">
+            <div class="flex-jc-between flex-align-items hb">
               <div class="title">热门租赁</div>
-              <div class="m_txt flex-align-items" @click="more">
-                更多
+              <div class="m_txt flex-align-items" @click="more">更多
                 <van-icon name="arrow"/>
               </div>
             </div>
-            <div class="flex-jc-between border-b bgc camer_hm_box" >
-              <div class="camer_hm" style="margin-left: 10px;" @click="toDetail">
+            <div class="flex-jc-between border-b bgc camer_hm_box">
+              <div class="camer_hm" @click="toDetail" v-for="item in 3">
                 <div class="img_box2 flex-center">
-                  <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                  <img
+                    class="img"
+                    src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                  >
                 </div>
                 <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
                 <div class="f12">
@@ -60,9 +64,12 @@
                   <span class="price">3.08</span>/日
                 </div>
               </div>
-              <div class="camer_hm">
+              <!-- <div class="camer_hm">
                 <div class="img_box2 flex-center">
-                  <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                  <img
+                    class="img"
+                    src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                  >
                 </div>
                 <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
                 <div class="f12">
@@ -72,27 +79,30 @@
               </div>
               <div class="camer_hm" style="margin-right: 10px;">
                 <div class="img_box2 flex-center">
-                  <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                  <img
+                    class="img"
+                    src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                  >
                 </div>
                 <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
                 <div class="f12">
                   <span style="color: #F21E1E;">¥</span>
                   <span class="price">3.08</span>/日
                 </div>
-              </div>
+              </div>-->
             </div>
           </div>
-
         </van-tab>
 
         <van-tab title="相机">
-          <div class="hb">
-            <div class="title">热门推荐</div>
-          </div>
+          <div class="title">热门推荐</div>
           <div class="flex-jc-between border-b bgc camer_hm_box">
-            <div class="camer_hm" style="margin-left: 10px;">
+            <div class="camer_hm" v-for="item in 3">
               <div class="img_box2 flex-center">
-                <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                <img
+                  class="img"
+                  src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                >
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -101,9 +111,12 @@
               </div>
             </div>
 
-            <div class="camer_hm">
+            <!-- <div class="camer_hm">
               <div class="img_box2 flex-center">
-                <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                <img
+                  class="img"
+                  src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                >
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
@@ -114,14 +127,17 @@
 
             <div class="camer_hm" style="margin-right: 10px;">
               <div class="img_box2 flex-center">
-                <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+                <img
+                  class="img"
+                  src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                >
               </div>
               <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
               <div class="f12">
                 <span style="color: #F21E1E;">¥</span>
                 <span class="price">3.08</span>/日
               </div>
-            </div>
+            </div>-->
           </div>
 
           <div class="bgc">
@@ -155,7 +171,7 @@
         <van-tab title="酷玩">酷玩</van-tab>
       </van-tabs>
     </div>
-    
+
     <div class="em"></div>
   </div>
 </template>
@@ -170,7 +186,7 @@ export default {
       lag: "",
       images: [
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99",
+        "https://img01.sogoucdn.com/app/a/100520146/b732e3b76b88596d786a22fe47b41f99"
       ],
       prolist: [
         { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
@@ -199,7 +215,7 @@ export default {
         }
       ],
       active: 0,
-      value: 5,
+      value: 5
     };
   },
 
@@ -226,8 +242,7 @@ export default {
     //产品详情
     toDetail() {
       this.$router.push({ path: "/ProductDetail" });
-    },
-
+    }
   }
 };
 </script>
@@ -301,11 +316,6 @@ export default {
   height: 75px;
 } */
 
-.hb {
-  height: 44px;
-  line-height: 44px;
-}
-
 .title {
   font-size: 17px;
   font-weight: 600;
@@ -374,6 +384,13 @@ export default {
   width: 100%;
   height: 175px;
 }
+
+.camer_hm_box > div:nth-child(1) {
+  margin-left: 10px;
+}
+.camer_hm_box > div:nth-child(3) {
+  margin-right: 10px;
+}
 .camer_hm {
   width: 95px;
   height: 175px;
@@ -387,8 +404,8 @@ export default {
 /*分类 所有产品*/
 .fl_pro_list {
   width: 100%;
-  padding:0 10px;
-  box-sizing:border-box
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 .fl_pro_list:last-child {
   /* margin-bottom: 48px; */
@@ -418,7 +435,7 @@ export default {
 .chat {
   width: 16px;
   height: 14px;
-  padding-left:15px;
+  padding-left: 15px;
   vertical-align: middle;
 }
 

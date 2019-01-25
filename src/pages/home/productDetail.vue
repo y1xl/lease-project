@@ -111,7 +111,7 @@
             <img class="img_r" src="../../assets/right.png" alt>
           </div>
         </div>
-        <div class="border-b" v-for="(item,index ) in wordlist" :key="index">
+        <div class="wordlist_box" v-for="(item,index ) in wordlist" :key="index">
           <div class="flex-align-items head_name">
             <img class="head_img" src="../../assets/my.png" alt>
             <span>李***莉</span>
@@ -170,7 +170,9 @@
           <div>
             <img class="img_kf" src="../../assets/tel.png" alt>
           </div>
-          <div class="f10_col"><a href="tel:400-0000-688">电话客服</a></div>
+          <div class="f10_col">
+            <a href="tel:400-0000-688">电话客服</a>
+          </div>
         </div>
         <div class="btn bcolor padding_lr margin_left">给朋友送礼</div>
         <div class="btn bcol padding_lr margin_left" @click="showinfo=true">立即租赁</div>
@@ -293,8 +295,8 @@ export default {
     };
   },
   methods: {
-    oncollection(){
-      this.iscollection = !this.iscollection
+    oncollection() {
+      this.iscollection = !this.iscollection;
     },
     //口碑
     toMouthw() {
@@ -432,11 +434,16 @@ export default {
 
 .word_mouth_box {
   margin-top: 10px;
-  padding: 10px 0;
 }
 .word_mouth {
   width: 92%;
   height: 100%;
+}
+.wordlist_box {
+  border-bottom: 1px solid #f0f0f0;
+}
+.word_mouth_box :last-child {
+  border-bottom: 1px solid #fff;
 }
 .head_name,
 .com_det {
@@ -566,6 +573,7 @@ export default {
   bottom: 10px;
   right: 20px;
   font-size: 24px;
+  z-index: 99;
 }
 /* 选择规格 */
 .fsz12 {
