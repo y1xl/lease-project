@@ -62,7 +62,7 @@ export default {
     },
     //取消托管
     cancelTg() {
-       window.sessionStorage.removeItem('hostCancelSession');
+      window.sessionStorage.removeItem("hostCancelSession");
       this.$router.push({ path: "/HostCancel" });
     }
   }
@@ -91,6 +91,7 @@ export default {
 
 .goods_title {
   font-size: 15px;
+  width: 135px;
 }
 .state {
   color: #aeaeae;
