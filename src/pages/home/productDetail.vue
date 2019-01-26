@@ -254,10 +254,10 @@
             <div class="border">型号2</div>
           </div>
 
-          <div class="mar-b-10 fsz12">数量</div>
+          <!-- <div class="mar-b-10 fsz12">数量</div>
           <div>
             <van-stepper v-model="numval"/>
-          </div>
+          </div> -->
         </div>
         <div class="pd-15" v-show="showinfo">
           <div class="gbtn text-c" @click="gobuy">开始下单</div>

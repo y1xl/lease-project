@@ -15,6 +15,7 @@ import Buy from '@/pages/home/buy'
 import Pay from '@/pages/home/pay'
 import Agreement from '@/pages/home/agreement'
 import Search from '@/pages/home/search'
+import PreBuy from '@/pages/home/preBuy'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -111,6 +112,7 @@ export default new Router({
     { path: '/appointmentExpress', component: AppointmentExpress, meta: { title: '预约快递' } },
     { path: '/deny', component: Deny, meta: { title: '否认' } },
     { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
+    { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
     //产品
     { path: '/goods', component: Goods, meta: { title: '产品列表' } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
@@ -121,6 +123,7 @@ export default new Router({
     { path: '/pay', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索' } },
+    { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, //预下单
 
     //个人中心
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },

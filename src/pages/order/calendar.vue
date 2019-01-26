@@ -4,12 +4,12 @@
     <div id="calendar">
       <Calendar @choseDay="clickDay" :agoDayHide="nowdate"></Calendar>
     </div>
-    <div class="fc-red tip pd-15">
+    <div class="fc-red tip pd-15" v-if="type1=='pre'">
       如当前没有您所需要的档期，请选择预租下单，我们将在24小时内
       回复是否可以满足您的需求.
     </div>
-    <div class="pd-t-100">
-      <div class="btn text-c">预租下单</div>
+    <div class="pd-t-100" v-if="type1=='pre'">
+      <div class="btn text-c" @click="goprebuy">预租下单</div>
     </div>
   </div>
 </template>
@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       value: "",
-      nowdate: String(Date.now() - 86400000).slice(0, 10)
+      nowdate: String(Date.now() - 86400000).slice(0, 10),
+      type1: this.$route.params.type1
     };
   },
   created() {},
@@ -101,7 +102,52 @@ export default {
           JSON.stringify(postDeliSession)
         );
       }
+      if (this.$route.params.type == "buy") {
+        let buySession = JSON.parse(
+          window.sessionStorage.getItem("buySession")
+        );
+        buySession.getdate = date;
+        window.sessionStorage.setItem(
+          "buySession",
+          JSON.stringify(buySession)
+        );
+      }
+      if (this.$route.params.type == "expectdateTobuy") {
+        let buySession = JSON.parse(
+          window.sessionStorage.getItem("buySession")
+        );
+        buySession.expectdate = date;
+        window.sessionStorage.setItem(
+          "buySession",
+          JSON.stringify(buySession)
+        );
+      }
+      if (this.$route.params.type == "preBuy") {
+        let prebuySession = JSON.parse(
+          window.sessionStorage.getItem("prebuySession")
+        );
+        prebuySession.getdate = date;
+        window.sessionStorage.setItem(
+          "prebuySession",
+          JSON.stringify(prebuySession)
+        );
+      }
+      if (this.$route.params.type == "expectdateTopreBuy") {
+        let prebuySession = JSON.parse(
+          window.sessionStorage.getItem("prebuySession")
+        );
+        prebuySession.expectdate = date;
+        window.sessionStorage.setItem(
+          "prebuySession",
+          JSON.stringify(prebuySession)
+        );
+      }
       this.$router.go(-1);
+    },
+
+    goprebuy(){
+      window.sessionStorage.removeItem("prebuySession");
+      this.$router.replace({ path: "/preBuy" });
     }
   }
 };

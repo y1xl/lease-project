@@ -22,7 +22,7 @@
     <template v-if="selected==0">
       <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showinfo=true">
         <span>选择规格参数</span>
-        <span class="flex-align-items fc-grey fsz12">黑色,1件
+        <span class="flex-align-items fc-grey fsz12">黑色
           <van-icon name="arrow"/>
         </span>
       </div>
@@ -183,10 +183,10 @@
             <div class="border">型号2</div>
           </div>
 
-          <div class="mar-b-10 fsz12">数量</div>
+          <!-- <div class="mar-b-10 fsz12">数量</div>
           <div>
             <van-stepper v-model="numval"/>
-          </div>
+          </div> -->
         </div>
         <div class="pd-15">
           <div class="btn text-c">确认</div>

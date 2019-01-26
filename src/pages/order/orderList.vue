@@ -7,7 +7,6 @@
 
     <div id="ordernav">
       <van-tabs @click="ontag" v-model="active">
-        <!-- <van-tab :title="item" v-for="(item,index) in navarr" :key="index"></van-tab> -->
         <van-tab :title="item" v-for="(item,index) in navarr" :key="index">
           <div slot="title" class="position tag">
             <div class="dot"><van-tag plain round color="#4EA9F9">1</van-tag></div>
@@ -22,10 +21,10 @@
         <div class="text-c">暂无订单</div>
       </div> -->
 
-    <div class="list">
-      <OrderCard>
+    <div class="list" v-show="selected==0">
+      <!-- <OrderCard> -->
         <!-- <div class="flex-center border-blue fc-blue">支付</div> -->
-        <div class="flex-center border" @click="onshowmodel">取消订单</div>
+        <!-- <div class="flex-center border" @click="onshowmodel">取消订单</div> -->
         <!-- <div class="flex-center border" >重新下单</div> -->
         <!-- <div class="flex-center border-blue fc-blue" >确认收货</div> -->
         <!-- <div class="flex-center border-blue fc-blue" >支付</div> -->
@@ -35,9 +34,9 @@
           <router-link v-bind="{to: '/deny'}">否认</router-link>
         </div> -->
         <!-- <div class="flex-center border-blue fc-blue">确认</div> -->
-        <div class="flex-center border" @click="getcode">取货码</div>
+        <!-- <div class="flex-center border" @click="getcode">取货码</div> -->
         <!-- <div class="flex-center border" @click="getcode">自还码</div> -->
-        <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div>
+        <!-- <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div> -->
         <!-- <div class="flex-center border-blue fc-blue">
           <router-link v-bind="{to: '/comments'}">评价</router-link>
         </div> -->
@@ -47,7 +46,89 @@
         <!-- <div class="flex-center border">
           <router-link v-bind="{to: '/shopping'}">购买</router-link>
         </div> -->
-      </OrderCard>  
+      <!-- </OrderCard>  -->
+
+      <OrderCard status="待评价" v-show="active==5">
+         <div class="flex-center border-blue fc-blue">
+          <router-link v-bind="{to: '/comments'}">去评价</router-link>
+        </div>
+      </OrderCard> 
+      <OrderCard status="已超期" v-show="active==4">
+         <div class="flex-center border-blue fc-blue">
+           <router-link v-bind="{to: '/shopping'}">购买</router-link>
+        </div>
+        <div class="flex-center border">
+          <router-link v-bind="{to: '/refund'}">退租</router-link>
+        </div>
+        <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div>
+      </OrderCard> 
+      <OrderCard status="已结束" v-show="active==6">
+        <div class="flex-center border">删除订单</div>
+      </OrderCard> 
+      <OrderCard status="订单关闭" v-show="active==7">
+        <div class="flex-center border">删除订单</div>
+      </OrderCard> 
+      <OrderCard status="订单超时" v-show="active==7">
+        <div class="flex-center border">删除订单</div>
+        <div class="flex-center border-blue fc-blue" >重新下单</div>
+      </OrderCard> 
+      <OrderCard status="检测中" v-show="active==3"></OrderCard> 
+      <OrderCard status="售后中" v-show="active==3"></OrderCard> 
+      <OrderCard status="待确认" v-show="active==3">
+        <div class="flex-center border">
+          <router-link v-bind="{to: '/deny'}">否认</router-link>
+        </div>
+        <div class="flex-center border-blue fc-blue">确认</div>
+      </OrderCard> 
+      <OrderCard status="退押金中" v-show="active==3"></OrderCard> 
+      <OrderCard status="待付款" v-show="active==0">
+        <div class="flex-center border" @click="onshowmodel">取消订单</div>
+        <div class="flex-center border-blue fc-blue">支付</div>
+      </OrderCard>
+      <OrderCard status="已确认" v-show="active==2">
+        <div class="flex-center border-blue fc-blue" >确认收货</div>
+      </OrderCard>
+      <OrderCard status="已预订" v-show="active==2">
+        <div class="flex-center border-blue fc-blue">支付</div>
+      </OrderCard>
+      <OrderCard status="待收货" v-show="active==2">
+        <div class="flex-center border">朋友代取</div>
+        <div class="flex-center border" @click="getcode">取货码</div>
+        <div class="flex-center border-blue fc-blue" >确认收货</div>
+      </OrderCard>
+      <OrderCard status="预租待确认" v-show="active==1"></OrderCard> 
+      <OrderCard status="已确认" v-show="active==3">
+        <div class="flex-center border-blue fc-blue">
+           <router-link v-bind="{to: '/shopping'}">购买</router-link>
+        </div>
+        <div class="flex-center border">
+          <router-link v-bind="{to: '/refund'}">退租</router-link>
+        </div>
+        <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div>
+      </OrderCard>
+      <OrderCard status="退租中" v-show="active==3">
+        <div class="flex-center border" >朋友代还</div>
+        <div class="flex-center border" @click="getcode">自还码</div>
+      </OrderCard>
+    </div>
+
+    <div class="list" v-show="selected==1">
+      <OrderCard status="待发货"></OrderCard> 
+      <OrderCard status="待付款">
+        <div class="flex-center border" @click="onshowmodel">取消订单</div>
+        <div class="flex-center border-blue fc-blue">支付</div>
+      </OrderCard>
+      <OrderCard status="待评价">
+         <div class="flex-center border-blue fc-blue">
+          <router-link v-bind="{to: '/comments'}">去评价</router-link>
+        </div>
+      </OrderCard> 
+      <OrderCard status="待收货">
+        <div class="flex-center border">朋友代取</div>
+        <div class="flex-center border" @click="getcode">取货码</div>
+        <div class="flex-center border-blue fc-blue" >确认收货</div>
+      </OrderCard>
+      <OrderCard status="已完成"></OrderCard> 
     </div>
 
     <div class="height"></div>
@@ -59,7 +140,7 @@
         alt="QRcode"
         class="codeimg"
       >
-      <div style="color:#fff">请出示此二维码供门店扫码取货</div>
+      <div style="color:#fff">请出示此二维码供门店扫码</div>
     </div>
 
     <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
@@ -99,8 +180,8 @@ export default {
     return {
       selected: 0,
       active: 0,
-      navarr: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价"],
-      navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价"],
+      navarr: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
+      navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
       navarr1: ["待付款", "待发货", "待收货", "待评价", "已完成"],
       radio: 1,
       canceltext: [{ id: 1, text: "我不想租了" }, { id: 2, text: "其他" }],

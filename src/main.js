@@ -19,7 +19,8 @@ Vue.use(Vant);
 import VueAMap from 'vue-amap';
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
-  key: '7dd71e09ac3a903d60949151b6d53744',
+  // key: '7dd71e09ac3a903d60949151b6d53744',//公司的
+  key: 'd2fb704760d2d6ff18b57df3147cb8cb',
   plugin: ['AMap.Autocomplete', 'AMap.OverView', 'AMap.PolyEditor', 'AMap.CircleEditor'],
   // 默认高德 sdk 版本为 1.4.4
   v: '1.4.4'

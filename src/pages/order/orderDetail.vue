@@ -12,7 +12,6 @@
           <div class="flex-1">
             <div class="mar-b-10">日本 instax拍立得</div>
             <div class="spec mar-b-10">
-              <span>1件</span>
               <span>黑色</span>
             </div>
           </div>

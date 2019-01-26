@@ -8,6 +8,7 @@
         <div class="address bgc flex-align-items pd-15" @click="go('/addresslist/appointmentExpress')">
             <div class="left bgc-brown flex-center">寄</div>
             <div class="flex-1 right">
+                <div v-show="getaddress==''" class="fc-grey">请选择</div>
                 <div class="mar-b-10">{{getaddress.name}} {{getaddress.phone}}</div>
                 <div>{{getaddress.address}}</div>
             </div>

@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="mar-b-10 main">
-            <van-cell is-link center @click="go('/addresslist/buy')" v-show="typenum==1||typenum==2" >
+            <van-cell is-link center @click="go('/addresslist/preBuy')" v-show="typenum==1||typenum==2" >
                 <div slot="title">
                     <div>收货地址</div>
                     <div>{{getaddress.name}}  {{getaddress.phone}} <van-tag plain v-if="getaddress.default">默认</van-tag></div>
@@ -17,20 +17,20 @@
                 </div>
             </van-cell>
             <template v-if="typenum==0">
-                <van-cell is-link center @click="go('/locationList/buy')">
+                <van-cell is-link center @click="go('/locationList/preBuy')">
                     <template slot="title">
                         <div>自取地点</div>
                         <div>{{getlocation.title}}</div>
                         <div>{{getlocation.address}}</div>
                     </template>
                 </van-cell>
-                <van-cell is-link center @click="go('/calendar/buy')">
+                <van-cell is-link center @click="go('/calendar/preBuy')">
                     <template slot="title">
                         <div>自取时间</div>
                         <div>{{getdate}}</div>
                     </template>
                 </van-cell>
-                <van-cell is-link center @click="go('/people/buy')">
+                <van-cell is-link center @click="go('/people/preBuy')">
                     <template slot="title">
                         <div>自取人</div>
                         <div>{{people.name}}  {{people.phone}}</div>
@@ -61,20 +61,12 @@
                     </div>
                 </div>
             </van-cell>
-            <van-cell title="期望收到的日期" is-link center v-show="typenum==0" @click="go('/calendar/expectdateTobuy/pre')" :value="expectdate"></van-cell>
-            <van-cell is-link center v-show="typenum==1||typenum==2"  @click="go('/calendar/expectdateTobuy/pre')" :value="expectdate">
-                <template slot="title">
-                    <div>期望收到的日期</div>
-                    <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
-                </template>
-            </van-cell>
-            <!-- 预租 -->
-            <!-- <van-cell is-link center v-show="typenum==1||typenum==2" @click="go('/calendar/buy')">
+            <van-cell is-link center v-show="typenum==1||typenum==2" @click="go('/calendar/expectdateTopreBuy')" :value="expectdate">
                 <template slot="title">
                     <div>预约期望档期</div>
                     <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
                 </template>
-            </van-cell> -->
+            </van-cell>
             <van-cell title="配送时间段" center :value="timequantumtext" is-link v-show="typenum==2" @click="showtimequantum=true"></van-cell>
             <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext" v-show="typenum==0"></van-cell>
         </div>
@@ -94,7 +86,7 @@
                 </div>       
             </van-cell>
         </div>
-
+        <!-- 预租 没库存-->
         <div class="mar-b-10">
             <van-cell title="押金" center value="￥1000"></van-cell>
             <van-cell title="租金" center value="￥1000"></van-cell>
@@ -202,34 +194,35 @@ export default {
             discountmodel:false,//优惠活动
             couponlist: [1,2],//优惠券
             remarkval:'',
+
             timequantumtext:'', //时间段
             showtimequantum: false, //时间段
             timequantumarr:['13:00-14:00','测试'] //时间段
         }
     },
     created() {
-        let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
-        if(buySession){
-            this.typenum = buySession.gettype
-            this.getlocation = buySession.getlocation
-            this.getdate = buySession.getdate
-            this.expectdate = buySession.expectdate
-            this.timetext = buySession.gettime
-            this.people = buySession.getpeople
-            this.getaddress = buySession.getaddress
-            this.weektext = buySession.weektext
-            this.weekval = buySession.weekval
-            this.isinsurance = buySession.isinsurance
-            this.couponstext = buySession.couponstext
-            this.activitytext = buySession.activitytext
-            this.remarkval = buySession.remarkval
-            this.timequantumtext = buySession.timequantumtext
+        let prebuySession = JSON.parse(window.sessionStorage.getItem("prebuySession"));
+        if(prebuySession){
+            this.typenum = prebuySession.gettype
+            this.getlocation = prebuySession.getlocation
+            this.getdate = prebuySession.getdate
+            this.expectdate = prebuySession.expectdate
+            this.timetext = prebuySession.gettime
+            this.people = prebuySession.getpeople
+            this.getaddress = prebuySession.getaddress
+            this.weektext = prebuySession.weektext
+            this.weekval = prebuySession.weekval
+            this.isinsurance = prebuySession.isinsurance
+            this.couponstext = prebuySession.couponstext
+            this.activitytext = prebuySession.activitytext
+            this.remarkval = prebuySession.remarkval
+            this.timequantumtext = prebuySession.timequantumtext
         }
         //取缓存 end
     },
     methods:{
         go(url){
-            let buySession = {
+            let prebuySession = {
                 gettype: String(this.typenum), //取货方式
                 getlocation: this.getlocation, //自取地点
                 getdate: this.getdate,
@@ -245,7 +238,7 @@ export default {
                 remarkval:this.remarkval,
                 timequantumtext:this.timequantumtext,
             }
-            window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
+            window.sessionStorage.setItem("prebuySession", JSON.stringify(prebuySession));
             this.$router.push({ path: url });
         },
         onConfirm(value) {

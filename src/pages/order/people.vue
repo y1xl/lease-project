@@ -59,6 +59,26 @@ export default {
           JSON.stringify(shoppingSession)
         );
       }
+      if (this.$route.params.type == "buy") {
+        let buySession = JSON.parse(
+          window.sessionStorage.getItem("buySession")
+        );
+        buySession.getpeople = people;
+        window.sessionStorage.setItem(
+          "buySession",
+          JSON.stringify(buySession)
+        );
+      }
+      if (this.$route.params.type == "preBuy") {
+        let prebuySession = JSON.parse(
+          window.sessionStorage.getItem("prebuySession")
+        );
+        prebuySession.getpeople = people;
+        window.sessionStorage.setItem(
+          "prebuySession",
+          JSON.stringify(prebuySession)
+        );
+      }
 
       this.$router.go(-1);
     }

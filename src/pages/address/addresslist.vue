@@ -124,6 +124,16 @@ export default {
           JSON.stringify(postDeliSession)
         );
       }
+      if (this.$route.params.type == "preBuy") {
+        let prebuySession = JSON.parse(
+          window.sessionStorage.getItem("prebuySession")
+        );
+        prebuySession.getaddress = this.list[val];
+        window.sessionStorage.setItem(
+          "prebuySession",
+          JSON.stringify(prebuySession)
+        );
+      }
       this.$router.go(-1);
     }
   }
