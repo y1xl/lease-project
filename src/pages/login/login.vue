@@ -8,7 +8,7 @@
           <input v-model="newPhone" placeholder="请输入手机号" type="number" maxlength="11">
         </div>
         <div class="text-r pw_login" @click="password">使用密码登陆</div>
-        <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'bgc-blue'">下一步</button>
+        <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'act'">下一步</button>
         <div class="other">
           <div class="flex-center disan_box">
             <div class="line"></div>
@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import { Notify } from 'vant';
+import { Notify } from "vant";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -39,8 +40,19 @@ export default {
     toNext() {
       console.log(this.newPhone);
       if (this.newPhone == "") {
-        // Notify('不能为空');
-        return
+        // Notify("不能为空");
+        return;
+      }
+
+      if (this.newPhone.length != 11) {
+        Toast("手机号长度有误");
+        return;
+      }
+
+      var telphone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+      if (!telphone.test(this.newPhone)) {
+        Toast("手机号码有误，请重填");
+        return;
       }
       this.$router.push({ path: "/InputCode/" + this.newPhone });
     },
@@ -53,11 +65,11 @@ export default {
 </script>
 
 <style scoped>
-.bigbox{
+.bigbox {
   min-height: 100vh;
 }
-.pdt50{
-  padding-top: 50px
+.pdt50 {
+  padding-top: 50px;
 }
 .login_box {
   width: 100%;

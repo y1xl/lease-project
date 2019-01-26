@@ -4,7 +4,11 @@
       <div class="flex-jc-between border-b pd-15" @click="isshow = true">
         <div class="flexbox">
           <div class="left">开卡银行</div>
-          <span :class="text=='请选择开卡银行'?'select':''">{{text}}</span>
+          <!-- <span :class="text=='请选择开卡银行'?'select':''">{{text}}</span> -->
+          <!-- <div class="fc-grey" v-if="typetext==''">请选择托管品类</div>
+          <div v-else>{{typetext}}</div>-->
+          <span class="select" v-if="text==''">请选择开卡银行</span>
+          <span v-else>{{text}}</span>
         </div>
         <van-icon name="arrow" color="#aeaeae" size="18px"/>
       </div>
@@ -12,37 +16,37 @@
         <div class="flexbox">
           <div class="left">卡号</div>
 
-          <input placeholder="请输入银行卡号 ">
+          <input placeholder="请输入银行卡号" v-model="cardnum">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">姓名</div>
-          <input placeholder="请输入姓名">
+          <input placeholder="请输入姓名" v-model="nickname">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">身份证号</div>
-          <input placeholder="请输入身份证号">
+          <input placeholder="请输入身份证号" v-model="idcard">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">手机号</div>
-          <input placeholder="请输入手机号">
+          <input placeholder="请输入手机号" v-model="tel">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15 flex-align-items">
         <div class="flexbox">
           <div class="left">验证码</div>
-          <input placeholder="请输入验证码" class="input_b">
+          <input placeholder="请输入验证码" class="input_b" v-model="yzcode">
         </div>
         <span class="yz" @click="countDown">{{content}}</span>
       </div>
     </div>
     <div class="flex-jc-center">
-      <div class="btn text-c">保存</div>
+      <div class="btn text-c" @click="save">保存</div>
     </div>
 
     <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
@@ -52,17 +56,38 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
       isshow: false,
       columns: ["中国农业银行", "中国工商银行", "测试", "测试", "测试"],
-      text: "请选择开卡银行",
+      text: "",
+      cardnum: "",
+      nickname: "",
+      idcard: "",
+      tel: "",
+      yzcode: "",
       content: "获取验证码",
       totalTime: 60, //倒计时
       canClick: true
     };
   },
+  created() {
+    let bindingCardSession = JSON.parse(
+      window.sessionStorage.getItem("bindingCardSession")
+    );
+
+    if (bindingCardSession) {
+      this.text = bindingCardSession.text;
+      this.cardnum = bindingCardSession.cardnum;
+      this.nickname = bindingCardSession.nickname;
+      this.idcard = bindingCardSession.idcard;
+      this.tel = bindingCardSession.tel;
+      this.yzcode = bindingCardSession.yzcode;
+    }
+  },
+
   methods: {
     onConfirm(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
@@ -84,6 +109,46 @@ export default {
           this.canClick = true;
         }
       }, 1000);
+    },
+
+    save() {
+      if (
+        this.text == "" ||
+        this.cardnum == "" ||
+        this.nickname == "" ||
+        this.idcard == "" ||
+        this.yzcode == ""
+      ) {
+        Toast("请先填写完整");
+        return;
+      }
+      if (this.tel == "") {
+        Toast("请先填写手机号");
+        return;
+      }
+      if (this.tel.length != 11) {
+        Toast("手机号长度有误");
+        return;
+      }
+
+      var telphone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+      if (!telphone.test(this.tel)) {
+        Toast("手机号码有误，请重填");
+        return;
+      }
+      let bindingCardSession = {
+        text: this.text,
+        cardnum: this.cardnum,
+        nickname: this.nickname,
+        idcard: this.idcard,
+        tel: this.tel,
+        yzcode: this.yzcode
+      };
+      window.sessionStorage.setItem(
+        "bindingCardSession",
+        JSON.stringify(bindingCardSession)
+      );
+      this.$router.go(-1);
     }
   }
 };
