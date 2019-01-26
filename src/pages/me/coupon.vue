@@ -1,13 +1,13 @@
 <template>
   <div>
     <div id="nav">
-      <van-tabs @click="ontab">
+      <van-tabs @click="ontab" v-model="ind">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
           <div
             class="coupon_box position"
             v-for="(item,index) in couponlist"
             :key="index"
-            v-show="showCoupon"
+            v-show="ind ==0||ind==1||ind==2"
           >
             <div>
               <img src="../../assets/1.png">
@@ -50,17 +50,19 @@ export default {
       navtitle: ["未使用", "已使用", "已失效", "领取/兑换"],
       couponlist: [{}, {}, {}],
       show: false,
-      showCoupon: true,
-      index: 0
+
+      ind: 0
     };
   },
   methods: {
     ontab(index, title) {
       console.log(index, title);
-      if (index == 3) {
-        this.showCoupon = false;
+      if (this.ind == 3) {
         this.show = true;
+      } else {
+        this.show = false;
       }
+
       this.index = index;
     },
 

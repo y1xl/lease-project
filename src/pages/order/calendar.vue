@@ -91,7 +91,7 @@ export default {
           JSON.stringify(sceneDeliSession)
         );
       }
-      if (this.$route.params.type == "sceneDeli") {
+      if (this.$route.params.type == "postDeli") {
         let postDeliSession = JSON.parse(
           window.sessionStorage.getItem("postDeliSession")
         );

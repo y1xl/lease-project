@@ -27,16 +27,16 @@
       <div :class="{ 'fc-blue selected': typenum==1 }" @click="typenum=1">已寄出</div>
     </div>
     <div v-if="typenum==0">
-      <router-link
+      <div
         class="flex-jc-between pd-15 bgc border-b flex-align-items"
-        to="/calendar/postDeli"
+        @click="go('/calendar/postDeli')"
       >
         <span class="custom-text">期望揽收日期</span>
-        <span class="flex-align-items fc-grey fsz12">
-          {{datetext}}
+        <span class="flex-align-items fc-grey fsz12" :class="datetext==''?'fc-grey':''">
+          {{datetext==''?'':datetext}}
           <van-icon name="arrow"/>
         </span>
-      </router-link>
+      </div>
       <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true">
         <span class="custom-text">时间</span>
         <span class="flex-align-items fc-grey fsz12">
@@ -100,6 +100,8 @@ export default {
     );
     if (postDeliSession) {
       this.getlocation = postDeliSession.getlocation;
+      this.datetext = postDeliSession.date;
+      this.getaddress = postDeliSession.getaddress;
     }
   },
   methods: {
@@ -117,7 +119,9 @@ export default {
     },
     go(url) {
       let postDeliSession = {
-        getlocation: this.getlocation
+        getlocation: this.getlocation,
+        date: this.datetext,
+        getaddress: this.getaddress
       };
       window.sessionStorage.setItem(
         "postDeliSession",
