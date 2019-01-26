@@ -1,6 +1,6 @@
 <template>
   <div class="bgc">
-    <div class="header">
+    <div class="header" :style="bgimg">
       <div class="text-c">500</div>
       <div class="text-c">当前可用积分</div>
       <div class="flex-jc-around">
@@ -29,6 +29,11 @@
 export default {
   data() {
     return {
+      bgimg: {
+        background:
+          "url(" + require("../../assets/in_bg.png") + ") no-repeat top",
+          backgroundSize: "100% 100%"
+      },
       integral: [{}, {}]
     };
   },
@@ -42,8 +47,8 @@ export default {
   align-items: center;
   width: 100%;
   height: 210px;
-  background: url(../../assets/in_bg.png) no-repeat;
-  background-size: 100% 100%;
+  /* background: url(../../assets/in_bg.png) no-repeat;
+  background-size: 100% 100%; */
   color: #fff;
 }
 .header > div:nth-of-type(1) {

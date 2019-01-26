@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bgc">
-      <div class="qd_b">
+      <div class="qd_b" :style="bgimg">
         <div class="text-c qd_box">
           <div class="flex-jc-center">
             <div class="bor"></div>
@@ -116,7 +116,18 @@
 
 <script>
 export default {
-  methods: {}
+  data(){
+    return{
+      bgimg: {
+        background:
+          "url(" + require("../../assets/fls_bg.png") + ") no-repeat top",
+          backgroundSize: "100% 100%"
+      }
+    }
+  },
+  methods: {
+
+  }
 };
 </script>
 
@@ -127,8 +138,8 @@ export default {
   align-items: center;
   width: 100%;
   height: 230px;
-  background: url(../../assets/fls_bg.png) no-repeat;
-  background-size: 100% 100%;
+  /* background: url(../../assets/fls_bg.png) no-repeat;
+  background-size: 100% 100%; */
 }
 .qd_box {
   padding-top: 50px;

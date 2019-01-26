@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div id="nav">
+    <div id="navBalance">
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
           <div v-for="(item,index) in 5" :key="index">
@@ -49,11 +49,11 @@ export default {
 };
 </script>
 <style>
-#nav .van-tab {
+#navBalance .van-tab {
   background-color: #f6f6f6;
 }
 
-#nav .van-tabs__line {
+#navBalance .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }

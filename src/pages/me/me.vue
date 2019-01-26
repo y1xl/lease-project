@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex-jc-between manber_b" @click="myInformat">
+    <div class="flex-jc-between manber_b" @click="myInformat" :style="bgimg">
       <div class="flex-align-items flex_box">
         <div class="head_img">
           <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
@@ -92,6 +92,15 @@
 
 <script>
 export default {
+  data(){
+    return{
+      bgimg: {
+        background:
+          "url(" + require("../../assets/me_bg.png") + ") no-repeat top",
+          backgroundSize: "100% 100%"
+      }
+    }
+  },
   methods: {
     //我的资料
     myInformat() {
@@ -110,8 +119,8 @@ export default {
   align-items: center;
   width: 100%;
   height: 180px;
-  background: url(../../assets/me_bg.png) no-repeat;
-  background-size: 100% 100%;
+  /* background: url(../../assets/me_bg.png) no-repeat;
+  background-size: 100% 100%; */
 }
 .head_img {
   width: 60px;
