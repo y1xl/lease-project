@@ -23,10 +23,14 @@ export default {
   data() {
     return {
       zoom: 16,
-      center:[121.406051,31.179695],
+      // center:[121.406051,31.179695],
+      center:[this.$route.params.center.split(",")[1],this.$route.params.center.split(",")[0]],
     };
   },
-
+  created(){
+    // console.log(this.$route.params.center.split(",")[0]);
+    
+  },
   methods: {
 
   }

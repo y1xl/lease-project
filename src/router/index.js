@@ -114,10 +114,10 @@ export default new Router({
     { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
     { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
     //产品
-    { path: '/goods', component: Goods, meta: { title: '产品列表' } },
+    { path: '/goods/:id', component: Goods, meta: { title: '产品列表' } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
-    { path: '/productDetail', component: ProductDetail, meta: { title: 'SKU信息' } },
+    { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy', component: Buy, meta: { title: '下单' } },
     { path: '/pay', component: Pay, meta: { title: '额度' } },
@@ -189,7 +189,7 @@ export default new Router({
     { path: '/addaddress', component: Addaddress, meta: { title: '收货地址' } },
 
     //地图
-    { path: '/map', component: Map, meta: { title: '地图' } },
+    { path: '/map/:center', component: Map, meta: { title: '地图' } },
 
   ],
 

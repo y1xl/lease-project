@@ -2,7 +2,7 @@
     <div>
         <div class="mar-b-10">
             <van-cell title="选择退租时间" is-link center :value="datetext" @click="go('/calendar/appointmentExpress')"></van-cell>  
-            <van-cell title="时间段" is-link center :value="timequantum" ></van-cell>  
+            <van-cell title="时间段" is-link center :value="timequantumtext" @click="showtimequantum=true"></van-cell>  
         </div>
 
         <div class="address bgc flex-align-items pd-15" @click="go('/addresslist/appointmentExpress')">
@@ -24,6 +24,10 @@
         </div>
 
         <div class="pd-t-100"><div class="btn text-c">提交</div></div>
+
+        <van-popup v-model="showtimequantum" position="bottom" :close-on-click-overlay="false">
+            <van-picker :columns="timequantumarr" show-toolbar @cancel="showtimequantum = false" @confirm="onConfirmTimequantum"/>
+        </van-popup>
     </div>
 </template>
 
@@ -32,15 +36,17 @@ export default {
     data(){
         return{
             datetext:'',
-            timequantum:'',
-            getaddress:''
+            getaddress:'',
+            timequantumtext:'', //时间段
+            showtimequantum: false, //时间段
+            timequantumarr:['13:00-14:00','测试'] //时间段
         }
     },
     created() {
         let appointmentExpress = JSON.parse(window.sessionStorage.getItem("appointmentExpress"));
         if(appointmentExpress){
             this.datetext = appointmentExpress.date
-            this.timequantum = appointmentExpress.timequantum
+            this.timequantumtext = appointmentExpress.timequantumtext
             this.getaddress = appointmentExpress.getaddress
         }
         //取缓存 end
@@ -49,11 +55,16 @@ export default {
         go(url){
             let appointmentExpress = {
                 date: this.datetext,
-                timequantum: this.timequantum,
+                timequantumtext: this.timequantumtext,
                 getaddress:this.getaddress,
             }
             window.sessionStorage.setItem("appointmentExpress", JSON.stringify(appointmentExpress));
             this.$router.push({ path: url });
+        },
+        onConfirmTimequantum(value,index){
+            console.log(`当前值：${value}, 当前索引：${index}`);
+            this.timequantumtext = value
+            this.showtimequantum = false
         },
     }
 }

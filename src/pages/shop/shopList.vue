@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="shoplist">
-      <van-list v-model="loading" :finished="finished" @load="onLoad">
-        <div v-for="item in list" :key="item" :title="item">
+        <div v-for="(item,index) in list" :key="index" :title="item">
           <div class="item">
             <router-link to="/ShopDetail">
               <div class="flex-jc-between">
@@ -14,42 +13,41 @@
               <div class="txt f12">广东省深圳市龙华新区油松路158号油富商城门店</div>
             </router-link>
 
-            <router-link class="dt text-c" to="/map">
+            <router-link class="dt text-c" :to="`/map/${item.coordinate}`">
               <img class="ck_img" src="../../assets/mddw.png">
               <span class="txt f12">查看地图</span>
             </router-link>
           </div>
         </div>
-      </van-list>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
       list: [],
-      loading: false,
-      finished: false
     };
   },
-
+  created(){
+    this.getlist()
+  },
   methods: {
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-
-        // 数据全部加载完成
-        if (this.list.length >= 20) {
-          this.finished = true;
-        }
-      }, 500);
+    getlist(){
+      Toast.loading({ mask: true,message: '加载中...'})
+      this.axios.post(this.API + 'api/Lease/store_select')
+        .then( res => {
+            console.log(res.data,'list'); 
+            let resdata = res.data
+            if(resdata.code == 200){
+              this.list = resdata.data
+            }else {
+              Toast(resdata.message)
+            }
+            Toast.clear()
+        })
     }
   }
 };

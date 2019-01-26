@@ -68,13 +68,6 @@
                     <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
                 </template>
             </van-cell>
-            <!-- 预租 -->
-            <!-- <van-cell is-link center v-show="typenum==1||typenum==2" @click="go('/calendar/buy')">
-                <template slot="title">
-                    <div>预约期望档期</div>
-                    <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
-                </template>
-            </van-cell> -->
             <van-cell title="配送时间段" center :value="timequantumtext" is-link v-show="typenum==2" @click="showtimequantum=true"></van-cell>
             <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext" v-show="typenum==0"></van-cell>
         </div>
@@ -102,12 +95,6 @@
                 <span class="fc-red">￥1000</span>
             </van-cell>
         </div>
-        <!-- 预租 有库存-->
-        <!-- <div class="mar-b-10">
-            <van-cell title="应付定金" center value="">
-                <span class="fc-red">￥1000</span>
-            </van-cell>
-        </div> -->
 
         <div class="bgc pd-15">
             <div class="mar-b-10 flexbox">
@@ -160,7 +147,7 @@
 
                     <div class="coupon_con flex-jc-around flex-align-items">
                     <div>
-                        <span class="num">10</span>
+                        <span class="num">{{item.price}}</span>
                         <span class="yuan">元</span>
                     </div>
                     <div>
@@ -200,7 +187,7 @@ export default {
             isinsurance: false,//保险
             isconsent:true,//协议
             discountmodel:false,//优惠活动
-            couponlist: [1,2],//优惠券
+            couponlist: [{price:10},{price:20}],//优惠券
             remarkval:'',
             timequantumtext:'', //时间段
             showtimequantum: false, //时间段

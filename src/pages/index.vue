@@ -15,7 +15,7 @@
         <van-swipe :autoplay="3000">
           <van-swipe-item v-for="(item, index) in images" :key="index">
             <div class="img_box">
-              <img :src="item">
+              <img :src="item.adpic_img">
             </div>
           </van-swipe-item>
         </van-swipe>
@@ -39,63 +39,37 @@
     </div>
 
     <div id="nav" class="bgc">
-      <van-tabs v-model="active">
+      <van-tabs v-model="active" @click="onClicknav">
         <van-tab title="热门">
-          <div v-for="index in 3" :key="index">
+          <div v-for="(item,key) in indexlist" :key="key">
             <div class="flex-jc-between flex-align-items hb">
-              <div class="title">热门租赁</div>
-              <div class="m_txt flex-align-items" @click="more">更多
+              <div class="title">{{item.scene_name}}</div>
+              <div class="m_txt flex-align-items" @click="more(item.scene_id)">更多
                 <van-icon name="arrow"/>
               </div>
             </div>
             <div class="flex-jc-between border-b bgc camer_hm_box">
-              <div class="camer_hm" @click="toDetail" v-for="item in 3">
+              <div class="camer_hm" @click="toDetail(goods.goods_id)" v-for="(goods,index) in item.goods" :key="index">
                 <div class="img_box2 flex-center">
                   <img
                     class="img"
-                    src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                    :src="goods.gd_img[0]"
                   >
                 </div>
-                <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
+                <div class="text-line pro_name">{{goods.category_name}}</div>
                 <div class="f12">
                   <span style="color: #F21E1E;">¥</span>
                   <span class="price">3.08</span>/日
                 </div>
               </div>
-              <!-- <div class="camer_hm">
-                <div class="img_box2 flex-center">
-                  <img
-                    class="img"
-                    src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-                  >
-                </div>
-                <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
-                <div class="f12">
-                  <span style="color: #F21E1E;">¥</span>
-                  <span class="price">3.08</span>/日
-                </div>
-              </div>
-              <div class="camer_hm" style="margin-right: 10px;">
-                <div class="img_box2 flex-center">
-                  <img
-                    class="img"
-                    src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-                  >
-                </div>
-                <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
-                <div class="f12">
-                  <span style="color: #F21E1E;">¥</span>
-                  <span class="price">3.08</span>/日
-                </div>
-              </div>-->
             </div>
           </div>
         </van-tab>
 
-        <van-tab title="相机">
+        <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key='index'>
           <div class="title">热门推荐</div>
           <div class="flex-jc-between border-b bgc camer_hm_box">
-            <div class="camer_hm" v-for="item in 3">
+            <div class="camer_hm" v-for="(item,index) in goodslist" :key="index">
               <div class="img_box2 flex-center">
                 <img
                   class="img"
@@ -108,34 +82,6 @@
                 <span class="price">3.08</span>/日
               </div>
             </div>
-
-            <!-- <div class="camer_hm">
-              <div class="img_box2 flex-center">
-                <img
-                  class="img"
-                  src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-                >
-              </div>
-              <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
-              <div class="f12">
-                <span style="color: #F21E1E;">¥</span>
-                <span class="price">3.08</span>/日
-              </div>
-            </div>
-
-            <div class="camer_hm" style="margin-right: 10px;">
-              <div class="img_box2 flex-center">
-                <img
-                  class="img"
-                  src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-                >
-              </div>
-              <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
-              <div class="f12">
-                <span style="color: #F21E1E;">¥</span>
-                <span class="price">3.08</span>/日
-              </div>
-            </div>-->
           </div>
 
           <div class="bgc">
@@ -162,11 +108,6 @@
             </div>
           </div>
         </van-tab>
-
-        <van-tab title="游戏">游戏</van-tab>
-        <van-tab title="手机">手机</van-tab>
-        <van-tab title="影音">影音</van-tab>
-        <van-tab title="酷玩">酷玩</van-tab>
       </van-tabs>
     </div>
 
@@ -181,11 +122,11 @@ export default {
     let self = this;
     return {
       lat: "",
-      lag: "",
-      images: [
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-      ],
+      lng: "",
+      images: [],
+      indexlist:[],
+      navlist:[],
+      goodslist:[],
       prolist: [
         { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
         { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
@@ -218,7 +159,10 @@ export default {
   },
 
   created() {
-    this.getLocation();
+    this.getLocation()
+    this.getbanner()
+    this.getindexlist()
+    this.getnav()
   },
 
   methods: {
@@ -226,9 +170,9 @@ export default {
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(position => {
           var lat = position.coords.latitude; //纬度
-          var lag = position.coords.longitude; //经度
+          var lng = position.coords.longitude; //经度
           this.lat = lat 
-          this.lag = lag
+          this.lng = lng
         });
       } else {
         Toast("浏览器不支持地理定位");
@@ -239,13 +183,75 @@ export default {
       this.$router.push({ path: "/gohosting" });
     },
     //更多
-    more() {
-      this.$router.push({ path: "/Goods" });
+    more(id) {
+      this.$router.push({ path: "/Goods/" + id });
     },
     //产品详情
-    toDetail() {
-      this.$router.push({ path: "/ProductDetail" });
-    }
+    toDetail(id) {
+      this.$router.push({ path: "/ProductDetail/" + id });
+    },
+
+    onClicknav(i){
+      Toast.loading({ mask: true,message: '加载中...'})
+      if(i==0){
+
+      }else{
+
+        let postData = this.$qs.stringify({
+            cate_id:this.navlist[i-1].cate_id
+        })
+        this.axios.post(this.API + 'api/Lease/cate_goods',postData)
+          .then( res => {
+              console.log(res.data,'goodslist'); 
+              let resdata = res.data
+              if(resdata.code == 200){
+                this.goodslist = resdata.data
+              }else {
+                Toast(resdata.message)
+              }
+              Toast.clear()
+          })
+      }
+    },
+
+    getbanner(){
+        this.axios.post(this.API + 'api/Lease/Rotation_chart')
+        .then( res => {
+            console.log(res.data,'getbanner'); 
+            let resdata = res.data
+            if(resdata.code == 200){
+              this.images = resdata.data
+            }else {
+              Toast(resdata.message)
+            }
+        })
+    },
+    getnav(){
+        this.axios.post(this.API + 'api/Lease/cate_select')
+        .then( res => {
+            console.log(res.data,'getnav'); 
+            let resdata = res.data
+            if(resdata.code == 200){
+              this.navlist = resdata.data
+            }else {
+              Toast(resdata.message)
+            }
+        })
+    },
+    getindexlist(){
+        Toast.loading({ mask: true,message: '加载中...'})
+        this.axios.post(this.API + 'api/Lease/goods_select')
+        .then( res => {
+            console.log(res.data,'getindexlist'); 
+            let resdata = res.data
+            if(resdata.code == 200){
+              this.indexlist = resdata.data
+            }else {
+              Toast(resdata.message)
+            }
+            Toast.clear()
+        })
+    },
   }
 };
 </script>
