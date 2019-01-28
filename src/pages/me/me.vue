@@ -92,14 +92,14 @@
 
 <script>
 export default {
-  data(){
-    return{
+  data() {
+    return {
       bgimg: {
         background:
           "url(" + require("../../assets/me_bg.png") + ") no-repeat top",
-          backgroundSize: "100% 100%"
+        backgroundSize: "100% 100%"
       }
-    }
+    };
   },
   methods: {
     //我的资料

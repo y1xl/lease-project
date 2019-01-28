@@ -24,7 +24,7 @@
 
     <div class="flex-jc-around bgc" v-show="active==0">
       <div class="tg" @click="gohosting">
-          <img src="../assets/tuoguan.png"> 我要托管
+        <img src="../assets/tuoguan.png"> 我要托管
       </div>
       <div class="tg">
         <router-link to="/Extension">
@@ -49,12 +49,14 @@
               </div>
             </div>
             <div class="flex-jc-between border-b bgc camer_hm_box">
-              <div class="camer_hm" @click="toDetail(goods.goods_id)" v-for="(goods,index) in item.goods" :key="index">
+              <div
+                class="camer_hm"
+                @click="toDetail(goods.goods_id)"
+                v-for="(goods,index) in item.goods"
+                :key="index"
+              >
                 <div class="img_box2 flex-center">
-                  <img
-                    class="img"
-                    :src="goods.gd_img[0]"
-                  >
+                  <img class="img" :src="goods.gd_img[0]">
                 </div>
                 <div class="text-line pro_name">{{goods.category_name}}</div>
                 <div class="f12">
@@ -135,10 +137,10 @@ export default {
   },
 
   created() {
-    this.getLocation()
-    this.getbanner()
-    this.getindexlist()
-    this.getnav()
+    this.getLocation();
+    this.getbanner();
+    this.getindexlist();
+    this.getnav();
   },
 
   methods: {
@@ -147,15 +149,15 @@ export default {
         window.navigator.geolocation.getCurrentPosition(position => {
           var lat = position.coords.latitude; //纬度
           var lng = position.coords.longitude; //经度
-          this.lat = lat 
-          this.lng = lng
+          this.lat = lat;
+          this.lng = lng;
         });
       } else {
         Toast("浏览器不支持地理定位");
       }
     },
     gohosting() {
-      window.sessionStorage.removeItem('gohostingSession');
+      window.sessionStorage.removeItem("gohostingSession");
       this.$router.push({ path: "/gohosting" });
     },
     //更多
@@ -190,44 +192,41 @@ export default {
       }
     },
 
-    getbanner(){
-        this.axios.post(this.API + 'api/Lease/Rotation_chart')
-        .then( res => {
-            console.log(res.data,'getbanner'); 
-            let resdata = res.data
-            if(resdata.code == 200){
-              this.images = resdata.data
-            }else {
-              Toast(resdata.message)
-            }
-        })
+    getbanner() {
+      this.axios.post(this.API + "api/Lease/Rotation_chart").then(res => {
+        console.log(res.data, "getbanner");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.images = resdata.data;
+        } else {
+          Toast(resdata.message);
+        }
+      });
     },
-    getnav(){
-        this.axios.post(this.API + 'api/Lease/cate_select')
-        .then( res => {
-            console.log(res.data,'getnav'); 
-            let resdata = res.data
-            if(resdata.code == 200){
-              this.navlist = resdata.data
-            }else {
-              Toast(resdata.message)
-            }
-        })
+    getnav() {
+      this.axios.post(this.API + "api/Lease/cate_select").then(res => {
+        console.log(res.data, "getnav");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.navlist = resdata.data;
+        } else {
+          Toast(resdata.message);
+        }
+      });
     },
-    getindexlist(){
-        Toast.loading({ mask: true,message: '加载中...'})
-        this.axios.post(this.API + 'api/Lease/goods_select')
-        .then( res => {
-            console.log(res.data,'getindexlist'); 
-            let resdata = res.data
-            if(resdata.code == 200){
-              this.indexlist = resdata.data
-            }else {
-              Toast(resdata.message)
-            }
-            Toast.clear()
-        })
-    },
+    getindexlist() {
+      Toast.loading({ mask: true, message: "加载中..." });
+      this.axios.post(this.API + "api/Lease/goods_select").then(res => {
+        console.log(res.data, "getindexlist");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.indexlist = resdata.data;
+        } else {
+          Toast(resdata.message);
+        }
+        Toast.clear();
+      });
+    }
   }
 };
 </script>
