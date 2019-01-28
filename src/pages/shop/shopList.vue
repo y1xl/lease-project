@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="shoplist">
-<<<<<<< HEAD
         <div v-for="(item,index) in list" :key="index" :title="item">
           <div class="item">
             <router-link to="/ShopDetail">
@@ -13,19 +12,6 @@
               </div>
               <div class="txt f12">{{item.store_district}}</div>
             </router-link>
-=======
-      <div v-for="(item,index) in list" :key="index" :title="item">
-        <div class="item">
-          <router-link to="/ShopDetail">
-            <div class="flex-jc-between">
-              <div class="shop_title">龙华区油松店</div>
-              <div>
-                <van-icon name="arrow"/>
-              </div>
-            </div>
-            <div class="txt f12">广东省深圳市龙华新区油松路158号油富商城门店</div>
-          </router-link>
->>>>>>> 781bc9fbb49cc0cfccc5577bc2e6916a669f1590
 
           <router-link class="dt text-c" :to="`/map/${item.coordinate}`">
             <img class="ck_img" src="../../assets/mddw.png">
