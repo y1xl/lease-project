@@ -3,21 +3,48 @@
     <div class="bgc box">
       <div class="pd-15 border-b">
         <span style=" margin-right: 10px">原密码</span>
-        <input type="text" maxlength="11" placeholder="请输入原密码">
+        <input type="password"  placeholder="请输入原密码" v-model="oldval">
       </div>
       <div class="pd-15">
         <span style=" margin-right: 10px">新密码</span>
-        <input type="text" maxlength="11" placeholder="请输入新密码">
+        <input type="password" placeholder="请输入新密码" v-model="newval">
       </div>
     </div>
     <div class="flex-jc-center">
-      <div class="btn text-c">确定修改</div>
+      <div class="btn text-c" @click="submit">确定修改</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { Toast } from "vant";
+export default {
+    data(){
+        return{
+            oldval: '',
+            newval: ''
+        }
+    },
+    methods:{
+        submit(){
+            let postData = this.$qs.stringify({
+                users_pwd: this.oldval,
+                new_pwd: this.newval,
+                user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+            })
+            this.axios.post(this.API + "api/Lease/update_pwd",postData)
+            .then(res => {
+                console.log(res.data, "submit");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    this.$router.go(-1);
+                } else {
+                Toast(resdata.message);
+                }
+            });
+        }
+    }
+};
 </script>
 
 <style scoped>

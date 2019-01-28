@@ -1,25 +1,27 @@
 <template>
   <div>
+    <div class="pd-15 fc-grey text-c" v-if="list.length==0">快去添加订单吧~</div>
+
     <van-radio-group v-model="radio" @change="selectedProduct">
       <div v-for="(item,index) in list" :key="index" class="list_box" @click="radio=index">
-        <van-swipe-cell :right-width="65" :on-close="onClose">
+        <van-swipe-cell :right-width="65" :on-close="onClose" >
           <div class="card bgc flex-align-items">
             <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
             <img
-              src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+              :src="item.gd_img[0]"
               alt
               class="bgc-grey goodsimg"
             >
             <div class="flex-1 right">
-              <div class="mar-b-10">商品1</div>
-              <div class="fc-grey fsz12 mar-b-10">黑色</div>
+              <div class="mar-b-10">{{item.goods_name}}</div>
+              <div class="fc-grey fsz12 mar-b-10">{{item.attr_names}}</div>
               <div class="flex-jc-between fsz12">
-                <span class="fc-blue">￥{{item.price}}/日</span>
+                <span class="fc-blue">￥{{item.hire_price.price}}/{{item.hire_price.unt}}</span>
                 <!-- <span class="fc-grey">x{{item.num}}</span> -->
               </div>
             </div>
           </div>
-          <div slot="right" class="del">删除</div>
+          <div slot="right" class="del" @click="getdel(item.cart_id)">删除</div>
         </van-swipe-cell>
       </div>
     </van-radio-group>
@@ -43,10 +45,14 @@ import { Dialog,Toast } from "vant";
 export default {
   data() {
     return {
-      list: [{ id: 1, price: 1 }, { id: 2, price: "3.03" }],
+      list: [],
       sum: 0,
-      radio: -1
+      radio: -1,
+      delid:''
     };
+  },
+  created(){
+    this.getlist()
   },
   methods: {
     // 删除
@@ -60,17 +66,53 @@ export default {
         case "right":
           Dialog.confirm({
             message: "确定删除吗？"
-          }).then(() => {
-            instance.close();
+          }).then((e) => {
+            if(e == 'confirm'){
+              this.del()
+            }
           });
           break;
       }
     },
+    getdel(id){
+      console.log(id)
+      this.delid = id
+    },
+    del(){
+      let postData = this.$qs.stringify({
+            cart_id: this.delid,
+        })
+      this.axios.post(this.API + "api/Lease/cart_delete",postData)
+      .then(res => {
+        console.log(res.data, "del")
+        let resdata = res.data
+        if (resdata.code == 200) {
+          this.getlist()
+        } else {
+          Toast(resdata.message)
+        }
+      });
+    },
 
-    //多选
     selectedProduct(res) {
       console.log(res);
-      this.sum = this.list[res].price
+      this.sum = this.list[res].hire_price.price
+    },
+
+    getlist(){
+      let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        })
+      this.axios.post(this.API + "api/Lease/cart_select",postData)
+      .then(res => {
+        console.log(res.data, "list")
+        let resdata = res.data
+        if (resdata.code == 200) {
+          this.list = resdata.data;
+        } else {
+          Toast(resdata.message)
+        }
+      });
     },
 
     gobuy() {

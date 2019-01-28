@@ -2,7 +2,7 @@
     <div class="full bgc">
         <div class="pd-15">验证码已发送至{{phone}}</div>
         <div class="pd-15 mar-b-10 flex-jc-between">
-            <input type="text" placeholder="请输入验证码">
+            <input type="text" placeholder="请输入验证码" v-model="codeval">
             <button class="send bgc-blue" @click="sendcode">重新发送</button>
         </div>
 
@@ -13,10 +13,12 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return{
-            phone: this.$route.params.phone
+            phone: this.$route.params.phone,
+            codeval: ''
         }
     },
     created(){
@@ -39,13 +41,26 @@ export default {
             });
         },
         next(){
+            let postData = this.$qs.stringify({
+                users_phone:this.$route.params.phone,
+                yzm: this.codeval
+            })
+            this.axios.post(this.API + "api/Lease/Reset_pwd",postData)
+            .then(res => {
+                console.log(res.data, "next");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    if(this.$route.params.type=='phone'){
+                        this.$router.replace({ path: "/newphone" });
+                    }
+                    if(this.$route.params.type=='password'){
+                        // this.$router.replace({ path: "/newpassword" });
+                    }
+                } else {
+                Toast(resdata.message);
+                }
+            });
             
-            // if(this.$route.params.type=='phone'){
-            //     this.$router.push({ path: "/newphone" });
-            // }
-            // if(this.$route.params.type=='password'){
-            //     this.$router.push({ path: "/newpassword" });
-            // }
         }
     }
 }

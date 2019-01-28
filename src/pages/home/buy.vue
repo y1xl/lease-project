@@ -57,7 +57,7 @@
                         <img src="../../assets/icon-triangle.png" class="triangleimg">
                     </div>
                     <div class="border flex-center">
-                        <input type="text" v-model="weekval">
+                        <input type="text" v-model="weekval" :disabled="isdisabled" class="bgc">
                     </div>
                 </div>
             </van-cell>
@@ -181,8 +181,9 @@ export default {
             showcoupon:false,//优惠券
             activitytext:'',//优惠活动
             showweek: false,//租期
-            columns: ['天', '小时', '分钟', '测试', '测试'],//租期
+            // columns: ['天', '小时'],
             weektext: '请选择',//租期
+            isdisabled: true,
             weekval:'',//租期
             isinsurance: false,//保险
             isconsent:true,//协议
@@ -192,6 +193,19 @@ export default {
             timequantumtext:'', //时间段
             showtimequantum: false, //时间段
             timequantumarr:['13:00-14:00','测试'] //时间段
+        }
+    },
+    computed:{
+        columns: function () {
+            if(this.typenum==0){
+                this.weektext= '请选择'
+                this.weekval = ''
+                return ['天', '小时']
+            }else{
+                this.weektext='请选择'
+                this.weekval = ''
+                return ['天']
+            }
         }
     },
     created() {
@@ -243,6 +257,13 @@ export default {
         onConfirmWeek(value,index){
             console.log(`当前值：${value}, 当前索引：${index}`);
             this.weektext = value
+            if(value=='小时'){
+                this.weekval = 6
+                this.isdisabled = true
+            }
+            if(value=='天'){
+                this.isdisabled = false
+            }
             this.showweek = false
         },
         onConfirmTimequantum(value,index){

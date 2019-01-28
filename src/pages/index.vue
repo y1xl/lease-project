@@ -3,7 +3,7 @@
     <div class="flex-jc-between top_sear bgc">
       <div class="dw flex-align-items">
         附近门店：
-        <span class="fc-blue text-line">{{nearShop.store_province+nearShop.store_district+nearShop.store_city}}</span>
+        <span class="fc-blue text-line">{{nearShop}}</span>
       </div>
       <router-link class="sear flex-align-items" to="/search">
         <van-icon name="search"/>
@@ -230,17 +230,17 @@ export default {
     },
     getNearShop() {
       let postData = this.$qs.stringify({
-            // lat:this.lat,
-            // lng:this.lng
-            lat:'22.54605355',
-            lng:'114.02597366'
+            lat:this.lat,
+            lng:this.lng
+            // lat:'22.54605355',
+            // lng:'114.02597366'
         })
       this.axios.post(this.API + "api/Lease/Nearby_store",postData)
       .then(res => {
         console.log(res.data, "Nearby_store");
         let resdata = res.data;
         if (resdata.code == 200) {
-          this.nearShop = resdata.data;
+          this.nearShop = resdata.data.store_province+resdata.data.store_district+resdata.data.store_city
         } else {
           Toast(resdata.message);
         }

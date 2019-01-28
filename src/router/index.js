@@ -119,7 +119,7 @@ export default new Router({
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
     { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
-    { path: '/buy', component: Buy, meta: { title: '下单' } },
+    { path: '/buy/:id/:guige', component: Buy, meta: { title: '下单' } },
     { path: '/pay', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索' } },
@@ -189,7 +189,7 @@ export default new Router({
     { path: '/addaddress', component: Addaddress, meta: { title: '收货地址' } },
 
     //地图
-    { path: '/map/:center', component: Map, meta: { title: '地图' } },
+    { path: '/map/:center/:shop', component: Map, meta: { title: '地图' } },
 
   ],
 

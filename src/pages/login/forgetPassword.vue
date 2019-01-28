@@ -60,7 +60,7 @@ export default {
         })
       this.axios.post(this.API + "api/Lease/Reset_pwd",postData)
       .then(res => {
-        console.log(res.data, "sendcode");
+        console.log(res.data, "next");
         let resdata = res.data;
         if (resdata.code == 200) {
             this.$router.replace({ path: "/ResetPassword/" + this.phoneval });

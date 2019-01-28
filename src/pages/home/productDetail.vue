@@ -7,7 +7,7 @@
         </div>
         <div class="banner bgc">
           <van-swipe :autoplay="3000">
-            <van-swipe-item v-for="(item, index) in images" :key="index">
+            <van-swipe-item v-for="(item, index) in detail.gd_img" :key="index">
               <div class="img_box">
                 <img :src="item">
               </div>
@@ -19,8 +19,8 @@
         <div class="product bgc">
           <div class="flex-jc-between">
             <div>
-              <div class="product_title">日本 instax拍立得</div>
-              <div class="grey_12 camera">一次成像相机</div>
+              <div class="product_title">{{detail.goods_name}}</div>
+              <!-- <div class="grey_12 camera">一次成像相机</div> -->
             </div>
             <div class="flexbox">
               <div class="text-c" @click="oncollection">
@@ -43,10 +43,10 @@
             <div>
               <span class="product_title">低至</span>
               <span>¥</span>
-              <span class="price">1.08</span>
-              <span class="fsize13">/日</span>
+              <span class="price">{{detail.hire_price.price||'-'}}</span>
+              <span class="fsize13">/{{detail.hire_price.unt||'-'}}</span>
             </div>
-            <div class="fsize13">押金: ¥1000.00</div>
+            <div class="fsize13">押金: ¥{{detail.gd_deposit}}</div>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@
             <img class="head_img" src="../../assets/my.png" alt>
             <span>李***莉</span>
             <span>
-              <van-rate v-model="value" disabled disabled-color="#FFB10E" size="12"/>
+              <!-- <van-rate disabled disabled-color="#FFB10E" size="12"/> -->
             </span>
           </div>
           <div>
@@ -137,23 +137,7 @@
     <div class="bgc flex-jc-center" style="margin-top:10px">
       <div class="product_det">
         <div class="dettail">产品详情</div>
-        <div>
-          <span class="grey_12">商品名称</span>
-          <span>INSTAXmini90</span>
-        </div>
-        <div class="weight">
-          <span class="grey_12">商品毛重</span>
-          <span>0.58kg</span>
-        </div>
-        <div>
-          <span class="grey_12">使用相纸尺寸</span>
-          <span>富士小尺寸</span>
-        </div>
-        <img
-          class="pro_img"
-          src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-          alt
-        >
+        
       </div>
     </div>
 
@@ -227,31 +211,26 @@
     <div class="model full" v-show="showinfo||showinfocar">
       <div class="main bgc">
         <div class="goods1 flexbox pd-15">
-          <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+          <img :src="detail.gd_img[0]" alt>
           <div class="flex-1">
-            <div class="mar-b-10 position title">日本 instax拍立得日本 instax拍立得
+            <div class="mar-b-10 position title">{{detail.goods_name}}
               <div class="closeicon" @click="showinfo=false,showinfocar=false">
                 <van-icon name="close"/>
               </div>
             </div>
             <div class="mar-b-10">
-              <span class="fc-red">¥1.08</span>
-              <span class="fsz10">/日</span>
+              <span class="fc-red">¥{{detail.hire_price.price||'-'}}</span>
+              <span class="fsz10">/{{detail.hire_price.unt||'-'}}</span>
             </div>
             <div class="fsz10">请选择规格属性</div>
           </div>
         </div>
         <div class="pd-lr-15">
-          <div class="mar-b-10 fsz12">颜色</div>
-          <div class="items mar-b-10">
-            <div class="border-blue fc-blue">黑色</div>
-            <div class="border">褐色</div>
-          </div>
-
-          <div class="mar-b-10 fsz12">型号</div>
-          <div class="items mar-b-10">
-            <div class="border">型号1</div>
-            <div class="border">型号2</div>
+          <div v-for="(item,index) in speclist" :key="index">
+            <div class="mar-b-10 fsz12" >{{item.spec_name}}</div>
+            <div class="items mar-b-10" >
+              <div :class="items.checked?'border-blue fc-blue':'border'" v-for="(items,indexs) in item.spec" :key="indexs" @click="onchooseguige(index,indexs)">{{items.attr_name}}</div>
+            </div>
           </div>
 
           <!-- <div class="mar-b-10 fsz12">数量</div>
@@ -263,56 +242,87 @@
           <div class="gbtn text-c" @click="gobuy">开始下单</div>
         </div>
         <div class="pd-15" v-show="showinfocar">
-          <div class="gbtn text-c">加入购物车</div>
+          <div class="gbtn text-c" @click="addcart">加入购物车</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      images: [
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-      ],
       imglist: [
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" 
       ],
       wordlist: [{}, {}],
       discountlist: [{}, {}],
-      value: 5,
       showmodel: false,
       discountmodel: false,
       numval: "",
       showinfo: false,
       showinfocar: false,
-      iscollection: false
+      iscollection: false,
+      detail:'',
+      speclist: []
     };
   },
   created(){
-
+    this.getdetail()
+    this.getguige()
   },
   methods: {
     getdetail(){
       let postData = this.$qs.stringify({
-            goods_id:''
+            goods_id:this.$route.params.id
         })
       this.axios.post(this.API + "api/Lease/Goods_Detail",postData)
       .then(res => {
         console.log(res.data, "Goods_Detail")
         let resdata = res.data
         if (resdata.code == 200) {
-          // this.nearShop = resdata.data;
+          this.detail = resdata.data;
         } else {
           Toast(resdata.message)
         }
       });
     },
+    getguige(){
+      let postData = this.$qs.stringify({
+            goods_id:this.$route.params.id
+        })
+      this.axios.post(this.API + "api/Lease/Goods_spec",postData)
+      .then(res => {
+        console.log(res.data, "getguige")
+        let resdata = res.data
+        if (resdata.code == 200) {
+          this.speclist = resdata.data;
+        } else {
+          Toast(resdata.message)
+        }
+      });
+    },
+    //选择规格
+    onchooseguige(index,indexs){
+      let speclist = this.speclist
+      for(let [k,v] of speclist.entries()){
+        if(k == index){
+          for(let [k1,v1] of v.spec.entries()){
+            if(k1 == indexs){
+              v1.checked = true
+              console.log(v1)
+            }else {
+              v1.checked = false
+            }
+          }
+        }
+      }
+      this.speclist = [...speclist]
+    },
+    // 收藏
     oncollection() {
       this.iscollection = !this.iscollection;
     },
@@ -320,9 +330,61 @@ export default {
     toMouthw() {
       this.$router.push({ path: "/WordMouth" });
     },
+
     gobuy() {
-      window.sessionStorage.removeItem("buySession");
-      this.$router.push({ path: "/buy" });
+      let arr = []
+      for(let v of this.speclist){
+        for (let v1 of v.spec){
+          if (v1.checked){
+            arr.push(v1)
+            
+          }
+        }
+      }
+      if(arr.length == this.speclist.length){
+        window.sessionStorage.removeItem("buySession");
+        this.$router.push({ path: "/buy/"+this.$route.params.id+'/'+JSON.stringify(arr) });
+      }else{
+        Toast('请先选择规格')
+      }
+    },
+    addcart(){
+      let arr = []
+      let attr_ids = []
+      let attr_names = []
+      for(let v of this.speclist){
+        for (let v1 of v.spec){
+          if (v1.checked){
+            arr.push(v1)
+            attr_ids.push(v1.guigezhi_id)
+            attr_names.push(v1.attr_name)
+          }
+        }
+      }
+      if(arr.length == this.speclist.length){
+
+        let postData = this.$qs.stringify({
+            gd_id:this.$route.params.id,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            cart_num:1,
+            cart_price:this.detail.hire_price.price,
+            attr_ids: attr_ids.join(','),
+            attr_names: attr_names.join(','),
+        })
+        this.axios.post(this.API + "api/Lease/Add_cart",postData)
+        .then(res => {
+          console.log(res.data, "addcart")
+          let resdata = res.data
+          if (resdata.code == 200) {
+            Toast('添加成功')
+          } else {
+            Toast(resdata.message)
+          }
+        });
+
+      }else{
+        Toast('请先选择规格')
+      }
     }
   }
 };
