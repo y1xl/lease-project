@@ -2,7 +2,7 @@
   <div>
     <div class="pd-15 bgc">请选择日期</div>
     <div id="calendar">
-      <Calendar @choseDay="clickDay" :agoDayHide="nowdate"></Calendar>
+      <Calendar @choseDay="clickDay" :agoDayHide="nowdate" :markDate=arr></Calendar>
     </div>
     <div class="fc-red tip pd-15" v-if="type1=='pre'">
       如当前没有您所需要的档期，请选择预租下单，我们将在24小时内
@@ -25,13 +25,18 @@ export default {
     return {
       value: "",
       nowdate: String(Date.now() - 86400000).slice(0, 10),
-      type1: this.$route.params.type1
+      type1: this.$route.params.type1,
+      arr:[]
     };
   },
   created() {},
   methods: {
     clickDay(date) {
       console.log(date);
+      // this.arr.push(date)
+      // if(this.arr.length==2){
+      //   this.$router.go(-1);
+      // }
       if (this.$route.params.type == "shopping") {
         let shoppingSession = JSON.parse(
           window.sessionStorage.getItem("shoppingSession")
@@ -171,6 +176,13 @@ export default {
 }
 #calendar .wh_content_item .wh_chose_day {
   background-color: #50abf9;
+  color: #fff;
+}
+#calendar .wh_content_item .wh_isToday{
+  background-color: transparent;
+}
+#calendar .wh_content_item>.wh_isMark{
+  background-color:#00f;
   color: #fff;
 }
 </style>

@@ -3,7 +3,7 @@
         <div class="pd-15">验证码已发送至{{phone}}</div>
         <div class="pd-15 mar-b-10 flex-jc-between">
             <input type="text" placeholder="请输入验证码">
-            <button class="send bgc-blue">重新发送</button>
+            <button class="send bgc-blue" @click="sendcode">重新发送</button>
         </div>
 
         <div class="flex-jc-center">
@@ -19,14 +19,33 @@ export default {
             phone: this.$route.params.phone
         }
     },
+    created(){
+        this.sendcode()
+    },
     methods:{
+        sendcode(){
+            let postData = this.$qs.stringify({
+                    users_phone:this.$route.params.phone
+                })
+            this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+            .then(res => {
+                console.log(res.data, "sendcode");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+
+                } else {
+                Toast(resdata.message);
+                }
+            });
+        },
         next(){
-            if(this.$route.params.type=='phone'){
-                this.$router.push({ path: "/newphone" });
-            }
-            if(this.$route.params.type=='password'){
-                this.$router.push({ path: "/newpassword" });
-            }
+            
+            // if(this.$route.params.type=='phone'){
+            //     this.$router.push({ path: "/newphone" });
+            // }
+            // if(this.$route.params.type=='password'){
+            //     this.$router.push({ path: "/newpassword" });
+            // }
         }
     }
 }

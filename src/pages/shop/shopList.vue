@@ -10,7 +10,7 @@
                   <img src="../../assets/right.png" class="img_r">
                 </div>
               </div>
-              <div class="txt f12">{{item.store_district}}</div>
+              <div class="txt f12">{{item.store_province+item.store_district+item.store_city}}</div>
             </router-link>
 
           <router-link class="dt text-c" :to="`/map/${item.coordinate}`">

@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="flex-jc-between top_sear bgc">
-      <div class="dw">
+      <div class="dw flex-align-items">
         附近门店：
-        <span class="fc-blue">深圳龙华</span>
+        <span class="fc-blue text-line">{{nearShop.store_province+nearShop.store_district+nearShop.store_city}}</span>
       </div>
       <router-link class="sear flex-align-items" to="/search">
         <van-icon name="search"/>
@@ -61,7 +61,7 @@
                 <div class="text-line pro_name">{{goods.category_name}}</div>
                 <div class="f12">
                   <span style="color: #F21E1E;">¥</span>
-                  <span class="price">3.08</span>/日
+                  <span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                 </div>
               </div>
             </div>
@@ -71,40 +71,40 @@
         <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key='index'>
           <div class="title" v-show="!hostlist.length==0">热门推荐</div>
           <div class="flex-jc-between border-b bgc camer_hm_box" v-show="!hostlist.length==0">
-            <div class="camer_hm" v-for="(item,index) in hostlist" :key="index">
+            <div class="camer_hm" v-for="(goods,index) in hostlist" :key="index" @click="toDetail(goods.goods_id)">
               <div class="img_box2 flex-center">
                 <img
                   class="img"
-                  src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
+                  :src="goods.gd_img[0]"
                 >
               </div>
-              <div class="text-line pro_name">日本 instax 拍日本 instax 拍</div>
+              <div class="text-line pro_name">{{goods.category_name}}</div>
               <div class="f12">
                 <span style="color: #F21E1E;">¥</span>
-                <span class="price">3.08</span>/日
+                <span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
               </div>
             </div>
           </div>
 
           <div class="bgc">
             <div class="title">所有产品</div>
-            <div class="fl_pro_list mar-b-10" v-for="(item, index) in goodslist" :key="index">
+            <div class="fl_pro_list mar-b-10" v-for="(item, index) in goodslist" :key="index" @click="toDetail(goods.goods_id)">
               <div class="img_box">
-                <img class="sy_img" :src="item.imgurl">
+                <img class="sy_img" :src="item.gd_img[0]">
               </div>
-              <div class="f14 pro_name">{{item.name1}}</div>
+              <div class="f14 pro_name">{{item.category_name}}</div>
               <div class="com_like">
-                <van-rate v-model="value" disabled disabled-color="#FFB10E"/>
-                <span class="f12">4.9</span>
+                <van-rate v-model="item.eva_score" disabled disabled-color="#FFB10E"/>
+                <span class="f12">{{item.eva_score}}</span>
                 <div>
                   <img class="chat" src="../assets/chat.png">
-                  <span class="f12">999+</span>
+                  <span class="f12">{{item.eva_num}}</span>
                 </div>
               </div>
               <div class="zj">
                 <span class="f14">租金：</span>
-                <span class="price">¥{{item.price1}}</span>
-                <span class="f12">/日</span>
+                <span class="price">¥{{item.hire_price.price}}</span>
+                <span class="f12">/{{item.hire_price.unt}}</span>
               </div>
             </div>
           </div>
@@ -132,15 +132,16 @@ export default {
       goodslist:[],
       hostlist:[],
       active: 0,
-      value: 5
+      nearShop:''
     };
   },
 
   created() {
     this.getLocation();
+    this.getnav();
     this.getbanner();
     this.getindexlist();
-    this.getnav();
+    this.getNearShop()
   },
 
   methods: {
@@ -226,7 +227,25 @@ export default {
         }
         Toast.clear();
       });
-    }
+    },
+    getNearShop() {
+      let postData = this.$qs.stringify({
+            // lat:this.lat,
+            // lng:this.lng
+            lat:'22.54605355',
+            lng:'114.02597366'
+        })
+      this.axios.post(this.API + "api/Lease/Nearby_store",postData)
+      .then(res => {
+        console.log(res.data, "Nearby_store");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.nearShop = resdata.data;
+        } else {
+          Toast(resdata.message);
+        }
+      });
+    },
   }
 };
 </script>
@@ -266,6 +285,11 @@ export default {
   line-height: 44px;
   margin-left: 13px;
   font-size: 13px;
+}
+.dw span {
+  display: inline-block;
+  width: 50px;
+  height: 100%;
 }
 
 .banner {

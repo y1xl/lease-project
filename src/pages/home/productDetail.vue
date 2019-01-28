@@ -294,7 +294,25 @@ export default {
       iscollection: false
     };
   },
+  created(){
+
+  },
   methods: {
+    getdetail(){
+      let postData = this.$qs.stringify({
+            goods_id:''
+        })
+      this.axios.post(this.API + "api/Lease/Goods_Detail",postData)
+      .then(res => {
+        console.log(res.data, "Goods_Detail")
+        let resdata = res.data
+        if (resdata.code == 200) {
+          // this.nearShop = resdata.data;
+        } else {
+          Toast(resdata.message)
+        }
+      });
+    },
     oncollection() {
       this.iscollection = !this.iscollection;
     },

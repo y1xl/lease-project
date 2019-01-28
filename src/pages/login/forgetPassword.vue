@@ -12,7 +12,7 @@
         </div>
 
         <button class="btn text-c" :class="phoneval!=''&&codeval!=''?'bgc-blue':'btn-grey'" @click="toNext" >下一步</button>
-        <div class="text-c resent">发送验证码</div>
+        <div class="text-c resent" @click="sendcode">发送验证码</div>
       </div>
     </div>
 
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data(){
     return{
@@ -28,6 +29,24 @@ export default {
     }
   },
   methods: {
+    sendcode(){
+      if(this.phoneval==''){
+        return
+      }
+      let postData = this.$qs.stringify({
+            users_phone:this.phoneval
+        })
+      this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+      .then(res => {
+        console.log(res.data, "sendcode");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+
+        } else {
+          Toast(resdata.message);
+        }
+      });
+    },
 
     //下一步
     toNext() {
@@ -35,7 +54,21 @@ export default {
         return
       }
 
-      this.$router.replace({ path: "/ResetPassword/" + this.phoneval });
+      let postData = this.$qs.stringify({
+            users_phone:this.phoneval,
+            yzm: this.codeval
+        })
+      this.axios.post(this.API + "api/Lease/Reset_pwd",postData)
+      .then(res => {
+        console.log(res.data, "sendcode");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+            this.$router.replace({ path: "/ResetPassword/" + this.phoneval });
+        } else {
+          Toast(resdata.message);
+        }
+      });
+
     }
   }
 };

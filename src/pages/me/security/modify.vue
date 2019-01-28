@@ -1,7 +1,7 @@
 <template>
   <div class="bgc full">
     <div class="modify text-c">
-      <div class="tel_num">您当前绑定手机号138xxxx4586</div>
+      <div class="tel_num">您当前绑定手机号{{phone}}</div>
       <div class="flex-jc-center">
         <router-link class="btn text-c" :to="`/sendcode/${this.$route.params.type}/${phone}`">获取验证码</router-link>
       </div>
@@ -13,7 +13,7 @@
 export default {
   data() {
     return {
-      phone: '123456789'
+      phone: this.$route.params.phone
       // content: "获取验证码",
       // totalTime: 60, //倒计时
       // canClick: true

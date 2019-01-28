@@ -6,7 +6,7 @@
         <input type="text" maxlength="11" placeholder="请输入原密码">
       </div>
       <div class="pd-15">
-        <span style=" margin-right: 10px">原密码</span>
+        <span style=" margin-right: 10px">新密码</span>
         <input type="text" maxlength="11" placeholder="请输入新密码">
       </div>
     </div>

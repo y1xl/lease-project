@@ -2,7 +2,7 @@
   <div>
     <div class="account_sec bgc">
       <div class="tel">
-        <van-cell center is-link value="138xxxx4568" to="/Modify/phone">
+        <van-cell center is-link value="13417074484" :to="`/Modify/phone/13417074484`">
           <template slot="title">
             <div>绑定手机号</div>
           </template>

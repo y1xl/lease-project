@@ -28,7 +28,7 @@
           <van-password-input :value="value" @focus="showKeyboard = true" :length="lengths"/>
           <button class="btn text-c" @click="login" :class="value==''?'btn-grey':'bgc-blue'">登陆</button>
 
-        <div class="text-c resent">重新发送</div>
+        <div class="text-c resent" @click="sendcode">重新发送</div>
       </div>
     </div>
 
@@ -43,16 +43,35 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data(){
     return{
       phone: this.$route.params.phone,
       value: '',
-      lengths: 4,
+      lengths: 6,
       showKeyboard: true
     }
   },
+  created(){
+    this.sendcode()
+  },
   methods: {
+    sendcode(){
+      let postData = this.$qs.stringify({
+            users_phone:this.$route.params.phone
+        })
+      this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+      .then(res => {
+        console.log(res.data, "sendcode");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+
+        } else {
+          Toast(resdata.message);
+        }
+      });
+    },
     onInput(key) {
       this.value = (this.value + key).slice(0, this.lengths);
     },
@@ -61,11 +80,27 @@ export default {
     },
     //登录
     login() {
-      console.log(this.value)
+      // console.log(this.value)
       if(this.value==''){
         return
       }
-      this.$router.replace({ path: "/" })
+
+      let postData = this.$qs.stringify({
+            users_phone:this.$route.params.phone,
+            yzm: this.value
+        })
+      this.axios.post(this.API + "api/Lease/Yzm_Login",postData)
+      .then(res => {
+        console.log(res.data, "login");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          window.localStorage.setItem("userinfo",JSON.stringify(resdata.data))
+          this.$router.replace({ path: "/" })
+        } else {
+          Toast(resdata.message);
+        }
+      });
+
     }
   }
 };

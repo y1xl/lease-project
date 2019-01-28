@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -31,7 +32,22 @@ export default {
         // Notify('不能为空');
         return
       }
-      this.$router.replace({ path: "/" })
+
+      let postData = this.$qs.stringify({
+            users_phone:this.phoneval,
+            users_pwd: this.pwval
+        })
+      this.axios.post(this.API + "api/Lease/Lease_Sign",postData)
+      .then(res => {
+        console.log(res.data, "pwlogin");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          window.localStorage.setItem("userinfo",JSON.stringify(resdata.data))
+          this.$router.replace({ path: "/" })
+        } else {
+          Toast(resdata.message);
+        }
+      });
 
     },
   }

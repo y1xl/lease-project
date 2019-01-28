@@ -131,7 +131,7 @@ export default new Router({
     { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
     { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
     { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
-    { path: '/modify/:type', component: Modify, meta: { title: '当前绑定手机号' } },
+    { path: '/modify/:type/:phone', component: Modify, meta: { title: '当前绑定手机号' } },
     { path: '/coupon', component: Coupon, meta: { title: '优惠券' } },
     { path: '/myBalance', component: MyBalance, meta: { title: '我的余额' } },
     { path: '/cash', component: Cash, meta: { title: '提现' } },
