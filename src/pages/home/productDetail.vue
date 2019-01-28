@@ -257,7 +257,7 @@
           <!-- <div class="mar-b-10 fsz12">数量</div>
           <div>
             <van-stepper v-model="numval"/>
-          </div> -->
+          </div>-->
         </div>
         <div class="pd-15" v-show="showinfo">
           <div class="gbtn text-c" @click="gobuy">开始下单</div>
@@ -443,7 +443,7 @@ export default {
 .wordlist_box {
   border-bottom: 1px solid #f0f0f0;
 }
-.word_mouth_box :last-child {
+.word_mouth :last-child {
   border-bottom: 1px solid #fff;
 }
 .head_name,

@@ -17,7 +17,7 @@
         </div>
       </div>-->
       <div class="word_mouth">
-        <div class="border-b" v-for="(item,index ) in wordlist" :key="index">
+        <div v-for="(item,index ) in wordlist" :key="index">
           <div class="flex-align-items head_name">
             <img class="head_img" src="../../assets/my.png" alt>
             <span>李***莉</span>
@@ -162,6 +162,14 @@ export default {
 .word_mouth {
   margin: 0 10px;
   height: 100%;
+}
+
+.word_mouth > div {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.word_mouth :last-child {
+  border-bottom: 1px solid #fff;
 }
 .head_name,
 .com_det {
