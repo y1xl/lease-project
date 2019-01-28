@@ -1,22 +1,18 @@
 <template>
   <div class="pd-15">
     <van-radio-group v-model="radio">
-        <div
-            class="card bgc mar-b-10 flex-align-items"
-            v-for="(item,index) in list"
-            :key="index"
-        >
-            <van-radio :name="item.id" checked-color="#2DBBF1"></van-radio>
-            <div class="flex-1 left" @click="radio = item.id">
-                <div>关系:朋友</div>
-                <div>联系人电话:18888888888</div>
-                <div>联系人姓名:xxx</div>
-            </div>
-            <div class="tools">
-                <img src="../../assets/icon-editor.png" alt="编辑">
-                <img src="../../assets/icon-del.png" alt="删除" @click="del(item.id,$event)">
-            </div>
+      <div class="card bgc mar-b-10 flex-align-items" v-for="(item,index) in list" :key="index">
+        <!-- <van-radio :name="item.id" checked-color="#2DBBF1"></van-radio> -->
+        <div class="flex-1 left" @click="radio = item.id">
+          <div>关系:{{item.urgent_sign}}</div>
+          <div>联系人电话:{{item.urgent_phone}}</div>
+          <div>联系人姓名:{{item.urgent_name}}</div>
         </div>
+        <div class="tools">
+          <img src="../../assets/icon-editor.png" alt="编辑" @click="edit(item.urgent_id)">
+          <img src="../../assets/icon-del.png" alt="删除" @click="del(item.urgent_id)">
+        </div>
+      </div>
     </van-radio-group>
 
     <router-link class="add bgc flex-center" to="/addPeople">
@@ -28,23 +24,70 @@
 
 <script>
 import { Dialog } from "vant";
-
+import { Toast } from "vant";
 export default {
   data() {
     return {
       radio: 1,
-      list: [{ id: 1 }, { id: 2 }]
+      list: [{ id: 1 }, { id: 2 }],
+      urgent_id: ""
     };
   },
+  created() {
+    this.geturgent();
+  },
   methods: {
-    del(id, e) {
+    edit(id) {
+      //编辑
+
+      this.$router.push({ path: "/addPeople/" + id });
+    },
+    geturgent() {
+      let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
+      if (userinfo) {
+        let postData = this.$qs.stringify({
+          users_id: userinfo.users_id
+        });
+        this.axios
+          .post(this.API + "api/Lease/urgent_select", postData)
+          .then(res => {
+            console.log(res.data, "user_price");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              this.list = resdata.data;
+              this.list.forEach((item, i) => {
+                let urgent_id = this.list[i].urgent_id;
+              });
+            } else {
+              Toast(resdata.message);
+            }
+          });
+      }
+    },
+    del(urgent_id) {
+      console.log(urgent_id);
+
       Dialog.confirm({
         title: "",
         message: "是否删除?"
       })
         .then(() => {
           // on confirm
-          console.log(id, e);
+          console.log(this.urgent_id, "111");
+          let postData = this.$qs.stringify({
+            urgent_id: urgent_id
+          });
+          this.axios
+            .post(this.API + "api/Lease/urgent_delete", postData)
+            .then(res => {
+              console.log(res.data, "delete");
+              let resdata = res.data;
+              if (resdata.code == 200) {
+                this.list.splice(this.urgent_id, 1);
+              } else {
+                Toast(resdata.message);
+              }
+            });
         })
         .catch(() => {
           // on cancel

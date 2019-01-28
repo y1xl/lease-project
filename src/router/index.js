@@ -165,6 +165,7 @@ export default new Router({
     { path: '/school', component: School, meta: { title: '学籍认证' } },
     { path: '/cpeople', component: cPeople, meta: { title: '添加紧急联系人' } },
     { path: '/addPeople', component: AddPeople },
+    { path: '/addPeople/:id', component: AddPeople },
     { path: '/realname', component: Realname, meta: { title: '实名认证' } },
     { path: '/face', component: Face, meta: { title: '人脸识别' } },
 
