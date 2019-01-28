@@ -7,7 +7,7 @@
     </div>
     <div>
       <van-list v-model="loading" :finished="finished" @load="onLoad" class="flex-wrap bgc">
-        <div v-for="item in list" :key="item" :title="item">
+        <div v-for="(item,index) in list" :key="index" :title="item">
           <div class="item text-c">
             <div class="flex-jc-center img_b1">
                 <img class="img" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
@@ -18,42 +18,79 @@
             </div>
           </div>
         </div>
-        <div class="text-c no_more">
+        <!-- <div class="text-c no_more">
           <span>没有更多了</span>
-        </div>
+        </div> -->
       </van-list>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      page:1
     };
   },
+  created(){
+    // this.getlist()
+  },
   methods: {
-    routerback() {
-      this.$router.back(-1);
-    },
     onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
+      // // 异步更新数据
+      // setTimeout(() => {
+      //   for (let i = 0; i < 10; i++) {
+      //     this.list.push(this.list.length + 1);
+      //   }
+      //   // 加载状态结束
+      //   this.loading = false;
 
-        // 数据全部加载完成
-        if (this.list.length >= 10) {
-          this.finished = true;
-        }
-      }, 500);
-    }
+      //   // 数据全部加载完成
+      //   if (this.list.length >= 10) {
+      //     this.finished = true;
+      //   }
+      // }, 500);
+
+      let postData = this.$qs.stringify({
+          scene_id: this.$route.params.id,
+          page: this.page
+      })
+      this.axios.post(this.API + 'api/Lease/Scene_goods',postData)
+      .then( res => {
+          console.log(res.data,'getbanner'); 
+          let resdata = res.data
+          if(resdata.code == 200){
+            this.list = [...resdata.data,...resdata.data]
+          }else {
+            Toast(resdata.message)
+          }
+      })
+       this.loading = false;
+    },
+    getlist(){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          scene_id: this.$route.params.id,
+          page: this.page
+      })
+      this.axios.post(this.API + 'api/Lease/Scene_goods',postData)
+      .then( res => {
+          console.log(res.data,'getbanner'); 
+          let resdata = res.data
+          if(resdata.code == 200){
+            this.list = [...resdata.data,...resdata.data]
+            // this.loading = false;
+          }else {
+            Toast(resdata.message)
+          }
+          Toast.clear()
+      })
+    },
   }
 };
 </script>

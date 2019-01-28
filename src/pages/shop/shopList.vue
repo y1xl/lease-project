@@ -5,12 +5,12 @@
           <div class="item">
             <router-link to="/ShopDetail">
               <div class="flex-jc-between">
-                <div class="shop_title">龙华区油松店</div>
+                <div class="shop_title">{{item.store_name}}</div>
                 <div>
                   <img src="../../assets/right.png" class="img_r">
                 </div>
               </div>
-              <div class="txt f12">广东省深圳市龙华新区油松路158号油富商城门店</div>
+              <div class="txt f12">{{item.store_district}}</div>
             </router-link>
 
             <router-link class="dt text-c" :to="`/map/${item.coordinate}`">
