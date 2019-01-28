@@ -65,7 +65,7 @@ export default {
           console.log(res.data,'getbanner'); 
           let resdata = res.data
           if(resdata.code == 200){
-            this.list = [...resdata.data,...resdata.data]
+            this.list = this.list.push(resdata.data)
           }else {
             Toast(resdata.message)
           }
