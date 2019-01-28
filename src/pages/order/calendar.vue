@@ -178,13 +178,13 @@ export default {
   background-color: #50abf9;
   color: #fff;
 }
-#calendar .wh_content_item .wh_isToday{
+/* #calendar .wh_content_item .wh_isToday{
   background-color: transparent;
 }
 #calendar .wh_content_item>.wh_isMark{
   background-color:#00f;
   color: #fff;
-}
+} */
 </style>
 
 <style scoped>

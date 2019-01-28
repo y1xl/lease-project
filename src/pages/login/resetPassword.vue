@@ -5,7 +5,7 @@
         <div class="tip_title text-c">请设置新密码</div>
         <div class="text-c tel">{{phone}}</div>
         <div class="border-b">
-          <input v-model="value" placeholder="请输入新密码" input-align="center" border="false">
+          <input v-model="value" type="password" placeholder="请输入新密码" input-align="center" border="false">
         </div>
         <button class="btn text-c" :class="value==''?'btn-grey':'bgc-blue'" @click="login">确认并登陆</button>
       </div>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -27,7 +28,22 @@ export default {
       if (this.value == "") {
         return
       }
-      this.$router.replace({ path: "/" });
+      let postData = this.$qs.stringify({
+            users_phone:this.$route.params.phone,
+            users_pwd: this.value
+        })
+      this.axios.post(this.API + "api/Lease/New_pwd",postData)
+      .then(res => {
+        console.log(res.data, "npwlogin");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          window.localStorage.setItem("userinfo",JSON.stringify(resdata.data))
+          this.$router.replace({ path: "/" })
+        } else {
+          Toast(resdata.message);
+        }
+      });
+      
     }
   }
 };

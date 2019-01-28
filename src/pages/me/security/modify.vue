@@ -3,7 +3,7 @@
     <div class="modify text-c">
       <div class="tel_num">您当前绑定手机号{{phone}}</div>
       <div class="flex-jc-center">
-        <router-link class="btn text-c" :to="`/sendcode/${this.$route.params.type}/${phone}`">获取验证码</router-link>
+        <router-link class="btn text-c" :to="`/sendcode/${this.$route.params.type}/${phone}`" replace>获取验证码</router-link>
       </div>
     </div>
   </div>

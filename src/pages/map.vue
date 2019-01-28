@@ -11,8 +11,8 @@
 
     <div class="bottom">
       <div class="bgc pd-15">
-        <p class="mar-b-10">龙华区油松店</p>
-        <p class="fsz12 fc-grey">广东省深圳市龙华新区油松路158号油富商城门店</p>
+        <p class="mar-b-10">{{shopinfo[0]}}</p>
+        <p class="fsz12 fc-grey">{{shopinfo[1]}}</p>
       </div>
     </div>
   </div>
@@ -25,6 +25,7 @@ export default {
       zoom: 16,
       // center:[121.406051,31.179695],
       center:[this.$route.params.center.split(",")[1],this.$route.params.center.split(",")[0]],
+      shopinfo: this.$route.params.shop.split(",")
     };
   },
   created(){

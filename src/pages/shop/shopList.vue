@@ -13,7 +13,7 @@
               <div class="txt f12">{{item.store_province+item.store_district+item.store_city}}</div>
             </router-link>
 
-          <router-link class="dt text-c" :to="`/map/${item.coordinate}`">
+          <router-link class="dt text-c" :to="`/map/${item.coordinate}/${item.store_name},${item.store_province+item.store_district+item.store_city}`">
             <img class="ck_img" src="../../assets/mddw.png">
             <span class="txt f12">查看地图</span>
           </router-link>

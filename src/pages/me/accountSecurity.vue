@@ -8,7 +8,7 @@
           </template>
         </van-cell>
 
-        <van-cell is-link center value="修改" to="/Modify/password">
+        <van-cell is-link center value="修改" to="/newpassword">
           <template slot="title">
             <div>登陆密码</div>
           </template>
