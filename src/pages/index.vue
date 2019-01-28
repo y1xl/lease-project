@@ -68,10 +68,10 @@
           </div>
         </van-tab>
 
-        <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key="index">
-          <div class="title">热门推荐</div>
-          <div class="flex-jc-between border-b bgc camer_hm_box">
-            <div class="camer_hm" v-for="(item,index) in goodslist" :key="index">
+        <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key='index'>
+          <div class="title" v-show="!hostlist.length==0">热门推荐</div>
+          <div class="flex-jc-between border-b bgc camer_hm_box" v-show="!hostlist.length==0">
+            <div class="camer_hm" v-for="(item,index) in hostlist" :key="index">
               <div class="img_box2 flex-center">
                 <img
                   class="img"
@@ -88,8 +88,7 @@
 
           <div class="bgc">
             <div class="title">所有产品</div>
-
-            <div class="fl_pro_list mar-b-10" v-for="(item, index) in flprolist" :key="index">
+            <div class="fl_pro_list mar-b-10" v-for="(item, index) in goodslist" :key="index">
               <div class="img_box">
                 <img class="sy_img" :src="item.imgurl">
               </div>
@@ -109,6 +108,8 @@
               </div>
             </div>
           </div>
+
+          <div v-show="goodslist.length==0" class="fc-grey text-c pd-15">没有更多了</div>
         </van-tab>
       </van-tabs>
     </div>
@@ -126,35 +127,10 @@ export default {
       lat: "",
       lng: "",
       images: [],
-      indexlist: [],
-      navlist: [],
-      goodslist: [],
-      prolist: [
-        { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
-        { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
-        { price: "3.08", name: "日本 instax 拍日本 instax 拍" },
-        { price: "3.08", name: "日本 instax 拍日本 instax 拍" }
-      ],
-      flprolist: [
-        {
-          imgurl:
-            "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-          price1: "3.08",
-          name1: "Canon/佳能 PowerShot SX720 HS "
-        },
-        {
-          imgurl:
-            "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-          price1: "1111111",
-          name1: "Canon/佳能 PowerShot SX720 HS "
-        },
-        {
-          imgurl:
-            "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-          price1: "3.08",
-          name1: "Canon/佳能 PowerShot SX720 HS "
-        }
-      ],
+      indexlist:[],
+      navlist:[],
+      goodslist:[],
+      hostlist:[],
       active: 0,
       value: 5
     };
@@ -193,25 +169,26 @@ export default {
       this.$router.push({ path: "/ProductDetail/" + id });
     },
 
-    onClicknav(i) {
-      Toast.loading({ mask: true, message: "加载中..." });
-      if (i == 0) {
-      } else {
+    onClicknav(i){
+      if(i==0){
+
+      }else{
+        Toast.loading({ mask: true,message: '加载中...'})
         let postData = this.$qs.stringify({
-          cate_id: this.navlist[i - 1].cate_id
-        });
-        this.axios
-          .post(this.API + "api/Lease/cate_goods", postData)
-          .then(res => {
-            console.log(res.data, "goodslist");
-            let resdata = res.data;
-            if (resdata.code == 200) {
-              this.goodslist = resdata.data;
-            } else {
-              Toast(resdata.message);
-            }
-            Toast.clear();
-          });
+            cate_id:this.navlist[i-1].cate_id
+        })
+        this.axios.post(this.API + 'api/Lease/cate_goods',postData)
+          .then( res => {
+              console.log(res.data,'goodslist'); 
+              let resdata = res.data
+              if(resdata.code == 200){
+                this.goodslist = resdata.data.goods
+                this.hostlist = resdata.data.remen
+              }else {
+                Toast(resdata.message)
+              }
+              Toast.clear()
+          })
       }
     },
 
