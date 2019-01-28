@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="flex-jc-between manber_b" @click="myInformat" :style="bgimg">
+    <div class="flex-jc-between manber_b" @click="myInformat('/MyInformation' )" :style="bgimg">
       <div class="flex-align-items flex_box">
         <div class="head_img">
           <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
         </div>
         <div class>
-          <div class="name">DORO_THY</div>
-          <div class="manber">普通会员</div>
+          <div class="name">{{users_name}}</div>
+          <!-- <div class="manber">普通会员</div> -->
         </div>
       </div>
       <img class="hg" src="../../assets/hg.png">
@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -98,13 +99,52 @@ export default {
         background:
           "url(" + require("../../assets/me_bg.png") + ") no-repeat top",
         backgroundSize: "100% 100%"
-      }
+      },
+      users_name: "",
+      users_birthday: "",
+      users_city: "",
+      users_sex: ""
     };
+  },
+  created() {
+    this.getuser();
   },
   methods: {
     //我的资料
-    myInformat() {
-      this.$router.push({ path: "/MyInformation" });
+    myInformat(url) {
+      // this.$router.push({ path: "/MyInformation" });
+      let meSession = {
+        users_id: this.users_id,
+        users_name: this.users_name,
+        users_birthday: this.users_birthday,
+        users_city: this.users_city,
+        users_sex: this.users_sex
+      };
+      window.sessionStorage.setItem("meSession", JSON.stringify(meSession));
+      this.$router.push({ path: url });
+    },
+    getuser() {
+      let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
+      if (userinfo) {
+        let postData = this.$qs.stringify({
+          users_id: userinfo.users_id
+        });
+        this.axios
+          .post(this.API + "api/Lease/users_detail", postData)
+          .then(res => {
+            console.log(res.data, "users_detail");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              this.users_name = resdata.data.users_name;
+              this.users_id = resdata.data.users_id;
+              this.users_birthday = resdata.data.users_birthday;
+              this.users_city = resdata.data.users_city;
+              this.users_sex = resdata.data.users_sex;
+            } else {
+              Toast(resdata.message);
+            }
+          });
+      }
     }
   }
 };

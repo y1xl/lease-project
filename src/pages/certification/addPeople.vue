@@ -43,19 +43,85 @@ export default {
       text: ""
     };
   },
-  created() {},
+  created() {
+    this.getupdate();
+  },
+
   methods: {
     onConfirm(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
       this.text = value;
       this.isshow = false;
     },
+    getupdate() {
+      let postData = this.$qs.stringify({
+        urgent_id: this.$route.params.id
+      });
+      this.axios
+        .post(this.API + "api/Lease/urgent_detail", postData)
+        .then(res => {
+          console.log(res.data, "user_price");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.text = resdata.data.urgent_sign;
+            this.nameval = resdata.data.urgent_name;
+            this.phoneval = resdata.data.urgent_phone;
+          } else {
+            Toast(resdata.message);
+          }
+        });
+    },
     submit() {
       if (this.text == "" || this.nameval == "" || this.phoneval == "") {
         Toast("请先填写完整");
         return;
       }
-      this.$router.go(-1);
+      let urgent_id = "";
+      urgent_id = this.$route.params.id;
+      if (urgent_id == "") {
+        let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
+        if (userinfo) {
+          let postData = this.$qs.stringify({
+            users_id: userinfo.users_id,
+            urgent_phone: this.phoneval,
+            urgent_name: this.nameval,
+            urgent_sign: this.text
+          });
+          this.axios
+            .post(this.API + "api/Lease/Add_urgent", postData)
+            .then(res => {
+              console.log(res.data, "user_price");
+              let resdata = res.data;
+              if (resdata.code == 200) {
+                Toast("添加成功");
+              } else {
+                Toast(resdata.message);
+              }
+            });
+        }
+
+        this.$router.go(-1);
+      } else {
+        let postData = this.$qs.stringify({
+          urgent_id: urgent_id,
+          urgent_phone: this.phoneval,
+          urgent_name: this.nameval,
+          urgent_sign: this.text
+        });
+        this.axios
+          .post(this.API + "api/Lease/urgent_update", postData)
+          .then(res => {
+            console.log(res.data, "user_price");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast("编辑成功");
+            } else {
+              Toast(resdata.message);
+            }
+          });
+
+        this.$router.go(-1);
+      }
     }
   }
 };

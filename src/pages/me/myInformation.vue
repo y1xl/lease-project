@@ -2,7 +2,7 @@
   <div>
     <div class="myinfor">
       <div class="me bgc">
-        <div class="flex-jc-between flex-align-items tx border-b" >
+        <div class="flex-jc-between flex-align-items tx border-b">
           <div>我的头像</div>
           <div class="head_img">
             <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
@@ -45,11 +45,11 @@
 
 <script>
 export default {
-  methods: {
-    routerback() {
-      this.$router.back(-1);
-    }
-  }
+  data() {
+    return {};
+  },
+  created() {},
+  methods: {}
 };
 </script>
 
@@ -70,8 +70,8 @@ export default {
   padding: 10px 0;
   font-size: 12px;
 }
-.tx > div:nth-of-type(1){
-  padding-left:12px;
+.tx > div:nth-of-type(1) {
+  padding-left: 12px;
 }
 .head_img {
   width: 45px;
@@ -86,7 +86,7 @@ export default {
 }
 .myinfor {
   width: 100%;
-  padding-top:12px;
+  padding-top: 12px;
 }
 
 .me {
@@ -94,6 +94,6 @@ export default {
   height: 100%;
   margin: 0 auto;
   border-radius: 5px;
-  margin-bottom:15px;
+  margin-bottom: 15px;
 }
 </style>
