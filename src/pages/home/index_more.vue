@@ -42,8 +42,7 @@ export default {
     return {
       list: [],
       loading: false,
-      finished: false,
-      pagenum: 1
+      finished: false
     };
   },
   methods: {
