@@ -54,22 +54,24 @@ export default {
       this.isshow = false;
     },
     getupdate() {
-      let postData = this.$qs.stringify({
-        urgent_id: this.$route.params.id
-      });
-      this.axios
-        .post(this.API + "api/Lease/urgent_detail", postData)
-        .then(res => {
-          console.log(res.data, "user_price");
-          let resdata = res.data;
-          if (resdata.code == 200) {
-            this.text = resdata.data.urgent_sign;
-            this.nameval = resdata.data.urgent_name;
-            this.phoneval = resdata.data.urgent_phone;
-          } else {
-            Toast(resdata.message);
-          }
+      if (this.$route.params.id) {
+        let postData = this.$qs.stringify({
+          urgent_id: this.$route.params.id
         });
+        this.axios
+          .post(this.API + "api/Lease/urgent_detail", postData)
+          .then(res => {
+            console.log(res.data, "user_price");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              this.text = resdata.data.urgent_sign;
+              this.nameval = resdata.data.urgent_name;
+              this.phoneval = resdata.data.urgent_phone;
+            } else {
+              Toast(resdata.message);
+            }
+          });
+      }
     },
     submit() {
       if (this.text == "" || this.nameval == "" || this.phoneval == "") {

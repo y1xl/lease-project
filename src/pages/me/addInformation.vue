@@ -10,10 +10,10 @@
           <van-cell-group>
             <van-field v-model="phoneval" placeholder="手机号"/>
           </van-cell-group>
-          <van-cell 
-          :title="areaval==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name" 
-          is-link 
-          @click="showarea=true"
+          <van-cell
+            :title="areaval==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name"
+            is-link
+            @click="showarea=true"
           />
           <van-cell-group>
             <van-field v-model="detailval" placeholder="请输入详细地址"/>
@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import area from '@/utils/area.js'
+import { Toast } from "vant";
+import area from "@/utils/area.js";
 export default {
   data() {
     return {
@@ -45,22 +46,89 @@ export default {
       phoneval: "",
       detailval: "",
       checked: false,
-      showarea:false,
-      areaval:'',
+      showarea: false,
+      areaval: "",
       areaList: area
     };
   },
-  created(){
-
+  created() {
+    this.getdata();
   },
   methods: {
-    onconfirm(val){
+    onconfirm(val) {
       console.log(val);
-      this.areaval = val
-      this.showarea = false
+      this.areaval = val;
+      this.showarea = false;
     },
-    submit(){
+    getdata() {
+      if (this.$route.params.id) {
+        let postData = this.$qs.stringify({
+          ads_id: this.$route.params.id
+        });
+        this.axios
+          .post(this.API + "api/Lease/Ads_Details", postData)
+          .then(res => {
+            console.log(res.data, "add");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              this.nameval = resdata.data.ads_user;
+              this.phoneval = resdata.data.ads_phone;
+              this.detailval = resdata.data.ads_address;
+              this.checked = resdata.data.ads_state == 2 ? true : false;
+              this.areaval = [
+                { name: resdata.data.ads_province },
+                { name: resdata.data.ads_city },
+                { name: resdata.data.ads_district }
+              ];
+            } else {
+              Toast(resdata.message);
+            }
+          });
+      }
+    },
+    submit() {
+      if (this.nameval == "" || this.phoneval == "" || this.detailval == "") {
+        Toast("请先填写完整");
+        return;
+      }
 
+      let postData = this.$qs.stringify({
+        ads_id: this.$route.params.id || "",
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        ads_user: this.nameval,
+        ads_phone: this.phoneval,
+        ads_state: this.checked ? "2" : "1",
+        ads_province: this.areaval[0].name,
+        ads_city: this.areaval[1].name,
+        ads_district: this.areaval[2].name,
+        ads_address: this.detailval
+      });
+
+      if (this.$route.params.id) {
+        this.axios
+          .post(this.API + "api/Lease/Ads_Update", postData)
+          .then(res => {
+            console.log(res.data, "editor");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast("修改成功");
+              this.$router.go(-1);
+            } else {
+              Toast(resdata.message);
+            }
+          });
+      } else {
+        this.axios.post(this.API + "api/Lease/Add_ads", postData).then(res => {
+          console.log(res.data, "add");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast("添加成功");
+            this.$router.go(-1);
+          } else {
+            Toast(resdata.message);
+          }
+        });
+      }
     }
   }
 };

@@ -34,23 +34,14 @@ export default {
   data() {
     return {
       value: "",
-      flprolist: [
-        // {
-        //   imgurl:
-        //     "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        //   price1: "3.08",
-        //   name1: "Canon/佳能 PowerShot SX720 HS ",
-        //   rate: 4
-        // }
-      ]
+      flprolist: []
     };
   },
-  created() {
-    this.getsearch();
-  },
+  created() {},
   methods: {
     onSearch() {
       console.log(this.value);
+      this.getsearch();
     },
     getsearch() {
       Toast.loading({ mask: true, message: "加载中..." });
@@ -63,7 +54,15 @@ export default {
           console.log(res.data, "getdetail");
           let resdata = res.data;
           if (resdata.code == 200) {
-            this.flprolist = resdata.data;
+            if (resdata.data.length == 0) {
+              Toast("没有匹配的产品");
+              Toast({
+                message: " 没有匹配的产品",
+                duration: "5000"
+              });
+            } else {
+              this.flprolist = resdata.data;
+            }
           } else {
             Toast(resdata.message);
           }

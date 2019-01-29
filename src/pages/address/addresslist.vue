@@ -35,13 +35,13 @@ import { Dialog } from "vant";
 export default {
   data() {
     return {
-      list: [ ],
+      list: [],
       radio: -1,
-      delid: ''
+      delid: ""
     };
   },
-  created(){
-    this.getlist()
+  created() {
+    this.getlist();
   },
   methods: {
     // 删除
@@ -55,48 +55,46 @@ export default {
         case "right":
           Dialog.confirm({
             message: "确定删除吗？"
-          }).then((e) => {
-            if(e == 'confirm'){
-              this.del()
+          }).then(e => {
+            if (e == "confirm") {
+              this.del();
             }
           });
           break;
       }
     },
-    getdel(id){
-      console.log(id)
-      this.delid = id
+    getdel(id) {
+      console.log(id);
+      this.delid = id;
     },
-    del(){
+    del() {
       let postData = this.$qs.stringify({
-            ads_id: this.delid,
-        })
-      this.axios.post(this.API + "api/Lease/ads_detele",postData)
-      .then(res => {
-        console.log(res.data, "del")
-        let resdata = res.data
+        ads_id: this.delid
+      });
+      this.axios.post(this.API + "api/Lease/ads_detele", postData).then(res => {
+        console.log(res.data, "del");
+        let resdata = res.data;
         if (resdata.code == 200) {
-          this.getlist()
+          this.getlist();
         } else {
-          Toast(resdata.message)
+          Toast(resdata.message);
         }
       });
     },
 
-    getlist(){
+    getlist() {
       let postData = this.$qs.stringify({
-          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      })
-      this.axios.post(this.API + "api/Lease/ads_select",postData)
-        .then(res => {
-            console.log(res.data, "list")
-            let resdata = res.data
-            if (resdata.code == 200) {
-                this.list = resdata.data
-            } else {
-                Toast(resdata.message)
-            }
-        });
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+      });
+      this.axios.post(this.API + "api/Lease/ads_select", postData).then(res => {
+        console.log(res.data, "list");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.list = resdata.data;
+        } else {
+          Toast(resdata.message);
+        }
+      });
     },
 
     onchoose(val) {
