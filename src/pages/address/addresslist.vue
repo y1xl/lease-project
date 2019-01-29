@@ -6,15 +6,17 @@
           <div class="bgc flex-align-items item">
             <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
             <div class="flex-1 left">
-              <div class="mar-b-10">{{item.name}} {{item.phone}}</div>
+              <div class="mar-b-10">{{item.ads_user||''}} {{item.ads_phone||''}}</div>
               <div>
-                <van-tag plain type="danger" v-if="item.default">默认</van-tag>
-                {{item.address}}
+                <van-tag plain type="danger" v-if="item.ads_state==2">默认</van-tag>
+                {{item.ads_province+item.ads_city+item.ads_district+item.ads_address}}
               </div>
             </div>
-            <img src="../../assets/icon-editor.png" alt="编辑" class="editorimg">
+            <router-link :to="`/addaddress/${item.ads_id}`">
+              <img src="../../assets/icon-editor.png" alt="编辑" class="editorimg">
+            </router-link>
           </div>
-          <div slot="right" class="del">删除</div>
+          <div slot="right" class="del" @click="getdel(item.ads_id)">删除</div>
         </van-swipe-cell>
       </div>
     </van-radio-group>
@@ -33,18 +35,13 @@ import { Dialog } from "vant";
 export default {
   data() {
     return {
-      list: [
-        {
-          id: 1,
-          name: "曾小姐",
-          phone: "123456789",
-          address: "深圳市龙华新区龙华街道九方A座1001号",
-          default: true
-        },
-        { id: 2, name: "曾小姐", phone: "123", address: "深圳市" }
-      ],
-      radio: -1
+      list: [ ],
+      radio: -1,
+      delid: ''
     };
+  },
+  created(){
+    this.getlist()
   },
   methods: {
     // 删除
@@ -58,11 +55,48 @@ export default {
         case "right":
           Dialog.confirm({
             message: "确定删除吗？"
-          }).then(() => {
-            instance.close();
+          }).then((e) => {
+            if(e == 'confirm'){
+              this.del()
+            }
           });
           break;
       }
+    },
+    getdel(id){
+      console.log(id)
+      this.delid = id
+    },
+    del(){
+      let postData = this.$qs.stringify({
+            ads_id: this.delid,
+        })
+      this.axios.post(this.API + "api/Lease/ads_detele",postData)
+      .then(res => {
+        console.log(res.data, "del")
+        let resdata = res.data
+        if (resdata.code == 200) {
+          this.getlist()
+        } else {
+          Toast(resdata.message)
+        }
+      });
+    },
+
+    getlist(){
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      })
+      this.axios.post(this.API + "api/Lease/ads_select",postData)
+        .then(res => {
+            console.log(res.data, "list")
+            let resdata = res.data
+            if (resdata.code == 200) {
+                this.list = resdata.data
+            } else {
+                Toast(resdata.message)
+            }
+        });
     },
 
     onchoose(val) {

@@ -12,8 +12,8 @@
             <van-cell is-link center @click="go('/addresslist/buy')" v-show="typenum==1||typenum==2" >
                 <div slot="title">
                     <div>收货地址</div>
-                    <div>{{getaddress.name}}  {{getaddress.phone}} <van-tag plain v-if="getaddress.default">默认</van-tag></div>
-                    <div>{{getaddress.address}}</div>
+                    <div>{{getaddress.ads_user||''}}  {{getaddress.ads_phone||''}} <van-tag plain v-if="getaddress.ads_state==2">默认</van-tag></div>
+                    <div>{{(getaddress.ads_province+getaddress.ads_city+getaddress.ads_district+getaddress.ads_address)||''}}</div>
                 </div>
             </van-cell>
             <template v-if="typenum==0">
@@ -209,6 +209,7 @@ export default {
         }
     },
     created() {
+        // console.log(decodeURI(this.$route.params.guige))
         let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
         if(buySession){
             this.typenum = buySession.gettype
@@ -227,6 +228,7 @@ export default {
             this.timequantumtext = buySession.timequantumtext
         }
         //取缓存 end
+        this.getdefaultaddress()
     },
     methods:{
         go(url){
@@ -270,6 +272,25 @@ export default {
             console.log(`当前值：${value}, 当前索引：${index}`);
             this.timequantumtext = value
             this.showtimequantum = false
+        },
+        getdefaultaddress(){
+            let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            })
+            this.axios.post(this.API + "api/Lease/ads_select",postData)
+            .then(res => {
+                console.log(res.data, "address")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    for(let v of resdata.data){
+                        if(v.ads_state==2){
+                            this.getaddress = v
+                        }
+                    }
+                } else {
+                    Toast(resdata.message)
+                }
+            });
         },
 
         nextface(){

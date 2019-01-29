@@ -141,7 +141,7 @@ export default {
     this.getnav();
     this.getbanner();
     this.getindexlist();
-    this.getNearShop()
+    
   },
 
   methods: {
@@ -152,6 +152,7 @@ export default {
           var lng = position.coords.longitude; //经度
           this.lat = lat;
           this.lng = lng;
+          this.getNearShop()
         });
       } else {
         Toast("浏览器不支持地理定位");

@@ -188,6 +188,7 @@ export default new Router({
     //收货地址
     { path: '/addresslist/:type', component: Addresslist, meta: { title: '收货地址' } },
     { path: '/addaddress', component: Addaddress, meta: { title: '收货地址' } },
+    { path: '/addaddress/:id', component: Addaddress, meta: { title: '收货地址' } },
 
     //地图
     { path: '/map/:center/:shop', component: Map, meta: { title: '地图' } },

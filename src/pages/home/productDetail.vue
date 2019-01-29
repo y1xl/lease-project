@@ -343,7 +343,7 @@ export default {
       }
       if(arr.length == this.speclist.length){
         window.sessionStorage.removeItem("buySession");
-        this.$router.push({ path: "/buy/"+this.$route.params.id+'/'+JSON.stringify(arr) });
+        this.$router.push({ path: "/buy/"+this.$route.params.id+'/'+encodeURI(JSON.stringify(arr)) });
       }else{
         Toast('请先选择规格')
       }
