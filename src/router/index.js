@@ -107,6 +107,7 @@ export default new Router({
     { path: '/shopping', component: Shopping, meta: { title: '购买' } },
     { path: '/people/:type', component: People, meta: { title: '自取联系人' } },
     { path: '/locationList/:type', component: LocationList, meta: { title: '选择地点' } },
+    { path: '/locationList/:type/:id', component: LocationList, meta: { title: '选择地点' } },
     { path: '/refund', component: Refund, meta: { title: '退租' } },
     { path: '/timeQuantum', component: TimeQuantum, meta: { title: '选择时间段' } },
     { path: '/appointmentExpress', component: AppointmentExpress, meta: { title: '预约快递' } },
@@ -120,7 +121,7 @@ export default new Router({
     { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy/:id/:guige', component: Buy, meta: { title: '下单' } },
-    { path: '/pay', component: Pay, meta: { title: '额度' } },
+    { path: '/pay/:orderid', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索' } },
     { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, //预下单
@@ -167,7 +168,7 @@ export default new Router({
     { path: '/addPeople', component: AddPeople },
     { path: '/addPeople/:id', component: AddPeople },
     { path: '/realname', component: Realname, meta: { title: '实名认证' } },
-    { path: '/face', component: Face, meta: { title: '人脸识别' } },
+    { path: '/face/:orderid', component: Face, meta: { title: '人脸识别' } },
 
     //托管
     { path: '/gohosting', component: Gohosting, meta: { title: '我要托管' } },

@@ -15,10 +15,10 @@
           <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
           <div class="item flex-align-items flex-jc-between flex-1">
             <div class="left flex-1">
-              <div>{{item.title}}</div>
-              <div class="fsz12">{{item.address}}</div>
+              <div>{{item.store_name}}</div>
+              <div class="fsz12">{{item.store_province+item.store_city+item.store_district+(item.store_Address||'')}}</div>
             </div>
-            <div class="right fsz12">距您74m</div>
+            <div class="right fsz12">距您{{item.juli}}m</div>
           </div>
         </div>
       </van-radio-group>
@@ -33,18 +33,32 @@
 export default {
   data() {
     return {
-      list: [
-        {
-          id: 1,
-          title: "深圳龙华九方店",
-          address: "深圳市龙华新区龙华街道九方A座1001号"
-        },
-        { id: 2, title: "深圳龙华九方店", address: "深圳市" }
-      ],
+      list: [ ],
       radio: 0
     };
   },
+  created(){
+    this.getlist()
+  },
   methods: {
+    getlist(){
+      let postData = this.$qs.stringify({
+          lat: JSON.parse(window.localStorage.getItem("center")).lat,
+          lng: JSON.parse(window.localStorage.getItem("center")).lng,
+          goods_id:this.$route.params.id,
+          page:1
+      })
+      this.axios.post(this.API + "api/Order/GetSelfShop",postData)
+        .then(res => {
+            console.log(res.data, "list")
+            let resdata = res.data
+            if (resdata.code == 200) {
+                this.list = resdata.data
+            } else {
+                Toast(resdata.message)
+            }
+        });
+    },
     submit() {
       if (this.$route.params.type == "shopping") {
         let shoppingSession = JSON.parse(

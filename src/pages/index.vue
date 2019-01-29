@@ -88,11 +88,11 @@
 
           <div class="bgc">
             <div class="title">所有产品</div>
-            <div class="fl_pro_list mar-b-10" v-for="(item, index) in goodslist" :key="index" @click="toDetail(goods.goods_id)">
+            <div class="fl_pro_list mar-b-10" v-for="(item, index) in goodslist" :key="index" @click="toDetail(item.goods_id)">
               <div class="img_box">
                 <img class="sy_img" :src="item.gd_img[0]">
               </div>
-              <div class="f14 pro_name">{{item.category_name}}</div>
+              <div class="f14 pro_name">{{item.goods_name}}</div>
               <div class="com_like">
                 <van-rate v-model="item.eva_score" disabled disabled-color="#FFB10E"/>
                 <span class="f12">{{item.eva_score}}</span>
@@ -141,7 +141,6 @@ export default {
     this.getnav();
     this.getbanner();
     this.getindexlist();
-    
   },
 
   methods: {
@@ -152,7 +151,12 @@ export default {
           var lng = position.coords.longitude; //经度
           this.lat = lat;
           this.lng = lng;
-          this.getNearShop()
+          this.getNearShop(lat,lng)
+          let center = {
+            lat,
+            lng
+          }
+          window.localStorage.setItem("center", JSON.stringify(center))
         });
       } else {
         Toast("浏览器不支持地理定位");
@@ -229,10 +233,10 @@ export default {
         Toast.clear();
       });
     },
-    getNearShop() {
+    getNearShop(lat,lng) {
       let postData = this.$qs.stringify({
-            lat:this.lat,
-            lng:this.lng
+            lat:lat,
+            lng:lng
             // lat:'22.54605355',
             // lng:'114.02597366'
         })

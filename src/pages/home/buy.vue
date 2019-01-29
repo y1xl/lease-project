@@ -17,11 +17,11 @@
                 </div>
             </van-cell>
             <template v-if="typenum==0">
-                <van-cell is-link center @click="go('/locationList/buy')">
+                <van-cell is-link center @click="go(`/locationList/buy/${goodid}`)">
                     <template slot="title">
                         <div>自取地点</div>
-                        <div>{{getlocation.title}}</div>
-                        <div>{{getlocation.address}}</div>
+                        <div>{{getlocation.store_name}}</div>
+                        <div>{{(getlocation.store_province+getlocation.store_city+getlocation.store_district+(getlocation.store_Address||''))||''}}</div>
                     </template>
                 </van-cell>
                 <van-cell is-link center @click="go('/calendar/buy')">
@@ -41,10 +41,10 @@
 
         <div class="pd-15 bgc">
             <div class="goods flexbox">
-                <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt="">
+                <img :src="detail.gd_img[0]" alt="">
                 <div class="flex-1">
-                    <div class="mar-b-10">日本 instax拍立得</div>
-                    <div>黑色</div>
+                    <div class="mar-b-10">{{detail.goods_name}}</div>
+                    <div><span v-for="(item,index) in guiges" :key="index"> {{item.attr_name}}</span></div>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                         <img src="../../assets/icon-triangle.png" class="triangleimg">
                     </div>
                     <div class="border flex-center">
-                        <input type="text" v-model="weekval" :disabled="isdisabled" class="bgc">
+                        <input type="number" v-model="weekval" :disabled="isdisabled" class="bgc">
                     </div>
                 </div>
             </van-cell>
@@ -73,11 +73,11 @@
         </div>
 
         <div class="mar-b-10">
-            <van-cell title="运费" center value="￥13" v-show="typenum==1"></van-cell>
-            <van-cell title="配送运费" center value="￥13" v-show="typenum==2"></van-cell>
+            <van-cell title="运费" center :value="'￥'+freight" v-show="typenum==1"></van-cell>
+            <van-cell title="配送运费" center :value="'￥'+freight" v-show="typenum==2"></van-cell>
             <van-cell title="优惠券" is-link center :value="couponstext" @click="showcoupon=true"></van-cell>
-            <van-cell title="保险费 ￥20" center>
-                <div class="flex-align-items" style="justify-content: flex-end"><van-switch v-model="isinsurance" size="20px"/></div>
+            <van-cell :title="'保险费 ￥'+detail.safe_price" center>
+                <div class="flex-align-items" style="justify-content: flex-end"><van-switch @change="onswitch" v-model="isinsurance" size="20px" :disabled="Dinsurance"/></div>
             </van-cell>
             <van-cell title="享受优惠" is-link center :value="activitytext" @click="discountmodel=true"></van-cell>
             <van-cell center v-show="typenum==2">
@@ -89,10 +89,10 @@
         </div>
 
         <div class="mar-b-10">
-            <van-cell title="押金" center value="￥1000"></van-cell>
-            <van-cell title="租金" center value="￥1000"></van-cell>
-            <van-cell title="应付总金额" center value="">
-                <span class="fc-red">￥1000</span>
+            <van-cell title="押金" center :value="'￥'+detail.gd_deposit"></van-cell>
+            <van-cell title="租金" center :value="'￥'+rent"></van-cell>
+            <van-cell title="应付总金额" center>
+                <span class="fc-red">￥{{sum}}</span>
             </van-cell>
         </div>
 
@@ -166,9 +166,12 @@
 
 <script>
 import { Toast } from 'vant';
+import { accAdd,accSub } from "@/utils/util.js";
+
 export default {
     data(){
         return{
+            goodid: this.$route.params.id,
             typenum:0,
             showtime:false,
             timetext:'',
@@ -185,25 +188,94 @@ export default {
             weektext: '请选择',//租期
             isdisabled: true,
             weekval:'',//租期
-            isinsurance: false,//保险
+            isinsurance: true,//保险
             isconsent:true,//协议
             discountmodel:false,//优惠活动
             couponlist: [{price:10},{price:20}],//优惠券
             remarkval:'',
             timequantumtext:'', //时间段
             showtimequantum: false, //时间段
-            timequantumarr:['13:00-14:00','测试'] //时间段
+            timequantumarr:[] ,//时间段
+            detail: '',
+            Dinsurance:false,
+            hire_cate:1,
+            guiges:[],
+            rent:0, //租金
+            freight:0 , //运费
+            sum: 0,
+        }
+    },
+    watch:{
+        weekval(){
+            let postData = this.$qs.stringify({
+                goods_id:this.$route.params.id,
+                rent_num: this.weekval,
+                unt: this.weektext
+            })
+            this.axios.post(this.API + "api/Order/GetHirePrice",postData)
+            .then(res => {
+                console.log(res.data, "weekval")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    this.rent = resdata.data
+
+                    if(this.typenum==0){
+                        if(this.Dinsurance||this.isinsurance){
+                            let a = accAdd(this.detail.pay_safe,this.detail.safe_price)
+                            this.sum = accAdd(a,this.rent)
+                        }else{
+                            this.sum = accAdd(this.detail.pay_safe,this.rent)
+                        }
+                    }else{
+                        if(this.Dinsurance||this.isinsurance){
+                            let a = accAdd(this.detail.pay_safe,this.detail.safe_price)
+                            let b = accAdd(a,this.rent)
+                            this.sum = accAdd(b,this.freight)
+                        }else{
+                            let a = accAdd(this.detail.pay_safe,this.rent)
+                            this.sum = accAdd(a,this.freight)
+                        }
+                    }
+                    
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
+        getaddress(){
+            if(this.typenum==0){
+                return
+            }
+            this.getfreight()
         }
     },
     computed:{
         columns: function () {
             if(this.typenum==0){
-                this.weektext= '请选择'
-                this.weekval = ''
-                return ['天', '小时']
+                if(this.Dinsurance||this.isinsurance){
+                    this.sum = accAdd(this.detail.pay_safe,this.detail.safe_price)
+                }else{
+                    this.sum = this.detail.pay_safe
+                }
+
+                if(this.hire_cate==1){
+                    this.weektext= '请选择'
+                    this.weekval = ''
+                    this.rent=0
+                    return ['天']
+                }
+                if(this.hire_cate==2){
+                    this.weektext= '请选择'
+                    this.weekval = ''
+                    this.rent=0
+                    return ['天', '小时']
+                }
+
             }else{
                 this.weektext='请选择'
                 this.weekval = ''
+                this.rent=0
+                this.getfreight()
                 return ['天']
             }
         }
@@ -219,16 +291,18 @@ export default {
             this.timetext = buySession.gettime
             this.people = buySession.getpeople
             this.getaddress = buySession.getaddress
-            this.weektext = buySession.weektext
-            this.weekval = buySession.weekval
+            // this.weektext = buySession.weektext
+            // this.weekval = buySession.weekval
             this.isinsurance = buySession.isinsurance
             this.couponstext = buySession.couponstext
             this.activitytext = buySession.activitytext
             this.remarkval = buySession.remarkval
             this.timequantumtext = buySession.timequantumtext
+        }else{
+            this.getdefaultaddress()
         }
         //取缓存 end
-        this.getdefaultaddress()
+        this.getotherprice()
     },
     methods:{
         go(url){
@@ -240,8 +314,8 @@ export default {
                 gettime: this.timetext,
                 getpeople: this.people,
                 getaddress:this.getaddress,
-                weektext:this.weektext,//租期
-                weekval:this.weekval,//租期
+                // weektext:this.weektext,//租期
+                // weekval:this.weekval,//租期
                 isinsurance:this.isinsurance,
                 couponstext:this.couponstext,
                 activitytext:this.activitytext,
@@ -273,9 +347,17 @@ export default {
             this.timequantumtext = value
             this.showtimequantum = false
         },
+        onswitch(val){
+            if(val){
+                this.sum = accAdd(this.sum,this.detail.safe_price)
+            }else{
+                this.sum = accSub(this.sum,this.detail.safe_price)
+            }
+        },
+
         getdefaultaddress(){
             let postData = this.$qs.stringify({
-            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             })
             this.axios.post(this.API + "api/Lease/ads_select",postData)
             .then(res => {
@@ -292,10 +374,134 @@ export default {
                 }
             });
         },
+        getotherprice(){
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                goods_id:this.$route.params.id,
+                sku: decodeURI(this.$route.params.guige)
+            })
+            this.axios.post(this.API + "api/Order/GetGoodsDetail",postData)
+            .then(res => {
+                console.log(res.data, "getotherprice")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    this.detail = resdata.data
+                    this.Dinsurance = resdata.data.safe_status==1?true:false
+                    this.hire_cate = resdata.data.hire_cate
+                    this.guiges = JSON.parse(resdata.data.sku)
+
+                    if(this.Dinsurance||this.isinsurance){
+                        this.sum = accAdd(resdata.data.pay_safe,resdata.data.safe_price)
+                    }else{
+                        this.sum = resdata.data.pay_safe
+                    }
+                    
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
+        getfreight(){
+            let postData = this.$qs.stringify({
+                type:this.typenum,
+                ads_id:this.getaddress.ads_id
+            })
+            this.axios.post(this.API + "api/Order/ExpressPrice",postData)
+            .then(res => {
+                console.log(res.data, "freight")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    this.freight = resdata.data.price
+                    this.timequantumarr = resdata.data.timelist
+                    
+                    if(this.Dinsurance||this.isinsurance){
+                        let a = accAdd(this.detail.pay_safe,this.detail.safe_price)
+                        this.sum = accAdd(a,this.freight)
+                    }else{
+                        this.sum = accAdd(this.detail.pay_safe,this.freight)
+                    }
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
 
         nextface(){
             if(this.isconsent){
-                this.$router.push({ path: '/face' })
+                if(this.typenum==0){
+                    if(this.getlocation==''||this.getdate==''||this.people == ''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timetext==''){
+                        Toast('还有未填写')
+                        return
+                    }
+                    var postData = this.$qs.stringify({
+                        unt:this.weektext=='天'?1:2,
+                        rent_num: this.weekval,
+                        goods_id: this.$route.params.id,
+                        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                        users_name: this.people.name,
+                        users_phone: this.people.phone,
+                        users_type: this.people.type==0?1:2,
+                        store_id: this.getlocation.store_id,
+                        order_delivery_time:this.getdate,
+                        safe_status: this.isinsurance?1:2,
+                        delivery_way: this.typenum,
+                        qwsh_time: this.expectdate,
+                        sku: decodeURI(this.$route.params.guige),
+                        time: this.timetext
+                    })
+                }
+                if(this.typenum==1){
+                    if(this.getaddress==''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''){
+                        Toast('还有未填写')
+                        return
+                    }
+                    var postData = this.$qs.stringify({
+                        unt:this.weektext=='天'?1:2,
+                        rent_num: this.weekval,
+                        goods_id: this.$route.params.id,
+                        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                        safe_status: this.isinsurance?1:2,
+                        delivery_way: this.typenum,
+                        qwsh_time: this.expectdate,
+                        sku: decodeURI(this.$route.params.guige),
+                        ads_id: this.getaddress.ads_id,
+                        way_price: this.freight
+                    })
+                }
+                if(this.typenum==2){
+                    if(this.getaddress==''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timequantumarr==''){
+                        Toast('还有未填写')
+                        return
+                    }
+                    var postData = this.$qs.stringify({
+                        unt:this.weektext=='天'?1:2,
+                        rent_num: this.weekval,
+                        goods_id: this.$route.params.id,
+                        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                        safe_status: this.isinsurance?1:2,
+                        delivery_way: this.typenum,
+                        qwsh_time: this.expectdate,
+                        sku: decodeURI(this.$route.params.guige),
+                        ads_id: this.getaddress.ads_id,
+                        way_price: this.freight,
+                        remark: this.remarkval,
+                        timelist: this.timequantumtext
+                    })
+                }
+
+                this.axios.post(this.API + "api/Order/AddOrder",postData)
+                .then(res => {
+                    console.log(res.data, "order")
+                    let resdata = res.data
+                    if (resdata.code == 200) {
+        
+                    } else {
+                        Toast(resdata.message)
+                    }
+                });
+
+
+                // this.$router.push({ path: '/face/1' })
             }else{
                 Toast('您还未同意协议');
             }
