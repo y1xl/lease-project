@@ -3,18 +3,20 @@
     <div class="bgc">
       <div class="flex-jc-center">
         <div class="shopimg_b">
-          <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1414761794,530721362&fm=26&gp=0.jpg">
+          <img
+            src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1414761794,530721362&fm=26&gp=0.jpg"
+          >
         </div>
       </div>
       <div class="dt text-c">
         <img class="dw_img" src="../../assets/mddw.png">
-        <span class="txt">广东省深圳市龙华新区油松路158号油富商城门店</span>
+        <span class="txt">{{store_province + store_city + store_district}}</span>
       </div>
     </div>
 
     <div class="bgc flex-jc-center miaosu_b">
       <div class="miaosu">
-        <div class="shop_name">店铺名称</div>
+        <div class="shop_name">{{store_name}}</div>
         <div class="shop_intro">
           店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍
           店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍
@@ -25,13 +27,40 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
-    return {};
+    return {
+      store_province: "",
+      store_city: "",
+      store_district: "",
+      store_name: ""
+    };
+  },
+  created() {
+    this.getdetail();
   },
   methods: {
-    routerback() {
-      this.$router.back(-1);
+    getdetail() {
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        store_id: this.$route.query.store_id
+      });
+      this.axios
+        .post(this.API + "api/Lease/store_detail", postData)
+        .then(res => {
+          console.log(res.data.data, "getdetail");
+          let resdata = res.data.data;
+          this.store_province = resdata.store_province;
+          this.store_city = resdata.store_city;
+          this.store_district = resdata.store_district;
+          this.store_name = resdata.store_name;
+          if (resdata.code == 200) {
+          } else {
+            Toast(resdata.message);
+          }
+          Toast.clear();
+        });
     }
   }
 };

@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -43,6 +44,9 @@ export default {
       couponlist: [{}, {}, {}],
       ind: 0
     };
+  },
+  created() {
+    this.getbrand();
   },
   methods: {
     ontab(index, title) {
@@ -64,6 +68,19 @@ export default {
     cancelTg() {
       window.sessionStorage.removeItem("hostCancelSession");
       this.$router.push({ path: "/HostCancel" });
+    },
+    getbrand() {
+      // Toast.loading({ mask: true, message: "加载中..." });
+
+      this.axios.post(this.API + "api/Lease/brand_select").then(res => {
+        console.log(res.data, "getbrand");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+        } else {
+          Toast(resdata.message);
+        }
+        Toast.clear();
+      });
     }
   }
 };
