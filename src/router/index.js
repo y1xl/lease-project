@@ -128,6 +128,7 @@ export default new Router({
     //个人中心
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
     { path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
+    { path: '/addInformation/:id', component: AddInformation, meta: { title: '添加收货信息' } },
     { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
     { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
     { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },

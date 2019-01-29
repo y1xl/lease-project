@@ -10,7 +10,7 @@
       </div>
       <div class="dt text-c">
         <img class="dw_img" src="../../assets/mddw.png">
-        <span class="txt">{{store_province + store_city + store_district}}</span>
+        <span class="txt">{{(store_province + store_city + store_district+(store_Address||''))||''}}</span>
       </div>
     </div>
 
@@ -33,6 +33,7 @@ export default {
     return {
       store_province: "",
       store_city: "",
+      store_Address: "",
       store_district: "",
       store_name: ""
     };
@@ -54,6 +55,7 @@ export default {
           this.store_province = resdata.store_province;
           this.store_city = resdata.store_city;
           this.store_district = resdata.store_district;
+          this.store_Address = resdata.store_Address;
           this.store_name = resdata.store_name;
           if (resdata.code == 200) {
           } else {

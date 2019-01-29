@@ -25,18 +25,16 @@
             <div>位置</div>
           </template>
         </van-cell>
-        <div class="bri_day">
-          <van-cell
-            is-link
-            center
-            :value="datetext==''?'':`${datetext[0]}年${datetext[1]}月${datetext[2]}日`"
-            @click="showdate=true"
-          >
-            <template slot="title">
-              <div>生日</div>
-            </template>
-          </van-cell>
+        <div class="border-b dz_detail">
+          <span>详细地址</span>
+          <input type="text" placeholder="请输入" v-model="detailval">
         </div>
+
+        <van-cell is-link center :value="datetext==''?'':datetext" @click="showdate=true">
+          <template slot="title">
+            <div>生日</div>
+          </template>
+        </van-cell>
       </div>
     </div>
 
@@ -87,7 +85,7 @@ export default {
       sexval: "",
       sex_id: "",
       sexList: [{ id: 0, val: "男" }, { id: 1, val: "女" }],
-
+      detailval: "",
       dateval: new Date(),
       datetext: "",
       showdate: false,
@@ -96,21 +94,9 @@ export default {
     };
   },
   created() {
-    let meSession = JSON.parse(window.sessionStorage.getItem("meSession"));
-    if (meSession) {
-      this.users_name = meSession.users_name;
-      this.areaval = meSession.users_city;
-      this.datetext = meSession.users_birthday;
-      let users_id = meSession.users_id;
-      let sex_id = meSession.users_sex;
-      if (sex_id == 0) {
-        this.sexval = this.sexList[0].val;
-      } else {
-        this.sexval = this.sexList[1].val;
-      }
-    }
-    // this.submit();
+    this.getuser();
   },
+
   methods: {
     onconfirmArea(val) {
       console.log(val);
@@ -126,47 +112,72 @@ export default {
     onConfirmDate(val) {
       console.log(val.getFullYear(), val.getMonth() + 1, val.getDate());
       this.dateval = val;
-      this.datetext = [val.getFullYear(), val.getMonth() + 1, val.getDate()];
-
+      let datet = [val.getFullYear(), val.getMonth() + 1, val.getDate()];
+      console.log(datet);
+      this.datetext = `${datet[0]}年${datet[1]}月${datet[2]}日`;
       this.showdate = false;
     },
-
-    submit() {
-      let meSession = JSON.parse(window.sessionStorage.getItem("meSession"));
-      if (meSession) {
-        let users_id = meSession.users_id;
-
-        let users_birthday = `${this.datetext[0]}年${this.datetext[1]}月${
-          this.datetext[2]
-        }日`;
-        let users_city =
-          this.areaval[0].name + this.areaval[1].name + this.areaval[2].name;
-        let sex_id = "";
-        if (this.sexval == "男") {
-          sex_id = 0;
-        } else {
-          sex_id = 1;
-        }
-
-        let postData = this.$qs.stringify({
-          users_id: users_id,
-          users_name: this.users_name,
-          users_birthday: users_birthday,
-          users_city: users_city,
-          users_sex: sex_id
-        });
-        this.axios
-          .post(this.API + "api/Lease/users_update", postData)
-          .then(res => {
-            console.log(res.data, "users_detail");
-            let resdata = res.data;
-            if (resdata.code == 200) {
-              this.$router.go(-1);
+    getuser() {
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+      });
+      this.axios
+        .post(this.API + "api/Lease/users_detail", postData)
+        .then(res => {
+          console.log(res.data, "users_detail");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.users_name = resdata.data.users_name;
+            this.users_id = resdata.data.users_id;
+            this.datetext = resdata.data.users_birthday;
+            this.detailval = resdata.data.users_address;
+            let sex_id = resdata.data.users_sex;
+            if (sex_id == 0) {
+              this.sexval = this.sexList[0].val;
             } else {
-              Toast(resdata.message);
+              this.sexval = this.sexList[1].val;
             }
-          });
+            let users_province = "";
+            this.areaval = [
+              { name: resdata.data.users_province },
+              { name: resdata.data.users_city },
+              { name: resdata.data.users_district }
+            ];
+          } else {
+            Toast(resdata.message);
+          }
+        });
+    },
+    submit() {
+      let sex_id = "";
+      if (this.sexval == "男") {
+        sex_id = 0;
+      } else {
+        sex_id = 1;
       }
+
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        users_name: this.users_name,
+        users_sex: sex_id,
+        users_birthday: this.datetext,
+        users_province: this.areaval[0].name,
+        users_city: this.areaval[1].name,
+        users_district: this.areaval[2].name,
+        users_address: this.detailval || ""
+      });
+      this.axios
+        .post(this.API + "api/Lease/users_update", postData)
+        .then(res => {
+          console.log(res.data, "users_update");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.$router.go(-1);
+            Toast("提交成功");
+          } else {
+            Toast(resdata.message);
+          }
+        });
     }
   }
 };
@@ -193,6 +204,19 @@ export default {
 .tx {
   padding: 10px 0;
   font-size: 12px;
+}
+.dz_detail {
+  padding: 10px;
+  font-size: 13px;
+}
+.dz_detail input {
+  width: 75%;
+  text-align: right;
+  padding-right: 10px;
+  color: grey;
+}
+.dz_detail input::placeholder {
+  text-align: right;
 }
 .head_img {
   width: 45px;

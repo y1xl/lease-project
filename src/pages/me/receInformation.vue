@@ -1,81 +1,114 @@
 <template>
   <div>
-    <div class="addresslist">
-
-      <div class="hang bgc" v-for="(address,index) in addresslist" :key="index">
-        <van-swipe-cell :right-width="65" :on-close="onClose">
-          <van-cell is-link center to="/AddInformation">
-            <template slot="title">
-              <div>
-                <span>曲文</span>
-                <span>13845684586</span>
-                <span class="moren" style>默认</span>
-              </div>
-              <div>广东省 深圳市 龙华区 水榭春天B201</div>
-            </template>
-
-            <template slot="right-icon">
-              <img src="../../assets/bj.png" alt="图标" class="left_img">
-            </template>
-          </van-cell>
-          <div slot="right" class="del">删除</div>
-        </van-swipe-cell>
-      </div>
-
+    <div
+      class="hang bgc"
+      v-for="(item,index) in addresslist"
+      :key="index"
+      @click="edit(item.ads_id)"
+    >
+      <van-swipe-cell :right-width="65" :on-close="onClose">
+        <van-cell is-link center>
+          <template slot="title">
+            <div>
+              <span>{{item.ads_user}}</span>
+              <span>{{item.ads_phone}}</span>
+              <span class="moren" v-if="item.ads_state==2">默认</span>
+            </div>
+            <div>{{item.ads_province+item.ads_city+item.ads_district+item.ads_address}}</div>
+          </template>
+          <!-- 编辑 -->
+          <template slot="right-icon">
+            <img src="../../assets/bj.png" @click="edit(item.ads_id)" alt="编辑" class="left_img">
+          </template>
+        </van-cell>
+        <div slot="right" class="del" @click="getdel(item.ads_id)">删除</div>
+      </van-swipe-cell>
     </div>
-    <div class="btn text-c" @click="addAddress">添加</div>
+    <router-link to="/AddInformation">
+      <div class="btn text-c">添加</div>
+    </router-link>
   </div>
 </template>
 
 <script>
-import { Dialog } from 'vant';
+import { Dialog, Toast } from "vant";
 export default {
   data() {
     return {
-      addresslist: [{}, {}]
+      addresslist: [{}, {}],
+      delid: ""
     };
   },
+  created() {
+    this.getselect();
+  },
   methods: {
-    addAddress() {
-      this.$router.push({ path: "/AddInformation" });
+    getselect() {
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+      });
+
+      this.axios.post(this.API + "api/Lease/ads_select", postData).then(res => {
+        console.log(res.data, "getselect");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.addresslist = resdata.data;
+        } else {
+          Toast(resdata.message);
+        }
+      });
+    },
+    edit(id) {
+      this.$router.push({ path: "/AddInformation/" + id });
+    },
+
+    getdel(id) {
+      console.log(id);
+      this.delid = id;
+    },
+    del() {
+      let postData = this.$qs.stringify({
+        ads_id: this.delid
+      });
+      this.axios.post(this.API + "api/Lease/ads_detele", postData).then(res => {
+        console.log(res.data, "del");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.getselect();
+        } else {
+          Toast(resdata.message);
+        }
+      });
     },
     // 删除
-        onClose(clickPosition, instance) {
-            switch (clickPosition) {
-                case 'left':
-                case 'cell':
-                case 'outside':
-                    instance.close();
-                break;
-                case 'right':
-                    Dialog.confirm({
-                        message: '确定删除吗？'
-                    }).then(() => {
-                        instance.close();
-                    });
-                break;
+    onClose(clickPosition, instance) {
+      switch (clickPosition) {
+        case "left":
+        case "cell":
+        case "outside":
+          instance.close();
+          break;
+        case "right":
+          Dialog.confirm({
+            message: "确定删除吗？"
+          }).then(e => {
+            if (e == "confirm") {
+              this.del();
             }
-        },
+          });
+          break;
+      }
+    }
   }
 };
 </script>
 
-<style>
-.hang .van-cell {
-  border-radius: 5px;
-}
-</style>
 
 <style scoped>
-.addresslist {
-  width: 100%;
-  margin-top: 12px;
-  margin-left: 4%;
-}
 .hang {
-  width: 92%;
-  margin-top: 10px;
+  margin: 10px;
   line-height: 35px;
+  overflow: hidden;
   border-radius: 5px;
 }
 
@@ -102,12 +135,12 @@ export default {
   color: #fff;
 }
 .del {
-    background-color: #d2d2d2;
-    color: #fff;
-    width: 60px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: #d2d2d2;
+  color: #fff;
+  width: 60px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
