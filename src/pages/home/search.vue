@@ -21,7 +21,7 @@
         <div class="zj">
           <span class="f14">租金：</span>
           <span class="price">¥{{item.hire_price.price}}</span>
-          <span class="f12">/日</span>
+          <span class="f12">/{{item.hire_price.unt}}</span>
         </div>
       </div>
     </div>
@@ -60,6 +60,7 @@ export default {
                 message: " 没有匹配的产品",
                 duration: "5000"
               });
+              this.flprolist = "";
             } else {
               this.flprolist = resdata.data;
             }
