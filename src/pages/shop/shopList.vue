@@ -1,19 +1,20 @@
 <template>
   <div>
     <div class="shoplist">
-        <div v-for="(item,index) in list" :key="index" :title="item">
-          <div class="item">
-            <router-link to="/ShopDetail">
-              <div class="flex-jc-between">
-                <div class="shop_title">{{item.store_name}}</div>
-                <div>
-                  <img src="../../assets/right.png" class="img_r">
-                </div>
-              </div>
-              <div class="txt f12">{{item.store_province+item.store_district+item.store_city}}</div>
-            </router-link>
+      <div v-for="(item,index) in list" :key="index" :title="item">
+        <div class="item">
+          <router-link :to="{path:'/ShopDetail',query:{store_id:item.store_id}}">
+            <div class="flex-jc-between">
+              <div class="shop_title">{{item.store_name}}</div>
+              <van-icon name="arrow"/>
+            </div>
+            <div class="txt f12">{{item.store_province+item.store_district+item.store_city}}</div>
+          </router-link>
 
-          <router-link class="dt text-c" :to="`/map/${item.coordinate}/${item.store_name},${item.store_province+item.store_district+item.store_city}`">
+          <router-link
+            class="dt text-c"
+            :to="`/map/${item.coordinate}/${item.store_name},${item.store_province+item.store_district+item.store_city}`"
+          >
             <img class="ck_img" src="../../assets/mddw.png">
             <span class="txt f12">查看地图</span>
           </router-link>
