@@ -130,7 +130,7 @@ export default {
             this.users_name = resdata.data.users_name;
             this.users_id = resdata.data.users_id;
             this.datetext = resdata.data.users_birthday;
-            this.detailval = resdata.data.users_address;
+            this.detailval = resdata.data.users_address || "";
             let sex_id = resdata.data.users_sex;
             if (sex_id == 0) {
               this.sexval = this.sexList[0].val;

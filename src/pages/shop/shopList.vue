@@ -8,7 +8,9 @@
               <div class="shop_title">{{item.store_name}}</div>
               <van-icon name="arrow"/>
             </div>
-            <div class="txt f12">{{item.store_province+item.store_district+item.store_city}}</div>
+            <div
+              class="txt f12"
+            >{{(item.store_province||'')+(item.store_district||'')+(item.store_city||'')+(item.store_Address||'')}}</div>
           </router-link>
 
           <router-link
@@ -33,8 +35,8 @@ export default {
     };
   },
   created() {
-    if(!window.localStorage.getItem("userinfo")){
-      this.$router.replace({ path: "/login" })
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
     }
     this.getlist();
   },
@@ -51,7 +53,6 @@ export default {
           Toast.clear();
           Toast(resdata.message);
         }
-        
       });
     }
   }

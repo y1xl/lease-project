@@ -100,42 +100,21 @@ export default {
           "url(" + require("../../assets/me_bg.png") + ") no-repeat top",
         backgroundSize: "100% 100%"
       },
-      users_name: "",
-      users_birthday: "",
-      users_city: "",
-      users_sex: ""
+      users_name: ""
     };
   },
   created() {
-    if(!window.localStorage.getItem("userinfo")){
-      this.$router.replace({ path: "/login" })
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
     }
-    this.getuser();
+    this.users_name = JSON.parse(
+      window.localStorage.getItem("userinfo")
+    ).users_name;
   },
   methods: {
     //我的资料
     myInformat(url) {
       this.$router.push({ path: "/MyInformation" });
-    },
-    getuser() {
-      let postData = this.$qs.stringify({
-        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-      });
-      this.axios
-        .post(this.API + "api/Lease/users_detail", postData)
-        .then(res => {
-          console.log(res.data, "users_detail");
-          let resdata = res.data;
-          if (resdata.code == 200) {
-            this.users_name = resdata.data.users_name;
-            this.users_id = resdata.data.users_id;
-            this.users_birthday = resdata.data.users_birthday;
-            this.users_city = resdata.data.users_city;
-            this.users_sex = resdata.data.users_sex;
-          } else {
-            Toast(resdata.message);
-          }
-        });
     }
   }
 };

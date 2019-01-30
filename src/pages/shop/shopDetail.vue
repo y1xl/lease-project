@@ -10,7 +10,9 @@
       </div>
       <div class="dt text-c">
         <img class="dw_img" src="../../assets/mddw.png">
-        <span class="txt">{{(store_province + store_city + store_district+(store_Address||''))||''}}</span>
+        <span
+          class="txt"
+        >{{(store_province||'') + (store_city||'') + (store_district||'')+(store_Address||'')}}</span>
       </div>
     </div>
 
