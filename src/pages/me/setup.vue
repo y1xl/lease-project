@@ -20,7 +20,8 @@ export default {
 
   methods: {
     logout(){
-      this.$router.push({ path: '/login' })
+      window.localStorage.removeItem("userinfo")
+      this.$router.replace({ path: '/login' })
     }
   }
 };

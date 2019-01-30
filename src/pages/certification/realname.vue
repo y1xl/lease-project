@@ -63,11 +63,12 @@
             </div>
         </div>
 
-        <div class="pd-15"><div class="btn text-c">提交</div></div>
+        <div class="pd-15"><div class="btn text-c" @click="submit">提交</div></div>
     </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return{
@@ -84,6 +85,9 @@ export default {
             console.log(file)
             this.img2 = file.content
         },
+        submit(){
+            Toast("此功能未开通");
+        }
     }
 }
 </script>

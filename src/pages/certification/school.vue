@@ -31,7 +31,7 @@ export default {
         Toast("请先填写完整");
         return;
       }
-      this.$router.go(-1);
+      Toast("此功能未开通");
     }
   }
 };

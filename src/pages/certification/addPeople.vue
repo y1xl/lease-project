@@ -96,13 +96,13 @@ export default {
               let resdata = res.data;
               if (resdata.code == 200) {
                 Toast("添加成功");
+                this.$router.go(-1);
               } else {
                 Toast(resdata.message);
               }
             });
         }
-
-        this.$router.go(-1);
+        
       } else {
         let postData = this.$qs.stringify({
           urgent_id: urgent_id,
@@ -117,12 +117,12 @@ export default {
             let resdata = res.data;
             if (resdata.code == 200) {
               Toast("编辑成功");
+              this.$router.go(-1);
             } else {
               Toast(resdata.message);
             }
           });
 
-        this.$router.go(-1);
       }
     }
   }

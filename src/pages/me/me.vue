@@ -107,6 +107,9 @@ export default {
     };
   },
   created() {
+    if(!window.localStorage.getItem("userinfo")){
+      this.$router.replace({ path: "/login" })
+    }
     this.getuser();
   },
   methods: {

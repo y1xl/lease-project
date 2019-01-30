@@ -2,9 +2,9 @@
     <div>
         <div class="header bgc mar-b-10 box-sizing">
             <div class="text-c">您的额度(元)</div>
-            <div class="text-c num">0</div>
+            <div class="text-c num">{{info.users_money}}</div>
             <div class="text-c marb30"><router-link class="lines" to="/certification">提升额度</router-link></div>
-            <div class="text-c">您的免押额度为0元,仍需支付<span class="fc-red"> ¥1170.00</span></div>
+            <div class="text-c">您的免押额度为{{info.order_credit_rent}}元,仍需支付<span class="fc-red"> ¥{{info.order_rent}}</span></div>
         </div>
 
         <div class="bgc">
@@ -19,24 +19,80 @@
                     <van-radio name="2" checked-color="#2DBBF1"></van-radio>
                 </div>
                 <div class="flex-jc-between pd-15" @click="radio = '3'">
-                    <div><img src="../../assets/balance.png" alt="余额" class="payimg">余额<span class="fc-red"> ¥2.00</span></div>
+                    <div><img src="../../assets/balance.png" alt="余额" class="payimg">余额<span class="fc-red"> ¥{{info.users_balance}}</span></div>
                     <van-radio name="3" checked-color="#2DBBF1"></van-radio>
                 </div>
             </van-radio-group>
         </div>
 
-        <div class="pd-t-50"><div class="btn text-c">支付</div></div>
+        <div class="pd-t-50"><div class="btn text-c" @click="submit">支付</div></div>
 
     </div>
 </template>
 
 <script>
+import { Toast,Dialog } from "vant";
 export default {
     data(){
         return{
             radio:'1',
+            info:''
         }
     },
+    created(){
+        this.getinfo()
+    },
+    methods:{
+        getinfo() {
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                order_id : this.$route.params.orderid
+            });
+            this.axios.post(this.API + "api/Order/GetPayData", postData)
+            .then(res => {
+                console.log(res.data, "info");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    this.info = resdata.data;
+                } else {
+                Toast(resdata.message);
+                }
+            });
+        },
+        submit(){
+            if(this.radio==1){
+                Toast('微信功能未开通')
+            }
+            if(this.radio==2){
+                Toast('支付宝功能未开通')
+            }
+            if(this.radio==3){
+                Toast.loading({ mask: true,message: '加载中...'})
+                let postData = this.$qs.stringify({
+                    users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                    order_id : this.$route.params.orderid,
+                    pay_way: this.radio
+                });
+                this.axios.post(this.API + "api/Order/GetPay", postData)
+                .then(res => {
+                    console.log(res.data, "submit");
+                    let resdata = res.data;
+                    if (resdata.code == 200) {
+                        Toast.clear()
+                        Dialog.alert({
+                            message: '支付成功'
+                        }).then((e) => {
+                            this.$router.replace({ path: "/order" })
+                        });
+                    } else {
+                        Toast.clear()
+                        Toast(resdata.message);
+                    }
+                    
+                });
+            }
+        }
+    }
 }
 </script>
 

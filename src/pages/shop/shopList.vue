@@ -33,6 +33,9 @@ export default {
     };
   },
   created() {
+    if(!window.localStorage.getItem("userinfo")){
+      this.$router.replace({ path: "/login" })
+    }
     this.getlist();
   },
   methods: {
@@ -42,11 +45,13 @@ export default {
         console.log(res.data, "list");
         let resdata = res.data;
         if (resdata.code == 200) {
+          Toast.clear();
           this.list = resdata.data;
         } else {
+          Toast.clear();
           Toast(resdata.message);
         }
-        Toast.clear();
+        
       });
     }
   }

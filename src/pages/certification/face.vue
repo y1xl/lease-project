@@ -9,7 +9,7 @@
 export default {
     methods:{
         naxt(){
-             this.$router.push({ path: '/pay/1' })
+             this.$router.push({ path: '/pay/'+this.$route.params.orderid })
         }
     }
 }
