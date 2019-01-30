@@ -14,8 +14,8 @@
             </div>
             <div class="text-line pro_title mar-b-10">{{item.goods_name}}</div>
             <div>
-              <span class="price">{{item.selling_price}}</span>
-              <span class="f12">/日</span>
+              <span class="price">{{item.hire_price.price}}</span>
+              <span class="f12">/{{item.hire_price.unt}}</span>
             </div>
           </div>
         </div>

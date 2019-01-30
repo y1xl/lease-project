@@ -39,7 +39,7 @@ export default {
       nameval: "",
       phoneval: "",
       isshow: false,
-      columns: ["朋友", "测试", "测试"],
+      columns: ["父母", "朋友", "兄弟", "姐妹"],
       text: ""
     };
   },
@@ -102,7 +102,6 @@ export default {
               }
             });
         }
-        
       } else {
         let postData = this.$qs.stringify({
           urgent_id: urgent_id,

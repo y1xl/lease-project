@@ -52,7 +52,16 @@ export default {
         console.log(res.data, "getselect");
         let resdata = res.data;
         if (resdata.code == 200) {
-          this.addresslist = resdata.data;
+          var list = resdata.data;
+          // for (let i = 0; i < list.length; i++) {
+          //   if (list[i].ads_state == 2) {
+          //     let first = list[0];
+          //     list[0] = list[i];
+          //     list[i] = first;
+          //   }
+          // }
+          this.addresslist = list;
+          console.log(this.addresslist);
         } else {
           Toast(resdata.message);
         }
