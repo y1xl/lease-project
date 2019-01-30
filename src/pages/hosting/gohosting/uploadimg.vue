@@ -120,6 +120,7 @@ export default {
 
         submit(){
             if(this.isconsent){
+                Toast("此功能未开通");
                 this.$router.replace({ path: '/gsuccessful' })
             }else{
                 Toast("您还未同意合约");

@@ -276,6 +276,7 @@ export default {
   },
   methods: {
     getdetail(){
+      Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({
             goods_id:this.$route.params.id
         })
@@ -284,10 +285,13 @@ export default {
         console.log(res.data, "Goods_Detail")
         let resdata = res.data
         if (resdata.code == 200) {
+          Toast.clear()
           this.detail = resdata.data;
         } else {
+          Toast.clear()
           Toast(resdata.message)
         }
+        
       });
     },
     getguige(){

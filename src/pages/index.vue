@@ -146,6 +146,9 @@ export default {
   },
 
   created() {
+    if(!window.localStorage.getItem("userinfo")){
+      this.$router.replace({ path: "/login" })
+    }
     this.getLocation();
     this.getnav();
     this.getbanner();
@@ -189,21 +192,22 @@ export default {
       } else {
         Toast.loading({ mask: true, message: "加载中..." });
         let postData = this.$qs.stringify({
-          cate_id: this.navlist[i - 1].cate_id
-        });
-        this.axios
-          .post(this.API + "api/Lease/cate_goods", postData)
-          .then(res => {
-            console.log(res.data, "goodslist");
-            let resdata = res.data;
-            if (resdata.code == 200) {
-              this.goodslist = resdata.data.goods;
-              this.hostlist = resdata.data.remen;
-            } else {
-              Toast(resdata.message);
-            }
-            Toast.clear();
-          });
+            cate_id:this.navlist[i-1].cate_id
+        })
+        this.axios.post(this.API + 'api/Lease/cate_goods',postData)
+          .then( res => {
+              console.log(res.data,'goodslist'); 
+              let resdata = res.data
+              if(resdata.code == 200){
+                Toast.clear()
+                this.goodslist = resdata.data.goods
+                this.hostlist = resdata.data.remen
+              }else {
+                Toast.clear()
+                Toast(resdata.message)
+              }
+          
+          })
       }
     },
 
@@ -235,11 +239,12 @@ export default {
         console.log(res.data, "getindexlist");
         let resdata = res.data;
         if (resdata.code == 200) {
+          Toast.clear();
           this.indexlist = resdata.data;
         } else {
+          Toast.clear();
           Toast(resdata.message);
         }
-        Toast.clear();
       });
     },
     getNearShop(lat, lng) {

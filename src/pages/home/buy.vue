@@ -20,8 +20,8 @@
                 <van-cell is-link center @click="go(`/locationList/buy/${goodid}`)">
                     <template slot="title">
                         <div>自取地点</div>
-                        <div>{{getlocation.store_name}}</div>
-                        <div>{{(getlocation.store_province+getlocation.store_city+getlocation.store_district+(getlocation.store_Address||''))||''}}</div>
+                        <div>{{getlocation.store_name||''}}</div>
+                        <div>{{(getlocation.store_province||'')+(getlocation.store_city||'')+(getlocation.store_district||'')+(getlocation.store_Address||'')}}</div>
                     </template>
                 </van-cell>
                 <van-cell is-link center @click="go('/calendar/buy')">
@@ -444,10 +444,14 @@ export default {
                         store_id: this.getlocation.store_id,
                         order_delivery_time:this.getdate,
                         safe_status: this.isinsurance?1:2,
-                        delivery_way: this.typenum,
+                        delivery_way: this.typenum==0?3:this.typenum==1?1:2,
                         qwsh_time: this.expectdate,
                         sku: decodeURI(this.$route.params.guige),
-                        time: this.timetext
+                        time: this.timetext,
+                        ads_id:'',
+                        way_price:'',
+                        remark:'',
+                        timelist:''
                     })
                 }
                 if(this.typenum==1){
@@ -461,15 +465,23 @@ export default {
                         goods_id: this.$route.params.id,
                         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                         safe_status: this.isinsurance?1:2,
-                        delivery_way: this.typenum,
+                        delivery_way: this.typenum==0?3:this.typenum==1?1:2,
                         qwsh_time: this.expectdate,
                         sku: decodeURI(this.$route.params.guige),
                         ads_id: this.getaddress.ads_id,
-                        way_price: this.freight
+                        way_price: this.freight,
+                        users_name:'',
+                        users_phone:'',
+                        users_type:'',
+                        store_id:'',
+                        order_delivery_time:'',
+                        time:'',
+                        remark:'',
+                        timelist:''
                     })
                 }
                 if(this.typenum==2){
-                    if(this.getaddress==''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timequantumarr==''){
+                    if(this.getaddress==''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timequantumtext==''){
                         Toast('还有未填写')
                         return
                     }
@@ -479,29 +491,35 @@ export default {
                         goods_id: this.$route.params.id,
                         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                         safe_status: this.isinsurance?1:2,
-                        delivery_way: this.typenum,
+                        delivery_way: this.typenum==0?3:this.typenum==1?1:2,
                         qwsh_time: this.expectdate,
                         sku: decodeURI(this.$route.params.guige),
                         ads_id: this.getaddress.ads_id,
                         way_price: this.freight,
                         remark: this.remarkval,
-                        timelist: this.timequantumtext
+                        timelist: this.timequantumtext,
+                        users_name:'',
+                        users_phone:'',
+                        users_type:'',
+                        store_id:'',
+                        order_delivery_time:'',
+                        time:'',
                     })
                 }
-
+                Toast.loading({ mask: true,message: '加载中...'})
                 this.axios.post(this.API + "api/Order/AddOrder",postData)
                 .then(res => {
                     console.log(res.data, "order")
                     let resdata = res.data
                     if (resdata.code == 200) {
-        
+                        Toast.clear()
+                        this.$router.push({ path: '/face/'+ resdata.data})
                     } else {
+                        Toast.clear()
                         Toast(resdata.message)
-                    }
+                    } 
                 });
 
-
-                // this.$router.push({ path: '/face/1' })
             }else{
                 Toast('您还未同意协议');
             }

@@ -16,7 +16,7 @@
 
 <script>
 import Calendar from "vue-calendar-component";
-
+import { Toast } from "vant";
 export default {
   components: {
     Calendar
@@ -151,6 +151,8 @@ export default {
     },
 
     goprebuy(){
+      Toast('微信功能未开通') 
+      return
       window.sessionStorage.removeItem("prebuySession");
       this.$router.replace({ path: "/preBuy" });
     }

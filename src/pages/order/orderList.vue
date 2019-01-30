@@ -113,7 +113,7 @@
     </div>
 
     <div class="list" v-show="selected==1">
-      <OrderCard status="待发货"></OrderCard> 
+      <!-- <OrderCard status="待发货"></OrderCard> 
       <OrderCard status="待付款">
         <div class="flex-center border" @click="onshowmodel">取消订单</div>
         <div class="flex-center border-blue fc-blue">支付</div>
@@ -128,7 +128,7 @@
         <div class="flex-center border" @click="getcode">取货码</div>
         <div class="flex-center border-blue fc-blue" >确认收货</div>
       </OrderCard>
-      <OrderCard status="已完成"></OrderCard> 
+      <OrderCard status="已完成"></OrderCard>  -->
     </div>
 
     <div class="height"></div>
@@ -172,6 +172,7 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
+import { Toast } from "vant";
 export default {
   components: {
     OrderCard
@@ -188,6 +189,12 @@ export default {
       showmodel: false,
       showcode: false
     };
+  },
+  created(){
+    if(!window.localStorage.getItem("userinfo")){
+      this.$router.replace({ path: "/login" })
+    }
+    this.getlist()
   },
   methods: {
     nav(n) {
@@ -219,6 +226,26 @@ export default {
           this.showcode = true
       } 
     },
+
+    getlist(){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        order_status:1
+      });
+      this.axios.post(this.API + "api/Lease_Order/LeaseQuery", postData)
+      .then(res => {
+        console.log(res.data, "list");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          Toast.clear()
+          this.list = resdata.data
+        } else {
+          Toast.clear()
+          Toast(resdata.message);
+        }
+      });
+    }
   }
 };
 </script>
