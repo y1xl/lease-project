@@ -10,14 +10,14 @@
           <img class="sy_img" :src="item.gd_img[0]">
         </div>
         <div class="f14 pro_name">{{item.goods_name}}</div>
-        <!-- <div class="com_like">
+        <div class="com_like">
           <van-rate v-model="item.rate" disabled disabled-color="#FFB10E"/>
           <span class="f12">4</span>
           <div>
             <img class="chat" src="../../assets/chat.png">
             <span class="f12">999+</span>
           </div>
-        </div>-->
+        </div>
         <div class="zj">
           <span class="f14">租金：</span>
           <span class="price">¥{{item.hire_price.price}}</span>
@@ -55,7 +55,6 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             if (resdata.data.length == 0) {
-              Toast("没有匹配的产品");
               Toast({
                 message: " 没有匹配的产品",
                 duration: "5000"
