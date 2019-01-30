@@ -1,8 +1,8 @@
 <template>
 <div>
     <div class="bgc card pd-15 mar-b-10">
-        <router-link v-bind="{to: '/orderDetail'}">
-            <div class="flex-jc-between border-b mar-b-10" >
+        <router-link v-bind="{to: '/orderDetail/'+data.order_id}">
+            <div class="flex-jc-between border-b mar-b-10 pb10" >
                 <span>订单号:{{data.order_no}}</span>
                 <span class="fc-blue" v-if="data.order_status==6">租赁中</span>
                 <span class="fc-blue" v-if="status=='待评价'">待评价</span>
@@ -10,16 +10,16 @@
                 <span class="fc-blue" v-if="status=='已结束'">已结束</span>
                 <span class="fc-blue" v-if="data.order_status==4">订单关闭</span>
                 <span class="fc-blue" v-if="status=='订单超时'">订单超时</span>
-                <span class="fc-blue" v-if="status=='检测中'">检测中</span>
-                <span class="fc-blue" v-if="status=='售后中'">售后中</span>
+                <span class="fc-blue" v-if="data.order_status==8">检测中</span>
+                <span class="fc-blue" v-if="data.order_status==9">售后中</span>
                 <span class="fc-blue" v-if="status=='待确认'">待确认</span>
-                <span class="fc-blue" v-if="status=='退押金中'">退押金中</span>
+                <span class="fc-blue" v-if="data.order_status==10">退押金中</span>
                 <span class="fc-blue" v-if="data.order_status==1">待付款</span>
                 <span class="fc-blue" v-if="status=='已确认'">已确认</span>
                 <span class="fc-blue" v-if="status=='已预订'">已预订</span>
                 <span class="fc-blue" v-if="data.order_status==5">待收货</span>
                 <span class="fc-blue" v-if="status=='预租待确认'">预租待确认</span>
-                <span class="fc-blue" v-if="status=='退租中'">退租中</span>
+                <span class="fc-blue" v-if="data.order_status==7">退租中</span>
                 <span class="fc-blue" v-if="status=='待发货'">待发货</span>
                 <span class="fc-blue" v-if="status=='已完成'">已完成</span>
             </div>

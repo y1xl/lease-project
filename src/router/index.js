@@ -102,7 +102,7 @@ export default new Router({
     { path: '/me', component: Me, meta: { title: '我的' } },
     //订单
     { path: '/comments', component: Comments, meta: { title: '评价' } },
-    { path: '/orderDetail', component: OrderDetail, meta: { title: '订单详情' } },
+    { path: '/orderDetail/:id', component: OrderDetail, meta: { title: '订单详情' } },
     { path: '/relet/:id', component: Relet, meta: { title: '续租' } },
     { path: '/shopping', component: Shopping, meta: { title: '购买' } },
     { path: '/people/:type', component: People, meta: { title: '自取联系人' } },
@@ -111,7 +111,7 @@ export default new Router({
     { path: '/refund/:id', component: Refund, meta: { title: '退租' } },
     { path: '/timeQuantum', component: TimeQuantum, meta: { title: '选择时间段' } },
     { path: '/appointmentExpress/:id', component: AppointmentExpress, meta: { title: '预约快递' } },
-    { path: '/deny', component: Deny, meta: { title: '否认' } },
+    { path: '/deny/:id', component: Deny, meta: { title: '否认' } },
     { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
     { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
     //产品

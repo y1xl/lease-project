@@ -266,17 +266,37 @@
 
 <script>
 import { ImagePreview } from 'vant';
+import { Toast } from 'vant';
 export default {
   data(){
     return {
       showlogistics:false,
     }
   },
+  created(){
+    this.getdata()
+  },
   methods:{
     onImagePreview(){
       ImagePreview([
         'http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg',
       ]);
+    },
+    getdata(){
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:this.$route.params.id,
+      })
+      this.axios.post(this.API + "api/Lease_Order/orderDetails",postData)
+      .then(res => {
+          console.log(res.data, "data")
+          let resdata = res.data
+          if (resdata.code == 200) {
+              
+          } else {
+              Toast(resdata.message)
+          }
+      });
     },
     goshopping(){
       window.sessionStorage.removeItem('shoppingSession');
@@ -285,7 +305,7 @@ export default {
     gorefund(){
       window.sessionStorage.removeItem('refundSession');
       this.$router.push({ path: "/refund" });
-    }
+    },
   }
 };
 </script>

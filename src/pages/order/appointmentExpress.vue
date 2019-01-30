@@ -18,8 +18,9 @@
         <div class="address bgc flex-align-items pd-15">
             <div class="left bgc-blue flex-center">收</div>
             <div class="flex-1">
+                <div v-show="shopaddress==''" class="fc-grey">暂无收货地址</div>
                 <div class="mar-b-10">{{shopaddress.store_name}} {{shopaddress.store_phone}}</div>
-                <div>深圳市龙华新区龙华街道九方A座1001号</div>
+                <div>{{(shopaddress.store_partners||'')+(shopaddress.store_city||'')+(shopaddress.store_district||'')+(shopaddress.store_Address||'')}}</div>
             </div>
         </div>
 
@@ -32,7 +33,7 @@
 </template>
 
 <script>
-import { Toast } from 'vant';
+import { Toast,Dialog } from 'vant';
 export default {
     data(){
         return{
@@ -103,11 +104,35 @@ export default {
         },
 
         submit(){
-            if(this.datetext==''||this.timequantumtext==''||!this.getaddress.ads_id){
+            if(this.datetext==''||this.timequantumtext==''||!this.getaddress.ads_id||!this.shopaddress.store_id){
                 Toast('还有未填写')
                 return
             }
-            this.$router.go(-2);
+            
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                order_id:this.$route.params.id,
+                ads_id: this.getaddress.ads_id,
+                store_id: this.shopaddress.store_id,
+                year : this.datetext,
+                time: this.timequantumtext
+            });
+            this.axios.post(this.API + "api/Lease_Order/onlineAppointment", postData)
+            .then(res => {
+            console.log(res.data, "code");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                Toast.clear()
+                Dialog.alert({
+                    message: '操作成功'
+                }).then((e) => {
+                    this.$router.go(-2);
+                });
+            } else {
+                Toast.clear()
+                Toast(resdata.message);
+            }
+            });
         }
 
     }

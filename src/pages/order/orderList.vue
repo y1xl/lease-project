@@ -9,7 +9,7 @@
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item" v-for="(item,index) in navarr" :key="index">
           <div slot="title" class="position tag">
-            <!-- <div class="dot"><van-tag plain round color="#4EA9F9">{{list.length}}</van-tag></div> -->
+            <div class="dot" v-if="active==index"><van-tag plain round color="#4EA9F9" v-if="list">{{list.length}}</van-tag></div>
             {{item}}
           </div>
         </van-tab>
@@ -34,10 +34,10 @@
         <!-- <div class="flex-center border-blue fc-blue" >支付</div> -->
         <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
         <!-- <div class="flex-center border">朋友代还</div> -->
-        <!-- <div class="flex-center border">
-          <router-link v-bind="{to: '/deny'}">否认</router-link>
-        </div> -->
-        <!-- <div class="flex-center border-blue fc-blue">确认</div> -->
+        <div class="flex-center border" v-if="item.order_status==9&&item.user_validation==0">
+          <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
+        </div>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==0" @click="onConfirmsales(item.order_id)">确认</div>
         <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
         <!-- <div class="flex-center border" @click="getcode(item.order_id,2)">自还码</div> -->
         <div class="flex-center border" v-if="item.order_status==6"><router-link :to="`/relet/${item.order_id}`">续租</router-link></div>
@@ -332,6 +332,25 @@ export default {
         this.axios.post(this.API + "api/Lease_Order/delOrder", postData)
         .then(res => {
           console.log(res.data, "del");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.getlist()
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
+    onConfirmsales(id){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/afterSalesConfirmation", postData)
+        .then(res => {
+          console.log(res.data, "onConfirmsales");
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear()

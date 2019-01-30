@@ -33,7 +33,7 @@
 
         <div v-show="selected==2">
             <van-cell title="选择退租时间" is-link center :value="datetext" @click="go('/calendar/refund')"></van-cell>  
-            <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext"></van-cell>  
+            <van-cell title="时间段" is-link center @click="showtimequantum=true" :value="timequantumtext"></van-cell>  
             <van-cell is-link center :border="false" @click="go('/addresslist/refund')">
                 <template slot="title">
                     <div>收货地址</div>
@@ -44,22 +44,25 @@
             <div class="pd-t-100"><div class="btn text-c" @click="platform">提交</div></div>
         </div>
 
-        <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
+        <!-- <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
             <van-datetime-picker
             type="time"
             show-toolbar
             @cancel="showtime=false"
             @confirm="onConfirm"
             />
-        </van-popup>
+        </van-popup> -->
         <van-popup v-model="showcode">
             <div style="font-size:0"><img :src="codeimg" alt="" class="codeimg"></div>
+        </van-popup>
+        <van-popup v-model="showtimequantum" position="bottom" :close-on-click-overlay="false">
+            <van-picker :columns="timequantumarr" show-toolbar @cancel="showtimequantum = false" @confirm="onConfirmTimequantum"/>
         </van-popup>
     </div>
 </template>
 
 <script>
-import { Toast } from 'vant';
+import { Toast,Dialog } from 'vant';
 export default {
     data(){
         return{
@@ -72,7 +75,10 @@ export default {
             getaddress:'',
             numval:'',
             showcode:false,
-            codeimg:''
+            codeimg:'',
+            timequantumtext:'', //时间段
+            showtimequantum: false, //时间段
+            timequantumarr:[] //时间段
         }
     },
     created() {
@@ -80,19 +86,22 @@ export default {
         if(refundSession){
             this.selected = refundSession.backtype
             this.datetext = refundSession.backdate
-            this.timetext = refundSession.backtime
+            // this.timetext = refundSession.backtime
+            this.timequantumtext = refundSession.timequantumtext
             this.getaddress = refundSession.getaddress
             this.numval = refundSession.numval
         }else{
             this.getdefaultaddress()
         }
+        this.gettimequantumarr()
     },
     methods:{
         go(url){
             let refundSession = {
                 backtype: String(this.selected),
                 backdate: this.datetext,
-                backtime: this.timetext,
+                // backtime: this.timetext,
+                timequantumtext: this.timequantumtext,
                 getaddress:this.getaddress,
                 numval:this.numval
             }
@@ -118,6 +127,27 @@ export default {
                             this.getaddress = v
                         }
                     }
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
+        onConfirmTimequantum(value,index){
+            console.log(`当前值：${value}, 当前索引：${index}`);
+            this.timequantumtext = value
+            this.showtimequantum = false
+        },
+        gettimequantumarr(){
+            this.axios.post(this.API + "api/Lease_Order/getSFTime")
+            .then(res => {
+                console.log(res.data, "timequantum")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    let arr = []
+                    for(let v of resdata.data){
+                        arr.push(v[0])  
+                    }
+                    this.timequantumarr = arr
                 } else {
                     Toast(resdata.message)
                 }
@@ -152,34 +182,64 @@ export default {
         },
         //快递
         express(){
-
-        },
-        //平台
-        platform(){
-            if(this.datetext==''||this.timetext==''||!this.getaddress.ads_id){
+            if(this.datetext==''||this.numval==''){
                 Toast('还有未填写')
                 return
             }
 
-            // Toast.loading({ mask: true,message: '加载中...'})
-            // let postData = this.$qs.stringify({
-            //     order_id:this.$route.params.id,
-            //     ads_id: this.getaddress.ads_id,
-            //     time: `${this.datetext} ${this.timetext}`
-            // });
-            // this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
-            // .then(res => {
-            // console.log(res.data, "code");
-            // let resdata = res.data;
-            // if (resdata.code == 200) {
-            //     Toast.clear()
-            //     this.codeimg = resdata.data
-            //     this.showcode = true
-            // } else {
-            //     Toast.clear()
-            //     Toast(resdata.message);
-            // }
-            // });
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                order_id: this.$route.params.id,
+                time: this.datetext,
+                express_no: this.numval
+            });
+            this.axios.post(this.API + "api/Lease_Order/surrender", postData)
+            .then(res => {
+            console.log(res.data, "express");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                Toast.clear()
+                Dialog.alert({
+                    message: '操作成功'
+                }).then((e) => {
+                    this.$router.go(-1);
+                });
+            } else {
+                Toast.clear()
+                Toast(resdata.message);
+            }
+            });
+        },
+        //平台
+        platform(){
+            if(this.datetext==''||this.timequantumtext==''||!this.getaddress.ads_id){
+                Toast('还有未填写')
+                return
+            }
+
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                order_id:this.$route.params.id,
+                year: this.datetext,
+                time:this.timequantumtext,
+                ads_id:this.getaddress.ads_id
+            });
+            this.axios.post(this.API + "api/Lease_Order/delivery", postData)
+            .then(res => {
+            console.log(res.data, "platform");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                Toast.clear()
+                Dialog.alert({
+                    message: '操作成功'
+                }).then((e) => {
+                    this.$router.go(-1);
+                });
+            } else {
+                Toast.clear()
+                Toast(resdata.message);
+            }
+            });
         }
     }
 }
