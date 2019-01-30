@@ -25,12 +25,13 @@
     </div>
     <div class="tip text-c pd-15">3个工作日内到账，节假日顺延</div>
     <div class="flex-jc-center">
-      <div class="btn text-c">确认提现</div>
+      <div class="btn text-c" @click="submit">确认提现</div>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -40,6 +41,9 @@ export default {
   methods: {
     allmoney() {
       this.money = 400;
+    },
+    submit(){
+      Toast('此功能未开通')
     }
   }
 };

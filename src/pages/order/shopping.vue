@@ -146,7 +146,7 @@
     </div>
 
     <div class="pd-15">
-      <div class="btn text-c">支付</div>
+      <div class="btn text-c" @click="submit">支付</div>
     </div>
 
     <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
@@ -197,6 +197,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -244,6 +245,9 @@ export default {
       console.log(`当前值：${value}`);
       this.timetext = value;
       this.showtime = false;
+    },
+    submit(){
+      Toast('此功能未开通')
     }
   }
 };

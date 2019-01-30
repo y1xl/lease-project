@@ -43,8 +43,8 @@
             <div>
               <span class="product_title">低至</span>
               <span>¥</span>
-              <span class="price">{{detail.hire_price.price||'-'}}</span>
-              <span class="fsize13">/{{detail.hire_price.unt||'-'}}</span>
+              <span class="price">{{detail.hire_price?detail.hire_price.price:'-'}}</span>
+              <span class="fsize13">/{{detail.hire_price?detail.hire_price.unt:'-'}}</span>
             </div>
             <div class="fsize13">押金: ¥{{detail.gd_deposit}}</div>
           </div>
@@ -116,7 +116,7 @@
             <img class="head_img" src="../../assets/my.png" alt>
             <span>李***莉</span>
             <span>
-              <!-- <van-rate disabled disabled-color="#FFB10E" size="12"/> -->
+              <van-rate disabled disabled-color="#FFB10E" size="12"/>
             </span>
           </div>
           <div>
@@ -137,7 +137,7 @@
     <div class="bgc flex-jc-center" style="margin-top:10px">
       <div class="product_det">
         <div class="dettail">产品详情</div>
-        
+        <div v-html="detail.gd_desc"></div>
       </div>
     </div>
 
@@ -558,13 +558,14 @@ export default {
   margin-right: 10px;
 }
 .product_det {
-  width: 92%;
+  width: 100%;
   height: 100%;
+  padding: 10px;
 }
 .dettail {
   font-size: 15px;
   font-weight: 600;
-  padding: 13px 0;
+  margin-bottom: 10px;
 }
 .weight {
   padding: 10px 0;

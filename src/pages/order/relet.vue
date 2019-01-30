@@ -5,15 +5,15 @@
                 <span>选择续租的时间</span>
                 <div class="time">
                     <div class="border text-line" @click="isshow = true">
-                        {{timetext}}
+                        {{weektext}}
                         <img src="../../assets/icon-triangle.png" class="triangleimg">
                     </div>
                     <div class="border">
-                        <input type="text" v-model="tval">
+                        <input type="number" v-model="weekval" :disabled="weektext=='请选择'?true:false" class="bgc">
                     </div>
                 </div>
             </div>
-            <div class="pd-15">租金:<span class="fc-red">¥100.00</span></div>
+            <div class="pd-15">租金:<span class="fc-red">¥{{rent}}</span></div>
         </div>
 
         <div class="bgc">
@@ -49,21 +49,41 @@
 </template>
 
 <script>
-import { Toast } from 'vant';
+import { Toast,Dialog } from 'vant';
 export default {
     data(){
         return{
             radio:'1',
             isshow: false,
-            columns: ['天', '小时', '分钟', '测试', '测试'],
-            timetext: '请选择',
-            tval:''
+            columns: ['天'],
+            weektext: '请选择',
+            weekval:'',
+            isdisabled: true,
+            rent:0
         }
+    },
+    watch:{
+        weekval(){
+            let postData = this.$qs.stringify({
+                order_id:this.$route.params.id,
+                day: this.weekval
+            })
+            this.axios.post(this.API + "api/Lease_Order/orderRelet",postData)
+            .then(res => {
+                console.log(res.data, "weekval")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    this.rent = resdata.data           
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
     },
     methods:{
         onConfirm(value, index) {
             console.log(`当前值：${value}, 当前索引：${index}`);
-            this.timetext = value
+            this.weektext = value
             this.isshow = false
         },
         submit(){
@@ -71,9 +91,39 @@ export default {
                 Toast('请填写续租时间');
                 return
             }
-            if(this.radio==''){
-                Toast('请选择支付方式');
-                return
+
+            if(this.radio==1){
+                Toast('微信功能未开通')
+            }
+            if(this.radio==2){
+                Toast('支付宝功能未开通')
+            }
+            if(this.radio==3){
+                Toast.loading({ mask: true,message: '加载中...'})
+                let postData = this.$qs.stringify({
+                    // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                    order_id : this.$route.params.id,
+                    pay_way: this.radio,
+                    day:this.weekval,
+                    money:this.rent
+                });
+                this.axios.post(this.API + "api/Lease_Order/orderRenew", postData)
+                .then(res => {
+                    console.log(res.data, "submit");
+                    let resdata = res.data;
+                    if (resdata.code == 200) {
+                        Toast.clear()
+                        Dialog.alert({
+                            message: '支付成功'
+                        }).then((e) => {
+                            this.$router.replace({ path: "/order" })
+                        });
+                    } else {
+                        Toast.clear()
+                        Toast(resdata.message);
+                    }
+                    
+                });
             }
         }
     }

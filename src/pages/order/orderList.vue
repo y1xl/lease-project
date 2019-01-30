@@ -9,7 +9,7 @@
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item" v-for="(item,index) in navarr" :key="index">
           <div slot="title" class="position tag">
-            <div class="dot"><van-tag plain round color="#4EA9F9">1</van-tag></div>
+            <!-- <div class="dot"><van-tag plain round color="#4EA9F9">{{list.length}}</van-tag></div> -->
             {{item}}
           </div>
         </van-tab>
@@ -22,33 +22,33 @@
       </div> -->
 
     <div class="list" v-show="selected==0">
-      <!-- <OrderCard> -->
-        <!-- <div class="flex-center border-blue fc-blue">支付</div> -->
-        <!-- <div class="flex-center border" @click="onshowmodel">取消订单</div> -->
+      <div class="pd-15 fc-grey text-c" v-if="!list">快去添加订单吧~</div>
+
+      <OrderCard v-for="(item,index) in list" :key="index" :data="item">
+        <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==1">
+          <router-link v-bind="{to: '/pay/'+item.order_id}">支付</router-link>
+        </div>
         <!-- <div class="flex-center border" >重新下单</div> -->
-        <!-- <div class="flex-center border-blue fc-blue" >确认收货</div> -->
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
         <!-- <div class="flex-center border-blue fc-blue" >支付</div> -->
-        <!-- <div class="flex-center border">删除订单</div> -->
+        <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
         <!-- <div class="flex-center border">朋友代还</div> -->
         <!-- <div class="flex-center border">
           <router-link v-bind="{to: '/deny'}">否认</router-link>
         </div> -->
         <!-- <div class="flex-center border-blue fc-blue">确认</div> -->
-        <!-- <div class="flex-center border" @click="getcode">取货码</div> -->
-        <!-- <div class="flex-center border" @click="getcode">自还码</div> -->
-        <!-- <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div> -->
+        <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
+        <!-- <div class="flex-center border" @click="getcode(item.order_id,2)">自还码</div> -->
+        <div class="flex-center border" v-if="item.order_status==6"><router-link :to="`/relet/${item.order_id}`">续租</router-link></div>
         <!-- <div class="flex-center border-blue fc-blue">
           <router-link v-bind="{to: '/comments'}">评价</router-link>
         </div> -->
-        <!-- <div class="flex-center border">
-          <router-link v-bind="{to: '/refund'}">退租</router-link>
-        </div> -->
-        <!-- <div class="flex-center border">
-          <router-link v-bind="{to: '/shopping'}">购买</router-link>
-        </div> -->
-      <!-- </OrderCard>  -->
+        <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div>
+      </OrderCard> 
 
-      <OrderCard status="待评价" v-show="active==5">
+      <!-- <OrderCard status="待评价" v-show="active==5">
          <div class="flex-center border-blue fc-blue">
           <router-link v-bind="{to: '/comments'}">去评价</router-link>
         </div>
@@ -97,7 +97,7 @@
         <div class="flex-center border-blue fc-blue" >确认收货</div>
       </OrderCard>
       <OrderCard status="预租待确认" v-show="active==1"></OrderCard> 
-      <OrderCard status="已确认" v-show="active==3">
+      <OrderCard status="租赁中" v-show="active==3">
         <div class="flex-center border-blue fc-blue">
            <router-link v-bind="{to: '/shopping'}">购买</router-link>
         </div>
@@ -109,7 +109,7 @@
       <OrderCard status="退租中" v-show="active==3">
         <div class="flex-center border" >朋友代还</div>
         <div class="flex-center border" @click="getcode">自还码</div>
-      </OrderCard>
+      </OrderCard> -->
     </div>
 
     <div class="list" v-show="selected==1">
@@ -136,7 +136,7 @@
     <div class="model full flex-column-center position" v-show="showcode">
       <div class="closeimg" @click="getcode"><van-icon name="close" color="#fff"/></div>
       <img
-        src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1016728805,4031130995&fm=26&gp=0.jpg"
+        :src="codeimg"
         alt="QRcode"
         class="codeimg"
       >
@@ -153,17 +153,17 @@
           <van-radio-group v-model="radio">
             <div
               class="flex-jc-between mar-b-10"
-              @click="radio = item.id"
+              @click="radio = index"
               v-for="(item,index) in canceltext"
               :key="index"
             >
               <span>{{index+1}}、{{item.text}}</span>
-              <van-radio :name="item.id" checked-color="#2DBBF1"></van-radio>
+              <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
             </div>
           </van-radio-group>
         </div>
         <div class="pd-15">
-          <div class="btn text-c">提交</div>
+          <div class="btn text-c" @click="cancelOrder(orderid)">提交</div>
         </div>
     </van-popup>
 
@@ -184,10 +184,13 @@ export default {
       navarr: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
       navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
       navarr1: ["待付款", "待发货", "待收货", "待评价", "已完成"],
-      radio: 1,
-      canceltext: [{ id: 1, text: "我不想租了" }, { id: 2, text: "其他" }],
+      radio: 0,
+      canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "收货地址写错了" },{ id: 3, text: "重新下单" },{ id: 4, text: "测试下单/误下单" }, { id: 5, text: "其他" }],
       showmodel: false,
-      showcode: false
+      showcode: false,
+      list:[],
+      orderid:'',
+      codeimg:''
     };
   },
   created(){
@@ -211,40 +214,133 @@ export default {
     ontag(index, title) {
       console.log(index, title);
       this.active = index;
+      this.getlist()
     },
-    onshowmodel(){
+    onshowmodel(id){
+      this.orderid = id
       if(this.showmodel){
           this.showmodel = false
       }else{
           this.showmodel = true
       } 
     },
-    getcode() {
+    goshopping(){
+      window.sessionStorage.removeItem('shoppingSession');
+      this.$router.push({ path: "/shopping" });
+    },
+    gorefund(id){
+      window.sessionStorage.removeItem('refundSession');
+      this.$router.push({ path: "/refund/"+id });
+    },
+    //二维码
+    getcode(id,type) {
       if(this.showcode){
           this.showcode = false
       }else{
-          this.showcode = true
+        Toast.loading({ mask: true,message: '加载中...'})
+        let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+          way: type
+        });
+        this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
+        .then(res => {
+          console.log(res.data, "code");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.codeimg = resdata.data
+            this.showcode = true
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
       } 
     },
 
     getlist(){
+      if(this.selected==0){
+        Toast.loading({ mask: true,message: '加载中...'})
+        let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_status:this.active
+        });
+        this.axios.post(this.API + "api/Lease_Order/LeaseQuery", postData)
+        .then(res => {
+          console.log(res.data, "list");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.list = resdata.data
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+      }  
+    },
+    //取消订单
+    cancelOrder(id){
       Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({
-        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        order_status:1
-      });
-      this.axios.post(this.API + "api/Lease_Order/LeaseQuery", postData)
-      .then(res => {
-        console.log(res.data, "list");
-        let resdata = res.data;
-        if (resdata.code == 200) {
-          Toast.clear()
-          this.list = resdata.data
-        } else {
-          Toast.clear()
-          Toast(resdata.message);
-        }
-      });
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+          withouTreason: this.canceltext[this.radio].text
+        });
+        this.axios.post(this.API + "api/Lease_Order/cancelOrder", postData)
+        .then(res => {
+          console.log(res.data, "cancelOrder");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.showmodel = false
+            this.getlist()
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
+    //确认收货
+    onConfirmGoods(id){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/confirmReceipt", postData)
+        .then(res => {
+          console.log(res.data, "onConfirmGoods");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.getlist()
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
+    //删除
+    del(id){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/delOrder", postData)
+        .then(res => {
+          console.log(res.data, "del");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.getlist()
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
     }
   }
 };

@@ -13,7 +13,7 @@
                 <div slot="title">
                     <div>收货地址</div>
                     <div>{{getaddress.ads_user||''}}  {{getaddress.ads_phone||''}} <van-tag plain v-if="getaddress.ads_state==2">默认</van-tag></div>
-                    <div>{{(getaddress.ads_province+getaddress.ads_city+getaddress.ads_district+getaddress.ads_address)||''}}</div>
+                    <div>{{(getaddress.ads_province||'')+(getaddress.ads_city||'')+(getaddress.ads_district||'')+(getaddress.ads_address||'')}}</div>
                 </div>
             </van-cell>
             <template v-if="typenum==0">
@@ -377,8 +377,9 @@ export default {
         getotherprice(){
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-                goods_id:this.$route.params.id,
-                sku: decodeURI(this.$route.params.guige)
+                goods_id:this.$route.params.id||'',
+                sku: this.$route.params.guige?decodeURI(this.$route.params.guige):'',
+                cart_id: this.$route.params.cartid||''
             })
             this.axios.post(this.API + "api/Order/GetGoodsDetail",postData)
             .then(res => {

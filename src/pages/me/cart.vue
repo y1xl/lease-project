@@ -120,8 +120,9 @@ export default {
             Toast('请先选择')
             return
         }
+
       window.sessionStorage.removeItem("buySession");
-      this.$router.push({ path: "/buy" });
+      this.$router.push({ path: "/buy/" + this.list[this.radio].cart_id });
     }
   }
 };

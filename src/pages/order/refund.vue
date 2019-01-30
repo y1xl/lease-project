@@ -14,7 +14,7 @@
             </div>
             <div class="text-c tip">温馨提示:选择朋友代还您需要发送给朋友打开才能还</div>
 
-            <div class="pd-t-100"><div class="btn text-c">确定</div></div>
+            <div class="pd-t-100"><div class="btn text-c" @click="oneself">确定</div></div>
         </div>
 
         <div v-show="selected==1">
@@ -27,8 +27,8 @@
             </van-cell>    
 
             <div class="text-c tip">温馨提示:如果未经平台预约寄送,请直接填写快递单号</div>
-            <div class="pd-15"><div class="btn1 text-c" @click="go('/appointmentExpress')">快捷预约顺丰上门取件入口</div></div>
-            <div class="pd-15"><div class="btn text-c">确定</div></div>
+            <div class="pd-15"><div class="btn1 text-c" @click="go('/appointmentExpress/'+orderid)">快捷预约顺丰上门取件入口</div></div>
+            <div class="pd-15"><div class="btn text-c" @click="express">确定</div></div>
         </div>
 
         <div v-show="selected==2">
@@ -37,11 +37,11 @@
             <van-cell is-link center :border="false" @click="go('/addresslist/refund')">
                 <template slot="title">
                     <div>收货地址</div>
-                    <div>{{getaddress.name}}  {{getaddress.phone}} <van-tag plain v-if="getaddress.default">默认</van-tag></div>
-                    <div>{{getaddress.address}}</div>
+                    <div>{{getaddress.ads_user||''}}  {{getaddress.ads_phone||''}} <van-tag plain v-if="getaddress.ads_state==2">默认</van-tag></div>
+                    <div>{{(getaddress.ads_province||'')+(getaddress.ads_city||'')+(getaddress.ads_district||'')+(getaddress.ads_address||'')}}</div>
                 </template>
             </van-cell>
-            <div class="pd-t-100"><div class="btn text-c">提交</div></div>
+            <div class="pd-t-100"><div class="btn text-c" @click="platform">提交</div></div>
         </div>
 
         <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
@@ -52,20 +52,27 @@
             @confirm="onConfirm"
             />
         </van-popup>
+        <van-popup v-model="showcode">
+            <div style="font-size:0"><img :src="codeimg" alt="" class="codeimg"></div>
+        </van-popup>
     </div>
 </template>
 
 <script>
+import { Toast } from 'vant';
 export default {
     data(){
         return{
+            orderid: this.$route.params.id,
             selected:0,
             typenum:0,
             showtime:false,
             datetext:'',
             timetext:'',
             getaddress:'',
-            numval:''
+            numval:'',
+            showcode:false,
+            codeimg:''
         }
     },
     created() {
@@ -76,8 +83,9 @@ export default {
             this.timetext = refundSession.backtime
             this.getaddress = refundSession.getaddress
             this.numval = refundSession.numval
+        }else{
+            this.getdefaultaddress()
         }
-        //取缓存 end
     },
     methods:{
         go(url){
@@ -96,6 +104,83 @@ export default {
             this.timetext = value
             this.showtime = false
         },
+        getdefaultaddress(){
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            })
+            this.axios.post(this.API + "api/Lease/ads_select",postData)
+            .then(res => {
+                console.log(res.data, "address")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    for(let v of resdata.data){
+                        if(v.ads_state==2){
+                            this.getaddress = v
+                        }
+                    }
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
+        //自还
+        oneself(){
+            if(this.typenum==0){
+                Toast.loading({ mask: true,message: '加载中...'})
+                let postData = this.$qs.stringify({
+                    users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                    order_id:this.$route.params.id,
+                    way: 2
+                });
+                this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
+                .then(res => {
+                console.log(res.data, "code");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    this.codeimg = resdata.data
+                    this.showcode = true
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message);
+                }
+                });
+            }
+            if(this.typenum==1){
+                Toast('此功能未开通')
+            }
+        },
+        //快递
+        express(){
+
+        },
+        //平台
+        platform(){
+            if(this.datetext==''||this.timetext==''||!this.getaddress.ads_id){
+                Toast('还有未填写')
+                return
+            }
+
+            // Toast.loading({ mask: true,message: '加载中...'})
+            // let postData = this.$qs.stringify({
+            //     order_id:this.$route.params.id,
+            //     ads_id: this.getaddress.ads_id,
+            //     time: `${this.datetext} ${this.timetext}`
+            // });
+            // this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
+            // .then(res => {
+            // console.log(res.data, "code");
+            // let resdata = res.data;
+            // if (resdata.code == 200) {
+            //     Toast.clear()
+            //     this.codeimg = resdata.data
+            //     this.showcode = true
+            // } else {
+            //     Toast.clear()
+            //     Toast(resdata.message);
+            // }
+            // });
+        }
     }
 }
 </script>
