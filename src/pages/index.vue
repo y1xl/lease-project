@@ -58,37 +58,46 @@
                 <div class="img_box2 flex-center">
                   <img class="img" :src="goods.gd_img[0]">
                 </div>
-                <div class="text-line pro_name">{{goods.category_name}}</div>
+                <div class="text-line pro_name">{{goods.goods_name}}</div>
                 <div class="f12">
                   <span style="color: #F21E1E;">¥</span>
-                  <span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
+                  <span class="price">{{goods.hire_price.price}}</span>
+                  /{{goods.hire_price.unt}}
                 </div>
               </div>
             </div>
           </div>
         </van-tab>
 
-        <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key='index'>
+        <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key="index">
           <div class="title" v-show="!hostlist.length==0">热门推荐</div>
           <div class="flex-jc-between border-b bgc camer_hm_box" v-show="!hostlist.length==0">
-            <div class="camer_hm" v-for="(goods,index) in hostlist" :key="index" @click="toDetail(goods.goods_id)">
+            <div
+              class="camer_hm"
+              v-for="(goods,index) in hostlist"
+              :key="index"
+              @click="toDetail(goods.goods_id)"
+            >
               <div class="img_box2 flex-center">
-                <img
-                  class="img"
-                  :src="goods.gd_img[0]"
-                >
+                <img class="img" :src="goods.gd_img[0]">
               </div>
-              <div class="text-line pro_name">{{goods.category_name}}</div>
+              <div class="text-line pro_name">{{goods.goods_name}}</div>
               <div class="f12">
                 <span style="color: #F21E1E;">¥</span>
-                <span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
+                <span class="price">{{goods.hire_price.price}}</span>
+                /{{goods.hire_price.unt}}
               </div>
             </div>
           </div>
 
           <div class="bgc">
             <div class="title">所有产品</div>
-            <div class="fl_pro_list mar-b-10" v-for="(item, index) in goodslist" :key="index" @click="toDetail(item.goods_id)">
+            <div
+              class="fl_pro_list mar-b-10"
+              v-for="(item, index) in goodslist"
+              :key="index"
+              @click="toDetail(item.goods_id)"
+            >
               <div class="img_box">
                 <img class="sy_img" :src="item.gd_img[0]">
               </div>
@@ -127,12 +136,12 @@ export default {
       lat: "",
       lng: "",
       images: [],
-      indexlist:[],
-      navlist:[],
-      goodslist:[],
-      hostlist:[],
+      indexlist: [],
+      navlist: [],
+      goodslist: [],
+      hostlist: [],
       active: 0,
-      nearShop:''
+      nearShop: ""
     };
   },
 
@@ -154,12 +163,12 @@ export default {
           var lng = position.coords.longitude; //经度
           this.lat = lat;
           this.lng = lng;
-          this.getNearShop(lat,lng)
+          this.getNearShop(lat, lng);
           let center = {
             lat,
             lng
-          }
-          window.localStorage.setItem("center", JSON.stringify(center))
+          };
+          window.localStorage.setItem("center", JSON.stringify(center));
         });
       } else {
         Toast("浏览器不支持地理定位");
@@ -178,11 +187,10 @@ export default {
       this.$router.push({ path: "/ProductDetail/" + id });
     },
 
-    onClicknav(i){
-      if(i==0){
-
-      }else{
-        Toast.loading({ mask: true,message: '加载中...'})
+    onClicknav(i) {
+      if (i == 0) {
+      } else {
+        Toast.loading({ mask: true, message: "加载中..." });
         let postData = this.$qs.stringify({
             cate_id:this.navlist[i-1].cate_id
         })
@@ -239,24 +247,28 @@ export default {
         }
       });
     },
-    getNearShop(lat,lng) {
+    getNearShop(lat, lng) {
       let postData = this.$qs.stringify({
-            lat:lat,
-            lng:lng
-            // lat:'22.54605355',
-            // lng:'114.02597366'
-        })
-      this.axios.post(this.API + "api/Lease/Nearby_store",postData)
-      .then(res => {
-        console.log(res.data, "Nearby_store");
-        let resdata = res.data;
-        if (resdata.code == 200) {
-          this.nearShop = resdata.data.store_province+resdata.data.store_district+resdata.data.store_city
-        } else {
-          Toast(resdata.message);
-        }
+        lat: lat,
+        lng: lng
+        // lat:'22.54605355',
+        // lng:'114.02597366'
       });
-    },
+      this.axios
+        .post(this.API + "api/Lease/Nearby_store", postData)
+        .then(res => {
+          console.log(res.data, "Nearby_store");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.nearShop =
+              resdata.data.store_province +
+              resdata.data.store_district +
+              resdata.data.store_city;
+          } else {
+            Toast(resdata.message);
+          }
+        });
+    }
   }
 };
 </script>

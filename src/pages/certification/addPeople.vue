@@ -122,7 +122,6 @@ export default {
               Toast(resdata.message);
             }
           });
-
       }
     }
   }
