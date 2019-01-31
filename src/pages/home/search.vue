@@ -68,6 +68,7 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             if (resdata.data.length == 0) {
+              Toast.clear();
               Toast({
                 message: " 没有匹配的产品",
                 duration: "5000"
@@ -77,9 +78,10 @@ export default {
               this.flprolist = resdata.data;
             }
           } else {
+            Toast.clear();
             Toast(resdata.message);
           }
-          Toast.clear();
+          
         });
     }
   }
