@@ -91,6 +91,8 @@ import Addaddress from '@/pages/address/addaddress'
 
 import Map from '@/pages/map'
 
+import NotFound from '@/pages/notFound'
+
 Vue.use(Router)
 
 export default new Router({
@@ -195,6 +197,8 @@ export default new Router({
 
     //地图
     { path: '/map/:center/:shop', component: Map, meta: { title: '地图' } },
+
+    { path: '*', component: NotFound, meta: { title: '404' } },
 
   ],
 
