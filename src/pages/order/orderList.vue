@@ -342,6 +342,7 @@ export default {
           }
         });
     },
+    //确认售后
     onConfirmsales(id){
       Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({

@@ -5,7 +5,7 @@
     </van-search>
 
     <div class="bgc">
-      <div class="fl_pro_list" v-for="(item, index) in flprolist" :key="index">
+      <div class="fl_pro_list" v-for="(item, index) in flprolist" :key="index" @click="toDetail(item.goods_id)">
         <div class="img_box">
           <img class="sy_img" :src="item.gd_img[0]">
         </div>
@@ -42,6 +42,10 @@ export default {
     onSearch() {
       console.log(this.value);
       this.getsearch();
+    },
+    //产品详情
+    toDetail(id) {
+      this.$router.push({ path: "/ProductDetail/" + id });
     },
     getsearch() {
       Toast.loading({ mask: true, message: "加载中..." });

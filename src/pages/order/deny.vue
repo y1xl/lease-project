@@ -48,7 +48,7 @@ export default {
                 // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 order_id:this.$route.params.id,
                 content: this.contentval,
-                // image:
+                image:this.imgarr[0].file
             })
             this.axios.post(this.API + "api/Lease_Order/afterConfirmation",postData)
             .then(res => {
