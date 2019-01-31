@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </van-cell>
-            <van-cell title="期望收到的日期" is-link center v-show="typenum==0" @click="go('/calendar/expectdateTobuy/pre')" :value="expectdate"></van-cell>
+            <!-- <van-cell title="期望收到的日期" is-link center v-show="typenum==0" @click="go('/calendar/expectdateTobuy/pre')" :value="expectdate"></van-cell> -->
             <van-cell is-link center v-show="typenum==1||typenum==2"  @click="go('/calendar/expectdateTobuy/pre')" :value="expectdate">
                 <template slot="title">
                     <div>期望收到的日期</div>
@@ -69,7 +69,7 @@
                 </template>
             </van-cell>
             <van-cell title="配送时间段" center :value="timequantumtext" is-link v-show="typenum==2" @click="showtimequantum=true"></van-cell>
-            <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext" v-show="typenum==0"></van-cell>
+            <!-- <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext" v-show="typenum==0"></van-cell> -->
         </div>
 
         <div class="mar-b-10">
@@ -430,7 +430,11 @@ export default {
         nextface(){
             if(this.isconsent){
                 if(this.typenum==0){
-                    if(this.getlocation==''||this.getdate==''||this.people == ''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timetext==''){
+                    // if(this.getlocation==''||this.getdate==''||this.people == ''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timetext==''){
+                    //     Toast('还有未填写')
+                    //     return
+                    // }
+                    if(this.getlocation==''||this.getdate==''||this.people == ''||this.weektext=='请选择'||this.weekval==''){
                         Toast('还有未填写')
                         return
                     }
@@ -446,9 +450,11 @@ export default {
                         order_delivery_time:this.getdate,
                         safe_status: this.isinsurance?1:2,
                         delivery_way: this.typenum==0?3:this.typenum==1?1:2,
-                        qwsh_time: this.expectdate,
+                        // qwsh_time: this.expectdate,
+                        qwsh_time: '',
                         sku: decodeURI(this.$route.params.guige),
-                        time: this.timetext,
+                        // time: this.timetext,
+                        time: '',
                         ads_id:'',
                         way_price:'',
                         remark:'',

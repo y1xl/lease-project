@@ -104,7 +104,7 @@
         <div class="flex-jc-between border-b word_num" @click="toMouthw">
           <div>
             <span>口碑</span>
-            <span>(999+)</span>
+            <!-- <span>(0)</span> -->
           </div>
           <div class="flex-align-items">
             <!-- <span>97.6%</span> -->

@@ -5,7 +5,7 @@
         附近门店：
         <span class="fc-blue text-line">{{nearShop}}</span>
       </div>
-      <router-link class="sear flex-align-items" to="/search">
+      <router-link class="sear flex-align-items" @click="gosearch">
         <van-icon name="search"/>
         <span>搜索你想要的商品</span>
       </router-link>
@@ -185,6 +185,10 @@ export default {
     //产品详情
     toDetail(id) {
       this.$router.push({ path: "/ProductDetail/" + id });
+    },
+    gosearch(){
+      window.sessionStorage.removeItem("searchSession");
+      this.$router.push({ path: "/search" });
     },
 
     onClicknav(i) {

@@ -12,10 +12,10 @@
         <div class="f14 pro_name">{{item.goods_name}}</div>
         <div class="com_like">
           <van-rate v-model="item.rate" disabled disabled-color="#FFB10E"/>
-          <span class="f12">4</span>
+          <span class="f12">0</span>
           <div>
             <img class="chat" src="../../assets/chat.png">
-            <span class="f12">999+</span>
+            <span class="f12">0</span>
           </div>
         </div>
         <div class="zj">
@@ -37,7 +37,12 @@ export default {
       flprolist: []
     };
   },
-  created() {},
+  created() {
+      let searchSession = JSON.parse(window.sessionStorage.getItem("searchSession"));
+      if(searchSession){
+          this.value = searchSession.value
+      }
+  },
   methods: {
     onSearch() {
       console.log(this.value);
@@ -45,6 +50,10 @@ export default {
     },
     //产品详情
     toDetail(id) {
+      let searchSession = {
+        value: this.value,
+      }
+      window.sessionStorage.setItem("searchSession", JSON.stringify(searchSession));
       this.$router.push({ path: "/ProductDetail/" + id });
     },
     getsearch() {
