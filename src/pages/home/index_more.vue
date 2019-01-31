@@ -65,22 +65,21 @@ export default {
         .post(this.API + "api/Lease/Scene_goods", postData)
         .then(res => {
           console.log(res.data, "Scene_goods");
+          this.loading = true;
           let resdata = res.data;
+
           if (resdata.code == 200) {
-            this.loading = true;
             // this.goodslist = this.goodslist.push(...resdata.data);
             this.goodslist = this.goodslist.concat(resdata.data);
 
             if (resdata.data.length == 0) {
+              // 加载状态结束
+              this.loading = false;
               this.finished = true;
             }
-
-            // 加载状态结束
-            this.loading = false;
           } else {
             Toast(resdata.message);
           }
-          this.finished = true;
         });
     }
   }

@@ -4,24 +4,28 @@
       <van-tag type="success">推荐</van-tag>
     </div>
     <div class="bgc list">
-      <van-radio-group v-model="radio">
-        <div
-          class="flex-align-items card"
-          :class="index===list.length-1?'':'border-b'"
-          @click="radio = index"
-          v-for="(item,index) in list"
-          :key="index"
-        >
-          <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
-          <div class="item flex-align-items flex-jc-between flex-1">
-            <div class="left flex-1">
-              <div>{{item.store_name}}</div>
-              <div class="fsz12">{{item.store_province+item.store_city+item.store_district+(item.store_Address||'')}}</div>
+      <van-list v-model="loading" :finished="finished" @load="onLoad">
+        <van-radio-group v-model="radio">
+          <div
+            class="flex-align-items card"
+            :class="index===list.length-1?'':'border-b'"
+            @click="radio = index"
+            v-for="(item,index) in list"
+            :key="index"
+          >
+            <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
+            <div class="item flex-align-items flex-jc-between flex-1">
+              <div class="left flex-1">
+                <div>{{item.store_name}}</div>
+                <div
+                  class="fsz12"
+                >{{item.store_province+item.store_city+item.store_district+(item.store_Address||'')}}</div>
+              </div>
+              <div class="right fsz12">距您{{item.juli}}m</div>
             </div>
-            <div class="right fsz12">距您{{item.juli}}m</div>
           </div>
-        </div>
-      </van-radio-group>
+        </van-radio-group>
+      </van-list>
     </div>
 
     <div class="height"></div>
@@ -33,30 +37,43 @@
 export default {
   data() {
     return {
-      list: [ ],
-      radio: 0
+      loading: false,
+      finished: false,
+      list: [],
+      radio: 0,
+      page: 0
     };
   },
-  created(){
-    this.getlist()
+  created() {
+    setTimeout(() => {
+      this.onLoad();
+    }, 500);
   },
   methods: {
-    getlist(){
+    onLoad() {
+      let nowPageNum = ++this.page;
       let postData = this.$qs.stringify({
-          lat: JSON.parse(window.localStorage.getItem("center")).lat,
-          lng: JSON.parse(window.localStorage.getItem("center")).lng,
-          goods_id:this.$route.params.id,
-          page:1
-      })
-      this.axios.post(this.API + "api/Order/GetSelfShop",postData)
+        lat: JSON.parse(window.localStorage.getItem("center")).lat,
+        lng: JSON.parse(window.localStorage.getItem("center")).lng,
+        goods_id: this.$route.params.id,
+        page: nowPageNum
+      });
+      this.axios
+        .post(this.API + "api/Order/GetSelfShop", postData)
         .then(res => {
-            console.log(res.data, "list")
-            let resdata = res.data
-            if (resdata.code == 200) {
-                this.list = resdata.data
-            } else {
-                Toast(resdata.message)
+          console.log(res.data, "list");
+          this.loading = true;
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.list = this.list.concat(resdata.data);
+            if (resdata.data.length == 0) {
+              this.finished = true;
+              this.loading = false;
+              // 加载状态结束
             }
+          } else {
+            Toast(resdata.message);
+          }
         });
     },
     submit() {
