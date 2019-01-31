@@ -198,7 +198,7 @@ export default new Router({
     //地图
     { path: '/map/:center/:shop', component: Map, meta: { title: '地图' } },
 
-    { path: '*', component: NotFound, meta: { title: '404' } },
+    { path: '*', component: NotFound, meta: { title: '404-not found' } },
 
   ],
 
