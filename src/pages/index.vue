@@ -5,10 +5,10 @@
         附近门店：
         <span class="fc-blue text-line">{{nearShop}}</span>
       </div>
-      <router-link class="sear flex-align-items" @click="gosearch">
+      <div class="sear flex-align-items" @click="gosearch">
         <van-icon name="search"/>
         <span>搜索你想要的商品</span>
-      </router-link>
+      </div>
     </div>
     <div class="flex-jc-center bgc" v-show="active==0">
       <div class="banner bgc">
