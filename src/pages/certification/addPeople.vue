@@ -78,13 +78,13 @@ export default {
         Toast("请先填写完整");
         return;
       }
-      let urgent_id = "";
-      urgent_id = this.$route.params.id;
-      if (urgent_id == "") {
+
+      let urgent_id = this.$route.params.id;
+      if (!urgent_id) {
         let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
         if (userinfo) {
           let postData = this.$qs.stringify({
-            users_id: userinfo.users_id,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             urgent_phone: this.phoneval,
             urgent_name: this.nameval,
             urgent_sign: this.text
@@ -92,7 +92,7 @@ export default {
           this.axios
             .post(this.API + "api/Lease/Add_urgent", postData)
             .then(res => {
-              console.log(res.data, "user_price");
+              console.log(res.data, "add");
               let resdata = res.data;
               if (resdata.code == 200) {
                 Toast("添加成功");
@@ -112,7 +112,7 @@ export default {
         this.axios
           .post(this.API + "api/Lease/urgent_update", postData)
           .then(res => {
-            console.log(res.data, "user_price");
+            console.log(res.data, "editor");
             let resdata = res.data;
             if (resdata.code == 200) {
               Toast("编辑成功");

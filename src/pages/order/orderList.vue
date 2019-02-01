@@ -88,7 +88,7 @@
       <OrderCard status="已确认" v-show="active==2">
         <div class="flex-center border-blue fc-blue" >确认收货</div>
       </OrderCard>
-      <OrderCard status="已预订" v-show="active==2">
+      <OrderCard status="已预定" v-show="active==2">
         <div class="flex-center border-blue fc-blue">支付</div>
       </OrderCard>
       <OrderCard status="待收货" v-show="active==2">
@@ -181,7 +181,7 @@ export default {
     return {
       selected: 0,
       active: 0,
-      navarr: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
+      navarr: ["待付款", "预租中", "已预定", "租赁中", "已超期", "待评价","已评价",'已取消'],
       navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
       navarr1: ["待付款", "待发货", "待收货", "待评价", "已完成"],
       radio: 0,

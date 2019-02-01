@@ -71,6 +71,25 @@ export default {
             this.timequantumtext = value
             this.showtimequantum = false
         },
+        getdefaultaddress(){
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            })
+            this.axios.post(this.API + "api/Lease/ads_select",postData)
+            .then(res => {
+                console.log(res.data, "address")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    for(let v of resdata.data){
+                        if(v.ads_state==2){
+                            this.getaddress = v
+                        }
+                    }
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
         getdefaultshop(){
             let postData = this.$qs.stringify({
                 order_id: this.$route.params.id

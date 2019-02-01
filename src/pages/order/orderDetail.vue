@@ -309,13 +309,53 @@ export default {
           }
       });
     },
-    goshopping(){
+    goshopping(id){
       window.sessionStorage.removeItem('shoppingSession');
-      this.$router.push({ path: "/shopping" });
+      this.$router.push({ path: "/shopping/"+id });
     },
-    gorefund(){
+    gorefund(id){
       window.sessionStorage.removeItem('refundSession');
-      this.$router.push({ path: "/refund" });
+      this.$router.push({ path: "/refund/"+id });
+    },
+    //确认收货
+    onConfirmGoods(id){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/confirmReceipt", postData)
+        .then(res => {
+          console.log(res.data, "onConfirmGoods");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.getlist()
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
+    //删除
+    del(id){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/delOrder", postData)
+        .then(res => {
+          console.log(res.data, "del");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.getlist()
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
     },
   }
 };

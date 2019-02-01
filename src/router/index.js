@@ -172,6 +172,7 @@ export default new Router({
     { path: '/addPeople', component: AddPeople },
     { path: '/addPeople/:id', component: AddPeople },
     { path: '/realname', component: Realname, meta: { title: '实名认证' } },
+    { path: '/realname/:orderid', component: Realname, meta: { title: '实名认证' } },
     { path: '/face/:orderid', component: Face, meta: { title: '人脸识别' } },
 
     //托管

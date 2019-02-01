@@ -75,6 +75,7 @@ export default {
               });
               this.flprolist = "";
             } else {
+              Toast.clear();
               this.flprolist = resdata.data;
             }
           } else {

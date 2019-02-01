@@ -5,7 +5,7 @@
         <van-swipe-cell :right-width="65" :on-close="onClose">
           <div class="bgc flex-align-items item">
             <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
-            <div class="flex-1 left">
+            <div class="flex-1 left" @click="radio=index">
               <div class="mar-b-10">{{item.ads_user||''}} {{item.ads_phone||''}}</div>
               <div>
                 <van-tag plain type="danger" v-if="item.ads_state==2">默认</van-tag>

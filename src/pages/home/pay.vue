@@ -4,7 +4,7 @@
             <div class="text-c">您的额度(元)</div>
             <div class="text-c num">{{info.users_money}}</div>
             <div class="text-c marb30"><router-link class="lines" to="/certification">提升额度</router-link></div>
-            <div class="text-c">您的免押额度为{{info.order_credit_rent}}元,仍需支付<span class="fc-red"> ¥{{info.order_rent}}</span></div>
+            <div class="text-c">您的押金为{{info.order_credit_rent}}元,仍需支付<span class="fc-red"> ¥{{info.order_rent}}</span></div>
         </div>
 
         <div class="bgc">

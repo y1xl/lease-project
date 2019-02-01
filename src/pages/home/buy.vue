@@ -167,6 +167,7 @@
 <script>
 import { Toast } from 'vant';
 import { accAdd,accSub } from "@/utils/util.js";
+import { log } from 'util';
 
 export default {
     data(){
@@ -207,10 +208,14 @@ export default {
     },
     watch:{
         weekval(){
+            if(this.weekval==''){
+                this.rent = 0
+                return
+            }
             let postData = this.$qs.stringify({
                 goods_id:this.$route.params.id,
                 rent_num: this.weekval,
-                unt: this.weektext
+                unt: this.weektext=='天'?'1':'2'
             })
             this.axios.post(this.API + "api/Order/GetHirePrice",postData)
             .then(res => {
@@ -247,7 +252,8 @@ export default {
                 return
             }
             this.getfreight()
-        }
+        },
+
     },
     computed:{
         columns: function () {
@@ -258,23 +264,35 @@ export default {
                     this.sum = this.detail.pay_safe
                 }
 
-                if(this.hire_cate==1){
-                    this.weektext= '请选择'
+                if(this.weektext=='天'){
+                    this.weekval = ''
+                    this.isdisabled = false
+                }else if(this.weektext=='小时'){
+                    this.isdisabled = true
+                }else{
+                    this.weektext='请选择'
                     this.weekval = ''
                     this.rent=0
+                }
+                return ['天', '小时']
+
+                if(this.hire_cate==1){
                     return ['天']
                 }
                 if(this.hire_cate==2){
-                    this.weektext= '请选择'
-                    this.weekval = ''
-                    this.rent=0
                     return ['天', '小时']
                 }
 
             }else{
-                this.weektext='请选择'
-                this.weekval = ''
-                this.rent=0
+                if(this.weektext=='天'){
+                    this.isdisabled = false
+                }else{
+                    this.weektext='天'
+                    this.weekval = ''
+                    this.rent=0
+                    this.isdisabled = false
+                }
+                
                 this.getfreight()
                 return ['天']
             }
@@ -291,8 +309,8 @@ export default {
             this.timetext = buySession.gettime
             this.people = buySession.getpeople
             this.getaddress = buySession.getaddress
-            // this.weektext = buySession.weektext
-            // this.weekval = buySession.weekval
+            this.weektext = buySession.weektext
+            this.weekval = buySession.weekval
             this.isinsurance = buySession.isinsurance
             this.couponstext = buySession.couponstext
             this.activitytext = buySession.activitytext
@@ -314,8 +332,8 @@ export default {
                 gettime: this.timetext,
                 getpeople: this.people,
                 getaddress:this.getaddress,
-                // weektext:this.weektext,//租期
-                // weekval:this.weekval,//租期
+                weektext:this.weektext,//租期
+                weekval:this.weekval,//租期
                 isinsurance:this.isinsurance,
                 couponstext:this.couponstext,
                 activitytext:this.activitytext,

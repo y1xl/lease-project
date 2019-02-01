@@ -6,7 +6,7 @@
       <div :class="{ 'fc-blue selected': selected==1 }" @click="selected=1">朋友代取</div>
     </div>
 
-    <div class="bgc">
+    <div class="bgc" v-show="selected==0">
       <div class="border-b inputbox pd-15">
         <span>姓名</span>
         <input type="text" v-model="nameval">
@@ -14,6 +14,16 @@
       <div class="inputbox pd-15">
         <span>手机号码</span>
         <input type="number" v-model="phoneval" maxlength="11">
+      </div>
+    </div>
+    <div class="bgc" v-show="selected==1">
+      <div class="border-b inputbox pd-15">
+        <span>姓名</span>
+        <input type="text" v-model="nameval1">
+      </div>
+      <div class="inputbox pd-15">
+        <span>手机号码</span>
+        <input type="number" v-model="phoneval1" maxlength="11">
       </div>
     </div>
 
@@ -30,24 +40,43 @@ export default {
     return {
       selected: 0,
       nameval: "",
-      phoneval: ""
+      phoneval: "",
+      nameval1: "",
+      phoneval1: "",
     };
+  },
+  created(){
+    this.nameval = JSON.parse(window.localStorage.getItem("userinfo")).users_name
+    this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone
   },
   methods: {
     onbtn() {
-      if (this.nameval == "" || this.phoneval == "") {
-        Toast("不能为空");
-        return;
+      let people = {}
+      if(this.selected == 0){
+        if (this.nameval == "" || this.phoneval == "") {
+          Toast("不能为空");
+          return;
+        }
+        if (this.phoneval.length != 11) {
+          Toast("手机号格式不正确");
+          return;
+        }
+        people.type=String(this.selected)
+        people.name=this.nameval
+        people.phone=this.phoneval
+      }else{
+        if (this.nameval1 == "" || this.phoneval1 == "") {
+          Toast("不能为空");
+          return;
+        }
+        if (this.phoneval1.length != 11) {
+          Toast("手机号格式不正确");
+          return;
+        }
+        people.type=String(this.selected)
+        people.name=this.nameval1
+        people.phone=this.phoneval1
       }
-      if (this.phoneval.length != 11) {
-        Toast("手机号格式不正确");
-        return;
-      }
-      let people = {
-        type: String(this.selected),
-        name: this.nameval,
-        phone: this.phoneval
-      };
 
       if (this.$route.params.type == "shopping") {
         let shoppingSession = JSON.parse(

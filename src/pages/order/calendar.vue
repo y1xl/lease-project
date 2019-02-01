@@ -151,7 +151,7 @@ export default {
     },
 
     goprebuy(){
-      Toast('微信功能未开通') 
+      Toast('功能未开通') 
       return
       window.sessionStorage.removeItem("prebuySession");
       this.$router.replace({ path: "/preBuy" });
