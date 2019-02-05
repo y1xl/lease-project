@@ -274,7 +274,7 @@ export default {
                     this.weekval = ''
                     this.rent=0
                 }
-                return ['天', '小时']
+                // return ['天', '小时']
 
                 if(this.hire_cate==1){
                     return ['天']
@@ -446,6 +446,7 @@ export default {
         },
 
         nextface(){
+            this.$router.push({ path: '/face/33'})
             if(this.isconsent){
                 if(this.typenum==0){
                     // if(this.getlocation==''||this.getdate==''||this.people == ''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timetext==''){

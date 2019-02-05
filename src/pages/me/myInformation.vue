@@ -5,7 +5,7 @@
         <div class="flex-jc-between flex-align-items tx border-b">
           <div>我的头像</div>
           <div class="head_img">
-            <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+            <img src="http://img2.imgtn.bdimg.com/it/u=390947329,3335162149&fm=26&gp=0.jpg">
           </div>
         </div>
 

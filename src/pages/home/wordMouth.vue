@@ -16,6 +16,7 @@
           <span class="border comment">不好(0)</span>
         </div>
       </div>-->
+
       <div class="word_mouth">
         <div v-for="(item,index ) in wordlist" :key="index">
           <div class="flex-align-items head_name">
@@ -40,6 +41,7 @@
         </div>
       </div>
     </div>
+    <div class="text-c fc-grey pd-15" v-show="wordlist.length==0">没有更多了</div>
   </div>
 </template>
 <script>
@@ -51,7 +53,7 @@ export default {
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
       ],
-      wordlist: [{}, {}],
+      wordlist: [],
       value: 5
     };
   }

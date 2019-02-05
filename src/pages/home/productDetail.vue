@@ -18,7 +18,7 @@
       <div class="flex-jc-center">
         <div class="product bgc">
           <div class="flex-jc-between">
-            <div>
+            <div class="flex-1">
               <div class="product_title">{{detail.goods_name}}</div>
               <!-- <div class="grey_12 camera">一次成像相机</div> -->
             </div>
@@ -258,8 +258,8 @@ export default {
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" 
       ],
-      wordlist: [{}, {}],
-      discountlist: [{}, {}],
+      wordlist: [],
+      discountlist: [],
       showmodel: false,
       discountmodel: false,
       numval: "",

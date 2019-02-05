@@ -29,8 +29,8 @@
                     <div class="mar-b-10">{{data.model_name}}</div>
                     <div class="spec mar-b-10"><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>
                     <div class="mar-b-10 fsz12">
-                        <span class="mr10">租金:￥{{data.rental||'-'}}</span>
-                        <span>押金:￥{{data.order_rent||'-'}}</span>
+                        <span class="mr10">租金:￥{{data.rental}}</span>
+                        <span>押金:￥{{data.order_rent}}</span>
                     </div>
                     <!-- <div v-if="data.order_status==1">应付总额:<span class="fc-red">￥{{data.total_price}}</span></div> -->
                     <div>实付总额:<span class="fc-red">￥{{data.total_price}}</span></div>

@@ -3,7 +3,7 @@
     <div class="flex-jc-between manber_b" @click="myInformat()" :style="bgimg">
       <div class="flex-align-items flex_box">
         <div class="head_img">
-          <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg">
+          <img src="http://img2.imgtn.bdimg.com/it/u=390947329,3335162149&fm=26&gp=0.jpg">
         </div>
         <div class>
           <div class="name">{{users_name}}</div>

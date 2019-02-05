@@ -16,6 +16,7 @@ import Pay from '@/pages/home/pay'
 import Agreement from '@/pages/home/agreement'
 import Search from '@/pages/home/search'
 import PreBuy from '@/pages/home/preBuy'
+import ApplyText from '@/pages/home/applyText'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -127,7 +128,8 @@ export default new Router({
     { path: '/pay/:orderid', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索' } },
-    { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, //预下单
+    { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, 
+    { path: '/applyText', component: ApplyText, meta: { title: '支付' } }, 
 
     //个人中心
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
@@ -172,7 +174,6 @@ export default new Router({
     { path: '/addPeople', component: AddPeople },
     { path: '/addPeople/:id', component: AddPeople },
     { path: '/realname', component: Realname, meta: { title: '实名认证' } },
-    { path: '/realname/:orderid', component: Realname, meta: { title: '实名认证' } },
     { path: '/face/:orderid', component: Face, meta: { title: '人脸识别' } },
 
     //托管

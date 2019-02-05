@@ -7,7 +7,7 @@
     </div>
     <div id="pro-list">
       <van-list v-model="loading" :finished="finished" @load="onLoad" class="flex-wrap bgc">
-        <div v-for="(item,index) in goodslist" :key="index">
+        <div v-for="(item,index) in goodslist" :key="index" @click="toDetail(item.goods_id)">
           <div class="item text-c">
             <div class="flex-jc-center img_b1">
               <img class="img" :src="item.gd_img[0]">
@@ -39,11 +39,11 @@ export default {
   },
   created() {
     this.gethender();
-    setTimeout(() => {
-      this.onLoad();
-    }, 500);
   },
   methods: {
+    toDetail(id) {
+      this.$router.push({ path: "/ProductDetail/" + id });
+    },
     gethender() {
       this.axios.post(this.API + "api/Lease/hender_img").then(res => {
         console.log(res.data, "gethender");
@@ -65,16 +65,16 @@ export default {
         .post(this.API + "api/Lease/Scene_goods", postData)
         .then(res => {
           console.log(res.data, "Scene_goods");
-          this.loading = true;
+          // this.loading = true;
           let resdata = res.data;
 
           if (resdata.code == 200) {
-            // this.goodslist = this.goodslist.push(...resdata.data);
             this.goodslist = this.goodslist.concat(resdata.data);
+            this.loading = false;
 
-            if (resdata.data.length == 0) {
+            if (resdata.data.length < 10) {
               // 加载状态结束
-              this.loading = false;
+              // this.loading = false;
               this.finished = true;
             }
           } else {

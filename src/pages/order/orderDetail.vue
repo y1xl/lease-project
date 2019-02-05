@@ -307,6 +307,9 @@ export default {
           } else {
               Toast(resdata.message)
           }
+      })
+      .catch(error => {
+        Toast('网络出错')
       });
     },
     goshopping(id){

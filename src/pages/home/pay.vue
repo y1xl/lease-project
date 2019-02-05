@@ -41,8 +41,23 @@ export default {
     },
     created(){
         this.getinfo()
+        // this.getfaceRes()
     },
     methods:{
+        getfaceRes() {
+            this.axios.get("https://api.megvii.com/faceid/lite/get_result?api_key=7WdSJGAzhmEuggj4EvL1RIC0Y9SzOS5n&&api_secret=CRSZvoqeeSWt1mM-hyt1BFgX67FOUOmF&&biz_id="+'1549183251,3472bf65-56e0-4057-8a98-ecd1a49b7f15')
+            .then(res => {
+                console.log(res.data, "getfaceRes");
+                let resdata = res.data;
+                if(resdata.status!='OK'){
+                    Dialog.alert({
+                        message: '请进行人脸识别认证'
+                    }).then((e) => {
+                        this.$router.replace({ path: "/face/33" })
+                    });
+                }
+            });
+        },   
         getinfo() {
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -64,7 +79,30 @@ export default {
                 Toast('微信功能未开通')
             }
             if(this.radio==2){
-                Toast('支付宝功能未开通')
+                // Toast('支付宝功能未开通')
+                Toast.loading({ mask: true,message: '加载中...'})
+                let postData = this.$qs.stringify({
+                    users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                    order_id : this.$route.params.orderid,
+                    pay_way: this.radio
+                });
+                this.axios.post(this.API + "api/Order/GetPay", postData)
+                .then(res => {
+                    console.log(res.data, "alipay");
+                    let resdata = res.data;
+
+                    const form = res.data;
+                    const div = document.createElement('div');
+                    div.id = 'alipay';
+                    div.style.opacity='0'
+                    div.innerHTML = form;
+                    document.body.appendChild(div);
+                    document.querySelector('#alipay').children[0].submit(); 
+                    // this.$router.replace({
+                    //     path: '/applyText',
+                    //     query: {html: res.data}
+                    // })
+                });
             }
             if(this.radio==3){
                 Toast.loading({ mask: true,message: '加载中...'})
