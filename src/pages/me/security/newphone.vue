@@ -1,10 +1,10 @@
 <template>
     <div class="bgc full">
         <div class="pd-15">
-            <input type="text" maxlength="11" placeholder="请输入新手机号" v-model="phoneval">
+            <input type="text" maxlength="11" placeholder="请输入新手机号" v-model.trim="phoneval">
         </div>
         <div class="pd-15 mar-b-10 flex-jc-between">
-            <input type="text" placeholder="请输入验证码" v-model="codeval">
+            <input type="text" placeholder="请输入验证码" v-model.trim="codeval">
             <button class="send bgc-blue" @click="sendcode">发送</button>
         </div>
 

@@ -20,7 +20,7 @@
                 <div>{{item.store_name}}</div>
                 <div
                   class="fsz12"
-                >{{item.store_province+item.store_city+item.store_district+(item.store_Address||'')}}</div>
+                >{{(item.store_province||'')+(item.store_city||'')+(item.store_district||'')+(item.store_Address||'')}}</div>
               </div>
               <div class="right fsz12">距您{{item.juli}}m</div>
             </div>

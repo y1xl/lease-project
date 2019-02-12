@@ -28,11 +28,11 @@
 
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">序列号</div>
-            <input type="text" placeholder="请填写产品序列号" v-model="serialnumval">
+            <input type="text" placeholder="请填写产品序列号" v-model.trim="serialnumval">
         </div>
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">联系方式</div>
-            <input type="text" placeholder="请填写联系方式" v-model="telval">
+            <input type="text" placeholder="请填写联系方式" v-model.trim="telval">
         </div>
 
         <div class="pd-15"><div class="btn text-c" @click="onshowmodel">提交</div></div>

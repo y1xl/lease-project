@@ -4,11 +4,11 @@
       <div class="add_addresscon bgc">
         <div class="me" style="margin-top: 15px;">
           <van-cell-group>
-            <van-field v-model="nameval" placeholder="姓名"/>
+            <van-field v-model.trim="nameval" placeholder="姓名"/>
           </van-cell-group>
 
           <van-cell-group>
-            <van-field v-model="phoneval" placeholder="手机号"/>
+            <van-field v-model.trim.number="phoneval" placeholder="手机号"/>
           </van-cell-group>
           <van-cell
             :title="areaval==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name"
@@ -16,7 +16,7 @@
             @click="showarea=true"
           />
           <van-cell-group>
-            <van-field v-model="detailval" placeholder="请输入详细地址"/>
+            <van-field v-model.trim="detailval" placeholder="请输入详细地址"/>
           </van-cell-group>
           <div class="flexbox moren">
             <van-checkbox v-model="checked" checked-color="#4EA9F9"></van-checkbox>
@@ -62,6 +62,7 @@ export default {
     },
     getdata() {
       if (this.$route.params.id) {
+        Toast.loading({ mask: true, message: "加载中..." });
         let postData = this.$qs.stringify({
           ads_id: this.$route.params.id
         });
@@ -71,6 +72,7 @@ export default {
             console.log(res.data, "add");
             let resdata = res.data;
             if (resdata.code == 200) {
+              Toast.clear();
               this.nameval = resdata.data.ads_user;
               this.phoneval = resdata.data.ads_phone;
               this.detailval = resdata.data.ads_address;
@@ -81,6 +83,7 @@ export default {
                 { name: resdata.data.ads_district }
               ];
             } else {
+              Toast.clear();
               Toast(resdata.message);
             }
           });

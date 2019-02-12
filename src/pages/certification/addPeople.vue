@@ -11,11 +11,11 @@
     <div class="bgc">
       <div class="pd-15 border-b">
         <span>联系人姓名</span>
-        <input type="text" placeholder="请输入" v-model="nameval">
+        <input type="text" placeholder="请输入" v-model.trim="nameval">
       </div>
       <div class="pd-15">
         <span>联系人电话</span>
-        <input type="text" placeholder="请输入" v-model="phoneval">
+        <input type="text" placeholder="请输入" v-model.trim.number="phoneval">
       </div>
     </div>
 

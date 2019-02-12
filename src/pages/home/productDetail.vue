@@ -295,6 +295,9 @@ export default {
           Toast(resdata.message)
         }
         
+      })
+      .catch(error => {
+        Toast('网络出错')
       });
     },
     getguige(){

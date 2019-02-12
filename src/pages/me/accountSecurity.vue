@@ -2,7 +2,7 @@
   <div>
     <div class="account_sec bgc">
       <div class="tel">
-        <van-cell center is-link value="13417074484" :to="`/Modify/phone/13417074484`">
+        <van-cell center is-link :value="phone" :to="`/Modify/phone/${phone}`">
           <template slot="title">
             <div>绑定手机号</div>
           </template>
@@ -20,6 +20,14 @@
 
 <script>
 export default {
+  data(){
+    return{
+      phone:''
+    }
+  },
+  created(){
+    this.phone = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
+  },
   methods: {}
 };
 </script>

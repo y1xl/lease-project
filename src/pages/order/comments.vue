@@ -12,7 +12,7 @@
       <van-rate v-model="rateval" @change="onRating" size="27"/>
     </div>
 
-    <div class="textarea bgc"><textarea rows="6" v-model="contentval" placeholder="分享使用体验，有机会上我们的头版哦！分享视频内容，更有机会上New Bee官方抖音并拿大奖！"></textarea></div>
+    <div class="textarea bgc"><textarea rows="6" v-model.trim="contentval" placeholder="分享使用体验，有机会上我们的头版哦！分享视频内容，更有机会上New Bee官方抖音并拿大奖！"></textarea></div>
     <div class="bgc imglist">
         <img @click="onImagePreview(index)" :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index">
       <van-uploader :after-read="onRead" accept="image/png, image/jpeg" multiple>

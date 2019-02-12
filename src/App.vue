@@ -68,9 +68,12 @@ export default {
     },
     navshow() {
       let url = this.$route.path;
-      if (url === "/" || url === "/shop" || url === "/order" || url === "/me") {
+
+      let urlarr = ['/','/shop','/order','/me']
+      if (urlarr.includes(url)) {
         return true;
       }
+
     }
   },
   created() {

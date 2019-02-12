@@ -2,7 +2,7 @@
     <div class="full bgc">
         <div class="pd-15">验证码已发送至{{phone}}</div>
         <div class="pd-15 mar-b-10 flex-jc-between">
-            <input type="text" placeholder="请输入验证码" v-model="codeval">
+            <input type="text" placeholder="请输入验证码" v-model.trim="codeval">
             <button class="send bgc-blue" @click="sendcode">重新发送</button>
         </div>
 

@@ -52,6 +52,7 @@ export default {
       this.axios
         .post(this.API + "api/Lease/store_detail", postData)
         .then(res => {
+          Toast.clear();
           console.log(res.data.data, "getdetail");
           let resdata = res.data.data;
           this.store_province = resdata.store_province;
@@ -61,9 +62,10 @@ export default {
           this.store_name = resdata.store_name;
           if (resdata.code == 200) {
           } else {
+            Toast.clear();
             Toast(resdata.message);
           }
-          Toast.clear();
+          
         });
     }
   }

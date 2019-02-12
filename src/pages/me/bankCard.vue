@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex-jc-center" v-for="(item,index) in cardlist">
+    <div class="flex-jc-center" v-for="(item,index) in cardlist" :key='index'>
       <div class="card_box bgc">
         <div class="card flex-jc-around flex-align-items">
           <div class="flex-align-items">

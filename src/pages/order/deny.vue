@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="textarea bgc"><textarea v-model="contentval" name="" id="" rows="6" placeholder="输入否认的理由"></textarea></div>
+        <div class="textarea bgc"><textarea v-model.trim="contentval" name="" id="" rows="6" placeholder="输入否认的理由"></textarea></div>
         <div class="bgc imglist">
             <img @click="onImagePreview(index)" :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index">
             <van-uploader :after-read="onRead" accept="image/png, image/jpeg" multiple>
@@ -44,6 +44,8 @@ export default {
                 Toast('还有未填写')
                 return
             }
+
+            Toast.loading({ mask: true,message: '加载中...'})
             let postData = this.$qs.stringify({
                 // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 order_id:this.$route.params.id,
@@ -55,12 +57,14 @@ export default {
                 console.log(res.data, "data")
                 let resdata = res.data
                 if (resdata.code == 200) {
+                    Toast.clear()
                         Dialog.alert({
                             message: '操作成功'
                         }).then((e) => {
                             this.$router.go(-1);
                         });
                 } else {
+                    Toast.clear()
                     Toast(resdata.message)
                 }
             });

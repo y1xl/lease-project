@@ -16,31 +16,31 @@
         <div class="flexbox">
           <div class="left">卡号</div>
 
-          <input placeholder="请输入银行卡号" v-model="cardnum">
+          <input placeholder="请输入银行卡号" v-model.trim="cardnum">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">姓名</div>
-          <input placeholder="请输入姓名" v-model="nickname">
+          <input placeholder="请输入姓名" v-model.trim="nickname">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">身份证号</div>
-          <input placeholder="请输入身份证号" v-model="idcard">
+          <input placeholder="请输入身份证号" v-model.trim="idcard">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">手机号</div>
-          <input placeholder="请输入手机号" v-model="tel">
+          <input placeholder="请输入手机号" v-model.trim="tel">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15 flex-align-items">
         <div class="flexbox">
           <div class="left">验证码</div>
-          <input placeholder="请输入验证码" class="input_b" v-model="yzcode">
+          <input placeholder="请输入验证码" class="input_b" v-model.trim="yzcode">
         </div>
         <span class="yz" @click="countDown">{{content}}</span>
       </div>

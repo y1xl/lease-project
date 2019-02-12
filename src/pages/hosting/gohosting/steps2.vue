@@ -10,7 +10,7 @@
         </div>
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">购买价格</div>
-            <input type="text" placeholder="请输入购买价格" v-model="priceval">
+            <input type="text" placeholder="请输入购买价格" v-model.trim.number="priceval">
         </div>
         <div class="flex-jc-between flex-align-items bgc pd-15" @click="showcolour=true">
             <div class="flex-1">
@@ -21,7 +21,7 @@
             <van-icon name="arrow" />
         </div>
         <van-field
-            v-model="colourdes"
+            v-model.trim="colourdes"
             type="textarea"
             placeholder="请输入外观成色描述"
             autosize

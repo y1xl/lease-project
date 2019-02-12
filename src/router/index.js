@@ -134,7 +134,7 @@ export default new Router({
     //个人中心
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
     { path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
-    { path: '/addInformation/:id', component: AddInformation, meta: { title: '添加收货信息' } },
+    { path: '/addInformation/:id', component: AddInformation, meta: { title: '编辑收货信息' } },
     { path: '/addInformation', component: AddInformation, meta: { title: '添加收货信息' } },
     { path: '/detaInformation', component: DetaInformation, meta: { title: '详细信息' } },
     { path: '/accountSecurity', component: AccountSecurity, meta: { title: '账号安全' } },
@@ -194,8 +194,8 @@ export default new Router({
 
     //收货地址
     { path: '/addresslist/:type', component: Addresslist, meta: { title: '收货地址' } },
-    { path: '/addaddress', component: Addaddress, meta: { title: '收货地址' } },
-    { path: '/addaddress/:id', component: Addaddress, meta: { title: '收货地址' } },
+    { path: '/addaddress', component: Addaddress, meta: { title: '添加收货地址' } },
+    { path: '/addaddress/:id', component: Addaddress, meta: { title: '编辑收货地址' } },
 
     //地图
     { path: '/map/:center/:shop', component: Map, meta: { title: '地图' } },

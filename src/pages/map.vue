@@ -29,7 +29,6 @@ export default {
     };
   },
   created(){
-    // console.log(this.$route.params.center.split(",")[0]);
     
   },
   methods: {

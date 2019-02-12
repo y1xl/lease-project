@@ -5,7 +5,7 @@
         <van-cell center>
           <template slot="title">
             <span>昵称</span>
-            <input type="text" v-model="users_name">
+            <input type="text" v-model.trim="users_name">
           </template>
         </van-cell>
 
@@ -27,7 +27,7 @@
         </van-cell>
         <div class="border-b dz_detail">
           <span>详细地址</span>
-          <input type="text" placeholder="请输入" v-model="detailval">
+          <input type="text" placeholder="请输入" v-model.trim="detailval">
         </div>
 
         <van-cell is-link center :value="datetext==''?'':datetext" @click="showdate=true">
@@ -118,6 +118,7 @@ export default {
       this.showdate = false;
     },
     getuser() {
+      Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
       });
@@ -127,6 +128,7 @@ export default {
           console.log(res.data, "users_detail");
           let resdata = res.data;
           if (resdata.code == 200) {
+            Toast.clear();
             this.users_name = resdata.data.users_name;
             this.users_id = resdata.data.users_id;
             this.datetext = resdata.data.users_birthday;
@@ -144,6 +146,7 @@ export default {
               { name: resdata.data.users_district }
             ];
           } else {
+            Toast.clear();
             Toast(resdata.message);
           }
         });
@@ -156,6 +159,7 @@ export default {
         sex_id = 1;
       }
 
+      Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         users_name: this.users_name,
@@ -172,9 +176,11 @@ export default {
           console.log(res.data, "users_update");
           let resdata = res.data;
           if (resdata.code == 200) {
+            Toast.clear();
             this.$router.go(-1);
             Toast("提交成功");
           } else {
+            Toast.clear();
             Toast(resdata.message);
           }
         });

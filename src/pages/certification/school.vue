@@ -3,11 +3,11 @@
     <div class="bgc box">
       <div class="pd-15 border-b">
         <span class="w">姓名</span>
-        <input type="text" placeholder="请输入" v-model="nameval">
+        <input type="text" placeholder="请输入" v-model.trim="nameval">
       </div>
       <div class="pd-15">
         <span class="w">身份证</span>
-        <input type="text" placeholder="请输入" v-model="phoneval">
+        <input type="text" placeholder="请输入" v-model.trim="phoneval">
       </div>
     </div>
     <div class="pd-t-100">

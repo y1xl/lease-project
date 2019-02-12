@@ -35,7 +35,7 @@ import { Dialog, Toast } from "vant";
 export default {
   data() {
     return {
-      addresslist: [{}, {}],
+      addresslist: [],
       delid: ""
     };
   },
@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     getselect() {
+      Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
       });
@@ -52,17 +53,13 @@ export default {
         console.log(res.data, "getselect");
         let resdata = res.data;
         if (resdata.code == 200) {
+          Toast.clear();
           var list = resdata.data;
-          // for (let i = 0; i < list.length; i++) {
-          //   if (list[i].ads_state == 2) {
-          //     let first = list[0];
-          //     list[0] = list[i];
-          //     list[i] = first;
-          //   }
-          // }
+
           this.addresslist = list;
           console.log(this.addresslist);
         } else {
+          Toast.clear();
           Toast(resdata.message);
         }
       });
@@ -76,6 +73,7 @@ export default {
       this.delid = id;
     },
     del() {
+      
       let postData = this.$qs.stringify({
         ads_id: this.delid
       });

@@ -3,11 +3,11 @@
     <div class="bgc box">
       <div class="pd-15 border-b">
         <span style=" margin-right: 10px">原密码</span>
-        <input type="password"  placeholder="请输入原密码" v-model="oldval">
+        <input type="password"  placeholder="请输入原密码" v-model.trim="oldval">
       </div>
       <div class="pd-15">
         <span style=" margin-right: 10px">新密码</span>
-        <input type="password" placeholder="请输入新密码" v-model="newval">
+        <input type="password" placeholder="请输入新密码" v-model.trim="newval">
       </div>
     </div>
     <div class="flex-jc-center">

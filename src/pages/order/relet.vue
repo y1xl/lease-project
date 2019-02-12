@@ -9,7 +9,7 @@
                         <img src="../../assets/icon-triangle.png" class="triangleimg">
                     </div>
                     <div class="border">
-                        <input type="number" v-model="weekval" :disabled="weektext=='请选择'?true:false" class="bgc">
+                        <input type="number" v-model.trim.number="weekval" :disabled="weektext=='请选择'?true:false" class="bgc">
                     </div>
                 </div>
             </div>

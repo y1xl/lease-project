@@ -9,21 +9,21 @@
     <div class="bgc" v-show="selected==0">
       <div class="border-b inputbox pd-15">
         <span>姓名</span>
-        <input type="text" v-model="nameval">
+        <input type="text" v-model.trim="nameval">
       </div>
       <div class="inputbox pd-15">
         <span>手机号码</span>
-        <input type="number" v-model="phoneval" maxlength="11">
+        <input type="number" v-model.trim.number="phoneval" maxlength="11">
       </div>
     </div>
     <div class="bgc" v-show="selected==1">
       <div class="border-b inputbox pd-15">
         <span>姓名</span>
-        <input type="text" v-model="nameval1">
+        <input type="text" v-model.trim="nameval1">
       </div>
       <div class="inputbox pd-15">
         <span>手机号码</span>
-        <input type="number" v-model="phoneval1" maxlength="11">
+        <input type="number" v-model.trim.number="phoneval1" maxlength="11">
       </div>
     </div>
 

@@ -118,7 +118,7 @@
             </div>
           </div>
 
-          <div v-show="goodslist.length==0" class="fc-grey text-c pd-15">没有更多了</div>
+          <div v-show="goodslist.length==0" class="fc-grey text-c pd-15" style="background-color: #f6f6f6;">没有更多了</div>
         </van-tab>
       </van-tabs>
     </div>

@@ -2,11 +2,11 @@
     <div>
         <div class="pd-15 bgc border-b">
             <span>收货人</span>
-            <input type="text" v-model="nameval">
+            <input type="text" v-model.trim="nameval">
         </div>
         <div class="pd-15 bgc border-b">
             <span>手机号</span>
-            <input type="text" maxlength="11" v-model="phoneval">
+            <input type="text" maxlength="11" v-model.trim.number="phoneval">
         </div>
         <div class="pd-15 flex-jc-between bgc border-b" @click="showarea=true">
             <span>所在地区</span>
@@ -17,7 +17,7 @@
         </div>
         <div class="pd-15 bgc mar-b-10">
             <div>街道、小区门牌等详情地址</div>
-            <div><input type="text" v-model="detailval"></div>
+            <div><input type="text" v-model.trim="detailval"></div>
         </div>
         <div class="pd-15 bgc flex-jc-between flex-align-items">
             <span>设为默认地址</span>
@@ -59,6 +59,7 @@ export default {
             this.showarea = false
         },
         getdata(){
+            Toast.loading({ mask: true, message: "加载中..." })
             let postData = this.$qs.stringify({
                 ads_id:this.$route.params.id
             })
@@ -67,6 +68,7 @@ export default {
                     console.log(res.data, "add")
                     let resdata = res.data
                     if (resdata.code == 200) {
+                        Toast.clear();
                         this.nameval = resdata.data.ads_user
                         this.phoneval = resdata.data.ads_phone
                         this.detailval = resdata.data.ads_address
@@ -77,6 +79,7 @@ export default {
                             {name:resdata.data.ads_district},
                         ]
                     } else {
+                        Toast.clear();
                         Toast(resdata.message)
                     }
                 });
@@ -100,24 +103,30 @@ export default {
             })
             
             if(this.$route.params.id){
+                Toast.loading({ mask: true, message: "加载中..." })
                 this.axios.post(this.API + "api/Lease/Ads_Update",postData)
                 .then(res => {
                     console.log(res.data, "editor")
                     let resdata = res.data
                     if (resdata.code == 200) {
+                        Toast.clear();
                         this.$router.go(-1)
                     } else {
+                        Toast.clear();
                         Toast(resdata.message)
                     }
                 });
             }else{
+                Toast.loading({ mask: true, message: "加载中..." })
                 this.axios.post(this.API + "api/Lease/Add_ads",postData)
                 .then(res => {
                     console.log(res.data, "add")
                     let resdata = res.data
                     if (resdata.code == 200) {
+                        Toast.clear();
                         this.$router.go(-1)
                     } else {
+                        Toast.clear();
                         Toast(resdata.message)
                     }
                 });

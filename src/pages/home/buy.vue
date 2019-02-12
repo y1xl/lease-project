@@ -57,7 +57,7 @@
                         <img src="../../assets/icon-triangle.png" class="triangleimg">
                     </div>
                     <div class="border flex-center">
-                        <input type="number" v-model="weekval" :disabled="isdisabled" class="bgc">
+                        <input type="number" v-model.trim.number="weekval" :disabled="isdisabled" class="bgc">
                     </div>
                 </div>
             </van-cell>

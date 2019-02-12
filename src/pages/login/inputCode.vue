@@ -85,6 +85,7 @@ export default {
         return
       }
 
+      Toast.loading({ mask: true, message: "加载中..." })
       let postData = this.$qs.stringify({
             users_phone:this.$route.params.phone,
             yzm: this.value
@@ -94,9 +95,11 @@ export default {
         console.log(res.data, "login");
         let resdata = res.data;
         if (resdata.code == 200) {
+          Toast.clear();
           window.localStorage.setItem("userinfo",JSON.stringify(resdata.data))
           this.$router.replace({ path: "/" })
         } else {
+          Toast.clear();
           Toast(resdata.message);
         }
       });
