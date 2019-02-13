@@ -48,7 +48,7 @@
                 <van-icon name="arrow"/>
               </div>
             </div>
-            <div class="flex-jc-between border-b bgc camer_hm_box">
+            <div class="flexbox border-b bgc camer_hm_box">
               <div
                 class="camer_hm"
                 @click="toDetail(goods.goods_id)"
@@ -211,7 +211,7 @@ export default {
               Toast.clear();
               Toast(resdata.message);
             }
-          });
+          })
       }
     },
 
@@ -419,13 +419,16 @@ export default {
   width: 100%;
   height: 175px;
 }
+.camer_hm_box > div{
+  margin-left:9px;
+}
 
-.camer_hm_box > div:nth-child(1) {
+/* .camer_hm_box > div:nth-child(1) {
   margin-left: 10px;
 }
 .camer_hm_box > div:nth-child(3) {
   margin-right: 10px;
-}
+} */
 .camer_hm {
   width: 95px;
   height: 175px;

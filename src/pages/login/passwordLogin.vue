@@ -4,7 +4,7 @@
       <div class="login_box">
         <div class="login_title text-c">密码登陆</div>
         <div class="border-b tel">
-          <input v-model.trim.number="phoneval" placeholder="请输入手机号" input-align="center" type="number" maxlength="11">
+          <input v-model.trim="phoneval" placeholder="请输入手机号" input-align="center" type="number" maxlength="11">
         </div>
         <div class="border-b password">
           <input v-model.trim="pwval" placeholder="请输入密码" input-align="center" type="password">

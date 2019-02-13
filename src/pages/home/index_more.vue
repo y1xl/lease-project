@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="flex-jc-center bgc">
+    <div class="flex-jc-center bgc" v-if="adpic_img!=''">
       <div class="img_b">
-        <img class="top_img" :src="adpic_img">
+        <img class="top_img" :src="adpic_img" >
       </div>
     </div>
     <div id="pro-list">

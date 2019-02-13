@@ -5,7 +5,7 @@
         <div class="tip_title text-c pdt50">Hi!</div>
         <div class="tip_title text-c">欢迎加入</div>
         <div class="border-b pdt50">
-          <input v-model.trim.number="newPhone" placeholder="请输入手机号" type="number" maxlength="11">
+          <input v-model.trim="newPhone" placeholder="请输入手机号" type="number" maxlength="11">
         </div>
         <div class="text-r pw_login" @click="password">使用密码登陆</div>
         <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'act'">下一步</button>
@@ -40,20 +40,19 @@ export default {
     toNext() {
       console.log(this.newPhone);
       if (this.newPhone == "") {
-        // Notify("不能为空");
         return;
       }
-
+      
       if (this.newPhone.length != 11) {
         Toast("手机号长度有误");
         return;
       }
 
-      var telphone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
-      if (!telphone.test(this.newPhone)) {
-        Toast("手机号码有误，请重填");
-        return;
-      }
+      // var telphone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+      // if (!telphone.test(this.newPhone)) {
+      //   Toast("手机号码有误，请重填");
+      //   return;
+      // }
       this.$router.push({ path: "/InputCode/" + this.newPhone });
     },
     //密码登录

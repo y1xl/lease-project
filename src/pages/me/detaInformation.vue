@@ -152,6 +152,7 @@ export default {
         });
     },
     submit() {
+      
       let sex_id = "";
       if (this.sexval == "男") {
         sex_id = 0;

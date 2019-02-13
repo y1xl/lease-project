@@ -5,7 +5,7 @@
         <div class="tip_title text-c mar-b-10">请输入验证码重置密码</div>
         
         <div class="border-b tel">
-          <input v-model.trim.number="phoneval" placeholder="请输入手机号" input-align="center" type="number" maxlength="11">
+          <input v-model.trim="phoneval" placeholder="请输入手机号" input-align="center" type="number" maxlength="11">
         </div>
         <div class="border-b password">
           <input v-model.trim="codeval" placeholder="请输入验证码" input-align="center" >
