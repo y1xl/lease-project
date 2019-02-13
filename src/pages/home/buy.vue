@@ -172,7 +172,7 @@ import { log } from 'util';
 export default {
     data(){
         return{
-            goodid: this.$route.params.id,
+            goodid: this.$route.query.id,
             typenum:0,
             showtime:false,
             timetext:'',
@@ -213,7 +213,7 @@ export default {
                 return
             }
             let postData = this.$qs.stringify({
-                goods_id:this.$route.params.id,
+                goods_id:this.$route.query.id,
                 rent_num: this.weekval,
                 unt: this.weektext=='天'?'1':'2'
             })
@@ -298,8 +298,7 @@ export default {
             }
         }
     },
-    created() {
-        // console.log(decodeURI(this.$route.params.guige))
+    created() {      
         let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
         if(buySession){
             this.typenum = buySession.gettype
@@ -395,9 +394,9 @@ export default {
         getotherprice(){
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-                goods_id:this.$route.params.id||'',
-                sku: this.$route.params.guige?decodeURI(this.$route.params.guige):'',
-                cart_id: this.$route.params.cartid||''
+                goods_id:this.$route.query.id||'',
+                sku: this.$route.query.guige?decodeURI(this.$route.query.guige):'',
+                cart_id: this.$route.query.cartid||''
             })
             this.axios.post(this.API + "api/Order/GetGoodsDetail",postData)
             .then(res => {
@@ -446,7 +445,6 @@ export default {
         },
 
         nextface(){
-            this.$router.push({ path: '/face/33'})
             if(this.isconsent){
                 if(this.typenum==0){
                     // if(this.getlocation==''||this.getdate==''||this.people == ''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timetext==''){
@@ -460,7 +458,7 @@ export default {
                     var postData = this.$qs.stringify({
                         unt:this.weektext=='天'?1:2,
                         rent_num: this.weekval,
-                        goods_id: this.$route.params.id,
+                        goods_id: this.$route.query.id,
                         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                         users_name: this.people.name,
                         users_phone: this.people.phone,
@@ -471,7 +469,7 @@ export default {
                         delivery_way: this.typenum==0?3:this.typenum==1?1:2,
                         // qwsh_time: this.expectdate,
                         qwsh_time: '',
-                        sku: decodeURI(this.$route.params.guige),
+                        sku: this.detail.sku,
                         // time: this.timetext,
                         time: '',
                         ads_id:'',
@@ -488,12 +486,12 @@ export default {
                     var postData = this.$qs.stringify({
                         unt:this.weektext=='天'?1:2,
                         rent_num: this.weekval,
-                        goods_id: this.$route.params.id,
+                        goods_id: this.$route.query.id,
                         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                         safe_status: this.isinsurance?1:2,
                         delivery_way: this.typenum==0?3:this.typenum==1?1:2,
                         qwsh_time: this.expectdate,
-                        sku: decodeURI(this.$route.params.guige),
+                        sku: this.detail.sku,
                         ads_id: this.getaddress.ads_id,
                         way_price: this.freight,
                         users_name:'',
@@ -514,12 +512,12 @@ export default {
                     var postData = this.$qs.stringify({
                         unt:this.weektext=='天'?1:2,
                         rent_num: this.weekval,
-                        goods_id: this.$route.params.id,
+                        goods_id: this.$route.query.id,
                         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                         safe_status: this.isinsurance?1:2,
                         delivery_way: this.typenum==0?3:this.typenum==1?1:2,
                         qwsh_time: this.expectdate,
-                        sku: decodeURI(this.$route.params.guige),
+                        sku: this.detail.sku,
                         ads_id: this.getaddress.ads_id,
                         way_price: this.freight,
                         remark: this.remarkval,

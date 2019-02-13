@@ -12,32 +12,6 @@ export default {
         this.getFaceToken()
     },
     methods:{
-        // getFaceToken(){
-        //     Toast.loading({ mask: true, message: "加载中..." });
-        //     let postData = this.$qs.stringify({
-        //         api_key: '7WdSJGAzhmEuggj4EvL1RIC0Y9SzOS5n',
-        //         api_secret: 'CRSZvoqeeSWt1mM-hyt1BFgX67FOUOmF',
-        //         return_url: this.API+'dist/#/pay/'+this.$route.params.orderid,//https://newbee.zx-app.cn/dist/#/pay/12
-        //         notify_url: this.API,
-        //         biz_no: this.$route.params.orderid,
-        //         comparison_type: 1,
-        //         idcard_mode: 2,
-        //         procedure_type: 'video',
-        //     });
-        //     this.axios
-        //     .post("https://api.megvii.com/faceid/lite/get_token", postData)
-        //     .then(res => {
-        //         console.log(res.data, "token");
-        //         let resdata = res.data;
-        //         Toast.clear();
-        //         if(resdata.error_message){
-        //             Toast('出错了')
-        //         }else{
-        //             this.goFace(resdata.token)
-        //         }
-                
-        //     });
-        // },
         getFaceToken(){
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -52,6 +26,9 @@ export default {
                 } else {
                     Toast(resdata.message);
                 }
+            })
+            .catch(error => {
+                Toast('网络出错')
             });
         },
         goFace(token){
@@ -59,9 +36,9 @@ export default {
                 window.location.href = 'https://api.megvii.com/faceid/lite/do?token='+token
             }
         },
-        naxt(){
-            this.$router.replace({ path: '/pay/'+this.$route.params.orderid })
-        }
+        // naxt(){
+        //     this.$router.replace({ path: '/pay/'+this.$route.params.orderid })
+        // }
     }
 }
 </script>

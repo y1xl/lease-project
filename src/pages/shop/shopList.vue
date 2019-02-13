@@ -1,5 +1,9 @@
 <template>
   <div>
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action>
+      <div slot="action" >搜索</div>
+    </van-search>
+
     <div class="shoplist">
       <div v-for="(item,index) in list" :key="index" :title="item">
         <div class="item">
