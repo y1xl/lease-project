@@ -53,19 +53,19 @@ export default {
         .post(this.API + "api/Lease/store_detail", postData)
         .then(res => {
           Toast.clear();
-          console.log(res.data.data, "getdetail");
-          let resdata = res.data.data;
-          this.store_province = resdata.store_province;
-          this.store_city = resdata.store_city;
-          this.store_district = resdata.store_district;
-          this.store_Address = resdata.store_Address;
-          this.store_name = resdata.store_name;
+          console.log(res.data, "getdetail");
+
+          let resdata = res.data;
           if (resdata.code == 200) {
+            this.store_province = resdata.data.store_province;
+            this.store_city = resdata.data.store_city;
+            this.store_district = resdata.data.store_district;
+            this.store_Address = resdata.data.store_Address;
+            this.store_name = resdata.data.store_name;
           } else {
             Toast.clear();
             Toast(resdata.message);
           }
-          
         });
     }
   }

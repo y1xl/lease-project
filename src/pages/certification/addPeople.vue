@@ -15,7 +15,7 @@
       </div>
       <div class="pd-15">
         <span>联系人电话</span>
-        <input type="text" placeholder="请输入" v-model.trim.number="phoneval">
+        <input type="text" placeholder="请输入" v-model.trim="phoneval">
       </div>
     </div>
 
@@ -84,7 +84,8 @@ export default {
         let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
         if (userinfo) {
           let postData = this.$qs.stringify({
-            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo"))
+              .users_id,
             urgent_phone: this.phoneval,
             urgent_name: this.nameval,
             urgent_sign: this.text

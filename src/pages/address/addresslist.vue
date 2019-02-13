@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { Dialog } from "vant";
+import { Dialog, Toast } from "vant";
 export default {
   data() {
     return {
@@ -83,15 +83,18 @@ export default {
     },
 
     getlist() {
+      Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
       });
       this.axios.post(this.API + "api/Lease/ads_select", postData).then(res => {
+        Toast.clear();
         console.log(res.data, "list");
         let resdata = res.data;
         if (resdata.code == 200) {
           this.list = resdata.data;
         } else {
+          Toast.clear();
           Toast(resdata.message);
         }
       });

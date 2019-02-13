@@ -5,7 +5,7 @@
         <div class="tip_title text-c pdt50">Hi!</div>
         <div class="tip_title text-c">欢迎加入</div>
         <div class="border-b pdt50">
-          <input v-model.trim.number="newPhone" placeholder="请输入手机号" type="number" maxlength="11">
+          <input v-model.trim="newPhone" placeholder="请输入手机号" type="value" maxlength="11">
         </div>
         <div class="text-r pw_login" @click="password">使用密码登陆</div>
         <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'act'">下一步</button>
@@ -39,6 +39,7 @@ export default {
     //下一步
     toNext() {
       console.log(this.newPhone);
+
       if (this.newPhone == "") {
         // Notify("不能为空");
         return;
