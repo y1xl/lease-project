@@ -34,7 +34,7 @@
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">手机号</div>
-          <input placeholder="请输入手机号" v-model.trim="tel" type="value" maxlength="11">
+          <input placeholder="请输入手机号" v-model.trim="tel" type="number" maxlength="11">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15 flex-align-items">

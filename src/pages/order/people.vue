@@ -13,7 +13,7 @@
       </div>
       <div class="inputbox pd-15">
         <span>手机号码</span>
-        <input type="value" v-model.trim="phoneval" maxlength="11">
+        <input type="number" v-model.trim="phoneval" maxlength="11">
       </div>
     </div>
     <div class="bgc" v-show="selected==1">
@@ -23,7 +23,7 @@
       </div>
       <div class="inputbox pd-15">
         <span>手机号码</span>
-        <input type="value" v-model.trim="phoneval1" maxlength="11">
+        <input type="number" v-model.trim="phoneval1" maxlength="11">
       </div>
     </div>
 
