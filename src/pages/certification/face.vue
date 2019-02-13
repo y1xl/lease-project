@@ -1,7 +1,6 @@
 <template>
     <div>
-        <!-- <div>人脸识别</div> -->
-        <!-- <div class="pd-15"><div class="btn text-c" @click="naxt">确定</div></div> -->
+
     </div>
 </template>
 
@@ -36,9 +35,6 @@ export default {
                 window.location.href = 'https://api.megvii.com/faceid/lite/do?token='+token
             }
         },
-        // naxt(){
-        //     this.$router.replace({ path: '/pay/'+this.$route.params.orderid })
-        // }
     }
 }
 </script>

@@ -3,72 +3,73 @@
     <div class="flex-jc-center">
       <div class="forget_box">
         <div class="tip_title text-c mar-b-10">请输入验证码重置密码</div>
-        
+
         <div class="border-b tel">
           <input v-model.trim="phoneval" placeholder="请输入手机号" input-align="center" type="number" maxlength="11">
         </div>
         <div class="border-b password">
-          <input v-model.trim="codeval" placeholder="请输入验证码" input-align="center" >
+          <input v-model.trim="codeval" placeholder="请输入验证码" input-align="center">
         </div>
 
-        <button class="btn text-c" :class="phoneval!=''&&codeval!=''?'bgc-blue':'btn-grey'" @click="toNext" >下一步</button>
+        <button
+          class="btn text-c"
+          :class="phoneval!=''&&codeval!=''?'bgc-blue':'btn-grey'"
+          @click="toNext"
+        >下一步</button>
         <div class="text-c resent" @click="sendcode">发送验证码</div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 import { Toast } from "vant";
 export default {
-  data(){
-    return{
-      phoneval:'',
-      codeval:''
-    }
+  data() {
+    return {
+      phoneval: "",
+      codeval: ""
+    };
   },
   methods: {
-    sendcode(){
-      if(this.phoneval==''){
-        return
+    sendcode() {
+      if (this.phoneval == "") {
+        return;
       }
       let postData = this.$qs.stringify({
-            users_phone:this.phoneval
-        })
-      this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
-      .then(res => {
-        console.log(res.data, "sendcode");
-        let resdata = res.data;
-        if (resdata.code == 200) {
-
-        } else {
-          Toast(resdata.message);
-        }
+        users_phone: this.phoneval
       });
+      this.axios
+        .post(this.API + "api/Lease/Forget_PassWord", postData)
+        .then(res => {
+          console.log(res.data, "sendcode");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+          } else {
+            Toast(resdata.message);
+          }
+        });
     },
 
     //下一步
     toNext() {
-      if (this.phoneval == ""||this.codeval == '') {
-        return
+      if (this.phoneval == "" || this.codeval == "") {
+        return;
       }
 
       let postData = this.$qs.stringify({
-            users_phone:this.phoneval,
-            yzm: this.codeval
-        })
-      this.axios.post(this.API + "api/Lease/Reset_pwd",postData)
-      .then(res => {
+        users_phone: this.phoneval,
+        yzm: this.codeval
+      });
+      this.axios.post(this.API + "api/Lease/Reset_pwd", postData).then(res => {
         console.log(res.data, "next");
         let resdata = res.data;
         if (resdata.code == 200) {
-            this.$router.replace({ path: "/ResetPassword/" + this.phoneval });
+          this.$router.replace({ path: "/ResetPassword/" + this.phoneval });
         } else {
           Toast(resdata.message);
         }
       });
-
     }
   }
 };

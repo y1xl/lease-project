@@ -39,6 +39,7 @@ export default {
     //下一步
     toNext() {
       console.log(this.newPhone);
+
       if (this.newPhone == "") {
         return;
       }

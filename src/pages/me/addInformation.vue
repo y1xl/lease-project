@@ -8,7 +8,7 @@
           </van-cell-group>
 
           <van-cell-group>
-            <van-field v-model.trim.number="phoneval" placeholder="手机号"/>
+            <van-field v-model.trim="phoneval" placeholder="手机号"/>
           </van-cell-group>
           <van-cell
             :title="areaval==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name"

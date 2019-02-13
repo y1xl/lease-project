@@ -45,11 +45,7 @@ export default {
       page: 0
     };
   },
-  created() {
-    setTimeout(() => {
-      this.onLoad();
-    }, 500);
-  },
+
   methods: {
     onLoad() {
       let nowPageNum = ++this.page;
@@ -63,14 +59,13 @@ export default {
         .post(this.API + "api/Order/GetSelfShop", postData)
         .then(res => {
           console.log(res.data, "list");
-          this.loading = true;
           let resdata = res.data;
           if (resdata.code == 200) {
             this.list = this.list.concat(resdata.data);
-            if (resdata.data.length == 0) {
+            // 加载状态结束
+            this.loading = false;
+            if (resdata.data.length < 10) {
               this.finished = true;
-              this.loading = false;
-              // 加载状态结束
             }
           } else {
             Toast(resdata.message);

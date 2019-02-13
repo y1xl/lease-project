@@ -5,7 +5,12 @@
     </van-search>
 
     <div class="bgc">
-      <div class="fl_pro_list" v-for="(item, index) in flprolist" :key="index" @click="toDetail(item.goods_id)">
+      <div
+        class="fl_pro_list"
+        v-for="(item, index) in flprolist"
+        :key="index"
+        @click="toDetail(item.goods_id)"
+      >
         <div class="img_box">
           <img class="sy_img" :src="item.gd_img[0]">
         </div>
@@ -38,10 +43,12 @@ export default {
     };
   },
   created() {
-      let searchSession = JSON.parse(window.sessionStorage.getItem("searchSession"));
-      if(searchSession){
-          this.value = searchSession.value
-      }
+    let searchSession = JSON.parse(
+      window.sessionStorage.getItem("searchSession")
+    );
+    if (searchSession) {
+      this.value = searchSession.value;
+    }
   },
   methods: {
     onSearch() {
@@ -51,9 +58,12 @@ export default {
     //产品详情
     toDetail(id) {
       let searchSession = {
-        value: this.value,
-      }
-      window.sessionStorage.setItem("searchSession", JSON.stringify(searchSession));
+        value: this.value
+      };
+      window.sessionStorage.setItem(
+        "searchSession",
+        JSON.stringify(searchSession)
+      );
       this.$router.push({ path: "/ProductDetail/" + id });
     },
     getsearch() {
@@ -82,7 +92,6 @@ export default {
             Toast.clear();
             Toast(resdata.message);
           }
-          
         });
     }
   }

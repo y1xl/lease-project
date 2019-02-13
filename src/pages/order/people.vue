@@ -13,7 +13,7 @@
       </div>
       <div class="inputbox pd-15">
         <span>手机号码</span>
-        <input type="number" v-model.trim.number="phoneval" maxlength="11">
+        <input type="value" v-model.trim="phoneval" maxlength="11">
       </div>
     </div>
     <div class="bgc" v-show="selected==1">
@@ -23,7 +23,7 @@
       </div>
       <div class="inputbox pd-15">
         <span>手机号码</span>
-        <input type="number" v-model.trim.number="phoneval1" maxlength="11">
+        <input type="value" v-model.trim="phoneval1" maxlength="11">
       </div>
     </div>
 
@@ -42,17 +42,21 @@ export default {
       nameval: "",
       phoneval: "",
       nameval1: "",
-      phoneval1: "",
+      phoneval1: ""
     };
   },
-  created(){
-    this.nameval = JSON.parse(window.localStorage.getItem("userinfo")).users_name
-    this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone
+  created() {
+    this.nameval = JSON.parse(
+      window.localStorage.getItem("userinfo")
+    ).users_name;
+    this.phoneval = JSON.parse(
+      window.localStorage.getItem("userinfo")
+    ).users_phone;
   },
   methods: {
     onbtn() {
-      let people = {}
-      if(this.selected == 0){
+      let people = {};
+      if (this.selected == 0) {
         if (this.nameval == "" || this.phoneval == "") {
           Toast("不能为空");
           return;
@@ -61,10 +65,10 @@ export default {
           Toast("手机号格式不正确");
           return;
         }
-        people.type=String(this.selected)
-        people.name=this.nameval
-        people.phone=this.phoneval
-      }else{
+        people.type = String(this.selected);
+        people.name = this.nameval;
+        people.phone = this.phoneval;
+      } else {
         if (this.nameval1 == "" || this.phoneval1 == "") {
           Toast("不能为空");
           return;
@@ -73,9 +77,9 @@ export default {
           Toast("手机号格式不正确");
           return;
         }
-        people.type=String(this.selected)
-        people.name=this.nameval1
-        people.phone=this.phoneval1
+        people.type = String(this.selected);
+        people.name = this.nameval1;
+        people.phone = this.phoneval1;
       }
 
       if (this.$route.params.type == "shopping") {
@@ -93,10 +97,7 @@ export default {
           window.sessionStorage.getItem("buySession")
         );
         buySession.getpeople = people;
-        window.sessionStorage.setItem(
-          "buySession",
-          JSON.stringify(buySession)
-        );
+        window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
       }
       if (this.$route.params.type == "preBuy") {
         let prebuySession = JSON.parse(

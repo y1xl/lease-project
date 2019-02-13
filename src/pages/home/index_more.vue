@@ -8,12 +8,12 @@
     <div id="pro-list">
       <van-list v-model="loading" :finished="finished" @load="onLoad" class="flex-wrap bgc">
         <div v-for="(item,index) in goodslist" :key="index" @click="toDetail(item.goods_id)">
-          <div class="item text-c">
+          <div class="item">
             <div class="flex-jc-center img_b1">
               <img class="img" :src="item.gd_img[0]">
             </div>
             <div class="text-line pro_title mar-b-10">{{item.goods_name}}</div>
-            <div>
+            <div class="price-box">
               <span class="price">{{item.hire_price.price}}</span>
               <span class="f12">/{{item.hire_price.unt}}</span>
             </div>
@@ -65,15 +65,14 @@ export default {
         .post(this.API + "api/Lease/Scene_goods", postData)
         .then(res => {
           console.log(res.data, "Scene_goods");
-          // this.loading = true;
+
           let resdata = res.data;
 
           if (resdata.code == 200) {
             this.goodslist = this.goodslist.concat(resdata.data);
+            // 加载状态结束
             this.loading = false;
-
             if (resdata.data.length < 10) {
-              // 加载状态结束
               // this.loading = false;
               this.finished = true;
             }
@@ -124,6 +123,9 @@ export default {
 }
 .pro_title {
   padding: 20px 20px 0 20px;
+}
+.price-box {
+  padding-left: 20px;
 }
 .price {
   color: #f21e1e;

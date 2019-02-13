@@ -11,8 +11,8 @@
     <router-link class="flex-jc-between pd-15 border-b" to="/realname">
       <div>实名认证</div>
       <div class="flex-align-items">
-        <span class="fc-blue mr" v-show="users_name.length!=0">去认证</span>
-        <span class="fc-grey mr" v-show="users_name.length==0">已认证</span>
+        <span class="fc-blue mr">去认证</span>
+        <span class="fc-grey mr">已认证</span>
         <van-icon name="arrow"/>
       </div>
     </router-link>
