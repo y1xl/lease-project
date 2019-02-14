@@ -108,7 +108,7 @@ export default {
 .item {
   width: 140px;
   height: 204px;
-  background: #f7f7f7;
+  /* background: #f7f7f7; */
   border-radius: 5px;
   margin: 13px 0 0 13px;
 }

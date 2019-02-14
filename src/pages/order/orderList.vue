@@ -188,7 +188,7 @@ export default {
       canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "收货地址写错了" },{ id: 3, text: "重新下单" },{ id: 4, text: "测试下单/误下单" }, { id: 5, text: "其他" }],
       showmodel: false,
       showcode: false,
-      list:[],
+      list:null,
       orderid:'',
       codeimg:''
     };
@@ -371,9 +371,9 @@ export default {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
-#ordernav .van-tab span {
+/* #ordernav .van-tab span {
   font-size: 8px;
-}
+} */
 </style>
 
 <style scoped>
