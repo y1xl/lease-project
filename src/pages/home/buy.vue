@@ -418,6 +418,7 @@ export default {
       });
     },
     getotherprice() {
+
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         goods_id: this.$route.query.id || "",
@@ -425,7 +426,7 @@ export default {
           ? decodeURI(this.$route.query.guige)
           : "",
         cart_id: this.$route.query.cartid || ""
-      });
+      })
       this.axios
         .post(this.API + "api/Order/GetGoodsDetail", postData)
         .then(res => {
@@ -451,7 +452,7 @@ export default {
       let postData = this.$qs.stringify({
         type: this.typenum,
         ads_id: this.getaddress.ads_id
-      });
+      })
       this.axios
         .post(this.API + "api/Order/ExpressPrice", postData)
         .then(res => {
