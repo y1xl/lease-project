@@ -35,7 +35,8 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      list: []
+      list: [],
+      value:''
     };
   },
   created() {

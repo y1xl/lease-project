@@ -20,7 +20,7 @@
                 <span class="fc-blue" v-if="data.order_status==5">待收货</span>
                 <span class="fc-blue" v-if="status=='预租待确认'">预租待确认</span>
                 <span class="fc-blue" v-if="data.order_status==7">退租中</span>
-                <span class="fc-blue" v-if="status=='待发货'">待发货</span>
+                <span class="fc-blue" v-if="data.order_status==12">待发货</span>
                 <span class="fc-blue" v-if="status=='已完成'">已完成</span>
             </div>
             <div class="flexbox">
@@ -38,7 +38,7 @@
             <div class="fc-red text-c overdue" v-if="status=='已超期'">
                 <span>您的订单已超期2天!</span>
             </div>
-            <div class="fc-red text-c overdue" v-if="status=='已预订'">
+            <div class="fc-red text-c overdue" v-if="status=='已预定'">
                 <span>要支付完剩余费用后才能发货哦!</span>
             </div>
         </router-link>

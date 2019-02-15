@@ -69,9 +69,9 @@ export default {
             orderid: this.$route.params.id,
             selected:0,
             typenum:0,
-            showtime:false,
+            // showtime:false,
             datetext:'',
-            timetext:'',
+            // timetext:'',
             getaddress:'',
             numval:'',
             showcode:false,
@@ -108,11 +108,11 @@ export default {
             window.sessionStorage.setItem("refundSession", JSON.stringify(refundSession));
             this.$router.push({ path: url });
         },
-        onConfirm(value) {
-            console.log(`当前值：${value}`);
-            this.timetext = value
-            this.showtime = false
-        },
+        // onConfirm(value) {
+        //     console.log(`当前值：${value}`);
+        //     this.timetext = value
+        //     this.showtime = false
+        // },
         getdefaultaddress(){
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,

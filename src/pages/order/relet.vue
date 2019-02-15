@@ -44,7 +44,7 @@
           <div class>
             <img src="../../assets/balance.png" alt="余额" class="payimg">
             余额
-            <span class="fc-red">¥2.00</span>
+            <span class="fc-red"> ¥{{info.users_balance}}</span>
           </div>
           <van-radio name="3" checked-color="#2DBBF1"></van-radio>
         </div>
@@ -72,7 +72,8 @@ export default {
       weektext: "请选择",
       weekval: "",
       isdisabled: true,
-      rent: 0
+      rent: 0,
+      info:''
     };
   },
   watch: {
@@ -94,14 +95,38 @@ export default {
         });
     }
   },
+  created(){
+    this.getinfo()
+  },
   methods: {
+    getinfo() {
+        let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            order_id : this.$route.params.id
+        });
+        this.axios.post(this.API + "api/Order/GetPayData", postData)
+        .then(res => {
+            console.log(res.data, "info");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                this.info = resdata.data;
+            } else {
+            Toast(resdata.message);
+            }
+        })
+        .catch(error => {
+            Toast('网络出错')
+        });
+    },
+
     onConfirm(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
       this.weektext = value;
       this.isshow = false;
     },
+
     submit() {
-      if (this.tval == "" || this.timetext == "请选择") {
+      if (this.weekval == "" || this.weektext == "请选择") {
         Toast("请填写续租时间");
         return;
       }

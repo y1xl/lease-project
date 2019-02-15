@@ -51,6 +51,8 @@ export default {
             this.datetext = appointmentExpress.date
             this.timequantumtext = appointmentExpress.timequantumtext
             this.getaddress = appointmentExpress.getaddress
+        }else {
+            this.getdefaultaddress();
         }
         //取缓存 end
         this.getdefaultshop()

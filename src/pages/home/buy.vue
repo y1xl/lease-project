@@ -302,7 +302,6 @@ export default {
           this.weekval = "";
           this.rent = 0;
         }
-        // return ['天', '小时']
 
         if (this.hire_cate == 1) {
           return ["天"];
@@ -588,7 +587,7 @@ export default {
             this.$router.push({ path: "/face/" + resdata.data });
           } else {
             Toast.clear();
-            Toast(resdata.message);
+            Toast(resdata.message||'操作失败');
           }
         });
       } else {

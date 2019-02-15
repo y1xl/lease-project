@@ -9,10 +9,11 @@
         <span v-if="data.order_status==10">退押金中</span>
         <span v-if="data.order_status==1">待付款</span>
         <span v-if="data.order_status==5">待收货</span>
+        <span v-if="data.order_status==12">待发货</span>
         <span v-if="data.order_status==7">退租中</span>
       </div>
-      <!-- <div class="fc-blue fsz13">29分钟36秒的支付时间</div>
-      <div class="fsz13 fc-grey">取消订单原因</div> -->
+      <!-- <div class="fc-blue fsz13">剩余29分钟36秒的支付时间</div> -->
+      <div class="fsz13 fc-grey">{{data.withouTreason}}</div>
     </div>
 
     <div class="pd-lr-15">
@@ -34,10 +35,13 @@
             <div class="r dot"></div>
           </div>
           <div class="mar-b-10 fsz13">{{data.express_company}} 运单号：{{data.express_no}}</div>
-          <div class="flex-align-items mar-b-10" @click="showlogistics=true">
+          <div v-if="logistics.length==0" class="flex-align-items mar-b-10 fc-blue">
+            暂无物流信息
+          </div>
+          <div class="flex-align-items mar-b-10" @click="showlogistics=true" v-else>
             <div class="flex-1">
-              <div class="fc-blue mar-b-10">订单已发货</div>
-              <div class="fsz12">2018-11-11</div>
+              <div class="fc-blue mar-b-10">{{logistics[logistics.length-1].AcceptStation}}</div>
+              <div class="fsz12">{{logistics[logistics.length-1].AcceptTime}}</div>
             </div>
             <van-icon name="arrow" />
           </div>
@@ -62,7 +66,7 @@
               <span>租期</span>
               <span class="flex-1">{{data.rent_time}}天</span>
             </div>
-            <div class="flexbox" >
+            <div class="flexbox" v-if="data.delivery_way=='快递'||data.delivery_way=='平台配送'">
               <span>期望收到的日期</span>
               <span class="flex-1">{{data.qwsh_time}}</span>
             </div>
@@ -87,16 +91,16 @@
             <div class="flexbox">
               <span>收货人</span>
               <span class="flex-1">
-                
+                {{data.order_name}}
               </span>
             </div>
             <div class="flexbox">
               <span>收货人手机号码</span>
               <span class="flex-1">
-                
+                {{data.order_phone}}
               </span>
             </div>
-            <div class="flexbox">
+            <div class="flexbox" v-if="data.order_status==6">
               <span>收货时间</span>
               <span class="flex-1">
                 {{data.sh_time}}
@@ -110,23 +114,28 @@
                 {{data.timelist}}
               </span>
             </div>
+            <div class="flexbox" v-if="data.remark">
+              <span>备注</span>
+              <span class="flex-1">
+                {{data.remark}}
+              </span>
+            </div>
 
             <template v-if="data.delivery_way=='自取'">
             <div class="flexbox">
               <span>自取地点</span>
               <span class="flex-1">
-                深圳市龙华新区龙华街道九方A座
-                1001号
+                {{data.store_province+data.store_city+data.store_district+(data.store_Address||'')}}
               </span>
             </div>
             <div class="flexbox">
               <span>自取时间</span>
-              <span class="flex-1"></span>
+              <span class="flex-1">{{data.order_delivery_time}}</span>
             </div>
-            <div class="flexbox">
+            <!-- <div class="flexbox">
               <span>时间点</span>
               <span class="flex-1"></span>
-            </div>
+            </div> -->
             <div class="flexbox">
               <span>联系人</span>
               <span class="flex-1">{{data.order_name}}</span>
@@ -135,10 +144,10 @@
               <span>手机号码</span>
               <span class="flex-1">{{data.order_phone}}</span>
             </div>
-            <div class="flexbox">
+            <div class="flexbox" v-if="data.order_status==6">
               <span>取货时间</span>
               <span class="flex-1">
-                {{data.order_delivery_time}}
+                
               </span>
             </div> 
             </template>
@@ -201,6 +210,7 @@
             </div>
           </div>
         </div>
+
         <!-- 售后中 -->
         <!-- <div>
           <div class="title position">
@@ -216,6 +226,7 @@
           </div>
           <div class="reason">我 :理由理由理由理由理由理由理由理由</div>
         </div> -->
+
         <!-- 租转售 -->
         <!-- <div>
           <div class="title position">
@@ -238,38 +249,29 @@
         快递信息
         <div class="fr"><van-icon name="close" @click="showlogistics=false"/></div>
       </div>
-      <!-- <div class='progress position'>
-        <div v-for="(item,index) in wuliu" :key="index">
-          <div class='time text-c'>
-            <div>07:45</div>
-          </div>
-          <div class='sdot'></div>
-          <div>[深圳] 快件已到达深圳快件已到达深圳</div>
-        </div>
-      </div> -->
       <div class="express">
-          <div class="item flex-align-items">
-              <span>11:00</span>
-              <span class="flex-1">快件已到达深圳快件已到达深圳</span>
-          </div>
-          <div class="item flex-align-items">
-              <span>11:00</span>
-              <span class="flex-1">快件已到达深圳快件已到达深圳深圳</span>
+          <div class="item" v-for="(item,index) in logistics" :key="index">
+              <p style="color:#666">{{item.AcceptTime}}</p>
+              <p>{{item.AcceptStation}}</p>
           </div>
       </div>
     </van-popup>
 
     <div class="height"></div>
 
-    <div class="tools bgc border-t">
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==1">
+    <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10">
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" >
         <router-link v-bind="{to: '/pay/'+data.order_id}">支付</router-link>
       </div>
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
       <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
       <div class="flex-center border" v-if="data.order_status==6"><router-link :to="`/relet/${data.order_id}`">续租</router-link></div>
-      <div class="flex-center border" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
+      <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
       <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
+      <div class="flex-center border" v-if="data.order_status==9">
+        <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
+      </div>
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9" @click="onConfirmsales(data.order_id)">确认</div>
     </div>
   </div>
 </template>
@@ -281,7 +283,24 @@ export default {
   data(){
     return {
       showlogistics:false,
-      data:''
+      data:'',
+      logistics:[
+        // {
+        //   AcceptTime: "2014/06/25 08:05:37",
+        //   AcceptStation: "正在派件..(派件人:邓裕富,电话:18718866310)[深圳 市]",
+        //   Remark: null
+        // },
+        // {
+        //   AcceptTime: "2014/06/25 08:05:37",
+        //   AcceptStation: "快件在 深圳集散中心 ,准备送往下一站 深圳 [深圳市]",
+        //   Remark: null
+        // },
+        // {
+        //   AcceptTime: "2014/06/25 08:05:37",
+        //   AcceptStation: "已收件[深圳市]",
+        //   Remark: null
+        // },
+      ]
     }
   },
   created(){
@@ -306,14 +325,39 @@ export default {
           if (resdata.code == 200) {
             Toast.clear()
               this.data = resdata.data[0]
+              this.queryLogistics()
           } else {
             Toast.clear()
               Toast(resdata.message)
           }
       })
       .catch(error => {
+        Toast.clear()
         Toast('网络出错')
       });
+    },
+        //物流
+    queryLogistics(){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          order_id: this.data.order_id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/queryLogistics", postData)
+        .then(res => {
+          console.log(res.data, "queryLogistics");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.logistics = resdata.data.Traces
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        })
+        .catch(error => {
+          Toast.clear()
+          Toast('网络出错')
+        });
     },
     goshopping(id){
       window.sessionStorage.removeItem('shoppingSession');
@@ -336,6 +380,27 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear()
+            Toast('操作成功')
+            this.$router.go(-1);
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
+    //确认售后
+    onConfirmsales(id){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/afterSalesConfirmation", postData)
+        .then(res => {
+          console.log(res.data, "onConfirmsales");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
             this.getlist()
           } else {
             Toast.clear()
@@ -343,6 +408,7 @@ export default {
           }
         });
     },
+
     //删除
     del(id){
       Toast.loading({ mask: true,message: '加载中...'})
@@ -356,7 +422,8 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear()
-            this.getlist()
+            Toast('操作成功')
+            this.$router.go(-1);
           } else {
             Toast.clear()
             Toast(resdata.message);
@@ -389,6 +456,7 @@ export default {
 .main {
   border-radius: 10px;
   padding: 15px;
+  overflow: hidden;
 }
 .main .title {
   font-weight: bold;
@@ -465,42 +533,11 @@ export default {
   font-size: 13px;
 }
 
-/* .progress{
-  width: 285px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-.progress > div {
-  margin-left: 50px;
-  padding-left: 20px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  border-left: 1px solid #ccc;
-  position: relative;
-}
-
-.progress .time {
-  position: absolute;
-  left: -50px;
-  top: 10px;
-  font-size: 12px;
-}
-
-.progress .sdot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  position: absolute;
-  top: 12px;
-  left: -5px;
-  overflow: hidden;
-  background-color: #E0E0E0;
-  display: inline-block;
-} */
 .express {
   width: 285px;
   box-sizing: border-box;
   padding-bottom: 10px;
+  font-size: 12px;
 }
 .express .item {
   padding: 10px;

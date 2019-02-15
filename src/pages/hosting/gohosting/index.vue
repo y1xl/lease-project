@@ -58,7 +58,7 @@
                 <van-picker :columns="typearr" show-toolbar @cancel="showtype = false" @confirm="onConfirmType"/>
             </van-popup>
             <van-popup v-model="showbrand" position="bottom" :close-on-click-overlay="false">
-                <van-picker :columns="brandarr" show-toolbar @cancel="showbrand = false" @confirm="onConfirmBrand"/>
+                <van-picker :columns="brandarr" show-toolbar @cancel="showbrand = false" @confirm="onConfirmBrand" value-key='brand_name'/>
             </van-popup>
             <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
                 <van-picker :columns="modelarr" show-toolbar @cancel="showmodel = false" @confirm="onConfirmModel"/>
@@ -140,7 +140,7 @@ export default {
             //品牌
             showbrand: false,
             brandtext: '',
-            brandarr: ['品牌1', '品牌2'],
+            brandarr: [],
             //型号
             showmodel: false,
             modeltext: '',
@@ -166,6 +166,8 @@ export default {
             this.numtext = gohostingSession.numtext
             this.gohostingSession = gohostingSession
         }
+
+        this.getbrand()
     },
     methods:{
         onConfirmType(value, index){
@@ -177,7 +179,7 @@ export default {
             this.showtype1 = false
         },
         onConfirmBrand(value, index){
-            this.brandtext = value
+            this.brandtext = value.brand_name
             this.showbrand = false
         },
         onConfirmModel(value, index){
@@ -191,6 +193,19 @@ export default {
         onConfirmNum(value, index){
             this.numtext = value
             this.shownum = false
+        },
+
+        getbrand(){
+            this.axios.post(this.API + "api/Lease/brand_select")
+            .then(res => {
+                console.log(res.data, "data")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    this.brandarr = resdata.data
+                } else {
+                    Toast(resdata.message)
+                }
+            })
         },
 
         next(){

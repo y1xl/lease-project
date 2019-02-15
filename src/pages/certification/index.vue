@@ -11,8 +11,8 @@
     <router-link class="flex-jc-between pd-15 border-b" to="/realname">
       <div>实名认证</div>
       <div class="flex-align-items">
-        <span class="fc-blue mr">去认证</span>
-        <span class="fc-grey mr">已认证</span>
+        <span class="fc-blue mr" v-if="!realname">去认证</span>
+        <span class="fc-grey mr" v-else>已认证</span>
         <van-icon name="arrow"/>
       </div>
     </router-link>
@@ -42,10 +42,12 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 export default {
   data() {
     return {
       users_money: "",
+      realname:'',
       users_name: ""
     };
   },
@@ -56,6 +58,7 @@ export default {
     userprice() {
       let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
       if (userinfo) {
+        Toast.loading({ mask: true,message: '加载中...'})
         let postData = this.$qs.stringify({
           users_id: userinfo.users_id
         });
@@ -65,11 +68,13 @@ export default {
             console.log(res.data, "user_price");
             let resdata = res.data;
             if (resdata.code == 200) {
+              Toast.clear()
               this.users_money = resdata.data.users_money;
+              this.realname = resdata.data.is_idcard
               let users_name = "";
               users_name = resdata.data.users_name;
-              console.log(users_name);
             } else {
+              Toast.clear()
               Toast(resdata.message);
             }
           });

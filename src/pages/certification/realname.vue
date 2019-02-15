@@ -22,30 +22,39 @@
             </div>
         </div>
 
+        <template v-if="info==''">
         <div class="bgc box-sizing">
             <div class="pt"></div>
             <div class="pd-lr-15">上传身份证 人像面</div>
             <div class="flex-center box">
-                <van-uploader :after-read="onRead1" accept="image/png, image/jpeg" multiple>
-                    <div class="upload flex-center"><img src="../../assets/icon-camera.png" alt=""></div>
+                <van-uploader :after-read="onRead1" multiple :max-size="maxsize" @oversize="oversize1">
+                    <div class="upload flex-center">
+                        <img src="../../assets/icon-camera.png" alt="" class="icon" v-show="!img1" >
+                        <img :src="img1" alt="" v-show="img1">
+                    </div>
                 </van-uploader>
             </div>
         </div>
         <div class="bgc box-sizing">
             <div class="pd-lr-15">上传身份证 国徽面</div>
             <div class="flex-center box">
-                <van-uploader :after-read="onRead2" accept="image/png, image/jpeg" multiple>
-                    <div class="upload flex-center"><img src="../../assets/icon-camera.png" alt=""></div>
+                <van-uploader :after-read="onRead2" multiple :max-size="maxsize" @oversize="oversize2">
+                    <div class="upload flex-center">
+                        <img src="../../assets/icon-camera.png" alt="" class="icon" v-show="!img2" >
+                        <img :src="img2" alt="" v-show="img2">
+                    </div>
                 </van-uploader>
             </div>
         </div>
+        </template>
 
-        <div class="pd-15 border-b bgc flex-align-items fsz12">
+        <template v-if="info!=''">
+        <div class="pd-15 border-b bgc flex-align-items fsz12" >
             <div class="flex-1">
                 <div class="mar-b-10 c6">姓名</div>
-                <div class="mar-b-10">某某某</div>
+                <div class="mar-b-10">{{info.realname}}</div>
                 <div class="mar-b-10 c6">身份证</div>
-                <div>1234567890123</div>
+                <div>{{info.idcard_number}}</div>
             </div>
             <div>
                 <img src="../../assets/idimg1.png" alt="" class="idimg">
@@ -54,16 +63,17 @@
         <div class="pd-15 bgc flex-align-items fsz12">
             <div class="flex-1">
                 <div class="mar-b-10 c6">签发机关</div>
-                <div class="mar-b-10">xx公安局</div>
+                <div class="mar-b-10">{{info.issued_by}}</div>
                 <div class="mar-b-10 c6">有效期限</div>
-                <div>2015.08.14-2025.8.25</div>
+                <div>{{info.valid_date}}</div>
             </div>
             <div>
                 <img src="../../assets/idimg2.png" alt="" class="idimg">
             </div>
         </div>
+        </template>
 
-        <div class="pd-15"><div class="btn text-c" @click="submit">提交</div></div>
+        <div class="pd-15"><div class="btn text-c" @click="submit" v-if="info==''">提交</div></div>
     </div>
 </template>
 
@@ -74,20 +84,85 @@ export default {
         return{
             img1:null,
             img2:null,
+            file1:null,
+            file2:null,
+            maxsize: 2097152,
+            info:''
         }
+    },
+    created(){
+        this.getinfo()
     },
     methods:{
         onRead1(file) {
             console.log(file)
             this.img1 = file.content
+            this.file1 = file
         },
         onRead2(file) {
             console.log(file)
             this.img2 = file.content
+            this.file2 = file
         },
+        oversize1(){
+            Toast('文件不能超过2MB')
+        },
+        oversize2(){
+            Toast('文件不能超过2MB')
+        },
+
+        getinfo(){
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            })
+
+            this.axios.post(this.API + "api/Order/GetIDCard",postData)
+            .then(res => {
+                console.log(res.data, "info")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    this.info = resdata.data
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message)
+                }
+            })
+        },
+
         submit(){
-            Toast("此功能未开通");
-        }
+            Toast.loading({ mask: true,message: '加载中...'})
+            let formData = new FormData()
+            formData.append('file',this.file1.file,this.file1.file.name)
+            formData.append('file1',this.file2.file,this.file2.file.name)
+            formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
+
+            let config = {
+                headers:{'Content-Type':'multipart/form-data'}
+            }
+
+            this.axios.post(this.API + "api/Order/CheckIDCard",formData,config)
+            .then(res => {
+                console.log(res.data, "res")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    Toast.clear()
+                        Dialog.alert({
+                            message: '操作成功'
+                        }).then((e) => {
+                            this.$router.go(-1);
+                        });
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message)
+                }
+            })
+            .catch(error => {
+                Toast.clear()
+                Toast('网络出错')
+            });
+        },
     }
 }
 </script>
@@ -132,7 +207,7 @@ export default {
     border: 1px dashed #666;
     border-radius: 6px;
 }
-.upload img {
+.upload .icon {
     width: 28px;
     height: 24px;
 }

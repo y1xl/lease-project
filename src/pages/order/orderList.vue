@@ -31,18 +31,17 @@
         </div>
         <!-- <div class="flex-center border" >重新下单</div> -->
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
-        <!-- <div class="flex-center border-blue fc-blue" >支付</div> -->
         <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
         <!-- <div class="flex-center border">朋友代还</div> -->
-        <div class="flex-center border" v-if="item.order_status==9&&item.user_validation==0">
+        <div class="flex-center border" v-if="item.order_status==9">
           <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
         </div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==0" @click="onConfirmsales(item.order_id)">确认</div>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9" @click="onConfirmsales(item.order_id)">确认</div>
         <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
         <!-- <div class="flex-center border" @click="getcode(item.order_id,2)">自还码</div> -->
         <div class="flex-center border" v-if="item.order_status==6"><router-link :to="`/relet/${item.order_id}`">续租</router-link></div>
         <!-- <div class="flex-center border-blue fc-blue">
-          <router-link v-bind="{to: '/comments'}">评价</router-link>
+          <router-link v-bind="{to: `/comments/${item.order_id}`}">评价</router-link>
         </div> -->
         <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div>
@@ -275,8 +274,13 @@ export default {
             this.list = resdata.data
           } else {
             Toast.clear()
+            this.list = []
             Toast(resdata.message);
           }
+        })
+        .catch(error => {
+          this.list = []
+          Toast('网络出错')
         });
       }  
     },

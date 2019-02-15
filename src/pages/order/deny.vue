@@ -3,7 +3,7 @@
         <div class="textarea bgc"><textarea v-model.trim="contentval" name="" id="" rows="6" placeholder="输入否认的理由"></textarea></div>
         <div class="bgc imglist">
             <img @click="onImagePreview(index)" :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index">
-            <van-uploader :after-read="onRead" accept="image/png, image/jpeg" multiple>
+            <van-uploader :after-read="onRead" accept="image/png, image/jpeg" multiple v-show="showupload">
                 <img src="../../assets/uploadimg.png" alt="">
             </van-uploader>
         </div>
@@ -19,7 +19,15 @@ export default {
     data(){
         return{
             imgarr:[],
-            contentval:''
+            contentval:'',
+            showupload: true
+        }
+    },
+    watch:{
+        imgarr(){
+            if(this.imgarr.length==3){
+                this.showupload = false
+            }
         }
     },
     methods:{
@@ -46,13 +54,19 @@ export default {
             }
 
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
-                // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-                order_id:this.$route.params.id,
-                content: this.contentval,
-                image:this.imgarr[0].file
-            })
-            this.axios.post(this.API + "api/Lease_Order/afterConfirmation",postData)
+            let config = {
+                headers:{'Content-Type':'multipart/form-data'}
+            }
+
+            let formData = new FormData()
+            for(let v of this.imgarr){
+                formData.append('image',v.file,v.file.name)
+            }
+            // formData.append('image',this.imgarr[0].file.file,this.imgarr[0].file.name)
+            formData.append('order_id',this.$route.params.id)
+            formData.append('content',this.contentval)
+
+            this.axios.post(this.API + "api/Lease_Order/afterConfirmation",formData,config)
             .then(res => {
                 console.log(res.data, "data")
                 let resdata = res.data
