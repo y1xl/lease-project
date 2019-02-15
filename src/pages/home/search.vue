@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action>
-      <div slot="action" @click="onSearch ">搜索</div>
+      <div slot="action" @click="onSearch">搜索</div>
     </van-search>
 
     <div class="bgc">

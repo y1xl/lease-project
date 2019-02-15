@@ -43,6 +43,7 @@ export default {
       this.$router.push({ path: "/addPeople/" + id });
     },
     geturgent() {
+      Toast.loading({ mask: true, message: "加载中..." });
       let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
       if (userinfo) {
         let postData = this.$qs.stringify({
@@ -54,11 +55,13 @@ export default {
             console.log(res.data, "user_price");
             let resdata = res.data;
             if (resdata.code == 200) {
+              Toast.clear();
               this.list = resdata.data;
               this.list.forEach((item, i) => {
                 let urgent_id = this.list[i].urgent_id;
               });
             } else {
+              Toast.clear();
               Toast(resdata.message);
             }
           });
