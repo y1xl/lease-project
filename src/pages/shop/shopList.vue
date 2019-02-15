@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action>
-      <div slot="action" >搜索</div>
+      <div slot="action" @click="onSearch">搜索</div>
     </van-search>
 
     <div class="shoplist">
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       list: [],
-      value:''
+      value: ""
     };
   },
   created() {
@@ -46,6 +46,9 @@ export default {
     this.getlist();
   },
   methods: {
+    onSearch() {
+      console.log(this.value);
+    },
     getlist() {
       Toast.loading({ mask: true, message: "加载中..." });
       this.axios.post(this.API + "api/Lease/store_select").then(res => {

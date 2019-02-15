@@ -71,7 +71,7 @@
 
         <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key="index">
           <div class="title" v-show="!hostlist.length==0">热门推荐</div>
-          <div class="flex-jc-between border-b bgc camer_hm_box" v-show="!hostlist.length==0">
+          <div class="flexbox border-b bgc camer_hm_box" v-show="!hostlist.length==0">
             <div
               class="camer_hm"
               v-for="(goods,index) in hostlist"
@@ -215,7 +215,7 @@ export default {
               Toast.clear();
               Toast(resdata.message);
             }
-          })
+          });
       }
     },
 
@@ -423,8 +423,8 @@ export default {
   width: 100%;
   height: 175px;
 }
-.camer_hm_box > div{
-  margin-left:9px;
+.camer_hm_box > div {
+  margin-left: 9px;
 }
 
 /* .camer_hm_box > div:nth-child(1) {
