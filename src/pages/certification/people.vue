@@ -39,7 +39,6 @@ export default {
   methods: {
     edit(id) {
       //编辑
-
       this.$router.push({ path: "/addPeople/" + id });
     },
     geturgent() {
@@ -77,6 +76,7 @@ export default {
         .then(() => {
           // on confirm
           console.log(this.urgent_id, "111");
+          Toast.loading({ mask: true, message: "加载中..." });
           let postData = this.$qs.stringify({
             urgent_id: urgent_id
           });
@@ -86,8 +86,10 @@ export default {
               console.log(res.data, "delete");
               let resdata = res.data;
               if (resdata.code == 200) {
+                Toast.clear();
                 this.list.splice(this.urgent_id, 1);
               } else {
+                Toast.clear();
                 Toast(resdata.message);
               }
             });

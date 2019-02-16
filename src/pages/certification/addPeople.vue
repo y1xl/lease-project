@@ -55,6 +55,7 @@ export default {
     },
     getupdate() {
       if (this.$route.params.id) {
+        Toast.loading({ mask: true, message: "加载中..." });
         let postData = this.$qs.stringify({
           urgent_id: this.$route.params.id
         });
@@ -64,10 +65,12 @@ export default {
             console.log(res.data, "user_price");
             let resdata = res.data;
             if (resdata.code == 200) {
+              Toast.clear();
               this.text = resdata.data.urgent_sign;
               this.nameval = resdata.data.urgent_name;
               this.phoneval = resdata.data.urgent_phone;
             } else {
+              Toast.clear();
               Toast(resdata.message);
             }
           });
@@ -83,9 +86,9 @@ export default {
       if (!urgent_id) {
         let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
         if (userinfo) {
+          Toast.loading({ mask: true, message: "加载中..." });
           let postData = this.$qs.stringify({
-            users_id: JSON.parse(window.localStorage.getItem("userinfo"))
-              .users_id,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             urgent_phone: this.phoneval,
             urgent_name: this.nameval,
             urgent_sign: this.text
@@ -96,14 +99,17 @@ export default {
               console.log(res.data, "add");
               let resdata = res.data;
               if (resdata.code == 200) {
+                Toast.clear();
                 Toast("添加成功");
                 this.$router.go(-1);
               } else {
+                Toast.clear();
                 Toast(resdata.message);
               }
             });
         }
       } else {
+        Toast.loading({ mask: true, message: "加载中..." });
         let postData = this.$qs.stringify({
           urgent_id: urgent_id,
           urgent_phone: this.phoneval,
@@ -116,9 +122,11 @@ export default {
             console.log(res.data, "editor");
             let resdata = res.data;
             if (resdata.code == 200) {
+              Toast.clear();
               Toast("编辑成功");
               this.$router.go(-1);
             } else {
+              Toast.clear();
               Toast(resdata.message);
             }
           });

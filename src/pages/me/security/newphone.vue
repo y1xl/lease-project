@@ -40,6 +40,7 @@ export default {
             });
         },
         submit(){
+            Toast.loading({ mask: true,message: '加载中...'})
             let postData = this.$qs.stringify({
                 users_phone: this.phoneval,
                 yzm: this.codeval,
@@ -50,9 +51,11 @@ export default {
                 console.log(res.data, "submit");
                 let resdata = res.data;
                 if (resdata.code == 200) {
+                    Toast.clear()
                     this.$router.replace({ path: "/accountSecurity" })
                 } else {
-                Toast(resdata.message);
+                    Toast.clear()
+                    Toast(resdata.message);
                 }
             });
         }

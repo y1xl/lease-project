@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="flex-jc-center bgc" v-show="active==0">
-      <div class="banner bgc">
+      <div class="banner bgc" id="banner">
         <van-swipe :autoplay="3000">
           <van-swipe-item v-for="(item, index) in images" :key="index">
             <div class="img_box">
@@ -56,7 +56,7 @@
                 :key="index"
               >
                 <div class="img_box2 flex-center">
-                  <img class="img" :src="goods.gd_img[0]">
+                  <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
                 </div>
                 <div class="text-line pro_name">{{goods.goods_name}}</div>
                 <div class="f12">
@@ -79,7 +79,7 @@
               @click="toDetail(goods.goods_id)"
             >
               <div class="img_box2 flex-center">
-                <img class="img" :src="goods.gd_img[0]">
+                <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
               </div>
               <div class="text-line pro_name">{{goods.goods_name}}</div>
               <div class="f12">
@@ -99,7 +99,7 @@
               @click="toDetail(item.goods_id)"
             >
               <div class="img_box">
-                <img class="sy_img" :src="item.gd_img[0]">
+                <img class="sy_img" :src="item.gd_img[0]" style="object-fit:contain" alt="商品">
               </div>
               <div class="f14 pro_name">{{item.goods_name}}</div>
               <div class="com_like">
@@ -286,6 +286,9 @@ export default {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
+#banner .van-swipe {
+  border-radius: 5px
+}
 </style>
 
 <style scoped>
@@ -331,11 +334,7 @@ export default {
   width: 290px;
   height: 160px;
 }
-.img_box img {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-}
+
 .tg {
   text-align: center;
   font-size: 12px;
@@ -439,7 +438,7 @@ export default {
 }
 .img_box2 {
   width: 95px;
-  height: 110px;
+  height: 95px;
   background: #f7f7f7;
 }
 

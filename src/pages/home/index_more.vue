@@ -10,7 +10,7 @@
         <div v-for="(item,index) in goodslist" :key="index" @click="toDetail(item.goods_id)">
           <div class="item">
             <div class="flex-jc-center img_b1">
-              <img class="img" :src="item.gd_img[0]">
+              <img class="img" :src="item.gd_img[0]" style="object-fit:contain">
             </div>
             <div class="text-line pro_title mar-b-10">{{item.goods_name}}</div>
             <div class="price-box">

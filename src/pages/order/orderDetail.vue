@@ -5,12 +5,13 @@
         <span v-if="data.order_status==6">租赁中</span>
         <span v-if="data.order_status==4">订单关闭</span>
         <span v-if="data.order_status==8">检测中</span>
-        <span v-if="data.order_status==9">售后中</span>
+        <span v-if="data.order_status==9&&user_validation==0">售后中</span>
         <span v-if="data.order_status==10">退押金中</span>
         <span v-if="data.order_status==1">待付款</span>
         <span v-if="data.order_status==5">待收货</span>
         <span v-if="data.order_status==12">待发货</span>
         <span v-if="data.order_status==7">退租中</span>
+        <span v-if="data.order_status==9&&user_validation==1">售后待确认</span>
       </div>
       <!-- <div class="fc-blue fsz13">剩余29分钟36秒的支付时间</div> -->
       <div class="fsz13 fc-grey">{{data.withouTreason}}</div>
@@ -212,20 +213,20 @@
         </div>
 
         <!-- 售后中 -->
-        <!-- <div>
+        <div v-if="!salesData==''">
           <div class="title position">
             协商信息
             <div class="l dot"></div>
             <div class="r dot"></div>
           </div>
-          <div>平台:边角有磨损、裂痕</div>
-          <div class="imglist flex-jc-between">
-            <img @click="onImagePreview()" src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
-            <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
-            <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+          <div class="mar-b-10" v-for="(item,index) in salesData" :key="index">
+            <div v-if="item.babelte==0">平台:{{item.content}}</div>
+            <div v-if="item.babelte==1">我:{{item.content}}</div>
+            <div class="imglist" v-if="item.image">
+              <img @click="onImagePreview(item.image)" :src="item.image" alt='图片'>
+            </div>
           </div>
-          <div class="reason">我 :理由理由理由理由理由理由理由理由</div>
-        </div> -->
+        </div>
 
         <!-- 租转售 -->
         <!-- <div>
@@ -268,10 +269,16 @@
       <div class="flex-center border" v-if="data.order_status==6"><router-link :to="`/relet/${data.order_id}`">续租</router-link></div>
       <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
       <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
-      <div class="flex-center border" v-if="data.order_status==9">
+      <div class="flex-center border" v-if="data.order_status==9&&user_validation==0">
         <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
       </div>
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9" @click="onConfirmsales(data.order_id)">确认</div>
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==0" @click="onConfirmsales(data.order_id)">确认</div>
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1">
+        <router-link v-bind="{to: '/compensation/'+data.order_id}">确认</router-link>
+      </div>
+      <!-- <div class="flex-center border-blue fc-blue">
+          <router-link v-bind="{to: `/comments/${data.order_id}`}">评价</router-link>
+        </div> -->
     </div>
   </div>
 </template>
@@ -284,6 +291,7 @@ export default {
     return {
       showlogistics:false,
       data:'',
+      salesData: '',
       logistics:[
         // {
         //   AcceptTime: "2014/06/25 08:05:37",
@@ -300,16 +308,18 @@ export default {
         //   AcceptStation: "已收件[深圳市]",
         //   Remark: null
         // },
-      ]
+      ],
+      user_validation: this.$route.query.validation
     }
   },
   created(){
     this.getdata()
+    this.getSalesData()
   },
   methods:{
-    onImagePreview(){
+    onImagePreview(imgurl){
       ImagePreview([
-        'http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg',
+        imgurl,
       ]);
     },
     getdata(){
@@ -336,9 +346,27 @@ export default {
         Toast('网络出错')
       });
     },
+    //售后详情
+    getSalesData(){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          order_id:this.$route.params.id,
+      })
+      this.axios.post(this.API + "api/Lease_Order/AfterDetails",postData)
+      .then(res => {
+          console.log(res.data, "getSalesData")
+          let resdata = res.data
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.salesData = resdata.data
+          } else {
+            Toast.clear()
+              // Toast(resdata.message)
+          }
+      })
+    },
         //物流
     queryLogistics(){
-      Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({
           order_id: this.data.order_id,
         });
@@ -347,15 +375,12 @@ export default {
           console.log(res.data, "queryLogistics");
           let resdata = res.data;
           if (resdata.code == 200) {
-            Toast.clear()
             this.logistics = resdata.data.Traces
           } else {
-            Toast.clear()
             Toast(resdata.message);
           }
         })
         .catch(error => {
-          Toast.clear()
           Toast('网络出错')
         });
     },
@@ -500,11 +525,9 @@ export default {
   font-size: 0;
 }
 .imglist > img {
-  width: 85px;
-  height: 85px;
-}
-.reason {
-  padding-top: 15px;
+  width: 84px;
+  height: 84px;
+  /* margin-left: 4px; */
 }
 
 .info div {

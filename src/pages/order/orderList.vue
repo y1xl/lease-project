@@ -16,29 +16,28 @@
       </van-tabs>
     </div>
 
-      <!-- <div class="ordernull">
-        <img src="../../assets/order-null.png" alt="" class="mar-b-10">
-        <div class="text-c">暂无订单</div>
-      </div> -->
-
     <div class="list" v-show="selected==0">
-      <div class="pd-15 fc-grey text-c" v-if="!list">快去添加订单吧~</div>
+      <div class="ordernull"  v-if="!list">
+        <img src="../../assets/order-null.png" alt="" class="mar-b-10">
+        <div class="text-c fc-grey">暂无订单</div>
+      </div>
 
       <OrderCard v-for="(item,index) in list" :key="index" :data="item">
         <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==1">
           <router-link v-bind="{to: '/pay/'+item.order_id}">支付</router-link>
         </div>
-        <!-- <div class="flex-center border" >重新下单</div> -->
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
         <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
         <!-- <div class="flex-center border">朋友代还</div> -->
-        <div class="flex-center border" v-if="item.order_status==9">
+        <div class="flex-center border" v-if="item.order_status==9&&item.user_validation==0">
           <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
         </div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9" @click="onConfirmsales(item.order_id)">确认</div>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==0" @click="onConfirmsales(item.order_id)">确认</div>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1">
+          <router-link v-bind="{to: '/compensation/'+item.order_id}">确认</router-link>
+        </div>
         <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
-        <!-- <div class="flex-center border" @click="getcode(item.order_id,2)">自还码</div> -->
         <div class="flex-center border" v-if="item.order_status==6"><router-link :to="`/relet/${item.order_id}`">续租</router-link></div>
         <!-- <div class="flex-center border-blue fc-blue">
           <router-link v-bind="{to: `/comments/${item.order_id}`}">评价</router-link>
@@ -112,6 +111,10 @@
     </div>
 
     <div class="list" v-show="selected==1">
+      <div class="ordernull"  v-if="!list">
+        <img src="../../assets/order-null.png" alt="" class="mar-b-10">
+        <div class="text-c fc-grey">暂无订单</div>
+      </div>
       <!-- <OrderCard status="待发货"></OrderCard> 
       <OrderCard status="待付款">
         <div class="flex-center border" @click="onshowmodel">取消订单</div>
@@ -171,7 +174,7 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 export default {
   components: {
     OrderCard
@@ -184,7 +187,7 @@ export default {
       navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
       navarr1: ["待付款", "待发货", "待收货", "待评价", "已完成"],
       radio: 0,
-      canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "收货地址写错了" },{ id: 3, text: "重新下单" },{ id: 4, text: "测试下单/误下单" }, { id: 5, text: "其他" }],
+      canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" },{ id: 6, text: "测试下单/误下单" }, { id: 7, text: "其他" }],
       showmodel: false,
       showcode: false,
       list:null,
@@ -193,6 +196,7 @@ export default {
     };
   },
   created(){
+    Dialog.close()
     if(!window.localStorage.getItem("userinfo")){
       this.$router.replace({ path: "/login" })
     }
@@ -204,10 +208,12 @@ export default {
       if (n == 0) {
         this.navarr = this.navarr0;
         this.active = 0
+        this.getlist()
       }
       if (n == 1) {
         this.navarr = this.navarr1;
         this.active = 0
+        this.list = null //测试
       }
     },
     ontag(index, title) {

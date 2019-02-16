@@ -29,6 +29,7 @@ import TimeQuantum from '@/pages/order/timeQuantum'
 import AppointmentExpress from '@/pages/order/appointmentExpress'
 import Deny from '@/pages/order/deny'
 import Calendar from '@/pages/order/calendar'
+import Compensation from '@/pages/order/compensation'
 
 //个人中心
 import MyInformation from '@/pages/me/myInformation'
@@ -117,6 +118,7 @@ export default new Router({
     { path: '/deny/:id', component: Deny, meta: { title: '否认' } },
     { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
     { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
+    { path: '/compensation/:id', component: Compensation, meta: { title: '赔偿' } },
     //产品
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表' } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },

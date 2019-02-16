@@ -26,7 +26,7 @@
 
 <script>
 import { ImagePreview } from 'vant';
-import { Toast } from 'vant';
+import { Toast,Dialog } from 'vant';
 export default {
   data() {
     return {
@@ -96,6 +96,38 @@ export default {
         Toast('请先填写内容')
         return
       }
+
+      Toast.loading({ mask: true,message: '加载中...'})
+      let config = {
+          headers:{'Content-Type':'multipart/form-data'}
+      }
+
+      let formData = new FormData()
+      for(let v of this.imgarr){
+          formData.append('eva_picture',v.file,v.file.name)
+      }
+      formData.append('order_id',this.$route.params.id)
+      // formData.append('goods_id',this.$route.query.goodsid)
+      formData.append('eva_content',this.contentval)
+      formData.append('eva_service',this.rateval)
+      formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
+
+      // this.axios.post(this.API + "api/Lease/goods_evaluate",formData,config)
+      // .then(res => {
+      //     console.log(res.data, "submit")
+      //     let resdata = res.data
+      //     if (resdata.code == 200) {
+      //         Toast.clear()
+      //             Dialog.alert({
+      //                 message: '操作成功'
+      //             }).then((e) => {
+      //                 this.$router.go(-1);
+      //             });
+      //     } else {
+      //         Toast.clear()
+      //         Toast(resdata.message)
+      //     }
+      // });
     }
   }
 };

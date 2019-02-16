@@ -1,11 +1,9 @@
 <template>
   <div>
     <div class="bgc">
-      <div class="flex-jc-center">
-        <div class="shopimg_b">
-          <img
-            src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1414761794,530721362&fm=26&gp=0.jpg"
-          >
+      <div class="flex-jc-center" v-if="detail.thumb">
+        <div class="shopimg_b bgc-grey">
+          <img :src="detail.thumb" alt="封面">
         </div>
       </div>
       <div class="dt text-c">
@@ -19,10 +17,7 @@
     <div class="bgc flex-jc-center miaosu_b">
       <div class="miaosu">
         <div class="shop_name">{{store_name}}</div>
-        <div class="shop_intro">
-          店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍
-          店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍
-        </div>
+        <div class="shop_intro" v-html="detail.content"></div>
       </div>
     </div>
   </div>
@@ -33,6 +28,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
+      detail:'',
       store_province: "",
       store_city: "",
       store_Address: "",
@@ -57,6 +53,7 @@ export default {
 
           let resdata = res.data;
           if (resdata.code == 200) {
+            this.detail = resdata.data
             this.store_province = resdata.data.store_province;
             this.store_city = resdata.data.store_city;
             this.store_district = resdata.data.store_district;
@@ -78,7 +75,6 @@ export default {
   width: 92%;
   height: 170px;
   border-radius: 5px;
-  background: rebeccapurple;
 }
 .shopimg_b img {
   width: 100%;

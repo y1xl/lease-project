@@ -5,11 +5,12 @@
         <div class="caricon fc-red" @click="showinfocar=true">
           <van-icon name="shopping-cart"/>
         </div>
-        <div class="banner bgc">
+        <div class="banner bgc" id="banner">
           <van-swipe :autoplay="3000">
             <van-swipe-item v-for="(item, index) in detail.gd_img" :key="index">
               <div class="img_box">
-                <img :src="item">
+                <!-- <img :src="item"> -->
+                <video src="http://www.runoob.com/try/demo_source/mov_bbb.mp4" controls loop preload style="width:100%;height:100%;object-fit:fill"></video>
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -406,6 +407,13 @@ export default {
 };
 </script>
 
+<style>
+#banner .van-swipe {
+  border-radius: 5px
+}
+</style>
+
+
 <style scoped>
 .height {
   height: 50px;
@@ -429,11 +437,6 @@ export default {
 .img_box {
   width: 290px;
   height: 230px;
-}
-.img_box img {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
 }
 
 .product {

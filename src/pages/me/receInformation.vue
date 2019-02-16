@@ -73,7 +73,7 @@ export default {
       this.delid = id;
     },
     del() {
-      
+      Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         ads_id: this.delid
       });
@@ -81,8 +81,10 @@ export default {
         console.log(res.data, "del");
         let resdata = res.data;
         if (resdata.code == 200) {
+          Toast.clear();
           this.getselect();
         } else {
+          Toast.clear();
           Toast(resdata.message);
         }
       });

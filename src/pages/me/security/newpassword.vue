@@ -27,6 +27,7 @@ export default {
     },
     methods:{
         submit(){
+          Toast.loading({ mask: true,message: '加载中...'})
             let postData = this.$qs.stringify({
                 users_pwd: this.oldval,
                 new_pwd: this.newval,
@@ -37,9 +38,11 @@ export default {
                 console.log(res.data, "submit");
                 let resdata = res.data;
                 if (resdata.code == 200) {
-                    this.$router.go(-1);
+                  Toast.clear()
+                  this.$router.go(-1);
                 } else {
-                Toast(resdata.message);
+                  Toast.clear()
+                  Toast(resdata.message);
                 }
             });
         }

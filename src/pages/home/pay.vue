@@ -27,6 +27,14 @@
 
         <div class="pd-t-50"><div class="btn text-c" @click="submit">支付</div></div>
 
+        <van-popup v-model="showWXpay" >
+            <div class="wxbox">
+                <p class="text-c border-b">请确认微信支付是否完成</p>
+                <p class="text-c fc-red border-b">已完成支付</p>
+                <p class="text-c fc-grey" @click="showWXpay = false">支付遇到问题，重新支付</p>
+            </div>
+        </van-popup>
+
     </div>
 </template>
 
@@ -36,7 +44,8 @@ export default {
     data(){
         return{
             radio:'1',
-            info:''
+            info:'',
+            showWXpay:false
         }
     },
     created(){
@@ -68,6 +77,7 @@ export default {
         },
 
         getinfo() {
+            Toast.loading({ mask: true, message: "加载中..." });
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 order_id : this.$route.params.orderid
@@ -77,18 +87,43 @@ export default {
                 console.log(res.data, "info");
                 let resdata = res.data;
                 if (resdata.code == 200) {
+                    Toast.clear();
                     this.info = resdata.data;
                 } else {
-                Toast(resdata.message);
+                    Toast.clear();
+                    Toast(resdata.message);
                 }
             })
             .catch(error => {
+                Toast.clear();
                 Toast('网络出错')
             });
         },
         submit(){
             if(this.radio==1){
-                Toast('微信功能未开通')
+                // Toast('微信功能未开通')
+                Toast.loading({ mask: true,message: '加载中...'})
+                let postData = this.$qs.stringify({
+                    users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                    order_id : this.$route.params.orderid,
+                    pay_way: this.radio
+                });
+                this.axios.post(this.API + "api/Order/GetPay", postData)
+                .then(res => {
+                    console.log(res.data, "wxpay");
+                    let resdata = res.data
+                    if (resdata.code == 200) {
+                        Toast.clear()
+                        window.location.href = resdata.data
+                    } else {
+                        Toast.clear()
+                        Toast(resdata.message);
+                    }
+                })
+                .catch(error => {
+                    Toast.clear()
+                    Toast('网络出错')
+                });
             }
             if(this.radio==2){
                 // Toast('支付宝功能未开通')
@@ -113,6 +148,10 @@ export default {
                     //     path: '/applyText',
                     //     query: {html: res.data}
                     // })
+                })
+                .catch(error => {
+                    Toast.clear()
+                    Toast('网络出错')
                 });
             }
             if(this.radio==3){
@@ -189,5 +228,12 @@ export default {
     padding: 0 15px;
     padding-top: 50px;
     padding-bottom:15px;
+}
+
+.wxbox {
+    width: 200px;
+}
+.wxbox > p {
+    padding: 10px 0;
 }
 </style>

@@ -79,6 +79,7 @@ export default {
       this.delid = id
     },
     del(){
+      Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({
             cart_id: this.delid,
         })
@@ -87,8 +88,10 @@ export default {
         console.log(res.data, "del")
         let resdata = res.data
         if (resdata.code == 200) {
+          Toast.clear()
           this.getlist()
         } else {
+          Toast.clear()
           Toast(resdata.message)
         }
       });
@@ -100,6 +103,7 @@ export default {
     },
 
     getlist(){
+      Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         })
@@ -108,8 +112,10 @@ export default {
         console.log(res.data, "list")
         let resdata = res.data
         if (resdata.code == 200) {
+          Toast.clear()
           this.list = resdata.data;
         } else {
+          Toast.clear()
           Toast(resdata.message)
         }
       });

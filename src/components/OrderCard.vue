@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="bgc card pd-15 mar-b-10">
-        <router-link v-bind="{to: '/orderDetail/'+data.order_id}">
+        <router-link v-bind="url">
             <div class="flex-jc-between border-b mar-b-10 pb10" >
                 <span>订单号:{{data.order_no}}</span>
                 <span class="fc-blue" v-if="data.order_status==6">租赁中</span>
@@ -11,8 +11,8 @@
                 <span class="fc-blue" v-if="data.order_status==4">订单关闭</span>
                 <span class="fc-blue" v-if="status=='订单超时'">订单超时</span>
                 <span class="fc-blue" v-if="data.order_status==8">检测中</span>
-                <span class="fc-blue" v-if="data.order_status==9">售后中</span>
-                <span class="fc-blue" v-if="status=='待确认'">待确认</span>
+                <span class="fc-blue" v-if="data.order_status==9&&data.user_validation==0">售后中</span>
+                <span class="fc-blue" v-if="data.order_status==9&&data.user_validation==1">待确认</span>
                 <span class="fc-blue" v-if="data.order_status==10">退押金中</span>
                 <span class="fc-blue" v-if="data.order_status==1">待付款</span>
                 <span class="fc-blue" v-if="status=='已确认'">已确认</span>
@@ -24,7 +24,7 @@
                 <span class="fc-blue" v-if="status=='已完成'">已完成</span>
             </div>
             <div class="flexbox">
-                <img :src="data.gd_img" alt="" class="goodsimg bgc-grey">
+                <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" >
                 <div class="flex-1 right">
                     <div class="mar-b-10">{{data.model_name}}</div>
                     <div class="spec mar-b-10"><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>
@@ -55,6 +55,15 @@ export default {
     data(){
         return{
             
+        }
+    },
+    computed:{
+        url(){
+            if(this.data.user_validation==1||this.data.user_validation==0){
+                return {to: `/orderDetail/${this.data.order_id}?validation=${this.data.user_validation}` }
+            }else{
+                return {to: '/orderDetail/'+this.data.order_id}
+            }    
         }
     },
     methods:{
