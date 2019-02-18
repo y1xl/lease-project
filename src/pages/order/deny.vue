@@ -56,7 +56,7 @@ export default {
             //     Toast('还有未填写')
             //     return
             // }
-            if(this.contentval==''||!this.img){
+            if(this.contentval==''||this.img==''){
                 Toast('还有未填写')
                 return
             }

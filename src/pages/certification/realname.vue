@@ -30,7 +30,7 @@
                 <van-uploader :after-read="onRead1" multiple :max-size="maxsize" @oversize="oversize1">
                     <div class="upload flex-center">
                         <img src="../../assets/icon-camera.png" alt="" class="icon" v-show="!img1" >
-                        <img :src="img1" alt="" v-show="img1">
+                        <img :src="img1" alt="" v-show="img1" style="object-fit:contain">
                     </div>
                 </van-uploader>
             </div>
@@ -41,7 +41,7 @@
                 <van-uploader :after-read="onRead2" multiple :max-size="maxsize" @oversize="oversize2">
                     <div class="upload flex-center">
                         <img src="../../assets/icon-camera.png" alt="" class="icon" v-show="!img2" >
-                        <img :src="img2" alt="" v-show="img2">
+                        <img :src="img2" alt="" v-show="img2" style="object-fit:contain">
                     </div>
                 </van-uploader>
             </div>

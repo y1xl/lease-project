@@ -12,6 +12,7 @@
         <span v-if="data.order_status==12">待发货</span>
         <span v-if="data.order_status==7">退租中</span>
         <span v-if="data.order_status==9&&user_validation==1">售后待确认</span>
+        <span v-if="data.order_status==11">已完成</span>
       </div>
       <!-- <div class="fc-blue fsz13">剩余29分钟36秒的支付时间</div> -->
       <div class="fsz13 fc-grey">{{data.withouTreason}}</div>
@@ -260,9 +261,9 @@
 
     <div class="height"></div>
 
-    <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10">
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" >
-        <router-link v-bind="{to: '/pay/'+data.order_id}">支付</router-link>
+    <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10" :style="maintenance_pay==1||active==6?'opacity: 0;':''">
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)">
+        <!-- <router-link v-bind="{to: '/pay/'+data.order_id}">支付</router-link> -->支付
       </div>
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
       <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
@@ -273,12 +274,12 @@
         <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
       </div>
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==0" @click="onConfirmsales(data.order_id)">确认</div>
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1">
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0">
         <router-link v-bind="{to: '/compensation/'+data.order_id}">确认</router-link>
       </div>
-      <!-- <div class="flex-center border-blue fc-blue">
-          <router-link v-bind="{to: `/comments/${data.order_id}`}">评价</router-link>
-        </div> -->
+      <div class="flex-center border-blue fc-blue" v-if="active==5">
+          <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}`}">评价</router-link>
+        </div>
     </div>
   </div>
 </template>
@@ -309,7 +310,9 @@ export default {
         //   Remark: null
         // },
       ],
-      user_validation: this.$route.query.validation
+      user_validation: this.$route.query.validation,
+      maintenance_pay: this.$route.query.maintenance_pay,
+      active: this.$route.query.active,
     }
   },
   created(){
@@ -321,6 +324,10 @@ export default {
       ImagePreview([
         imgurl,
       ]);
+    },
+    gopay(id){
+      window.sessionStorage.removeItem("wxpaySession");
+      this.$router.push({ path: `/pay/${id}` });
     },
     getdata(){
       Toast.loading({ mask: true,message: '加载中...'})

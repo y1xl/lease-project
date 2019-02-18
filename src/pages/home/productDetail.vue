@@ -7,10 +7,14 @@
         </div>
         <div class="banner bgc" id="banner">
           <van-swipe :autoplay="3000">
+            <van-swipe-item v-if="detail.goods_video">
+              <div class="img_box">
+                <video ref="video" :src="detail.goods_video" controls preload style="width:100%;height:100%;object-fit:fill" ></video>
+              </div>
+            </van-swipe-item>
             <van-swipe-item v-for="(item, index) in detail.gd_img" :key="index">
               <div class="img_box">
-                <!-- <img :src="item"> -->
-                <video src="http://www.runoob.com/try/demo_source/mov_bbb.mp4" controls loop preload style="width:100%;height:100%;object-fit:fill"></video>
+                <img :src="item">
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -21,7 +25,6 @@
           <div class="flex-jc-between">
             <div class="flex-1">
               <div class="product_title">{{detail.goods_name}}</div>
-              <!-- <div class="grey_12 camera">一次成像相机</div> -->
             </div>
             <div class="flexbox">
               <div class="text-c" @click="oncollection">
@@ -348,13 +351,23 @@ export default {
         for (let v1 of v.spec){
           if (v1.checked){
             arr.push(v1)
-            
           }
         }
       }
+      if(this.speclist.length==0){
+        window.sessionStorage.removeItem("buySession");
+        this.$router.push({
+            path: '/buy',
+            query: {
+              id: this.$route.params.id,
+              guige: encodeURI(JSON.stringify(arr))
+            }
+        })
+        return
+      }
       if(arr.length == this.speclist.length){
         window.sessionStorage.removeItem("buySession");
-        this.$router.replace({
+        this.$router.push({
             path: '/buy',
             query: {
               id: this.$route.params.id,
@@ -385,8 +398,8 @@ export default {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             cart_num:1,
             cart_price:this.detail.hire_price.price,
-            attr_ids: attr_ids.join(','),
-            attr_names: attr_names.join(','),
+            attr_ids: attr_ids.length==0 ? '' : attr_ids.join(','),
+            attr_names: attr_names.length==0 ? '' : attr_names.join(','),
         })
         this.axios.post(this.API + "api/Lease/Add_cart",postData)
         .then(res => {

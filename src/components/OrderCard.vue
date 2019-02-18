@@ -5,7 +5,6 @@
             <div class="flex-jc-between border-b mar-b-10 pb10" >
                 <span>订单号:{{data.order_no}}</span>
                 <span class="fc-blue" v-if="data.order_status==6">租赁中</span>
-                <span class="fc-blue" v-if="status=='待评价'">待评价</span>
                 <span class="fc-blue" v-if="status=='已超期'">已超期</span>
                 <span class="fc-blue" v-if="status=='已结束'">已结束</span>
                 <span class="fc-blue" v-if="data.order_status==4">订单关闭</span>
@@ -21,7 +20,7 @@
                 <span class="fc-blue" v-if="status=='预租待确认'">预租待确认</span>
                 <span class="fc-blue" v-if="data.order_status==7">退租中</span>
                 <span class="fc-blue" v-if="data.order_status==12">待发货</span>
-                <span class="fc-blue" v-if="status=='已完成'">已完成</span>
+                <span class="fc-blue" v-if="data.order_status==11">已完成</span>
             </div>
             <div class="flexbox">
                 <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" >
@@ -51,7 +50,7 @@
 
 <script>
 export default {
-    props: ['status','data'],
+    props: ['status','data','active'],
     data(){
         return{
             
@@ -60,9 +59,9 @@ export default {
     computed:{
         url(){
             if(this.data.user_validation==1||this.data.user_validation==0){
-                return {to: `/orderDetail/${this.data.order_id}?validation=${this.data.user_validation}` }
+                return {to: `/orderDetail/${this.data.order_id}?validation=${this.data.user_validation}&&maintenance_pay=${this.data.maintenance_pay}` }
             }else{
-                return {to: '/orderDetail/'+this.data.order_id}
+                return {to:`/orderDetail/${this.data.order_id}?active=${this.active}`}
             }    
         }
     },

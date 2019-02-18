@@ -22,10 +22,10 @@
         <div class="text-c fc-grey">暂无订单</div>
       </div>
 
-      <OrderCard v-for="(item,index) in list" :key="index" :data="item">
+      <OrderCard v-for="(item,index) in list" :key="index" :data="item" :active="active">
         <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==1">
-          <router-link v-bind="{to: '/pay/'+item.order_id}">支付</router-link>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==1" @click="gopay(item.order_id)">
+          <!-- <router-link v-bind="{to: '/pay/'+item.order_id}">支付</router-link> -->支付
         </div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
         <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
@@ -34,14 +34,14 @@
           <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
         </div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==0" @click="onConfirmsales(item.order_id)">确认</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1">
-          <router-link v-bind="{to: '/compensation/'+item.order_id}">确认</router-link>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0">
+          <router-link v-bind="{to: `/compensation/${item.order_id}`}">确认</router-link>
         </div>
         <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
         <div class="flex-center border" v-if="item.order_status==6"><router-link :to="`/relet/${item.order_id}`">续租</router-link></div>
-        <!-- <div class="flex-center border-blue fc-blue">
-          <router-link v-bind="{to: `/comments/${item.order_id}`}">评价</router-link>
-        </div> -->
+        <div class="flex-center border-blue fc-blue" v-if="active==5">
+          <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}`}">评价</router-link>
+        </div>
         <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div>
       </OrderCard> 
@@ -203,6 +203,10 @@ export default {
     this.getlist()
   },
   methods: {
+    gopay(id){
+      window.sessionStorage.removeItem("wxpaySession");
+      this.$router.push({ path: `/pay/${id}` });
+    },
     nav(n) {
       this.selected = n;
       if (n == 0) {
@@ -415,7 +419,7 @@ export default {
 
 .tag .dot{
   position: absolute;
-  top:0;
+  top:1px;
   right:0;
 }
 

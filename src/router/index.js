@@ -105,7 +105,7 @@ export default new Router({
     { path: '/order', component: Order, meta: { title: '订单' } },
     { path: '/me', component: Me, meta: { title: '我的' } },
     //订单
-    { path: '/comments/:id', component: Comments, meta: { title: '评价' } },
+    { path: '/comments/:id/:goodid', component: Comments, meta: { title: '评价' } },
     { path: '/orderDetail/:id', component: OrderDetail, meta: { title: '订单详情' } },
     { path: '/relet/:id', component: Relet, meta: { title: '续租' } },
     { path: '/shopping', component: Shopping, meta: { title: '购买' } },

@@ -476,9 +476,25 @@ export default {
     nextface() {
       if (this.isconsent) {
         if (this.typenum == 0) {
-          // if(this.getlocation==''||this.getdate==''||this.people == ''||this.weektext=='请选择'||this.weekval==''||this.expectdate==''||this.timetext==''){
-          //     Toast('还有未填写')
-          //     return
+          // if(this.getlocation == ""){
+          //   Toast("请填写自取地点")
+          //   return
+          // }
+          // if(this.getdate == ""){
+          //   Toast("请填写自取时间")
+          //   return
+          // }
+          // if(this.people == ""){
+          //   Toast("请填写自取人")
+          //   return
+          // }
+          // if(this.weektext == "请选择"){
+          //   Toast("请选择租期方式")
+          //   return
+          // }
+          // if(this.weekval == ""){
+          //   Toast("请填写租期")
+          //   return
           // }
           if (
             this.getlocation == "" ||
@@ -490,6 +506,7 @@ export default {
             Toast("还有未填写");
             return;
           }
+          
           var postData = this.$qs.stringify({
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
@@ -514,6 +531,22 @@ export default {
           });
         }
         if (this.typenum == 1) {
+          // if(this.getaddress == ""){
+          //   Toast("请选择收货地址")
+          //   return
+          // }
+          // if(this.weektext == "请选择"){
+          //   Toast("请选择租期方式")
+          //   return
+          // }
+          // if(this.weekval == ""){
+          //   Toast("请填写租期")
+          //   return
+          // }
+          // if(this.expectdate == ""){
+          //   Toast("请选择期望收到的日期")
+          //   return
+          // }
           if (
             this.getaddress == "" ||
             this.weektext == "请选择" ||
@@ -527,8 +560,7 @@ export default {
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
             goods_id: this.$route.query.id,
-            users_id: JSON.parse(window.localStorage.getItem("userinfo"))
-              .users_id,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             safe_status: this.isinsurance ? 1 : 2,
             delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
             qwsh_time: this.expectdate,
@@ -546,6 +578,26 @@ export default {
           });
         }
         if (this.typenum == 2) {
+          // if(this.getaddress == ""){
+          //   Toast("请选择收货地址")
+          //   return
+          // }
+          // if(this.weektext == "请选择"){
+          //   Toast("请选择租期方式")
+          //   return
+          // }
+          // if(this.weekval == ""){
+          //   Toast("请填写租期")
+          //   return
+          // }
+          // if(this.expectdate == ""){
+          //   Toast("请选择期望收到的日期")
+          //   return
+          // }
+          // if(this.timequantumtext == ""){
+          //   Toast("请选择配送时间段")
+          //   return
+          // }
           if (
             this.getaddress == "" ||
             this.weektext == "请选择" ||

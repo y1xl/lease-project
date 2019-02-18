@@ -27,10 +27,10 @@
 
         <div class="pd-t-50"><div class="btn text-c" @click="submit">支付</div></div>
 
-        <van-popup v-model="showWXpay" >
+        <van-popup v-model="showWXpay" :close-on-click-overlay='false'>
             <div class="wxbox">
                 <p class="text-c border-b">请确认微信支付是否完成</p>
-                <p class="text-c fc-red border-b">已完成支付</p>
+                <p class="text-c fc-red border-b"><router-link to='/order'>已完成支付</router-link></p>
                 <p class="text-c fc-grey" @click="showWXpay = false">支付遇到问题，重新支付</p>
             </div>
         </van-popup>
@@ -49,8 +49,14 @@ export default {
         }
     },
     created(){
+        let wxpaySession = JSON.parse(window.sessionStorage.getItem("wxpaySession"))
+        if(wxpaySession){
+            if(wxpaySession.orderid==this.$route.params.orderid){
+                this.showWXpay = wxpaySession.state
+            }
+        }
         this.getinfo()
-        this.getfaceRes()
+        // this.getfaceRes()
     },
     methods:{ 
         getfaceRes() {
@@ -114,6 +120,11 @@ export default {
                     let resdata = res.data
                     if (resdata.code == 200) {
                         Toast.clear()
+                        let wxpaySession = {
+                            orderid:this.$route.params.orderid,
+                            state: true
+                        }
+                        window.sessionStorage.setItem("wxpaySession", JSON.stringify(wxpaySession))
                         window.location.href = resdata.data
                     } else {
                         Toast.clear()
@@ -136,6 +147,7 @@ export default {
                 this.axios.post(this.API + "api/Order/GetPay", postData)
                 .then(res => {
                     console.log(res.data, "alipay");
+                    window.sessionStorage.removeItem("wxpaySession");
 
                     const form = res.data;
                     const div = document.createElement('div');

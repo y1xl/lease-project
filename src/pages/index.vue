@@ -1,13 +1,15 @@
 <template>
   <div>
     <div class="flex-jc-between top_sear bgc">
-      <div class="dw flex-align-items">
-        附近门店：
-        <span class="fc-blue text-line">{{nearShop}}</span>
+      <div class="dw flex-align-items f12">
+        <p>
+          附近门店：
+          <span class="fc-blue">{{nearShop}}</span>
+        </p>
       </div>
-      <div class="sear flex-align-items" @click="gosearch">
+      <div class="sear flex-align-items f12" @click="gosearch">
         <van-icon name="search"/>
-        <span>搜索你想要的商品</span>
+        <span class="pl10">搜索你想要的商品</span>
       </div>
     </div>
     <div class="flex-jc-center bgc" v-show="active==0">
@@ -157,6 +159,7 @@ export default {
     this.getnav();
     this.getbanner();
     this.getindexlist();
+    // this.getNearShop('22.54605355', '114.02597366') //测试
   },
 
   methods: {
@@ -268,10 +271,7 @@ export default {
           console.log(res.data, "Nearby_store");
           let resdata = res.data;
           if (resdata.code == 200) {
-            this.nearShop =
-              resdata.data.store_province +
-              resdata.data.store_district +
-              resdata.data.store_city;
+            this.nearShop = resdata.data.store_name
           } else {
             Toast(resdata.message);
           }
@@ -295,6 +295,9 @@ export default {
 .f12 {
   font-size: 12px;
 }
+.pl10{
+  padding-left:10px
+}
 
 .top_sear {
   width: 100%;
@@ -316,15 +319,13 @@ export default {
 .dw {
   width: 50%;
   height: 44px;
-  line-height: 44px;
   margin-left: 13px;
-  font-size: 13px;
 }
-.dw span {
+/* .dw span {
   display: inline-block;
   width: 50px;
   height: 100%;
-}
+} */
 
 .banner {
   width: 290px;

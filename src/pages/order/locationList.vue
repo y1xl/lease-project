@@ -30,7 +30,7 @@
     </div>
 
     <div class="height"></div>
-    <div class="btn text-c" @click="submit">完成</div>
+    <div class="btn text-c" @click="submit" v-show="list.length!=0">完成</div>
   </div>
 </template>
 

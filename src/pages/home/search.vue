@@ -12,7 +12,7 @@
         @click="toDetail(item.goods_id)"
       >
         <div class="img_box">
-          <img class="sy_img" :src="item.gd_img[0]">
+          <img class="sy_img" :src="item.gd_img[0]" style="object-fit:contain">
         </div>
         <div class="f14 pro_name">{{item.goods_name}}</div>
         <div class="com_like">
