@@ -6,10 +6,22 @@
           <van-icon name="shopping-cart"/>
         </div>
         <div class="banner bgc" id="banner">
-          <van-swipe :autoplay="3000">
+          <van-swipe :autoplay="autoplay" >
             <van-swipe-item v-if="detail.goods_video">
               <div class="img_box">
-                <video ref="video" :src="detail.goods_video" controls preload style="width:100%;height:100%;object-fit:fill" ></video>
+                <video 
+                id="video" 
+                ref="video"
+                :src="detail.goods_video" 
+                controls preload muted 
+                playsinline="true"
+                x-webkit-airplay="true" 
+                x5-playsinline="true"
+                webkit-playsinline="true" 
+                x5-video-player-type="h5"
+                style="width:100%;height:100%;object-fit:fill" 
+                >
+                </video>
               </div>
             </van-swipe-item>
             <van-swipe-item v-for="(item, index) in detail.gd_img" :key="index">
@@ -257,6 +269,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
+      autoplay:3000,
       imglist: [
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
         "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
@@ -280,6 +293,16 @@ export default {
     }
     this.getdetail()
     this.getguige()
+  },
+  mounted(){
+    
+    // myvideo.addEventListener('play',function(){  
+    //      console.log('play');
+         
+    // })
+    // myvideo.addEventListener('pause',function(){  
+    //   console.log('pause');
+    // })
   },
   methods: {
     getdetail(){
@@ -422,7 +445,8 @@ export default {
 
 <style>
 #banner .van-swipe {
-  border-radius: 5px
+  border-radius: 5px;
+  overflow: hidden;
 }
 </style>
 
