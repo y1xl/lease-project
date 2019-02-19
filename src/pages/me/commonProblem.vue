@@ -2,53 +2,44 @@
   <div>
     <div class="box" id="pse">
       <van-collapse v-model="activeNames">
-        <van-collapse-item name="2">
-          <div slot="title">关于下单</div>如何获取免押额度如何获取免押额度如何获取免押额度如何获取免押额度
-        </van-collapse-item>
-      </van-collapse>
-    </div>
-    <div class="box" id="pse">
-      <van-collapse v-model="activeNames1">
-        <van-collapse-item name="2">
-          <div slot="title">关于审核</div>如何获取免押额度如何获取免押额度如何获取免押额度如何获取免押额度
-        </van-collapse-item>
-      </van-collapse>
-    </div>
-    <div class="box" id="pse">
-      <van-collapse v-model="activeNames2">
-        <van-collapse-item name="2">
-          <div slot="title">关于维修</div>如何获取免押额度如何获取免押额度如何获取免押额度如何获取免押额度
-        </van-collapse-item>
-      </van-collapse>
-    </div>
-    <div class="box" id="pse">
-      <van-collapse v-model="activeNames3">
-        <van-collapse-item name="2">
-          <div slot="title">关于退货</div>如何获取免押额度如何获取免押额度如何获取免押额度如何获取免押额度
-        </van-collapse-item>
-      </van-collapse>
-    </div>
-    <div class="box" id="pse">
-      <van-collapse v-model="activeNames4">
-        <van-collapse-item name="2">
-          <div slot="title">关于归还</div>如何获取免押额度如何获取免押额度如何获取免押额度如何获取免押额度
+        <van-collapse-item :name="index" v-for="(item,index) in list" :key="index">
+          <div slot="title">{{item.tetail_name}}</div>{{item.tetail_content}}
         </van-collapse-item>
       </van-collapse>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      activeNames: ["1"],
-      activeNames1: ["1"],
-      activeNames2: ["1"],
-      activeNames3: ["1"],
-      activeNames4: ["1"]
+      activeNames: [],
+      list:[]
     };
   },
-  methods: {}
+  created(){
+    this.getdata()
+  },
+  methods:{
+    getdata() {
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          help_id: this.$route.query.id
+      })
+      this.axios.post(this.API + "api/Lease/help_detail",postData).then(res => {
+        console.log(res.data, "help_detail");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          Toast.clear()
+          this.list = resdata.data
+        } else {
+          Toast.clear()
+          Toast(resdata.message);
+        }
+      });
+    },
+  }
 };
 </script>
 <style>

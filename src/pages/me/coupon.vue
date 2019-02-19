@@ -15,14 +15,14 @@
 
             <div class="coupon_con flex-jc-around flex-align-items">
               <div>
-                <span class="num">10</span>
+                <span class="num">{{item.coupons_money}}</span>
                 <span class="yuan">元</span>
               </div>
               <div>
-                <div class="coupon_fl">新人专享红包</div>
+                <div class="coupon_fl">{{item.coupon_name}}</div>
                 <div class="limit">
-                  <div>有效期至2019.01.15</div>
-                  <div>满50可用</div>
+                  <div>有效期至{{item.end_time}}</div>
+                  <div>满{{item.coupons_condition}}可用</div>
                 </div>
               </div>
             </div>
@@ -33,7 +33,7 @@
               <div class="mask_box text-c">
                 <img src="../../assets/2.png">
                 <div class="lq_txt">领取优惠券</div>
-                <input placeholder="请输入兑换码">
+                <input placeholder="请输入兑换码" v-model="couponsCode">
               </div>
             </van-dialog>
           </div>
@@ -44,35 +44,90 @@
 </template>
 
 <script>
+import { Dialog,Toast } from "vant";
 export default {
   data() {
     return {
       navtitle: ["未使用", "已使用", "已失效", "领取/兑换"],
-      couponlist: [{}, {}, {}],
+      couponlist: [],
       show: false,
-
-      ind: 0
+      ind: 0,
+      couponsCode:''
     };
+  },
+  created(){
+    this.getdata()
   },
   methods: {
     ontab(index, title) {
       console.log(index, title);
       if (this.ind == 3) {
         this.show = true;
+        this.couponsCode=''
+        return
       } else {
         this.show = false;
       }
+      this.getdata()
+    },
 
-      this.index = index;
+    getdata(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        state: this.ind+1
+      });
+      this.axios
+        .post(this.API + "api/Lease/user_coupons", postData)
+        .then(res => {
+          console.log(res.data, "couponslist");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            for(let v of resdata.data){
+              v.end_time = v.end_time.split(" ")[0]
+            }
+            
+            this.couponlist = resdata.data
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+          }
+        });
     },
 
     beforeClose(action, done) {
       if (action === "confirm") {
-        setTimeout(done, 1000);
+        if(this.couponsCode==''){
+          done(false)
+          return
+        }
+        
+        let postData = this.$qs.stringify({
+          user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          coupons_code: this.couponsCode
+        });
+        this.axios
+          .post(this.API + "api/Lease/Receive_coupons", postData)
+          .then(res => {
+            console.log(res.data, "couponslist");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              done()
+              Toast(resdata.message)
+            } else {
+              done(false)
+              Toast(resdata.message)
+            }
+          })
+          .catch(error => {
+            done(false)
+            Toast('网络出错')
+          });
       } else {
-        done();
+        done()
       }
-    }
+    },
   }
 };
 </script>
@@ -97,21 +152,21 @@ export default {
 }
 
 .num {
-  font-size: 70px;
+  font-size: 60px;
   font-weight: lighter;
   color: #4ea9f9;
 }
 
 .yuan {
-  font-size: 25px;
+  font-size: 20px;
   color: #4ea9f9;
 }
 
 .coupon_fl {
-  font-size: 15px;
+  font-size: 14px;
 }
 .limit {
-  font-size: 12px;
+  font-size: 10px;
   color: #aeaeae;
 }
 

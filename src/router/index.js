@@ -47,7 +47,6 @@ import Integral from '@/pages/me/integral'
 import Cart from '@/pages/me/cart'
 import CommonProblem from '@/pages/me/commonProblem'
 import Setup from '@/pages/me/setup'
-import Rules from '@/pages/me/rules'
 import AccountBinding from '@/pages/me/accountBinding'
 import Modify from '@/pages/me/security/modify'
 import Sendcode from '@/pages/me/security/sendcode'
@@ -149,7 +148,6 @@ export default new Router({
     { path: '/integral', component: Integral, meta: { title: '我的积分' } },
     { path: '/cart', component: Cart, meta: { title: '购物车' } },
     { path: '/commonProblem', component: CommonProblem, meta: { title: '常见问题' } },
-    { path: '/rules', component: Rules, meta: { title: '租赁规则' } },
     { path: '/setup', component: Setup, meta: { title: '设置' } },
     { path: '/accountBinding', component: AccountBinding, meta: { title: '账号绑定' } },
     { path: '/Sendcode/:type/:phone', component: Sendcode, meta: { title: '发送验证码' } },

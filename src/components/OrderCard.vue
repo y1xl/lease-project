@@ -3,10 +3,8 @@
     <div class="bgc card pd-15 mar-b-10">
         <router-link v-bind="url">
             <div class="flex-jc-between border-b mar-b-10 pb10" >
-                <span>订单号:{{data.order_no}}</span>
+                <span>订单号:<span class="fsz12">{{data.order_no}}</span></span>
                 <span class="fc-blue" v-if="data.order_status==6">租赁中</span>
-                <span class="fc-blue" v-if="status=='已超期'">已超期</span>
-                <span class="fc-blue" v-if="status=='已结束'">已结束</span>
                 <span class="fc-blue" v-if="data.order_status==4">订单关闭</span>
                 <span class="fc-blue" v-if="status=='订单超时'">订单超时</span>
                 <span class="fc-blue" v-if="data.order_status==8">检测中</span>
@@ -25,7 +23,7 @@
             <div class="flexbox">
                 <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" >
                 <div class="flex-1 right">
-                    <div class="mar-b-10">{{data.model_name}}</div>
+                    <div class="mar-b-10">{{data.goods_name}}</div>
                     <div class="spec mar-b-10"><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>
                     <div class="mar-b-10 fsz12 rental">
                         <span>租金:￥{{data.rental}}</span>
@@ -34,8 +32,8 @@
                     <div>实付总额:<span class="fc-red">￥{{data.total_price}}</span></div>
                 </div>
             </div>
-            <div class="fc-red text-c overdue" v-if="status=='已超期'">
-                <span>您的订单已超期2天!</span>
+            <div class="fc-red text-c overdue" v-if="active==4">
+                <span>您的订单已超期{{data.day}}天!</span>
             </div>
             <div class="fc-red text-c overdue" v-if="status=='已预定'">
                 <span>要支付完剩余费用后才能发货哦!</span>

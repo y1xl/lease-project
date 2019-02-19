@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="bgc box">
-      <van-cell title="常见问题" is-link to="CommonProblem"/>
-      <van-cell title="租赁规则" is-link to="rules"/>
+      <van-cell :title="item.help_name" is-link :to="`/CommonProblem?id=${item.help_id}`" v-for="(item,index) in list" :key="index"/>
+      <!-- <van-cell title="租赁规则" is-link to="rules"/> -->
       <van-cell title="在线客服" is-link/>
       <a href="tel:400-0000-688">
         <van-cell title="电话客服" is-link/>
@@ -12,9 +12,28 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
-    return {};
+    return {
+      list:[]
+    };
+  },
+  created(){
+    this.getdata()
+  },
+  methods:{
+    getdata() {
+      this.axios.post(this.API + "api/Lease/help").then(res => {
+        console.log(res.data, "help");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.list = resdata.data
+        } else {
+          Toast(resdata.message);
+        }
+      });
+    },
   }
 };
 </script>

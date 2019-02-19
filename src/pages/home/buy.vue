@@ -93,7 +93,7 @@
     <div class="mar-b-10">
       <van-cell title="运费" center :value="'￥'+freight" v-show="typenum==1"></van-cell>
       <van-cell title="配送运费" center :value="'￥'+freight" v-show="typenum==2"></van-cell>
-      <van-cell title="优惠券" is-link center :value="couponstext" @click="showcoupon=true"></van-cell>
+      <van-cell title="优惠券" is-link center :value="couponstext" @click="onshowcoupon"></van-cell>
       <van-cell :title="'保险费 ￥'+detail.safe_price" center>
         <div class="flex-align-items" style="justify-content: flex-end">
           <van-switch @change="onswitch" v-model="isinsurance" size="20px" :disabled="Dinsurance"/>
@@ -174,16 +174,16 @@
             <img src="../../assets/1.png">
           </div>
 
-          <div class="coupon_con flex-jc-around flex-align-items">
+          <div class="coupon_con flex-jc-around flex-align-items" @click="choosecoupon(item)">
             <div>
-              <span class="num">{{item.price}}</span>
+              <span class="num">{{item.coupons_money}}</span>
               <span class="yuan">元</span>
             </div>
             <div>
-              <div class="coupon_fl">新人专享红包</div>
+              <div class="coupon_fl">{{item.coupon_name}}</div>
               <div class="limit">
-                <div>有效期至2019.01.15</div>
-                <div>满50可用</div>
+                <div>有效期至{{item.end_time}}</div>
+                <div>满{{item.coupons_condition}}可用</div>
               </div>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default {
       typenum: 0,
       showtime: false,
       timetext: "",
-      getdate: "",
+      getdate: "",//自取时间
       expectdate: "", //期望收到日期
       people: "",
       getlocation: "",
@@ -227,7 +227,7 @@ export default {
       showtimequantum: false, //时间段
       timequantumarr: [], //时间段
       detail: "",
-      Dinsurance: false,
+      Dinsurance: false, //保险
       hire_cate: 1,
       guiges: [],
       rent: 0, //租金
@@ -239,6 +239,11 @@ export default {
     weekval() {
       if (this.weekval == "") {
         this.rent = 0;
+        return;
+      }
+      if (this.weekval <= 0) {
+        this.weekval = 1
+        Toast('不能为小于0');
         return;
       }
       let postData = this.$qs.stringify({
@@ -258,17 +263,33 @@ export default {
               if (this.Dinsurance || this.isinsurance) {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 this.sum = accAdd(a, this.rent);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
               } else {
-                this.sum = accAdd(this.detail.pay_safe, this.rent);
+                this.sum = accAdd(this.detail.pay_safe, this.rent)
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
               }
             } else {
               if (this.Dinsurance || this.isinsurance) {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 let b = accAdd(a, this.rent);
-                this.sum = accAdd(b, this.freight);
+                this.sum = accAdd(b, this.freight)
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
               } else {
                 let a = accAdd(this.detail.pay_safe, this.rent);
                 this.sum = accAdd(a, this.freight);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
               }
             }
           } else {
@@ -417,7 +438,6 @@ export default {
       });
     },
     getotherprice() {
-
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         goods_id: this.$route.query.id || "",
@@ -432,15 +452,59 @@ export default {
           console.log(res.data, "getotherprice");
           let resdata = res.data;
           if (resdata.code == 200) {
-            this.detail = resdata.data;
             this.Dinsurance = resdata.data.safe_status == 1 ? true : false;
             this.hire_cate = resdata.data.hire_cate;
             this.guiges = JSON.parse(resdata.data.sku);
+            this.detail = resdata.data;
 
             if (this.Dinsurance || this.isinsurance) {
-              this.sum = accAdd(resdata.data.pay_safe, resdata.data.safe_price);
+              this.sum = accAdd(resdata.data.pay_safe, resdata.data.safe_price)
+              if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
             } else {
-              this.sum = resdata.data.pay_safe;
+              this.sum = resdata.data.pay_safe
+              if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+            }
+
+            if (this.weekval == "") {
+              this.rent = 0
+              return;
+            }
+            if (this.typenum == 0) {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                this.sum = accAdd(a, this.rent);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              } else {
+                this.sum = accAdd(this.detail.pay_safe, this.rent);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              }
+            } else {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                let b = accAdd(a, this.rent);
+                this.sum = accAdd(b, this.freight)
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              } else {
+                let a = accAdd(this.detail.pay_safe, this.rent);
+                this.sum = accAdd(a, this.freight);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              }
             }
           } else {
             Toast(resdata.message);
@@ -464,47 +528,114 @@ export default {
             if (this.Dinsurance || this.isinsurance) {
               let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
               this.sum = accAdd(a, this.freight);
+
+              if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
             } else {
               this.sum = accAdd(this.detail.pay_safe, this.freight);
+
+              if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+            }
+
+            if (this.weekval == "") {
+              this.rent = 0
+              return;
+            }
+            if (this.typenum == 0) {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                this.sum = accAdd(a, this.rent);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              } else {
+                this.sum = accAdd(this.detail.pay_safe, this.rent);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              }
+            } else {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                let b = accAdd(a, this.rent);
+                this.sum = accAdd(b, this.freight);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              } else {
+                let a = accAdd(this.detail.pay_safe, this.rent);
+                this.sum = accAdd(a, this.freight);
+
+                if(this.couponstext!=''){
+                  this.sum = accSub(this.sum,this.couponstext)
+                }
+              }
             }
           } else {
             Toast(resdata.message);
           }
         });
     },
+    //优惠卷
+    onshowcoupon(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        state: 1
+      });
+      this.axios
+        .post(this.API + "api/Lease/user_coupons", postData)
+        .then(res => {
+          console.log(res.data, "couponslist");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.showcoupon = true
+            Toast.clear()
+            for(let v of resdata.data){
+              v.end_time = v.end_time.split(" ")[0]
+            }
+            this.couponlist = resdata.data
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
+    choosecoupon(item){
+      console.log(item);
+      this.couponstext = item.coupons_money
+      this.sum = accSub(this.sum,item.coupons_money)
+      this.showcoupon = false
+    },
 
     nextface() {
       if (this.isconsent) {
         if (this.typenum == 0) {
-          // if(this.getlocation == ""){
-          //   Toast("请填写自取地点")
-          //   return
-          // }
-          // if(this.getdate == ""){
-          //   Toast("请填写自取时间")
-          //   return
-          // }
-          // if(this.people == ""){
-          //   Toast("请填写自取人")
-          //   return
-          // }
-          // if(this.weektext == "请选择"){
-          //   Toast("请选择租期方式")
-          //   return
-          // }
-          // if(this.weekval == ""){
-          //   Toast("请填写租期")
-          //   return
-          // }
-          if (
-            this.getlocation == "" ||
-            this.getdate == "" ||
-            this.people == "" ||
-            this.weektext == "请选择" ||
-            this.weekval == ""
-          ) {
-            Toast("还有未填写");
-            return;
+          if(this.getlocation == ""){
+            Toast("请填写自取地点")
+            return
+          }
+          if(this.getdate == ""){
+            Toast("请填写自取时间")
+            return
+          }
+          if(this.people == ""){
+            Toast("请填写自取人")
+            return
+          }
+          if(this.weektext == "请选择"){
+            Toast("请选择租期方式")
+            return
+          }
+          if(this.weekval == ""){
+            Toast("请填写租期")
+            return
           }
           
           var postData = this.$qs.stringify({
@@ -531,31 +662,23 @@ export default {
           });
         }
         if (this.typenum == 1) {
-          // if(this.getaddress == ""){
-          //   Toast("请选择收货地址")
-          //   return
-          // }
-          // if(this.weektext == "请选择"){
-          //   Toast("请选择租期方式")
-          //   return
-          // }
-          // if(this.weekval == ""){
-          //   Toast("请填写租期")
-          //   return
-          // }
-          // if(this.expectdate == ""){
-          //   Toast("请选择期望收到的日期")
-          //   return
-          // }
-          if (
-            this.getaddress == "" ||
-            this.weektext == "请选择" ||
-            this.weekval == "" ||
-            this.expectdate == ""
-          ) {
-            Toast("还有未填写");
-            return;
+          if(this.getaddress == ""){
+            Toast("请选择收货地址")
+            return
           }
+          if(this.weektext == "请选择"){
+            Toast("请选择租期方式")
+            return
+          }
+          if(this.weekval == ""){
+            Toast("请填写租期")
+            return
+          }
+          if(this.expectdate == ""){
+            Toast("请选择期望收到的日期")
+            return
+          }
+ 
           var postData = this.$qs.stringify({
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
@@ -578,36 +701,27 @@ export default {
           });
         }
         if (this.typenum == 2) {
-          // if(this.getaddress == ""){
-          //   Toast("请选择收货地址")
-          //   return
-          // }
-          // if(this.weektext == "请选择"){
-          //   Toast("请选择租期方式")
-          //   return
-          // }
-          // if(this.weekval == ""){
-          //   Toast("请填写租期")
-          //   return
-          // }
-          // if(this.expectdate == ""){
-          //   Toast("请选择期望收到的日期")
-          //   return
-          // }
-          // if(this.timequantumtext == ""){
-          //   Toast("请选择配送时间段")
-          //   return
-          // }
-          if (
-            this.getaddress == "" ||
-            this.weektext == "请选择" ||
-            this.weekval == "" ||
-            this.expectdate == "" ||
-            this.timequantumtext == ""
-          ) {
-            Toast("还有未填写");
-            return;
+          if(this.getaddress == ""){
+            Toast("请选择收货地址")
+            return
           }
+          if(this.weektext == "请选择"){
+            Toast("请选择租期方式")
+            return
+          }
+          if(this.weekval == ""){
+            Toast("请填写租期")
+            return
+          }
+          if(this.expectdate == ""){
+            Toast("请选择期望收到的日期")
+            return
+          }
+          if(this.timequantumtext == ""){
+            Toast("请选择配送时间段")
+            return
+          }
+
           var postData = this.$qs.stringify({
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
@@ -747,21 +861,21 @@ export default {
   height: 100%;
 }
 .num {
-  font-size: 70px;
+  font-size: 60px;
   font-weight: lighter;
   color: #4ea9f9;
 }
 
 .yuan {
-  font-size: 25px;
+  font-size: 20px;
   color: #4ea9f9;
 }
 
 .coupon_fl {
-  font-size: 15px;
+  font-size: 14px;
 }
 .limit {
-  font-size: 12px;
+  font-size: 10px;
   color: #aeaeae;
 }
 </style>

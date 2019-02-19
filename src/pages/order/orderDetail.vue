@@ -268,8 +268,8 @@
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
       <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
       <div class="flex-center border" v-if="data.order_status==6"><router-link :to="`/relet/${data.order_id}`">续租</router-link></div>
-      <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
       <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
+      <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
       <div class="flex-center border" v-if="data.order_status==9&&user_validation==0">
         <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
       </div>
@@ -279,7 +279,18 @@
       </div>
       <div class="flex-center border-blue fc-blue" v-if="active==5">
           <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}`}">评价</router-link>
-        </div>
+      </div>
+      <div class="flex-center border" @click="getcode(data.order_id,1)" v-if="data.order_status==5">取货码</div>
+    </div>
+
+    <div class="model full flex-column-center position" v-show="showcode">
+      <div class="closeimg" @click="getcode"><van-icon name="close" color="#fff"/></div>
+      <img
+        :src="codeimg"
+        alt="QRcode"
+        class="codeimg"
+      >
+      <div style="color:#fff">请出示此二维码供门店扫码</div>
     </div>
   </div>
 </template>
@@ -313,6 +324,8 @@ export default {
       user_validation: this.$route.query.validation,
       maintenance_pay: this.$route.query.maintenance_pay,
       active: this.$route.query.active,
+      codeimg:'',
+      showcode: false,
     }
   },
   created(){
@@ -462,6 +475,33 @@ export default {
           }
         });
     },
+
+    //二维码
+    getcode(id,type) {
+      if(this.showcode){
+          this.showcode = false
+      }else{
+        Toast.loading({ mask: true,message: '加载中...'})
+        let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+          way: type
+        });
+        this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
+        .then(res => {
+          console.log(res.data, "code");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.codeimg = resdata.data
+            this.showcode = true
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+      } 
+    },
   }
 };
 </script>
@@ -574,6 +614,34 @@ export default {
 }
 .express .item > span:nth-of-type(1){
     width: 50px;
+}
+
+.model {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.model .main {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.codeimg {
+  width: 180px;
+  height: 180px;
+  margin-bottom:20px;
+}
+.closeimg {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  right: 20px;
+  top: 100px;
+  font-size:34px;
 }
 
 </style>

@@ -5,11 +5,11 @@
         <div class="caricon fc-red" @click="showinfocar=true">
           <van-icon name="shopping-cart"/>
         </div>
-        <div class="banner bgc" id="banner">
-          <van-swipe :autoplay="autoplay" >
+        <div class="banner bgc" id="goodsbanner">
+          <van-swipe :autoplay="autoplay" @change="onChange">
             <van-swipe-item v-if="detail.goods_video">
-              <div class="img_box">
-                <video 
+              <div class="img_box" style="background: #000">
+                <!-- <video 
                 id="video" 
                 ref="video"
                 :src="detail.goods_video" 
@@ -21,12 +21,19 @@
                 x5-video-player-type="h5"
                 style="width:100%;height:100%;object-fit:fill" 
                 >
-                </video>
+                </video> -->
+                <video-player  class="video-player vjs-custom-skin"
+                     ref="videoPlayer"
+                     :playsinline="true"
+                     :options="playerOptions"
+                     @play="onPlayerPlay($event)"
+                     @pause="onPlayerPause($event)">
+                </video-player>
               </div>
             </van-swipe-item>
             <van-swipe-item v-for="(item, index) in detail.gd_img" :key="index">
               <div class="img_box">
-                <img :src="item">
+                <img :src="item" >
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -266,7 +273,13 @@
 </template>
 <script>
 import { Toast } from "vant";
+import 'video.js/dist/video-js.css'
+import 'vue-video-player/src/custom-theme.css'
+import { videoPlayer } from 'vue-video-player'
 export default {
+  components: {
+    videoPlayer,
+  },
   data() {
     return {
       autoplay:3000,
@@ -284,7 +297,18 @@ export default {
       showinfocar: false,
       iscollection: false,
       detail:'',
-      speclist: []
+      speclist: [],
+      playerOptions: {
+        autoplay: false, 
+        muted: false,
+        loop: false, 
+        preload: 'auto',
+        aspectRatio: '4:3', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+        fluid: true, // 当true时，它将按比例缩放以适应其容器。
+        sources: [],
+        poster: "", 
+        notSupportedMessage: '此视频暂无法播放，请稍后重试',
+      },
     };
   },
   created(){
@@ -294,17 +318,28 @@ export default {
     this.getdetail()
     this.getguige()
   },
-  mounted(){
-    
-    // myvideo.addEventListener('play',function(){  
-    //      console.log('play');
-         
-    // })
-    // myvideo.addEventListener('pause',function(){  
-    //   console.log('pause');
-    // })
+  computed: {
+    player() {
+      return this.$refs.videoPlayer.player
+    }
   },
   methods: {
+    onChange(index) {
+      if(index!=0){
+        this.autoplay = 3000
+        this.$refs.videoPlayer.player.pause() //暂停
+      }
+      // console.log(this.player,index);
+    },
+    onPlayerPlay(player) {
+      console.log("play");
+      this.autoplay = 0
+    },
+    onPlayerPause(player){
+      console.log("pause");
+      this.autoplay = 3000
+    },
+    
     getdetail(){
       Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({
@@ -316,7 +351,8 @@ export default {
         let resdata = res.data
         if (resdata.code == 200) {
           Toast.clear()
-          this.detail = resdata.data;
+          this.detail = resdata.data
+          this.playerOptions.sources = [{src:resdata.data.goods_video}]
         } else {
           Toast.clear()
           Toast(resdata.message)
@@ -414,6 +450,28 @@ export default {
           }
         }
       }
+
+      if(this.speclist.length==0){
+        let postData = this.$qs.stringify({
+            gd_id:this.$route.params.id,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            cart_num:1,
+            cart_price:this.detail.hire_price.price,
+            attr_ids: attr_ids.length==0 ? '' : attr_ids.join(','),
+            attr_names: attr_names.length==0 ? '' : attr_names.join(','),
+        })
+        this.axios.post(this.API + "api/Lease/Add_cart",postData)
+        .then(res => {
+          console.log(res.data, "addcart")
+          let resdata = res.data
+          if (resdata.code == 200) {
+            Toast('添加成功')
+          } else {
+            Toast(resdata.message)
+          }
+        });
+        return
+      }
       if(arr.length == this.speclist.length){
 
         let postData = this.$qs.stringify({
@@ -444,9 +502,8 @@ export default {
 </script>
 
 <style>
-#banner .van-swipe {
-  border-radius: 5px;
-  overflow: hidden;
+video {
+  object-fit:fill;
 }
 </style>
 
@@ -470,9 +527,10 @@ export default {
   width: 290px;
   height: 230px;
   box-shadow: 0px 1px 7px 1px rgba(233, 235, 237, 1);
+  overflow: hidden;
 }
 .img_box {
-  width: 290px;
+  /* width: 290px; */
   height: 230px;
 }
 
