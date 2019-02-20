@@ -34,6 +34,14 @@
         <div class="pd-t-100">
             <div class="btn text-c" @click="submit">提交</div>
         </div>
+
+        <van-popup v-model="showWXpay" :close-on-click-overlay='false'>
+            <div class="wxbox">
+                <p class="text-c border-b">请确认微信支付是否完成</p>
+                <p class="text-c fc-red border-b" @click="goback">已完成支付</p>
+                <p class="text-c fc-grey" @click="showWXpay = false">支付遇到问题，重新支付</p>
+            </div>
+        </van-popup>
     </div>
 </template>
 
@@ -44,14 +52,24 @@ export default {
         return{
             radio: "1",
             info:'',
-            money:''
+            money:'',
+            showWXpay:false
         }
     },
     created(){
+        let wxpayCompensationSession = JSON.parse(window.sessionStorage.getItem("wxpayCompensationSession"))
+        if(wxpayCompensationSession){
+            if(wxpayCompensationSession.orderid==this.$route.params.id){
+                this.showWXpay = wxpayCompensationSession.state
+            }
+        }
         this.getinfo()
         this.getmoney()
     },
     methods:{
+        goback(){
+            this.$router.go(-1);
+        },
         getinfo() {
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -95,13 +113,64 @@ export default {
             }
 
             if (this.radio == 1) {
-                Toast("微信功能未开通");
+                // Toast("微信功能未开通");
+                Toast.loading({ mask: true, message: "加载中..." });
+                let postData = this.$qs.stringify({
+                    // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                    order_id: this.$route.params.id,
+                    pay_way: this.radio,
+                });
+                this.axios.post(this.API + "api/Lease_Order/maintenancePay", postData)
+                .then(res => {
+                    console.log(res.data, "wxpay");
+                    let resdata = res.data;
+                    if (resdata.code == 200) {
+                        Toast.clear();
+                        let wxpayCompensationSession = {
+                            orderid:this.$route.params.id,
+                            state: true
+                        }
+                        window.sessionStorage.setItem("wxpayCompensationSession", JSON.stringify(wxpayCompensationSession))
+                        window.location.href = resdata.data
+                    } else {
+                        Toast.clear();
+                        Toast(resdata.message);
+                    }
+                })
+                .catch(error => {
+                    Toast.clear()
+                    Toast('网络出错')
+                });
             }
             if (this.radio == 2) {
-                Toast("支付宝功能未开通");
+                // Toast("支付宝功能未开通");
+                Toast.loading({ mask: true, message: "加载中..." });
+                let postData = this.$qs.stringify({
+                    // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                    order_id: this.$route.params.id,
+                    pay_way: this.radio,
+                });
+                this.axios.post(this.API + "api/Lease_Order/maintenancePay", postData)
+                .then(res => {
+                    console.log(res.data, "alipay");
+                    window.sessionStorage.removeItem("wxpayCompensationSession");
+                    Toast.clear()
+
+                    const form = res.data;
+                    const div = document.createElement('div');
+                    div.id = 'alipay';
+                    div.style.opacity='0'
+                    div.innerHTML = form;
+                    document.body.appendChild(div);
+                    document.querySelector('#alipay').children[0].submit();
+                })
+                .catch(error => {
+                    Toast.clear()
+                    Toast('网络出错')
+                });
             }
             if (this.radio == 3) {
-                 Toast.loading({ mask: true, message: "加载中..." });
+                Toast.loading({ mask: true, message: "加载中..." });
                 let postData = this.$qs.stringify({
                     // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     order_id: this.$route.params.id,
@@ -122,6 +191,10 @@ export default {
                         Toast.clear();
                         Toast(resdata.message);
                     }
+                })
+                .catch(error => {
+                    Toast.clear()
+                    Toast('网络出错')
                 });
             }
         }
@@ -146,5 +219,12 @@ export default {
   height: 20px;
   padding-right: 10px;
   vertical-align: middle;
+}
+
+.wxbox {
+    width: 200px;
+}
+.wxbox > p {
+    padding: 10px 0;
 }
 </style>

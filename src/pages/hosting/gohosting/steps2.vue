@@ -121,14 +121,24 @@ export default {
     },
 
     next() {
-      if (
-        this.datetext == "" ||
-        this.colourtext == "" ||
-        this.colourdes == "" ||
-        this.statetext == "" ||
-        this.priceval == ""
-      ) {
-        Toast("请先填写完整");
+      if(this.datetext == ""){
+        Toast("请选择购买时间");
+        return;
+      }
+      if(this.priceval == ""){
+        Toast("请输入购买价格");
+        return;
+      }
+      if(this.colourtext == ""){
+        Toast("请选择外观成色");
+        return;
+      }
+      if(this.colourdes == ""){
+        Toast("请输入外观成色描述");
+        return;
+      }
+      if(this.statetext == ""){
+        Toast("请选择功能状况");
         return;
       }
 

@@ -1,8 +1,12 @@
 <template>
   <div>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action>
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action @search="onSearch" @focus="onfocus" @blur="onblur">
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
+
+    <div class="history bgc ignore" v-show="showhistory">
+      <p @click="historySearch(item)" v-for="(item,index) in historylist" :key="index" class="border-b">{{item}}</p>
+    </div>
 
     <div class="bgc">
       <div
@@ -39,10 +43,17 @@ export default {
   data() {
     return {
       value: "",
-      flprolist: []
+      flprolist: [],
+      historylist:[],
+      showhistory: false
     };
   },
   created() {
+    let goodshistory = window.localStorage.getItem("goodshistory")
+    if(goodshistory){
+      this.historylist = JSON.parse(goodshistory)
+    }
+
     let searchSession = JSON.parse(
       window.sessionStorage.getItem("searchSession")
     );
@@ -53,6 +64,17 @@ export default {
   methods: {
     onSearch() {
       console.log(this.value);
+      this.getsearch();
+    },
+    onfocus(){
+      this.showhistory = true
+    },
+    onblur(){
+      this.showhistory = false
+    },
+    historySearch(val){
+      this.showhistory = false
+      this.value = val
       this.getsearch();
     },
     //产品详情
@@ -67,6 +89,12 @@ export default {
       this.$router.push({ path: "/ProductDetail/" + id });
     },
     getsearch() {
+      // 历史记录处理
+      this.historylist.unshift(this.value)
+      this.historylist.slice(0,10)
+      this.historylist = [...new Set(this.historylist)]        
+      window.localStorage.setItem("goodshistory", JSON.stringify(this.historylist));
+
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         goods_name: this.value
@@ -81,7 +109,6 @@ export default {
               Toast.clear();
               Toast({
                 message: " 没有匹配的产品",
-                duration: "5000"
               });
               this.flprolist = "";
             } else {
@@ -99,6 +126,16 @@ export default {
 </script>
 
 <style scoped>
+.history > p{
+  padding: 10px;
+  box-sizing: border-box;
+}
+.ignore {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 44px;
+}
 /*分类 所有产品*/
 .fl_pro_list {
   width: 100%;

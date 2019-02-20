@@ -128,7 +128,6 @@ export default {
         }
 
       window.sessionStorage.removeItem("buySession");
-      // this.$router.push({ path: "/buy/"+this.lis[this.radio].goods_id+ '/' + this.list[this.radio].cart_id });
       this.$router.replace({
           path: '/buy',
           query: {

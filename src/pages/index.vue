@@ -129,7 +129,7 @@
       </van-tabs>
     </div>
 
-    <div class="em"></div>
+    <!-- <div class="em"></div> -->
   </div>
 </template>
 
@@ -150,18 +150,20 @@ export default {
       nearShop: ""
     };
   },
-
-  created() {
+  beforeCreate(){
     if (!window.localStorage.getItem("userinfo")) {
       this.$router.replace({ path: "/login" });
     }
+  },
+  created() {
     this.getLocation();
     this.getnav();
-    this.getbanner();
     this.getindexlist();
-    // this.getNearShop('22.54605355', '114.02597366') //测试
+    // this.getNearShop('22.54605355', '114.02597366') //测试 
   },
-
+  mounted(){
+    this.getbanner();
+  },
   methods: {
     getLocation() {
       if (window.navigator.geolocation) {
@@ -178,7 +180,7 @@ export default {
           window.localStorage.setItem("center", JSON.stringify(center));
         });
       } else {
-        Toast("浏览器不支持地理定位");
+        Toast("浏览器不支持地理定位,请升级");
       }
     },
     gohosting() {
@@ -348,12 +350,6 @@ export default {
   width: 50px;
   height: 50px;
 }
-
-/* .img {
-  display: block;
-  width: 50px;
-  height: 75px;
-} */
 
 .title {
   font-size: 17px;

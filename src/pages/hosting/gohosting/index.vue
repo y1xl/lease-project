@@ -209,8 +209,24 @@ export default {
         },
 
         next(){
-            if(this.typetext==''||this.brandtext==''||this.modeltext==''||this.colortext==''||this.numtext==''){
-                Toast("请先填写完整");
+            if(this.typetext==''){
+                Toast("请选择品类");
+                return
+            }
+            if(this.brandtext==''){
+                Toast("请选择品牌");
+                return
+            }
+            if(this.modeltext==''){
+                Toast("请选择型号");
+                return
+            }
+            if(this.colortext==''){
+                Toast("请选择颜色");
+                return
+            }
+            if(this.numtext==''){
+                Toast("请选择数量");
                 return
             }
 

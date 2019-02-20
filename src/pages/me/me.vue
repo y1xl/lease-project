@@ -86,7 +86,7 @@
         </template>
       </van-cell>
     </div>
-    <div class="height"></div>
+    <!-- <div class="height"></div> -->
   </div>
 </template>
 
@@ -103,10 +103,12 @@ export default {
       users_name: ""
     };
   },
-  created() {
+  beforeCreate(){
     if (!window.localStorage.getItem("userinfo")) {
       this.$router.replace({ path: "/login" });
     }
+  },
+  created() {
     this.users_name = JSON.parse(
       window.localStorage.getItem("userinfo")
     ).users_name;

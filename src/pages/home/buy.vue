@@ -168,13 +168,13 @@
     </van-popup>
 
     <van-actionsheet v-model="showcoupon" title="优惠券">
-      <div>
-        <div class="coupon_box position" v-for="(item,index) in couponlist" :key="index">
-          <div>
-            <img src="../../assets/1.png">
+      <div class="coupon_box">
+        <div class="position mar-b-10" v-for="(item,index) in couponlist" :key="index" @click="choosecoupon(item,index)">
+          <div class="couponcard" :class="index+1==couponindex?'boxshadow-blue':'boxshadow'">
+            <!-- <img src="../../assets/1.png"> -->
           </div>
 
-          <div class="coupon_con flex-jc-around flex-align-items" @click="choosecoupon(item)">
+          <div class="coupon_con flex-jc-around flex-align-items" >
             <div>
               <span class="num">{{item.coupons_money}}</span>
               <span class="yuan">元</span>
@@ -212,6 +212,7 @@ export default {
       getaddress: "",
       couponstext: "", //优惠券
       showcoupon: false, //优惠券
+      couponindex: '', //优惠券
       activitytext: "", //优惠活动
       showweek: false, //租期
       // columns: ['天', '小时'],
@@ -362,10 +363,11 @@ export default {
       this.activitytext = buySession.activitytext;
       this.remarkval = buySession.remarkval;
       this.timequantumtext = buySession.timequantumtext;
+      this.couponindex = buySession.couponindex;
     } else {
       this.getdefaultaddress();
     }
-    //取缓存 end
+
     this.getotherprice();
   },
   methods: {
@@ -384,7 +386,8 @@ export default {
         couponstext: this.couponstext,
         activitytext: this.activitytext,
         remarkval: this.remarkval,
-        timequantumtext: this.timequantumtext
+        timequantumtext: this.timequantumtext,
+        couponindex: this.couponindex
       };
       window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
       this.$router.push({ path: url });
@@ -607,15 +610,31 @@ export default {
           }
         });
     },
-    choosecoupon(item){
-      console.log(item);
-      this.couponstext = item.coupons_money
-      this.sum = accSub(this.sum,item.coupons_money)
-      this.showcoupon = false
+    choosecoupon(item,index){
+      // console.log(item,index);
+      if(index+1==this.couponindex){
+        this.couponindex = ''
+        this.couponstext = ''
+        this.sum = accAdd(this.sum,item.coupons_money)
+      }else{
+        this.couponindex = index+1
+        this.couponstext = item.coupons_money
+        this.sum = accSub(this.sum,item.coupons_money)
+        this.showcoupon = false
+      }
     },
 
     nextface() {
       if (this.isconsent) {
+        if(this.couponindex!=''){
+          let sum = accAdd(this.sum,this.couponstext)
+          if(this.couponlist[this.couponindex-1].coupons_condition < sum){            
+          // if('20.00'<50.00){
+            Toast("优惠券不满足使用条件")
+            return
+          }
+        }
+
         if (this.typenum == 0) {
           if(this.getlocation == ""){
             Toast("请填写自取地点")
@@ -854,6 +873,22 @@ export default {
 }
 
 /* 优惠券 */
+.coupon_box {
+  padding: 10px;
+}
+.couponcard {
+  height: 100px;
+  border-radius: 5px;
+  overflow: hidden;
+  border-bottom: 3px solid #4ea9f9;
+  box-sizing: border-box;
+}
+.boxshadow{
+  box-shadow: 0px 1px 7px 1px #DAD7D7;
+}
+.boxshadow-blue{
+  box-shadow: 0px 1px 7px 1px #4ea9f9;
+}
 .coupon_con {
   position: absolute;
   top: 0px;
@@ -862,7 +897,7 @@ export default {
 }
 .num {
   font-size: 60px;
-  font-weight: lighter;
+  /* font-weight: lighter; */
   color: #4ea9f9;
 }
 

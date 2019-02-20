@@ -7,7 +7,7 @@
     <div class="shoplist">
       <div v-for="(item,index) in list" :key="index" :title="item">
         <div class="item">
-          <router-link :to="{path:'/ShopDetail',query:{store_id:item.store_id}}">
+          <router-link :to="{path:'/shopDetail',query:{store_id:item.store_id}}">
             <div class="flex-jc-between">
               <div class="shop_title">{{item.store_name}}</div>
               <van-icon name="arrow"/>
@@ -39,10 +39,12 @@ export default {
       value: ""
     };
   },
-  created() {
+  beforeCreate(){
     if (!window.localStorage.getItem("userinfo")) {
       this.$router.replace({ path: "/login" });
     }
+  },
+  created() {
     this.getlist();
   },
   methods: {
@@ -73,7 +75,7 @@ export default {
 }
 
 .shoplist {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   padding-top: 2px;
   background: #fbfbfb;
 }

@@ -34,11 +34,11 @@
           <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
         </div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==0" @click="onConfirmsales(item.order_id)">确认</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0">
-          <router-link v-bind="{to: `/compensation/${item.order_id}`}">确认</router-link>
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0" @click="gocompensation(item.order_id)">
+          确认
         </div>
         <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
-        <div class="flex-center border" v-if="item.order_status==6"><router-link :to="`/relet/${item.order_id}`">续租</router-link></div>
+        <div class="flex-center border" v-if="item.order_status==6" @click="gorelet(item.order_id)">续租</div>
         <div class="flex-center border-blue fc-blue" v-if="active==5">
           <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}`}">评价</router-link>
         </div>
@@ -133,7 +133,7 @@
       <OrderCard status="已完成"></OrderCard>  -->
     </div>
 
-    <div class="height"></div>
+    <!-- <div class="height"></div> -->
 
     <div class="model full flex-column-center position" v-show="showcode">
       <div class="closeimg" @click="getcode"><van-icon name="close" color="#fff"/></div>
@@ -195,17 +195,27 @@ export default {
       codeimg:''
     };
   },
-  created(){
+  beforeCreate(){
     Dialog.close()
     if(!window.localStorage.getItem("userinfo")){
       this.$router.replace({ path: "/login" })
     }
+  },
+  created(){
     this.getlist()
   },
   methods: {
     gopay(id){
       window.sessionStorage.removeItem("wxpaySession");
       this.$router.push({ path: `/pay/${id}` });
+    },
+    gorelet(id){
+      window.sessionStorage.removeItem("wxpayReletSession");
+      this.$router.push({ path: `/relet/${id}` });
+    },
+    gocompensation(id){
+      window.sessionStorage.removeItem("wxpayCompensationSession");
+      this.$router.push({ path: `/compensation/${id}` });
     },
     nav(n) {
       this.selected = n;

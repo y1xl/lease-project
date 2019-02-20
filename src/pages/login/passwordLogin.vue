@@ -10,7 +10,7 @@
           <input v-model.trim="pwval" placeholder="请输入密码" input-align="center" type="password">
         </div>
         <div class="text-r forget">
-          <router-link to="/ForgetPassword">忘记密码</router-link>
+          <router-link to="/forgetPassword">忘记密码</router-link>
         </div>
         <div
           class="btn text-c"

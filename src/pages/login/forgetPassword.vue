@@ -65,7 +65,7 @@ export default {
         console.log(res.data, "next");
         let resdata = res.data;
         if (resdata.code == 200) {
-          this.$router.replace({ path: "/ResetPassword/" + this.phoneval });
+          this.$router.replace({ path: "/resetPassword/" + this.phoneval });
         } else {
           Toast(resdata.message);
         }

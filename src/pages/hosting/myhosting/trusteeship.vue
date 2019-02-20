@@ -55,7 +55,7 @@ export default {
     //托管详情
     toDetail() {
       if (this.ind == 1) {
-        this.$router.push({ path: "/HostDetail" });
+        this.$router.push({ path: "/hostDetail" });
       }
       if (this.ind == 2) {
         this.$router.push({ path: "/hostingDetail" });
@@ -67,7 +67,7 @@ export default {
     //取消托管
     cancelTg() {
       window.sessionStorage.removeItem("hostCancelSession");
-      this.$router.push({ path: "/HostCancel" });
+      this.$router.push({ path: "/hostCancel" });
     },
     getbrand() {
       // Toast.loading({ mask: true, message: "加载中..." });

@@ -58,6 +58,14 @@
     <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
       <van-picker :columns="columns" show-toolbar @cancel="isshow = false" @confirm="onConfirm"/>
     </van-popup>
+
+    <van-popup v-model="showWXpay" :close-on-click-overlay='false'>
+        <div class="wxbox">
+            <p class="text-c border-b">请确认微信支付是否完成</p>
+            <p class="text-c fc-red border-b" @click="goback">已完成支付</p>
+            <p class="text-c fc-grey" @click="showWXpay = false">支付遇到问题，重新支付</p>
+        </div>
+    </van-popup>
   </div>
 </template>
 
@@ -73,11 +81,17 @@ export default {
       weekval: "",
       isdisabled: true,
       rent: 0,
-      info:''
+      info:'',
+      showWXpay:false
     };
   },
   watch: {
     weekval() {
+      if (this.weekval <= 0) {
+        this.weekval = 1
+        Toast('不能为小于0');
+        return;
+      }
       let postData = this.$qs.stringify({
         order_id: this.$route.params.id,
         day: this.weekval
@@ -96,9 +110,18 @@ export default {
     }
   },
   created(){
+    let wxpayReletSession = JSON.parse(window.sessionStorage.getItem("wxpayReletSession"))
+        if(wxpayReletSession){
+            if(wxpayReletSession.orderid==this.$route.params.id){
+                this.showWXpay = wxpayReletSession.state
+            }
+        }
     this.getinfo()
   },
   methods: {
+    goback(){
+      this.$router.go(-1);
+    },
     getinfo() {
         let postData = this.$qs.stringify({
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -132,10 +155,67 @@ export default {
       }
 
       if (this.radio == 1) {
-        Toast("微信功能未开通");
+        // Toast("微信功能未开通");
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id: this.$route.params.id,
+          pay_way: this.radio,
+          day: this.weekval,
+          money: this.rent
+        });
+        this.axios
+          .post(this.API + "api/Lease_Order/orderRenew", postData)
+          .then(res => {
+            console.log(res.data, "wxpay");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast.clear();
+              let wxpayReletSession = {
+                  orderid:this.$route.params.id,
+                  state: true
+              }
+              window.sessionStorage.setItem("wxpayReletSession", JSON.stringify(wxpayReletSession))
+              window.location.href = resdata.data
+            } else {
+              Toast.clear();
+              Toast(resdata.message);
+            }
+          })
+          .catch(error => {
+                Toast.clear()
+                Toast('网络出错')
+            });
       }
       if (this.radio == 2) {
-        Toast("支付宝功能未开通");
+        // Toast("支付宝功能未开通");
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id: this.$route.params.id,
+          pay_way: this.radio,
+          day: this.weekval,
+          money: this.rent
+        });
+        this.axios
+          .post(this.API + "api/Lease_Order/orderRenew", postData)
+          .then(res => {
+            console.log(res.data, "alipay");
+            window.sessionStorage.removeItem("wxpayReletSession");
+            Toast.clear()
+
+            const form = res.data;
+            const div = document.createElement('div');
+            div.id = 'alipay';
+            div.style.opacity='0'
+            div.innerHTML = form;
+            document.body.appendChild(div);
+            document.querySelector('#alipay').children[0].submit();
+          })
+          .catch(error => {
+                Toast.clear()
+                Toast('网络出错')
+            });
       }
       if (this.radio == 3) {
         Toast.loading({ mask: true, message: "加载中..." });
@@ -162,7 +242,11 @@ export default {
               Toast.clear();
               Toast(resdata.message);
             }
-          });
+          })
+          .catch(error => {
+                Toast.clear()
+                Toast('网络出错')
+            });
       }
     }
   }
@@ -212,5 +296,12 @@ export default {
   border-radius: 20px;
   color: #fff;
   background-image: linear-gradient(90deg, #2dbbf1 0%, #4ea9f9 100%);
+}
+
+.wxbox {
+    width: 200px;
+}
+.wxbox > p {
+    padding: 10px 0;
 }
 </style>

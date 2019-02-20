@@ -38,13 +38,18 @@ export default {
 </script>
 
 <style>
-.fsz12{
-  font-size: 12px
-}
 .amap-page-container{
     width: 100%;
     height:100vh;
 }
+</style>
+
+
+<style scoped>
+.fsz12{
+  font-size: 12px
+}
+
 .bottom {
   z-index: 100;
   width: 100%;

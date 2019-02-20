@@ -23,11 +23,14 @@
       <div class="btn text-c" @click="submit">提交</div>
     </div>
 
-    <div v-show="isshow" class="model full">
-      <div class="main">
-        <van-picker :columns="columns" show-toolbar @confirm="onConfirm" @cancel="isshow = false"/>
-      </div>
-    </div>
+    <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
+      <van-picker
+        :columns="columns"
+        show-toolbar
+        @cancel="isshow = false"
+        @confirm="onConfirm"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -49,7 +52,6 @@ export default {
 
   methods: {
     onConfirm(value, index) {
-      console.log(`当前值：${value}, 当前索引：${index}`);
       this.text = value;
       this.isshow = false;
     },
@@ -147,19 +149,5 @@ export default {
   border-radius: 20px;
   color: #fff;
   background-image: linear-gradient(90deg, #2dbbf1 0%, #4ea9f9 100%);
-}
-.model {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-.main {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
 }
 </style>

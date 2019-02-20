@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="fsz">
-    <router-view v-wechat-title="$route.meta.title"></router-view>
+    <router-view v-wechat-title="$route.meta.title" ></router-view>
+
+    <div class="nav-pd-b" v-if="navshow"></div>
 
     <div class="nav bgc flexbox" v-if="navshow">
     <!-- <div class="nav bgc flexbox"> -->
@@ -45,7 +47,7 @@
 </template>
 
 <script>
-import VConsole from 'vconsole/dist/vconsole.min.js'
+// import VConsole from 'vconsole/dist/vconsole.min.js'
 
 export default {
   data() {
@@ -57,7 +59,7 @@ export default {
       if (this.$route.path === "/") {
         return "index";
       }
-      if (this.$route.path === "/shop") {
+      if (this.$route.path === "/shop") { 
         return "shop";
       }
       if (this.$route.path === "/order") {
@@ -69,11 +71,66 @@ export default {
     },
     navshow() {
       let url = this.$route.path;
-
-      let urlarr = ['/','/shop','/order','/me']
-      if (urlarr.includes(url)) {
-        return true;
+      // let urlarr = ['/','/shop','/order','/me']
+      // if (urlarr.includes(url)) {
+      //   return true
+      // }
+      
+      if (url.includes('/login')) {
+        return false
       }
+      if (url.includes('/passwordLogin')) {
+        return false
+      }
+      if (url.includes('/forgetPassword')) {
+        return false
+      }
+      if (url.includes('/resetPassword')) {
+        return false
+      }
+      if (url.includes('/inputCode')) {
+        return false
+      }
+      if (url.includes('/newpassword')) {
+        return false
+      }
+      if (url.includes('/sendcode')) {
+        return false
+      }
+      if (url.includes('/newphone')) {
+        return false
+      }
+      if (url.includes('/Modify')) {
+        return false
+      }
+      if (url.includes('/map')) {
+        return false
+      }
+      if (url.includes('/orderDetail')) {
+        return false
+      }
+      if (url.includes('/cart')) {
+        return false
+      }
+      if (url.includes('/Setup')) {
+        return false
+      }
+      if (url.includes('/locationList')) {
+        return false
+      }
+      if (url.includes('/calendar')) {
+        return false
+      }
+      if (url.includes('/people')) {
+        return false
+      }
+      if (url.includes('/addresslist')) {
+        return false
+      }
+      if (url.includes('/zagreement')) {
+        return false
+      }
+      return true
 
     }
   },
@@ -85,6 +142,9 @@ export default {
 </script>
 
 <style scoped>
+.nav-pd-b{
+  padding-bottom: 50px;
+}
 .nav {
   position: fixed;
   bottom: 0;

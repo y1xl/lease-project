@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     toShopdet() {
-      this.$router.push({ path: "/ShopDetail" });
+      this.$router.push({ path: "/shopDetail" });
     },
     onConfirm(value) {
       console.log(`当前值：${value}`);
@@ -115,7 +115,7 @@ export default {
     },
 
     submit() {
-      this.$router.push({ path: "/Trusteeship" });
+      this.$router.push({ path: "/trusteeship" });
     },
     go(url) {
       let postDeliSession = {

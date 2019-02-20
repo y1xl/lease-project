@@ -54,11 +54,11 @@ export default {
       //   Toast("手机号码有误，请重填");
       //   return;
       // }
-      this.$router.push({ path: "/InputCode/" + this.newPhone });
+      this.$router.push({ path: "/inputCode/" + this.newPhone });
     },
     //密码登录
     password() {
-      this.$router.push({ path: "/PasswordLogin" });
+      this.$router.push({ path: "/passwordLogin" });
     }
   }
 };

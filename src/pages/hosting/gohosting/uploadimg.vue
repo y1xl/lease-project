@@ -103,9 +103,17 @@ export default {
         },
 
         onshowmodel(){
-            if(this.serialnumval==''||this.telval==''){
-                Toast("请先填写完整");
-                return
+            if(this.fileimg1 == ""||this.fileimg2 == ""){
+                Toast("请上传产品照片");
+                return;
+            }
+            if(this.serialnumval == ""){
+                Toast("请填写产品序列号");
+                return;
+            }
+            if(this.telval == ""){
+                Toast("请填写联系方式");
+                return;
             }
 
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));

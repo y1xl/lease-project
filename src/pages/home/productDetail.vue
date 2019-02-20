@@ -311,11 +311,15 @@ export default {
       },
     };
   },
-  created(){
-    if(!window.localStorage.getItem("userinfo")){
-      this.$router.replace({ path: "/login" })
+  beforeCreate(){
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
     }
+  },
+  created(){
     this.getdetail()
+  },
+  mounted(){
     this.getguige()
   },
   computed: {
@@ -690,7 +694,7 @@ video {
   width: 100%;
   height: 50px;
   position: fixed;
-  bottom: 0;
+  bottom: 48px;
 }
 .btn {
   height: 32px;

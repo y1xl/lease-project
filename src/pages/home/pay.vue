@@ -148,7 +148,8 @@ export default {
                 .then(res => {
                     console.log(res.data, "alipay");
                     window.sessionStorage.removeItem("wxpaySession");
-
+                    Toast.clear()
+                    
                     const form = res.data;
                     const div = document.createElement('div');
                     div.id = 'alipay';

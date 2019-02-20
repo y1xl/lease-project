@@ -150,7 +150,7 @@ export default new Router({
     { path: '/commonProblem', component: CommonProblem, meta: { title: '常见问题' } },
     { path: '/setup', component: Setup, meta: { title: '设置' } },
     { path: '/accountBinding', component: AccountBinding, meta: { title: '账号绑定' } },
-    { path: '/Sendcode/:type/:phone', component: Sendcode, meta: { title: '发送验证码' } },
+    { path: '/sendcode/:type/:phone', component: Sendcode, meta: { title: '发送验证码' } },
     { path: '/newphone', component: Newphone, meta: { title: '绑定新手机号' } },
     { path: '/newpassword', component: Newpassword, meta: { title: '修改密码' } },
 
