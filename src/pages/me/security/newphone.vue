@@ -33,7 +33,7 @@ export default {
                 console.log(res.data, "sendcode");
                 let resdata = res.data;
                 if (resdata.code == 200) {
-
+                    Toast('发送成功')
                 } else {
                 Toast(resdata.message);
                 }

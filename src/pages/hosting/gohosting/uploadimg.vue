@@ -9,7 +9,11 @@
                         <img src="../../../assets/tg_camera.png" alt="">
                     </van-uploader>
                 </div>
-                <div class="fileimg" v-else><img :src="fileimg1.content" alt=""></div>
+                <div class="fileimg" v-else>
+                    <van-uploader :after-read="onRead1" accept="image/png, image/jpeg" multiple>
+                        <img :src="fileimg1.content" alt="">
+                    </van-uploader>
+                </div>
 
                 <div class="text-c btext">上传包含产品配件的全家福</div>
             </div>
@@ -19,12 +23,16 @@
                         <img src="../../../assets/tg_camera.png" alt="">
                     </van-uploader>
                 </div>
-                <div class="fileimg" v-else><img :src="fileimg2.content" alt=""></div>
+                <div class="fileimg" v-else>
+                    <van-uploader :after-read="onRead2" accept="image/png, image/jpeg" multiple>
+                        <img :src="fileimg2.content" alt="">
+                    </van-uploader>
+                </div>
 
                 <div class="text-c btext">上传可以看清型号的照片</div>
             </div>
         </div>
-        <div class="fc-grey pd-lr-15 bgc">(配件分开摆放整齐，清晰可见)</div>
+        <div class="fc-grey pd-lr-15 bgc fsz12">(配件分开摆放整齐，清晰可见)</div>
 
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">序列号</div>
@@ -32,7 +40,7 @@
         </div>
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">联系方式</div>
-            <input type="text" placeholder="请填写联系方式" v-model.trim="telval">
+            <input type="number" placeholder="请填写联系方式" v-model.trim="telval">
         </div>
 
         <div class="pd-15"><div class="btn text-c" @click="onshowmodel">提交</div></div>
@@ -40,19 +48,19 @@
         <div class="model" v-if="showmodel">
             <div class="main bgc position">
                 <div class="closeimg" @click="showmodel=false"><van-icon name="close" /></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">品类</span><span>相机</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">品牌</span><span>相机</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">型号</span><span>x5</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">颜色</span><span>黑</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">数量</span><span>1</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">品类</span><span>{{gohostingSession.typetext.cate_name}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">品牌</span><span>{{gohostingSession.brandtext.brand_name}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">型号</span><span>{{gohostingSession.modeltext.model_name}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">颜色</span><span>{{gohostingSession.colortext}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">数量</span><span>{{gohostingSession.numtext}}</span></div>
                 <div class="flex-jc-between pd">
                     <span class="fc-grey">含配件</span>
-                    <span class="flex-1 fittings">相机、镜头、电池、说明书、说明书、电池</span>
+                    <span class="flex-1 fittings">{{gohostingSession.fittingstring}}</span>
                 </div>
                 <div class="flex-jc-between pd"><span class="fc-grey">购买时间</span><span>2018-11-11</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">购买价格</span><span>￥1000</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">外观成色</span><span>95新</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">功能状况</span><span>好</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">购买价格</span><span>￥{{gohostingSession.priceval}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">外观成色</span><span>{{gohostingSession.colourtext}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">功能状况</span><span>{{gohostingSession.statetext}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">联系方式</span><span>{{gohostingSession.telval}}</span></div>
                 <div class="imglist flex-jc-between pd">
                     <img :src="fileimg1.content" alt="">
@@ -88,6 +96,8 @@ export default {
     created(){
         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
         if(gohostingSession){
+            this.fileimg1 = gohostingSession.fileimg1
+            this.fileimg2 = gohostingSession.fileimg2
             this.serialnumval = gohostingSession.serialnumval
             this.telval = gohostingSession.telval
         }
@@ -117,11 +127,13 @@ export default {
             }
 
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.fileimg1 = this.fileimg1
+            gohostingSession.fileimg2 = this.fileimg2
             gohostingSession.serialnumval = this.serialnumval
             gohostingSession.telval = this.telval
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
 
-            console.log(gohostingSession) 
+            console.log(gohostingSession,'gohostingSession') 
             this.gohostingSession = gohostingSession
             this.showmodel = true
         },
@@ -129,7 +141,7 @@ export default {
         submit(){
             if(this.isconsent){
                 Toast("此功能未开通");
-                this.$router.replace({ path: '/gsuccessful' })
+                // this.$router.replace({ path: '/gsuccessful' })
             }else{
                 Toast("您还未同意合约");
             }
@@ -140,6 +152,9 @@ export default {
 </script>
 
 <style scoped>
+.fsz12{
+    font-size: 12px;
+}
 .pdl10{
     padding-left: 10px
 }
@@ -183,7 +198,7 @@ export default {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    z-index: 6;
     padding: 10px;
     box-sizing: border-box;
 }
@@ -195,7 +210,7 @@ export default {
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 2;
+    z-index: 7;
 }
 .main > div {
     box-sizing: border-box;

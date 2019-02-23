@@ -22,7 +22,7 @@
             <van-cell center :border="false">
                 <div class="bgc flex-align-items" slot="title">
                     <span>快递单号</span>
-                    <input type="text" placeholder="请输入" class="pdl" v-model.trim="numval">
+                    <input type="text" placeholder="请输入(必须是顺丰)" class="pdl" v-model.trim="numval">
                 </div>
             </van-cell>    
 

@@ -148,11 +148,12 @@ export default {
                 let resdata = res.data
                 if (resdata.code == 200) {
                     Toast.clear()
-                        Dialog.alert({
-                            message: '操作成功'
-                        }).then((e) => {
-                            this.$router.go(-1);
-                        });
+                        // Dialog.alert({
+                        //     message: '操作成功'
+                        // }).then((e) => {
+                        //     this.$router.go(-1);
+                        // });
+                    this.getinfo()
                 } else {
                     Toast.clear()
                     Toast(resdata.message)

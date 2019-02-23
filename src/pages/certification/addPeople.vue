@@ -79,6 +79,19 @@ export default {
       }
     },
     submit() {
+      console.log(this.nameval);
+      
+      if(!(/^[\u4e00-\u9fa5]{2,4}$/.test(this.nameval))){ 
+        Toast("请正确输入姓名");
+        return;
+      }
+
+      // if (!(/^1\d{10}$/.test(this.phoneval))) {
+      if(!(/^1(3|4|5|7|8)\d{9}$/.test(this.phoneval))){ 
+        Toast("手机号格式不正确");
+        return;
+      }
+
       if (this.text == "" || this.nameval == "" || this.phoneval == "") {
         Toast("请先填写完整");
         return;

@@ -10,7 +10,7 @@
     </div>
     <div class="bgc pd-15">
       <div class="mar-b-10 fc-grey">购买价格</div>
-      <input type="text" placeholder="请输入购买价格" v-model.trim="priceval">
+      <input type="number" placeholder="请输入购买价格" v-model.trim.number="priceval">
     </div>
     <div class="flex-jc-between flex-align-items bgc pd-15" @click="showcolour=true">
       <div class="flex-1">
@@ -34,6 +34,9 @@
         <div v-else>{{statetext}}</div>
       </div>
       <van-icon name="arrow"/>
+    </div>
+    <div class="bgc pd-15" v-show="statetext=='不正常（说明原因）'">
+      <input type="text" placeholder="请输入说明原因" v-model.trim="causetext">
     </div>
 
     <div class="pd-15">
@@ -83,12 +86,15 @@ export default {
       //外观成色
       showcolour: false,
       colourtext: "",
-      colourarr: ["成色1", "成色2"],
+      colourarr: ["全新", "95新","9成新","85新","8成新","7成新"], //全新、95新、9成新、85新、8成新、7成新
       colourdes: "",
       //功能状况
       showstate: false,
       statetext: "",
-      statearr: ["状况1", "状况2"],
+      statearr: ["正常", "不正常（说明原因）"],
+      //不正常（说明原因
+      causetext:'',
+
       priceval: ""
     };
   },
@@ -102,6 +108,7 @@ export default {
       this.colourdes = gohostingSession.colourdes;
       this.statetext = gohostingSession.statetext;
       this.priceval = gohostingSession.priceval;
+      this.causetext = gohostingSession.causetext;
     }
   },
   methods: {
@@ -141,6 +148,10 @@ export default {
         Toast("请选择功能状况");
         return;
       }
+      if(this.causetext == ""&&this.statetext == "不正常（说明原因）"){
+        Toast("请输入说明原因");
+        return;
+      }
 
       let gohostingSession = JSON.parse(
         window.sessionStorage.getItem("gohostingSession")
@@ -150,6 +161,7 @@ export default {
       gohostingSession.colourdes = this.colourdes;
       gohostingSession.statetext = this.statetext;
       gohostingSession.priceval = this.priceval;
+      gohostingSession.causetext = this.causetext;
       window.sessionStorage.setItem(
         "gohostingSession",
         JSON.stringify(gohostingSession)

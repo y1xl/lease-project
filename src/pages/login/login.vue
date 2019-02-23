@@ -44,16 +44,11 @@ export default {
         return;
       }
       
-      if (this.newPhone.length != 11) {
-        Toast("手机号长度有误");
+      if (!(/^1\d{10}$/.test(this.newPhone))) {
+        Toast("手机号格式不正确");
         return;
       }
-
-      // var telphone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
-      // if (!telphone.test(this.newPhone)) {
-      //   Toast("手机号码有误，请重填");
-      //   return;
-      // }
+      
       this.$router.push({ path: "/inputCode/" + this.newPhone });
     },
     //密码登录

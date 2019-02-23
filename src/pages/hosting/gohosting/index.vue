@@ -13,41 +13,43 @@
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">品类</div>
                     <div class="fc-grey" v-if="typetext==''">请选择托管品类</div>
-                    <div v-else>{{typetext}}</div>
+                    <div v-else>{{typetext.cate_name}}</div>
                 </div>
                 <van-icon name="arrow" />
             </div>
-            <div class="flex-jc-between flex-align-items bgc pd-15" @click="showbrand=true">
+            <div class="flex-jc-between flex-align-items bgc pd-15" @click="onshowbrand">
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">品牌</div>
                     <div class="fc-grey" v-if="brandtext==''">请选择品牌</div>
-                    <div v-else>{{brandtext}}</div>
+                    <div v-else>{{brandtext.brand_name}}</div>
                 </div>
                 <van-icon name="arrow" />
             </div>
-            <div class="flex-jc-between flex-align-items bgc pd-15"  @click="showmodel=true">
+            <div class="flex-jc-between flex-align-items bgc pd-15"  @click="onshowmodel">
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">型号</div>
                     <div class="fc-grey" v-if="modeltext==''">请选择型号</div>
-                    <div v-else>{{modeltext}}</div>
+                    <div v-else>{{modeltext.model_name}}</div>
                 </div>
                 <van-icon name="arrow" />
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showcolor=true">
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">颜色</div>
-                    <div class="fc-grey" v-if="colortext==''">请选择颜色</div>
-                    <div v-else>{{colortext}}</div>
+                    <!-- <div class="fc-grey" v-if="colortext==''">请选择颜色</div>
+                    <div v-else>{{colortext}}</div> -->
+                    <input type="text" placeholder="请输入颜色，例:黑色" v-model.trim="colortext">
                 </div>
-                <van-icon name="arrow" />
+                <!-- <van-icon name="arrow" /> -->
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="shownum=true">
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">数量</div>
-                    <div class="fc-grey" v-if="numtext==''">请选择数量</div>
-                    <div v-else>{{numtext}}</div>
+                    <!-- <div class="fc-grey" v-if="numtext==''">请选择数量</div>
+                    <div v-else>{{numtext}}</div> -->
+                    <van-stepper v-model.trim="numtext" disable-input integer/>
                 </div>
-                <van-icon name="arrow" />
+                <!-- <van-icon name="arrow" /> -->
             </div>
 
             <div class="pd-15">
@@ -55,20 +57,20 @@
             </div>
 
             <van-popup v-model="showtype" position="bottom" :close-on-click-overlay="false">
-                <van-picker :columns="typearr" show-toolbar @cancel="showtype = false" @confirm="onConfirmType"/>
+                <van-picker :columns="typearr" show-toolbar @cancel="showtype = false" @confirm="onConfirmType" value-key='cate_name'/>
             </van-popup>
             <van-popup v-model="showbrand" position="bottom" :close-on-click-overlay="false">
                 <van-picker :columns="brandarr" show-toolbar @cancel="showbrand = false" @confirm="onConfirmBrand" value-key='brand_name'/>
             </van-popup>
             <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
-                <van-picker :columns="modelarr" show-toolbar @cancel="showmodel = false" @confirm="onConfirmModel"/>
+                <van-picker :columns="modelarr" show-toolbar @cancel="showmodel = false" @confirm="onConfirmModel" value-key='model_name'/>
             </van-popup>
-            <van-popup v-model="showcolor" position="bottom" :close-on-click-overlay="false">
+            <!-- <van-popup v-model="showcolor" position="bottom" :close-on-click-overlay="false">
                 <van-picker :columns="colorarr" show-toolbar @cancel="showcolor = false" @confirm="onConfirmColor"/>
             </van-popup>
             <van-popup v-model="shownum" position="bottom" :close-on-click-overlay="false">
                 <van-picker :columns="numarr" show-toolbar @cancel="shownum = false" @confirm="onConfirmNum"/>
-            </van-popup>
+            </van-popup> -->
 
         </div>
 
@@ -78,7 +80,7 @@
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">品类</div>
                     <div class="fc-grey" v-if="typetext1==''">请选择托管品类</div>
-                    <div v-else>{{typetext1}}</div>
+                    <div v-else>{{typetext1.cate_name}}</div>
                 </div>
                 <van-icon name="arrow" />
             </div>
@@ -116,7 +118,7 @@
             </div>
 
             <van-popup v-model="showtype1" position="bottom" :close-on-click-overlay="false">
-                <van-picker :columns="typearr1" show-toolbar @cancel="showtype1 = false" @confirm="onConfirmType1"/>
+                <van-picker :columns="typearr1" show-toolbar @cancel="showtype1 = false" @confirm="onConfirmType1" value-key='cate_name'/>
             </van-popup>
         </div>
 
@@ -132,11 +134,11 @@ export default {
             //品类
             showtype: false,
             typetext: '',
-            typearr: ['品类1', '相机'],
+            typearr: [],
             //品类1
             showtype1: false,
             typetext1: '',
-            typearr1: ['品类1', '相机'],
+            typearr1: [],
             //品牌
             showbrand: false,
             brandtext: '',
@@ -144,15 +146,15 @@ export default {
             //型号
             showmodel: false,
             modeltext: '',
-            modelarr: ['型号1', '型号2'],
+            modelarr: [],
             //颜色
-            showcolor: false,
+            // showcolor: false,
             colortext: '',
-            colorarr: ['颜色1', '颜色2'],
+            // colorarr: ['颜色1', '颜色2'],
             //数量
-            shownum: false,
-            numtext: '',
-            numarr: ['数量1', '数量2'],
+            // shownum: false,
+            numtext: '1',
+            // numarr: ['数量1', '数量2'],
             gohostingSession: ''
         }
     },
@@ -167,42 +169,112 @@ export default {
             this.gohostingSession = gohostingSession
         }
 
-        this.getbrand()
+        this.gettype()
+    },
+    mounted(){
+        if(this.brandtext!=''){
+            this.getbrand()
+        }
+        if(this.modeltext!=''){
+            this.getmodel()
+        }
     },
     methods:{
+        onshowbrand(){
+            if(this.typetext==''){
+                Toast('请先选择品类')
+                return
+            }
+            this.showbrand = true
+        },
+        onshowmodel(){
+            if(this.typetext==''){
+                Toast('请先选择品类')
+                return
+            }
+            if(this.brandtext==''){
+                Toast('请先选择品牌')
+                return
+            }
+            this.showmodel = true
+        },
+
         onConfirmType(value, index){
             this.typetext = value
             this.showtype = false
+            this.getbrand()
         },
         onConfirmType1(value, index){
             this.typetext1 = value
             this.showtype1 = false
         },
         onConfirmBrand(value, index){
-            this.brandtext = value.brand_name
+            this.brandtext = value
             this.showbrand = false
+            this.getmodel()
         },
         onConfirmModel(value, index){
             this.modeltext = value
             this.showmodel = false
         },
-        onConfirmColor(value, index){
-            this.colortext = value
-            this.showcolor = false
-        },
-        onConfirmNum(value, index){
-            this.numtext = value
-            this.shownum = false
-        },
+        // onConfirmColor(value, index){
+        //     this.colortext = value
+        //     this.showcolor = false
+        // },
+        // onConfirmNum(value, index){
+        //     this.numtext = value
+        //     this.shownum = false
+        // },
 
-        getbrand(){
-            this.axios.post(this.API + "api/Lease/brand_select")
+        gettype(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            this.axios.post(this.API + "api/Trusteeship/queryCate")
             .then(res => {
-                console.log(res.data, "data")
+                console.log(res.data, "gettype")
                 let resdata = res.data
                 if (resdata.code == 200) {
+                    Toast.clear();
+                    this.typearr = resdata.data
+                    this.typearr1 = resdata.data
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message)
+                }
+            })
+        },
+        getbrand(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                cate_id: this.typetext.cate_id
+            });
+            this.axios.post(this.API + "api/Trusteeship/queryBrand",postData)
+            .then(res => {
+                console.log(res.data, "getbrand")
+                let resdata = res.data 
+                if (resdata.code == 200) {
+                    Toast.clear();
                     this.brandarr = resdata.data
                 } else {
+                    Toast.clear();
+                    Toast(resdata.message)
+                }
+            })
+        },
+        getmodel(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                cate_id: this.typetext.cate_id,
+                brand_id: this.brandtext.brand_id,
+            });
+            this.axios.post(this.API + "api/Trusteeship/queryModel",postData)
+            .then(res => {
+                console.log(res.data, "getmodel")
+                let resdata = res.data 
+                if (resdata.code == 200) {
+                    Toast.clear();
+                    this.modelarr = resdata.data
+                } else {
+                    Toast.clear();
                     Toast(resdata.message)
                 }
             })

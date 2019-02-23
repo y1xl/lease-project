@@ -17,7 +17,9 @@
         <van-swipe :autoplay="3000">
           <van-swipe-item v-for="(item, index) in images" :key="index">
             <div class="img_box">
-              <img :src="item.adpic_img">
+              <router-link to="">
+                <img :src="item.adpic_img">
+              </router-link>
             </div>
           </van-swipe-item>
         </van-swipe>
@@ -29,12 +31,12 @@
         <img src="../assets/tuoguan.png"> 我要托管
       </div>
       <div class="tg">
-        <router-link to="/Extension">
+        <router-link to="/extension">
           <img src="../assets/wytg.png"> 我要推广
         </router-link>
       </div>
       <div class="tg">
-        <router-link to="/WelfareAgency">
+        <router-link to="/welfareAgency">
           <img src="../assets/fls.png"> 福利社
         </router-link>
       </div>
@@ -61,10 +63,9 @@
                   <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
                 </div>
                 <div class="text-line pro_name">{{goods.goods_name}}</div>
-                <div class="f12">
-                  <span style="color: #F21E1E;">¥</span>
-                  <span class="price">{{goods.hire_price.price}}</span>
-                  /{{goods.hire_price.unt}}
+                <div class="f12">     
+                  低至
+                  <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                 </div>
               </div>
             </div>
@@ -85,9 +86,8 @@
               </div>
               <div class="text-line pro_name">{{goods.goods_name}}</div>
               <div class="f12">
-                <span style="color: #F21E1E;">¥</span>
-                <span class="price">{{goods.hire_price.price}}</span>
-                /{{goods.hire_price.unt}}
+                低至
+                <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
               </div>
             </div>
           </div>
@@ -114,6 +114,7 @@
               </div>
               <div class="zj">
                 <span class="f14">租金：</span>
+                低至
                 <span class="price">¥{{item.hire_price.price}}</span>
                 <span class="f12">/{{item.hire_price.unt}}</span>
               </div>

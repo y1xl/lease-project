@@ -16,7 +16,6 @@
       </div>
     </div>
     <div class="pd-15 bgc mar-b-10">
-      <!-- <div>街道、小区门牌等详情地址</div> -->
       <div>
         <input type="text" v-model.trim="detailval" placeholder="街道、小区门牌等详情地址">
       </div>
@@ -92,6 +91,10 @@ export default {
     submit() {
       if (this.nameval == "" || this.phoneval == "" || this.detailval == "") {
         Toast("请先填写完整");
+        return;
+      }
+      if (!(/^1\d{10}$/.test(this.phoneval))) {
+        Toast("手机号格式不正确");
         return;
       }
 

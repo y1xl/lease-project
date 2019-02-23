@@ -76,10 +76,7 @@ export default {
   height: 170px;
   border-radius: 5px;
 }
-.shopimg_b img {
-  width: 100%;
-  height: 100%;
-}
+
 .txt {
   font-size: 12px;
   color: #dcdddf;

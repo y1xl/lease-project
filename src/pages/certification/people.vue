@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       radio: 1,
-      list: [{ id: 1 }, { id: 2 }],
+      list: [],
       urgent_id: ""
     };
   },

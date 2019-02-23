@@ -325,7 +325,7 @@ export default {
           this.rent = 0;
         }
 
-        if (this.hire_cate == 1) {
+        if (this.hire_cate == 1 || this.hire_cate == 3) {
           return ["天"];
         }
         if (this.hire_cate == 2) {
@@ -347,6 +347,8 @@ export default {
     }
   },
   created() {
+    this.getotherprice();
+    
     let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
     if (buySession) {
       this.typenum = buySession.gettype;
@@ -367,8 +369,6 @@ export default {
     } else {
       this.getdefaultaddress();
     }
-
-    this.getotherprice();
   },
   methods: {
     go(url) {
@@ -671,7 +671,7 @@ export default {
             delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
             // qwsh_time: this.expectdate,
             qwsh_time: "",
-            sku: this.detail.sku,
+            sku: this.detail.sku||'',
             // time: this.timetext,
             time: "",
             ads_id: "",
@@ -706,7 +706,7 @@ export default {
             safe_status: this.isinsurance ? 1 : 2,
             delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
             qwsh_time: this.expectdate,
-            sku: this.detail.sku,
+            sku: this.detail.sku||'',
             ads_id: this.getaddress.ads_id,
             way_price: this.freight,
             users_name: "",
@@ -750,7 +750,7 @@ export default {
             safe_status: this.isinsurance ? 1 : 2,
             delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
             qwsh_time: this.expectdate,
-            sku: this.detail.sku,
+            sku: this.detail.sku||'',
             ads_id: this.getaddress.ads_id,
             way_price: this.freight,
             remark: this.remarkval,

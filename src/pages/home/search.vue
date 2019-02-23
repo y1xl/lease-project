@@ -1,10 +1,10 @@
 <template>
   <div>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action @search="onSearch" @focus="onfocus" @blur="onblur">
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action focus @search="onSearch" >
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
 
-    <div class="history bgc ignore" v-show="showhistory">
+    <div class="history bgc ignore" v-show="flprolist.length==0">
       <p @click="historySearch(item)" v-for="(item,index) in historylist" :key="index" class="border-b">{{item}}</p>
     </div>
 
@@ -29,6 +29,7 @@
         </div>
         <div class="zj">
           <span class="f14">租金：</span>
+          低至
           <span class="price">¥{{item.hire_price.price}}</span>
           <span class="f12">/{{item.hire_price.unt}}</span>
         </div>
@@ -45,7 +46,7 @@ export default {
       value: "",
       flprolist: [],
       historylist:[],
-      showhistory: false
+      // showhistory: false
     };
   },
   created() {
@@ -89,6 +90,9 @@ export default {
       this.$router.push({ path: "/ProductDetail/" + id });
     },
     getsearch() {
+      if(this.value==''){
+        return
+      }
       // 历史记录处理
       this.historylist.unshift(this.value)
       this.historylist.slice(0,10)
@@ -110,7 +114,7 @@ export default {
               Toast({
                 message: " 没有匹配的产品",
               });
-              this.flprolist = "";
+              this.flprolist = []
             } else {
               Toast.clear();
               this.flprolist = resdata.data;
@@ -118,6 +122,7 @@ export default {
           } else {
             Toast.clear();
             Toast(resdata.message);
+            this.flprolist = []
           }
         });
     }
@@ -130,12 +135,18 @@ export default {
   padding: 10px;
   box-sizing: border-box;
 }
-.ignore {
+.history {
+  z-index: 1;
+  width: 100%;
+  position: absolute;
+  left: 0;
+}
+/* .ignore {
   width: 100%;
   position: absolute;
   left: 0;
   top: 44px;
-}
+} */
 /*分类 所有产品*/
 .fl_pro_list {
   width: 100%;

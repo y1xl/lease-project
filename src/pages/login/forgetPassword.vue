@@ -36,6 +36,10 @@ export default {
       if (this.phoneval == "") {
         return;
       }
+      if (!(/^1\d{10}$/.test(this.phoneval))) {
+        Toast("手机号格式不正确");
+        return;
+      }
       let postData = this.$qs.stringify({
         users_phone: this.phoneval
       });
@@ -45,6 +49,7 @@ export default {
           console.log(res.data, "sendcode");
           let resdata = res.data;
           if (resdata.code == 200) {
+            Toast('发送成功')
           } else {
             Toast(resdata.message);
           }
@@ -54,6 +59,10 @@ export default {
     //下一步
     toNext() {
       if (this.phoneval == "" || this.codeval == "") {
+        return;
+      }
+      if (!(/^1\d{10}$/.test(this.phoneval))) {
+        Toast("手机号格式不正确");
         return;
       }
 

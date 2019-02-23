@@ -94,6 +94,10 @@ export default {
         Toast("请先填写完整");
         return;
       }
+      if (!(/^1\d{10}$/.test(this.phoneval))) {
+        Toast("手机号格式不正确");
+        return;
+      }
 
       let postData = this.$qs.stringify({
         ads_id: this.$route.params.id || "",

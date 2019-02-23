@@ -9,13 +9,13 @@
           </div>
         </div>
 
-        <van-cell is-link center to="/DetaInformation" :border="false">
+        <van-cell is-link center to="/detaInformation" :border="false">
           <template slot="title">
             <div>详细信息</div>
           </template>
         </van-cell>
         <div class="shxx border-t">
-          <van-cell is-link center to="/ReceInformation">
+          <van-cell is-link center to="/receInformation">
             <template slot="title">
               <div>收货信息</div>
             </template>

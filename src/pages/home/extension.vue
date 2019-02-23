@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="divbox">
     <div class="bgc">
       <div class="flex-jc-center">
         <div class="trust_box text-c">
@@ -95,6 +95,10 @@ export default {
 </script>
 
 <style scoped>
+.divbox {
+  min-height: 100vh;
+  background-color: #fff;
+}
 .trust_box {
   width: 300px;
   height: 170px;

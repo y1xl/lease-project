@@ -196,7 +196,7 @@
             </div>
             <div class="flexbox" v-if="data.delivery_way=='快递'">
               <span>快递费</span>
-              <span class="flex-1">-¥{{data.way_price||0}}</span>
+              <span class="flex-1">+¥{{data.way_price||0}}</span>
             </div>
             <!-- <div class="flexbox">
               <span>已收定金</span>

@@ -13,7 +13,7 @@
       </div>
       <div class="inputbox pd-15">
         <span>手机号码</span>
-        <input type="number" v-model.trim="phoneval" maxlength="11" disabled class="bgc">
+        <input type="number" v-model.trim="phoneval" maxlength="11" class="bgc">
       </div>
     </div>
     <div class="bgc" v-show="selected==1">
@@ -61,10 +61,14 @@ export default {
           Toast("不能为空");
           return;
         }
-        // if (this.phoneval.length != 11) {
-        //   Toast("手机号格式不正确");
-        //   return;
-        // }
+        if(!(/^[\u4e00-\u9fa5]{2,4}$/.test(this.nameval))){ 
+          Toast("请正确输入姓名");
+          return;
+        }
+        if(!(/^1(3|4|5|7|8)\d{9}$/.test(this.phoneval))){ 
+          Toast("手机号格式不正确");
+          return;
+        }
 
         let postData = this.$qs.stringify({
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -85,11 +89,16 @@ export default {
         people.name = this.nameval;
         people.phone = this.phoneval;
       } else {
+
         if (this.nameval1 == "" || this.phoneval1 == "") {
           Toast("不能为空");
           return;
         }
-        if (this.phoneval1.length != 11) {
+        if(!(/^[\u4e00-\u9fa5]{2,4}$/.test(this.nameval1))){ 
+          Toast("请正确输入姓名");
+          return;
+        }
+        if(!(/^1(3|4|5|7|8)\d{9}$/.test(this.phoneval1))){ 
           Toast("手机号格式不正确");
           return;
         }

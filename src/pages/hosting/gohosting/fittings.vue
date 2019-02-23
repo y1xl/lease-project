@@ -8,9 +8,9 @@
 
         <van-checkbox-group v-model="result">
             <div class="bgc pd-15 flex-wrap">
-                <div v-for="(item, index) in list" :key="index" class="flex-align-items item">
-                    <van-checkbox :name="item" checked-color="#2DBBF1"></van-checkbox>
-                    <span class="pdl">相机</span>
+                <div v-for="(item, index) in list" :key="index" class="flex-align-items item" @click="toggle(index)">
+                    <van-checkbox :name="item.cate_id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox>
+                    <span class="pdl">{{item.cate_name}}</span>
                 </div>
             </div>
         </van-checkbox-group>
@@ -22,10 +22,11 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return{
-            list: ['a', 'b', 'c'],
+            list: [],
             result: []
         }
     },
@@ -34,11 +35,58 @@ export default {
         if(gohostingSession){
             this.result = gohostingSession.fittings
         }
+
+        this.getqueryCate()
     },
     methods:{
+        toggle(index) {
+            this.$refs.checkboxes[index].toggle();
+        },
+        getqueryCate(){
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            if(gohostingSession){
+                var typetext = gohostingSession.typetext
+                var brandtext = gohostingSession.brandtext
+                var modeltext = gohostingSession.modeltext
+            }else{
+                Toast('未选择品类')
+                return
+            }
+
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                cate_id: typetext.cate_id,
+                brand_id: brandtext.brand_id,
+                model_id: modeltext.model_id
+            });
+            this.axios.post(this.API + "api/Trusteeship/queryCate",postData)
+            .then(res => {
+                console.log(res.data, "queryCate")
+                let resdata = res.data 
+                if (resdata.code == 200) {
+                    Toast.clear();
+                    this.list = resdata.data
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message)
+                }
+            })
+        },
         next(){
+            // console.log(this.result);
+            let arr = []
+            for(let v1 of this.result){
+                for(let v2 of this.list){
+                    if(v1==v2.cate_id){
+                        // console.log(v2.cate_name);
+                        arr.push(v2.cate_name)
+                    }
+                }
+            }
+            
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
             gohostingSession.fittings = this.result
+            gohostingSession.fittingstring = arr.join()
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/uploadimg' })
         }
