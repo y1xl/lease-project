@@ -63,7 +63,7 @@ export default {
 .all_bal {
   width: 100%;
   height: 150px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   box-shadow: 0px 0px 16px 0px rgba(220, 221, 223, 0.19);
 }
 .all_money {

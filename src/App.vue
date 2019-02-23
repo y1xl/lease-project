@@ -130,9 +130,9 @@ export default {
       if (url.includes('/zagreement')) {
         return false
       }
-      if (url.includes('/receInformation')) {
-        return false
-      }
+      // if (url.includes('/receInformation')) {
+      //   return false
+      // }
       return true
 
     }
