@@ -7,7 +7,7 @@
     </div>
     <div class="pd-lr-15 bgc mar-b-10">
       <div class="goods flexbox">
-        <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
+        <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" style="object-fit:contain" alt>
         <div class="flex-1">
           <div class="mar-b-10">日本 instax拍立得</div>
           <div v-if="selected==0">该新品官方价格 ¥6000.00</div>

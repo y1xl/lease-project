@@ -1,40 +1,40 @@
 <template>
   <div class="divbox">
     <div class="bgc">
-      <div class="flex-jc-center">
+      <div class="pd10 box-sizing mar-b-10">
         <div class="trust_box text-c">
           <div class="flex-jc-around">
             <div>
               <div class="grey_f">推广佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
-                <span class="money">230</span>
+                <span class="money">100</span>
               </div>
             </div>
             <div>
               <div class="grey_f">订单佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
-                <span class="money">230</span>
+                <span class="money">100</span>
               </div>
             </div>
             <div>
               <div class="grey_f">未结算佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
-                <span class="money">230</span>
+                <span class="money">100</span>
               </div>
             </div>
           </div>
           <div class="grey_f padding_tb">总佣金</div>
           <div class>
             <img class="all_img" src="../../assets/qicon.png">
-            <span class="all_money">2300</span>
+            <span class="all_money">300</span>
           </div>
         </div>
       </div>
 
-      <div class="flex-jc-center" style="padding-top: 15px;">
+      <div class="pdlr10 mar-b-10">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="flex-jc-center" @click="showcode=true">
+      <div class="pdlr10" @click="showcode=true">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
@@ -71,6 +71,11 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="pd10 fs12 fc-grey">
+        <p>佣金计算说明：</p>
+        <p>总佣金=推广佣金+订单佣金+未结算佣金</p>
     </div>
 
     <van-popup v-model="showcode">
@@ -95,17 +100,27 @@ export default {
 </script>
 
 <style scoped>
+.fs12{
+  font-size: 12px
+}
+.pd10{
+  padding: 10px;
+}
+.pdlr10{
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .divbox {
   min-height: 100vh;
   background-color: #fff;
 }
 .trust_box {
-  width: 300px;
+  /* width: 300px; */
   height: 170px;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
-  margin-top: 11px;
+  /* margin-top: 11px; */
   padding-top: 30px;
 }
 .grey_f {
@@ -136,18 +151,18 @@ export default {
 }
 
 .tg_yq_box {
-  width: 300px;
+  /* width: 300px; */
   height: 80px;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .tg_yq {
   display: flex;
   align-items: center;
-  width: 300px;
+  /* width: 300px; */
   height: 80px;
 }
 .img_r {

@@ -22,7 +22,7 @@
         </template>
       </van-cell>
 
-      <van-cell is-link center to="/Integral">
+      <van-cell is-link center to="/integral">
         <template slot="icon">
           <img src="../../assets/jf.png" alt="图标" class="left_img">
         </template>
@@ -31,7 +31,7 @@
         </template>
       </van-cell>
 
-      <van-cell is-link center to="Trusteeship">
+      <van-cell is-link center to="/trusteeship">
         <template slot="icon">
           <img src="../../assets/tg.png" alt="图标" class="left_img">
         </template>
@@ -49,7 +49,7 @@
         </template>
       </van-cell>
 
-      <van-cell is-link center to="/MyBalance">
+      <van-cell is-link center to="/myBalance">
         <template slot="icon">
           <img src="../../assets/ye.png" alt="图标" class="left_img">
         </template>
@@ -58,7 +58,7 @@
         </template>
       </van-cell>
       <div class="coupon">
-        <van-cell is-link center to="/Coupon">
+        <van-cell is-link center to="/coupon">
           <template slot="icon">
             <img src="../../assets/yhq.png" alt="图标" class="left_img">
           </template>
@@ -68,7 +68,7 @@
         </van-cell>
       </div>
       <div class="hcenter border-b">
-        <van-cell is-link center to="/HelpCenter">
+        <van-cell is-link center to="/helpCenter">
           <template slot="icon">
             <img src="../../assets/bz.png" alt="图标" class="left_img">
           </template>
@@ -77,7 +77,7 @@
           </template>
         </van-cell>
       </div>
-      <van-cell is-link center to="Setup">
+      <van-cell is-link center to="/setup">
         <template slot="icon">
           <img src="../../assets/sz.png" alt="图标" class="left_img">
         </template>

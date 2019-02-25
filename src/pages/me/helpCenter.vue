@@ -4,7 +4,7 @@
       <van-cell :title="item.help_name" is-link :to="`/CommonProblem?id=${item.help_id}`" v-for="(item,index) in list" :key="index"/>
       <!-- <van-cell title="租赁规则" is-link to="rules"/> -->
       <van-cell title="在线客服" is-link/>
-      <a href="tel:400-0000-688">
+      <a :href="`tel:${tel}`">
         <van-cell title="电话客服" is-link/>
       </a>
     </div>
@@ -16,11 +16,13 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      list:[]
+      list:[],
+      tel:''
     };
   },
   created(){
     this.getdata()
+    this.gettel()
   },
   methods:{
     getdata() {
@@ -29,6 +31,17 @@ export default {
         let resdata = res.data;
         if (resdata.code == 200) {
           this.list = resdata.data
+        } else {
+          Toast(resdata.message);
+        }
+      });
+    },
+    gettel() {
+      this.axios.post(this.API + "api/Order/GetServiceTel").then(res => {
+        console.log(res.data, "tel");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.tel = resdata.data
         } else {
           Toast(resdata.message);
         }

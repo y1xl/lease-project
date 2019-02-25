@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="pd-15 fc-grey bgc">请上传产品照片</div>
+        <div class="pd-15 fc-grey bgc">请上传产品相关照片</div>
         
-        <div class="box bgc flex-jc-between">
+        <div class="box bgc flex-jc-between" >
             <div>
-                <div class="uploadimg bgc flex-center" v-if="fileimg1==''">
+                <div class="uploadimg bgc flex-center" v-if="!fileimg1">
                     <van-uploader :after-read="onRead1" accept="image/png, image/jpeg" multiple>
                         <img src="../../../assets/tg_camera.png" alt="">
                     </van-uploader>
@@ -18,7 +18,7 @@
                 <div class="text-c btext">上传包含产品配件的全家福</div>
             </div>
             <div>
-                <div class="uploadimg bgc flex-center" v-if="fileimg2==''">
+                <div class="uploadimg bgc flex-center" v-if="!fileimg2">
                     <van-uploader :after-read="onRead2" accept="image/png, image/jpeg" multiple>
                         <img src="../../../assets/tg_camera.png" alt="">
                     </van-uploader>
@@ -32,7 +32,39 @@
                 <div class="text-c btext">上传可以看清型号的照片</div>
             </div>
         </div>
-        <div class="fc-grey pd-lr-15 bgc fsz12">(配件分开摆放整齐，清晰可见)</div>
+        <div class="fc-grey pd-lr-15 bgc fsz12 mar-b-10">(配件分开摆放整齐，清晰可见)</div>
+
+        <div class="box bgc flex-jc-between">
+            <div>
+                <div class="uploadimg bgc flex-center" v-if="!fileimg3">
+                    <van-uploader :after-read="onRead3" accept="image/png, image/jpeg" multiple>
+                        <img src="../../../assets/tg_camera.png" alt="">
+                    </van-uploader>
+                </div>
+                <div class="fileimg" v-else>
+                    <van-uploader :after-read="onRead3" accept="image/png, image/jpeg" multiple>
+                        <img :src="fileimg3.content" alt="">
+                    </van-uploader>
+                </div>
+
+                <div class="text-c btext">上传产品照片</div>
+            </div>
+            <div>
+                <div class="uploadimg bgc flex-center" v-if="!fileimg4">
+                    <van-uploader :after-read="onRead4" accept="image/png, image/jpeg" multiple>
+                        <img src="../../../assets/tg_camera.png" alt="">
+                    </van-uploader>
+                </div>
+                <div class="fileimg" v-else>
+                    <van-uploader :after-read="onRead4" accept="image/png, image/jpeg" multiple>
+                        <img :src="fileimg4.content" alt="">
+                    </van-uploader>
+                </div>
+
+                <div class="text-c btext">上传产品损坏处的照片</div>
+            </div>
+        </div>
+        <div class="fc-grey pd-lr-15 bgc fsz12">(收到设备时会根据照片核实成色)</div>
 
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">序列号</div>
@@ -63,8 +95,12 @@
                 <div class="flex-jc-between pd"><span class="fc-grey">功能状况</span><span>{{gohostingSession.statetext}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">联系方式</span><span>{{gohostingSession.telval}}</span></div>
                 <div class="imglist flex-jc-between pd">
-                    <img :src="fileimg1.content" alt="">
-                    <img :src="fileimg2.content" alt="">
+                    <img :src="gohostingSession.fileimg1.content" alt="">
+                    <img :src="gohostingSession.fileimg2.content" alt="">
+                </div>
+                <div class="imglist flex-jc-between pd">
+                    <img :src="gohostingSession.fileimg3.content" alt="">
+                    <img :src="gohostingSession.fileimg4.content" alt="">
                 </div>
                 <div class="flex-jc-between pd"><span class="fc-grey">托管费率</span><span>20%</span></div>
                 <div class="pd">审核结果将在48小时内通知您</div>
@@ -84,13 +120,27 @@ import { Toast } from "vant";
 export default {
     data(){
         return{
-            fileimg1:'',
-            fileimg2:'',
+            fileimg1:null,
+            fileimg2:null,
+            fileimg3:null,
+            fileimg4:null,
             serialnumval:'',
             telval:'',
             isconsent: true,
             showmodel: false,
-            gohostingSession: ''
+            gohostingSession: {}
+        }
+    },
+    watch:{
+        serialnumval(){
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.serialnumval = this.serialnumval
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+        },
+        telval(){
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.telval = this.telval
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
         }
     },
     created(){
@@ -98,6 +148,8 @@ export default {
         if(gohostingSession){
             this.fileimg1 = gohostingSession.fileimg1
             this.fileimg2 = gohostingSession.fileimg2
+            this.fileimg3 = gohostingSession.fileimg3
+            this.fileimg4 = gohostingSession.fileimg4
             this.serialnumval = gohostingSession.serialnumval
             this.telval = gohostingSession.telval
         }
@@ -106,15 +158,35 @@ export default {
         onRead1(file) {
             console.log(file)
             this.fileimg1 = file
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.fileimg1 = this.fileimg1
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
         },
         onRead2(file) {
             console.log(file)
             this.fileimg2 = file
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.fileimg2 = this.fileimg2
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+        },
+        onRead3(file) {
+            console.log(file)
+            this.fileimg3 = file
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.fileimg3 = this.fileimg3
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+        },
+        onRead4(file) {
+            console.log(file)
+            this.fileimg4 = file
+            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+            gohostingSession.fileimg4 = this.fileimg4
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
         },
 
         onshowmodel(){
-            if(this.fileimg1 == ""||this.fileimg2 == ""){
-                Toast("请上传产品照片");
+            if(this.fileimg1 == ""||this.fileimg2 == ""||this.fileimg3 == ""){
+                Toast("请上传产品相关照片");
                 return;
             }
             if(this.serialnumval == ""){
@@ -125,15 +197,15 @@ export default {
                 Toast("请填写联系方式");
                 return;
             }
+            if (!(/^1\d{10}$/.test(this.telval))) {
+                Toast("手机号格式不正确");
+                return;
+            }
 
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fileimg1 = this.fileimg1
-            gohostingSession.fileimg2 = this.fileimg2
-            gohostingSession.serialnumval = this.serialnumval
-            gohostingSession.telval = this.telval
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
-
             console.log(gohostingSession,'gohostingSession') 
+
             this.gohostingSession = gohostingSession
             this.showmodel = true
         },

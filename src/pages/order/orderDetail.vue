@@ -27,7 +27,7 @@
               <span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span>
             </div>
           </div>
-          <img :src="data.gd_img" alt>
+          <img :src="data.gd_img" :alt="data.goods_name" style="object-fit:contain">
         </div>
 
         <div v-if="!data.express_no==''">
@@ -192,11 +192,11 @@
             </div>
             <div class="flexbox" v-if="data.delivery_way=='平台配送'">
               <span>配送运费</span>
-              <span class="flex-1">-¥{{data.way_price||0}}</span>
+              <span class="flex-1">¥{{data.way_price||0}}</span>
             </div>
             <div class="flexbox" v-if="data.delivery_way=='快递'">
               <span>快递费</span>
-              <span class="flex-1">+¥{{data.way_price||0}}</span>
+              <span class="flex-1">¥{{data.way_price||0}}</span>
             </div>
             <!-- <div class="flexbox">
               <span>已收定金</span>

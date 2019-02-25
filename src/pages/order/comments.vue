@@ -5,7 +5,7 @@
         <div style="font-weight: bold;" class="mar-b-10">{{data.goods_name}}</div>
         <div><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>
       </div>
-      <img :src="data.gd_img" alt>
+      <img :src="data.gd_img" alt style="object-fit:contain">
     </div>
 
     <div class="border-b text-c bgc ratebox">

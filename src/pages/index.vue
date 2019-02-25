@@ -17,7 +17,8 @@
         <van-swipe :autoplay="3000">
           <van-swipe-item v-for="(item, index) in images" :key="index">
             <div class="img_box">
-              <router-link to="">
+              <img :src="item.adpic_img" v-if="item.adpic_goodsid==0">
+              <router-link :to="`/productDetail/${item.adpic_goodsid}`" v-else>
                 <img :src="item.adpic_img">
               </router-link>
             </div>
@@ -190,11 +191,11 @@ export default {
     },
     //更多
     more(id) {
-      this.$router.push({ path: "/Goods/" + id });
+      this.$router.push({ path: "/goods/" + id });
     },
     //产品详情
     toDetail(id) {
-      this.$router.push({ path: "/ProductDetail/" + id });
+      this.$router.push({ path: "/productDetail/" + id });
     },
     gosearch() {
       window.sessionStorage.removeItem("searchSession");

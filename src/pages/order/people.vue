@@ -49,9 +49,9 @@ export default {
     this.nameval = JSON.parse(
       window.localStorage.getItem("userinfo")
     ).users_name;
-    this.phoneval = JSON.parse(
-      window.localStorage.getItem("userinfo")
-    ).users_phone;
+    // this.phoneval = JSON.parse(
+    //   window.localStorage.getItem("userinfo")
+    // ).users_phone;
   },
   methods: {
     onbtn() {

@@ -56,7 +56,7 @@ export default {
             }
         }
         this.getinfo()
-        // this.getfaceRes()
+        this.getfaceRes()
     },
     methods:{ 
         getfaceRes() {

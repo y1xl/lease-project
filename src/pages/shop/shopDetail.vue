@@ -1,21 +1,24 @@
 <template>
   <div>
     <div class="bgc">
-      <div class="flex-jc-center" v-if="detail.thumb">
+      <div class="flex-jc-center box" v-if="detail.thumb">
         <div class="shopimg_b bgc-grey">
           <img :src="detail.thumb" alt="封面">
         </div>
       </div>
-      <div class="dt text-c">
-        <img class="dw_img" src="../../assets/mddw.png">
+      <div class="mar-b-10 pd-lr-15 pd-t">联系人：{{detail.store_boss}}</div>
+      <div class="mar-b-10 pd-lr-15">联系方式：<a :href="`tel:${detail.store_phone}`">{{detail.store_phone}}</a></div>
+      <div class="dt">
+        <!-- <img class="dw_img" src="../../assets/mddw.png"> -->
+        地址：
         <span
           class="txt"
         >{{(store_province||'') + (store_city||'') + (store_district||'')+(store_Address||'')}}</span>
       </div>
     </div>
 
-    <div class="bgc flex-jc-center miaosu_b">
-      <div class="miaosu">
+    <div class="bgc miaosu_b">
+      <div class="pd-lr-15">
         <div class="shop_name">{{store_name}}</div>
         <div class="shop_intro" v-html="detail.content"></div>
       </div>
@@ -70,30 +73,38 @@ export default {
 </script>
 
 <style scoped>
+.pd-t{
+  padding-top: 15px;
+}
+.box{
+  padding: 15px;
+  padding-bottom: 0;
+}
 .shopimg_b {
-  margin-top: 15px;
-  width: 92%;
+  /* margin-top: 15px; */
+  width: 100%;
   height: 170px;
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .txt {
-  font-size: 12px;
-  color: #dcdddf;
+  /* font-size: 12px; */
+  /* color: #dcdddf; */
+}
+.dt{
+  padding: 0px 15px;
+  padding-bottom: 15px;
 }
 .dw_img {
   width: 10px;
   height: 12px;
 }
-.dt {
-  line-height: 40px;
-}
+
 .miaosu_b {
   margin-top: 12px;
 }
-.miaosu {
-  width: 92%;
-}
+
 .shop_name {
   font-size: 15px;
   font-weight: 700;
@@ -103,7 +114,11 @@ export default {
 
 .shop_intro {
   font-size: 12px;
-  color: #808080;
+  /* color: #808080; */
   padding-bottom: 20px;
+}
+
+.phone{
+  border-bottom: 1px dashed #4EA9F9
 }
 </style>

@@ -44,7 +44,7 @@
 
     <div class="pd-15 bgc">
       <div class="goods flexbox">
-        <img :src="detail.gd_img[0]" alt>
+        <img :src="detail.gd_img[0]" :alt="detail.goods_name" style="object-fit:contain">
         <div class="flex-1">
           <div class="mar-b-10">{{detail.goods_name}}</div>
           <div>
@@ -169,6 +169,7 @@
 
     <van-actionsheet v-model="showcoupon" title="优惠券">
       <div class="coupon_box">
+        <div  class="text-c fc-grey pd-15" v-if="couponlist.length==0">暂无优惠券</div>
         <div class="position mar-b-10" v-for="(item,index) in couponlist" :key="index" @click="choosecoupon(item,index)">
           <div class="couponcard" :class="index+1==couponindex?'boxshadow-blue':'boxshadow'">
             <!-- <img src="../../assets/1.png"> -->
@@ -213,6 +214,8 @@ export default {
       couponstext: "", //优惠券
       showcoupon: false, //优惠券
       couponindex: '', //优惠券
+      // coupons_condition:'', //优惠券
+      couponid:'', //优惠券
       activitytext: "", //优惠活动
       showweek: false, //租期
       // columns: ['天', '小时'],
@@ -222,7 +225,7 @@ export default {
       isinsurance: true, //保险
       isconsent: true, //协议
       discountmodel: false, //优惠活动
-      couponlist: [{ price: 10 }, { price: 20 }], //优惠券
+      couponlist: [], //优惠券
       remarkval: "",
       timequantumtext: "", //时间段
       showtimequantum: false, //时间段
@@ -366,6 +369,7 @@ export default {
       this.remarkval = buySession.remarkval;
       this.timequantumtext = buySession.timequantumtext;
       this.couponindex = buySession.couponindex;
+      this.couponid = buySession.couponid;
     } else {
       this.getdefaultaddress();
     }
@@ -387,7 +391,8 @@ export default {
         activitytext: this.activitytext,
         remarkval: this.remarkval,
         timequantumtext: this.timequantumtext,
-        couponindex: this.couponindex
+        couponindex: this.couponindex,
+        couponid: this.couponid
       };
       window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
       this.$router.push({ path: url });
@@ -619,6 +624,8 @@ export default {
       }else{
         this.couponindex = index+1
         this.couponstext = item.coupons_money
+        this.coupons_condition = item.coupons_condition
+        this.couponid = item.user_cp_id
         this.sum = accSub(this.sum,item.coupons_money)
         this.showcoupon = false
       }
@@ -626,14 +633,14 @@ export default {
 
     nextface() {
       if (this.isconsent) {
-        if(this.couponindex!=''){
-          let sum = accAdd(this.sum,this.couponstext)
-          if(this.couponlist[this.couponindex-1].coupons_condition < sum){            
-          // if('20.00'<50.00){
-            Toast("优惠券不满足使用条件")
-            return
-          }
-        }
+        // if(this.couponindex!=''){
+        //   let sum = accAdd(this.sum,this.couponstext)   
+        //   if(this.coupons_condition < sum){            
+        //   // if('20.00'<50.00){
+        //     Toast("优惠券不满足使用条件")
+        //     return
+        //   }
+        // }
 
         if (this.typenum == 0) {
           if(this.getlocation == ""){
@@ -677,7 +684,8 @@ export default {
             ads_id: "",
             way_price: "",
             remark: "",
-            timelist: ""
+            timelist: "",
+            coupons_id: this.couponid
           });
         }
         if (this.typenum == 1) {
@@ -716,7 +724,8 @@ export default {
             order_delivery_time: "",
             time: "",
             remark: "",
-            timelist: ""
+            timelist: "",
+            coupons_id: this.couponid
           });
         }
         if (this.typenum == 2) {
@@ -760,7 +769,8 @@ export default {
             users_type: "",
             store_id: "",
             order_delivery_time: "",
-            time: ""
+            time: "",
+            coupons_id: this.couponid
           });
         }
         Toast.loading({ mask: true, message: "加载中..." });
@@ -769,7 +779,7 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear();
-            this.$router.push({ path: "/face/" + resdata.data });
+            // this.$router.push({ path: "/face/" + resdata.data });
           } else {
             Toast.clear();
             Toast(resdata.message||'操作失败');

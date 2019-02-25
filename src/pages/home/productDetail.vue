@@ -62,10 +62,10 @@
             </div>
           </div>
 
-          <div class="flex-jc-between price_box">
+          <div class="flex-jc-between price_box flex-align-items">
             <div>
               <span class="product_title">低至</span>
-              <span>¥</span>
+              <span class="fc-red">¥</span>
               <span class="price">{{detail.hire_price?detail.hire_price.price:'-'}}</span>
               <span class="fsize13">/{{detail.hire_price?detail.hire_price.unt:'-'}}</span>
             </div>
@@ -175,10 +175,12 @@
         </div>
         <div class="text-c margin_left">
           <div>
+            <a :href="`tel:${tel}`">
             <img class="img_kf" src="../../assets/tel.png" alt>
+            </a>
           </div>
           <div class="f10_col">
-            <a href="tel:400-0000-688">电话客服</a>
+            电话客服
           </div>
         </div>
         <div class="btn bcolor padding_lr margin_left">给朋友送礼</div>
@@ -234,7 +236,7 @@
     <div class="model full" v-show="showinfo||showinfocar">
       <div class="main bgc">
         <div class="goods1 flexbox pd-15">
-          <img :src="detail.gd_img[0]" alt>
+          <img :src="detail.gd_img[0]" alt style="object-fit:contain">
           <div class="flex-1">
             <div class="mar-b-10 position title">{{detail.goods_name}}
               <div class="closeicon" @click="showinfo=false,showinfocar=false">
@@ -309,6 +311,7 @@ export default {
         poster: "", 
         notSupportedMessage: '此视频暂无法播放，请稍后重试',
       },
+      tel:''
     };
   },
   beforeCreate(){
@@ -320,6 +323,7 @@ export default {
     this.getdetail()
   },
   mounted(){
+    this.gettel()
     this.getguige()
   },
   computed: {
@@ -328,6 +332,17 @@ export default {
     }
   },
   methods: {
+    gettel() {
+      this.axios.post(this.API + "api/Order/GetServiceTel").then(res => {
+        console.log(res.data, "tel");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          this.tel = resdata.data
+        } else {
+          Toast(resdata.message);
+        }
+      });
+    },
     onChange(index) {
       if(index!=0){
         this.autoplay = 3000
