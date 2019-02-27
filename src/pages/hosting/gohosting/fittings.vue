@@ -8,9 +8,12 @@
 
         <van-checkbox-group v-model="result">
             <div class="bgc pd-15 flex-wrap">
-                <div v-for="(item, index) in list" :key="index" class="flex-align-items item" @click="toggle(index)">
-                    <van-checkbox :name="item.cate_id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox>
-                    <span class="pdl">{{item.cate_name}}</span>
+                <div v-for="(item, index) in list" :key="index" class="flex-align-items item" >
+                    <van-checkbox :name="item.id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox>
+                    <div class="pdl">
+                        <div>{{item.name}}</div>
+                        <div v-if="item.number!=1"><van-stepper disable-input :value="item.number" :max="item.number" @change="onchange(index,$event)" /></div>
+                    </div>
                 </div>
             </div>
         </van-checkbox-group>
@@ -65,20 +68,28 @@ export default {
                 let resdata = res.data 
                 if (resdata.code == 200) {
                     Toast.clear();
-                    // let arr = []
+                    let arr = []
                     // let i = 1
-                    // for(let [k, v] of Object.entries(resdata.data)){
-                    //     console.log(v);
-                    //     v.index = i,
-                    //     i++
-                    // }
+                    for(let [k, v] of Object.entries(resdata.data)){
+                        v.num = v.number
+                        arr.push(v)
+                        // console.log(v);
+                        // v.index = i,
+                        // i++
+                    }
                     
-                    // this.list = resdata.data
+                    this.list = arr
                 } else {
                     Toast.clear();
                     Toast(resdata.message)
                 }
             })
+        },
+        onchange(index,val){
+            console.log('k:'+index,'val:'+val);
+            this.list[index].num = val
+            console.log(this.list,'change');
+            
         },
         next(){
             // console.log(this.result);

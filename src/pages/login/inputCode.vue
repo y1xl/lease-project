@@ -4,26 +4,6 @@
       <div class="inputcode">
         <div class="tip_title text-c">请输入验证码</div>
         <div class="text-c tel">{{phone}}</div>
-          <!-- <div class="border input_box flexbox">
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div class="border_right">
-              <input type="text" maxlength="1">
-            </div>
-            <div>
-              <input type="text" maxlength="1">
-            </div>
-          </div> -->
 
           <van-password-input :value="value" @focus="showKeyboard = true" :length="lengths"/>
           <button class="btn text-c" @click="login" :class="value==''?'btn-grey':'bgc-blue'">登陆</button>

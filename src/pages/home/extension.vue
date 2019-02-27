@@ -34,6 +34,12 @@
         </div>
       </div>
 
+      <!-- <div style="overflow:hidden">
+        <div class="test">
+        <div class="border" v-for="item in 8">1</div>
+        </div>
+      </div> -->
+
       <div class="pdlr10 mar-b-10">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
@@ -72,7 +78,7 @@
         </div>
       </div>
     </div>
-
+      
     <div class="pd10 fs12 fc-grey">
         <p>佣金计算说明：</p>
         <p>总佣金=推广佣金+订单佣金+未结算佣金</p>
@@ -92,14 +98,29 @@ export default {
     };
   },
   methods: {
-    routerback() {
-      this.$router.back(-1);
-    }
+
   }
 };
 </script>
 
 <style scoped>
+/* .test {
+  width:100%;
+  white-space: nowrap;
+  overflow-x:scroll;
+  overflow-y:hidden;
+  display: inline;
+  float:left;
+}
+.test::-webkit-scrollbar {
+  display: none;
+}
+.test > div {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+} */
+
 .fs12{
   font-size: 12px
 }
@@ -115,12 +136,10 @@ export default {
   background-color: #fff;
 }
 .trust_box {
-  /* width: 300px; */
   height: 170px;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
-  /* margin-top: 11px; */
   padding-top: 30px;
 }
 .grey_f {
@@ -151,18 +170,15 @@ export default {
 }
 
 .tg_yq_box {
-  /* width: 300px; */
   height: 80px;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
-  /* margin-top: 10px; */
 }
 
 .tg_yq {
   display: flex;
   align-items: center;
-  /* width: 300px; */
   height: 80px;
 }
 .img_r {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex-jc-between manber_b" @click="myInformat()" :style="bgimg">
+    <div class="flex-jc-between manber_b" @click="myInformat" :style="bgimg">
       <div class="flex-align-items flex_box">
         <div class="head_img">
           <img src="../../assets/headimg.png" alt="头像">
@@ -108,11 +108,28 @@ export default {
     }
   },
   created() {
-    this.users_name = JSON.parse(
-      window.localStorage.getItem("userinfo")
-    ).users_name;
+    this.getuser()
   },
   methods: {
+    getuser() {
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+      });
+      this.axios
+        .post(this.API + "api/Lease/users_detail", postData)
+        .then(res => {
+          console.log(res.data, "users_detail");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear();
+            this.users_name = resdata.data.users_name;
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+          }
+        });
+    },
     //我的资料
     myInformat(url) {
       this.$router.push({ path: "/MyInformation" });
@@ -130,8 +147,6 @@ export default {
   align-items: center;
   width: 100%;
   height: 180px;
-  /* background: url(../../assets/me_bg.png) no-repeat;
-  background-size: 100% 100%; */
 }
 .head_img {
   width: 60px;

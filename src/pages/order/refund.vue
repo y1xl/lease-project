@@ -44,14 +44,6 @@
             <div class="pd-t-100"><div class="btn text-c" @click="platform">提交</div></div>
         </div>
 
-        <!-- <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
-            <van-datetime-picker
-            type="time"
-            show-toolbar
-            @cancel="showtime=false"
-            @confirm="onConfirm"
-            />
-        </van-popup> -->
         <van-popup v-model="showcode">
             <div style="font-size:0"><img :src="codeimg" alt="" class="codeimg"></div>
         </van-popup>
@@ -69,9 +61,7 @@ export default {
             orderid: this.$route.params.id,
             selected:0,
             typenum:0,
-            // showtime:false,
             datetext:'',
-            // timetext:'',
             getaddress:'',
             numval:'',
             showcode:false,
@@ -86,7 +76,6 @@ export default {
         if(refundSession){
             this.selected = refundSession.backtype
             this.datetext = refundSession.backdate
-            // this.timetext = refundSession.backtime
             this.timequantumtext = refundSession.timequantumtext
             this.getaddress = refundSession.getaddress
             this.numval = refundSession.numval
@@ -100,7 +89,6 @@ export default {
             let refundSession = {
                 backtype: String(this.selected),
                 backdate: this.datetext,
-                // backtime: this.timetext,
                 timequantumtext: this.timequantumtext,
                 getaddress:this.getaddress,
                 numval:this.numval
@@ -108,11 +96,7 @@ export default {
             window.sessionStorage.setItem("refundSession", JSON.stringify(refundSession));
             this.$router.push({ path: url });
         },
-        // onConfirm(value) {
-        //     console.log(`当前值：${value}`);
-        //     this.timetext = value
-        //     this.showtime = false
-        // },
+
         getdefaultaddress(){
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,

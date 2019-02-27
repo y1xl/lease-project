@@ -42,8 +42,6 @@
             <div class="flex-jc-between flex-align-items bgc pd-15 mar-b-10" >
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">数量</div>
-                    <!-- <div class="fc-grey" v-if="numtext==''">请选择数量</div>
-                    <div v-else>{{numtext}}</div> -->
                     <div class="fc-grey">1</div>
                 </div>
             </div>

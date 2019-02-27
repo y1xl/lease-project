@@ -71,12 +71,6 @@ export default {
         }
       }
       
-    // this.nameval = JSON.parse(
-    //   window.localStorage.getItem("userinfo")
-    // ).users_name;
-    // this.phoneval = JSON.parse(
-    //   window.localStorage.getItem("userinfo")
-    // ).users_phone;
   },
   methods: {
     onbtn() {
@@ -174,7 +168,6 @@ export default {
   width: 103px;
   height: 37px;
   line-height: 37px;
-  /* color: #666; */
   display: inline-block;
   box-shadow: 0 1px 7px 1px #e8e9ea;
   margin-left: 10px;

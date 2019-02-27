@@ -121,7 +121,6 @@ export default {
   background: #f6f6f6;
 }
 .header > div:nth-of-type(1) {
-  /* font-size: 12px; */
   padding-top: 30px;
 }
 .header > div:nth-of-type(2) {

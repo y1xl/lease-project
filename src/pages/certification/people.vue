@@ -95,7 +95,7 @@ export default {
             });
         })
         .catch(() => {
-          // on cancel
+          Toast('网络出错');
         });
     }
   }
