@@ -59,13 +59,21 @@ export default {
                 brand_id: brandtext.brand_id,
                 model_id: modeltext.model_id
             });
-            this.axios.post(this.API + "api/Trusteeship/queryCate",postData)
+            this.axios.post(this.API + "api/Trusteeship/getPartlist",postData)
             .then(res => {
-                console.log(res.data, "queryCate")
+                console.log(res.data, "list")
                 let resdata = res.data 
                 if (resdata.code == 200) {
                     Toast.clear();
-                    this.list = resdata.data
+                    // let arr = []
+                    // let i = 1
+                    // for(let [k, v] of Object.entries(resdata.data)){
+                    //     console.log(v);
+                    //     v.index = i,
+                    //     i++
+                    // }
+                    
+                    // this.list = resdata.data
                 } else {
                     Toast.clear();
                     Toast(resdata.message)

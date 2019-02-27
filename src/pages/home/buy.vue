@@ -462,7 +462,7 @@ export default {
           if (resdata.code == 200) {
             this.Dinsurance = resdata.data.safe_status == 1 ? true : false;
             this.hire_cate = resdata.data.hire_cate;
-            this.guiges = JSON.parse(resdata.data.sku);
+            this.guiges = resdata.data.sku==''?'':JSON.parse(resdata.data.sku);
             this.detail = resdata.data;
 
             if (this.Dinsurance || this.isinsurance) {
@@ -779,7 +779,7 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear();
-            // this.$router.push({ path: "/face/" + resdata.data });
+            this.$router.push({ path: "/face/" + resdata.data });
           } else {
             Toast.clear();
             Toast(resdata.message||'操作失败');

@@ -438,7 +438,7 @@ export default {
             path: '/buy',
             query: {
               id: this.$route.params.id,
-              guige: encodeURI(JSON.stringify(arr))
+              // guige: ''
             }
         })
         return

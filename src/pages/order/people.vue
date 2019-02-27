@@ -46,9 +46,29 @@ export default {
     };
   },
   created() {
-    this.nameval = JSON.parse(
-      window.localStorage.getItem("userinfo")
-    ).users_name;
+    if (this.$route.params.type == "buy") {
+        let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
+        if (buySession) {
+          if(buySession.getpeople.type){
+            this.selected = buySession.getpeople.type||0
+            if(buySession.getpeople.type == 0){
+              this.nameval = buySession.getpeople.name||''
+              this.phoneval = buySession.getpeople.phone||''
+            }else{
+              this.nameval1 = buySession.getpeople.name||''
+              this.phoneval1 = buySession.getpeople.phone||''
+            }
+          }else{
+            this.nameval = JSON.parse(
+              window.localStorage.getItem("userinfo")
+            ).users_name;
+          }
+        }
+      }
+      
+    // this.nameval = JSON.parse(
+    //   window.localStorage.getItem("userinfo")
+    // ).users_name;
     // this.phoneval = JSON.parse(
     //   window.localStorage.getItem("userinfo")
     // ).users_phone;
@@ -81,7 +101,7 @@ export default {
           if (resdata.code == 200) {
               window.localStorage.setItem("userinfo", JSON.stringify(resdata.data));
           } else {
-            Toast(resdata.message);
+            // Toast(resdata.message);
           }
         });
 

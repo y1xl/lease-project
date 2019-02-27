@@ -68,11 +68,11 @@
 
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">序列号</div>
-            <input type="text" placeholder="请填写产品序列号" v-model.trim="serialnumval">
+            <input style="width:100%" type="text" placeholder="请填写产品序列号" v-model.trim="serialnumval">
         </div>
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">联系方式</div>
-            <input type="number" placeholder="请填写联系方式" v-model.trim="telval">
+            <input style="width:100%" type="number" placeholder="请填写联系方式" v-model.trim="telval">
         </div>
 
         <div class="pd-15"><div class="btn text-c" @click="onshowmodel">提交</div></div>
@@ -84,7 +84,7 @@
                 <div class="flex-jc-between pd"><span class="fc-grey">品牌</span><span>{{gohostingSession.brandtext.brand_name}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">型号</span><span>{{gohostingSession.modeltext.model_name}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">颜色</span><span>{{gohostingSession.colortext}}</span></div>
-                <div class="flex-jc-between pd"><span class="fc-grey">数量</span><span>{{gohostingSession.numtext}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">数量</span><span>1</span></div>
                 <div class="flex-jc-between pd">
                     <span class="fc-grey">含配件</span>
                     <span class="flex-1 fittings">{{gohostingSession.fittingstring}}</span>
@@ -102,7 +102,7 @@
                     <img :src="gohostingSession.fileimg3.content" alt="">
                     <img :src="gohostingSession.fileimg4.content" alt="">
                 </div>
-                <div class="flex-jc-between pd"><span class="fc-grey">托管费率</span><span>20%</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">托管费率</span><span>30%</span></div>
                 <div class="pd">审核结果将在48小时内通知您</div>
                 <div class="pd flex-align-items ">
                     <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
@@ -185,7 +185,7 @@ export default {
         },
 
         onshowmodel(){
-            if(this.fileimg1 == ""||this.fileimg2 == ""||this.fileimg3 == ""){
+            if(!this.fileimg1||!this.fileimg2||!this.fileimg3){
                 Toast("请上传产品相关照片");
                 return;
             }

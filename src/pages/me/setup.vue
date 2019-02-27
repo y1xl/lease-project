@@ -1,6 +1,6 @@
 <template>
-  <div class="bgc full">
-    <div class="flex-jc-between flex-align-items box border-b">
+  <div class="bgc page">
+    <div class="flex-jc-between flex-align-items box ">
       <div>通知设置</div>
 
       <van-switch v-model="checked" active-color="#4EA9F9" inactive-color="#fff"/>
@@ -28,13 +28,16 @@ export default {
 </script>
 
 <style scoped>
+.page{
+  max-height: 100vh
+}
 .box {
   margin: 0 15px;
   height: 40px;
 }
 .btn {
   position: fixed;
-  bottom: 0;
+  bottom: 50px;
   width: 100%;
   height: 40px;
   line-height: 40px;

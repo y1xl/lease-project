@@ -4,21 +4,21 @@
       <div class="pd10 box-sizing mar-b-10">
         <div class="trust_box text-c">
           <div class="flex-jc-around">
-            <div>
+            <div class="text-c">
               <div class="grey_f">推广佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
                 <span class="money">100</span>
               </div>
             </div>
-            <div>
+            <div class="text-c">
               <div class="grey_f">订单佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
                 <span class="money">100</span>
               </div>
             </div>
-            <div>
+            <div class="text-c">
               <div class="grey_f">未结算佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="grey_f padding_tb">总佣金</div>
-          <div class>
+          <div class="">
             <img class="all_img" src="../../assets/qicon.png">
             <span class="all_money">300</span>
           </div>

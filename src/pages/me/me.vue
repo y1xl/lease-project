@@ -3,11 +3,10 @@
     <div class="flex-jc-between manber_b" @click="myInformat()" :style="bgimg">
       <div class="flex-align-items flex_box">
         <div class="head_img">
-          <img src="http://img2.imgtn.bdimg.com/it/u=390947329,3335162149&fm=26&gp=0.jpg" alt="头像">
+          <img src="../../assets/headimg.png" alt="头像">
         </div>
         <div class>
           <div class="name">{{users_name}}</div>
-          <!-- <div class="manber">普通会员</div> -->
         </div>
       </div>
       <img class="hg" src="../../assets/hg.png">
@@ -138,7 +137,7 @@ export default {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 1px solid #fff;
+  /* border: 1px solid #fff; */
   margin-left: 14px;
   overflow: hidden;
 }

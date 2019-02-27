@@ -33,23 +33,26 @@
                 </div>
                 <van-icon name="arrow" />
             </div>
-            <div class="flex-jc-between flex-align-items bgc pd-15" @click="showcolor=true">
+            <div class="flex-jc-between flex-align-items bgc pd-15" >
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">颜色</div>
-                    <!-- <div class="fc-grey" v-if="colortext==''">请选择颜色</div>
-                    <div v-else>{{colortext}}</div> -->
-                    <input type="text" placeholder="请输入颜色，例:黑色" v-model.trim="colortext">
+                    <input style="width:100%" type="text" placeholder="请输入颜色，例:黑色" v-model.trim="colortext">
                 </div>
-                <!-- <van-icon name="arrow" /> -->
             </div>
-            <div class="flex-jc-between flex-align-items bgc pd-15" @click="shownum=true">
+            <div class="flex-jc-between flex-align-items bgc pd-15 mar-b-10" >
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">数量</div>
                     <!-- <div class="fc-grey" v-if="numtext==''">请选择数量</div>
                     <div v-else>{{numtext}}</div> -->
-                    <van-stepper v-model.trim="numtext" disable-input integer/>
+                    <div class="fc-grey">1</div>
                 </div>
-                <!-- <van-icon name="arrow" /> -->
+            </div>
+
+            <div class="flex-jc-between flex-align-items bgc pd-15" @click="shownomodel=true">
+                <div class="flex-1">
+                    <div class="fc-grey">如我的设备这里没有，可手动输入</div>
+                </div>
+                <van-icon name="arrow" />
             </div>
 
             <div class="pd-15">
@@ -65,13 +68,6 @@
             <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
                 <van-picker :columns="modelarr" show-toolbar @cancel="showmodel = false" @confirm="onConfirmModel" value-key='model_name'/>
             </van-popup>
-            <!-- <van-popup v-model="showcolor" position="bottom" :close-on-click-overlay="false">
-                <van-picker :columns="colorarr" show-toolbar @cancel="showcolor = false" @confirm="onConfirmColor"/>
-            </van-popup>
-            <van-popup v-model="shownum" position="bottom" :close-on-click-overlay="false">
-                <van-picker :columns="numarr" show-toolbar @cancel="shownum = false" @confirm="onConfirmNum"/>
-            </van-popup> -->
-
         </div>
 
         <div v-show="active==1">
@@ -122,6 +118,40 @@
             </van-popup>
         </div>
 
+        <van-popup v-model="shownomodel" :close-on-click-overlay="false">
+            <div class="nomain bgc position">
+                <div class="closeimg" ><van-icon name="close" @click="shownomodel=false"/></div>
+                
+                <div class="flex-jc-between flex-align-items bgc pd-15" >
+                    <div class="flex-1">
+                        <div class="mar-b-10 fc-grey">品类</div>
+                        <input style="width:100%" type="text" placeholder="请输入托管品类" >
+                    </div>
+                </div>
+                <div class="flex-jc-between flex-align-items bgc pd-15" >
+                    <div class="flex-1">
+                        <div class="mar-b-10 fc-grey">品牌</div>
+                        <input style="width:100%" type="text" placeholder="请输入品牌" >
+                    </div>
+                </div>
+                <div class="flex-jc-between flex-align-items bgc pd-15" >
+                    <div class="flex-1">
+                        <div class="mar-b-10 fc-grey">型号</div>
+                        <input style="width:100%" type="text" placeholder="请输入型号" >
+                    </div>
+                </div>
+                <div class="flex-jc-between flex-align-items bgc pd-15" >
+                    <div class="flex-1">
+                        <div class="mar-b-10 fc-grey">颜色</div>
+                        <input style="width:100%" type="text" placeholder="请输入颜色，例:黑色" v-model.trim="colortext">
+                    </div>
+                </div>
+
+                <div class="pd-15">
+                    <div class="btn text-c" >下一步</div>
+                </div>
+            </div>
+        </van-popup>
     </div>
 </template>
 
@@ -151,11 +181,8 @@ export default {
             // showcolor: false,
             colortext: '',
             // colorarr: ['颜色1', '颜色2'],
-            //数量
-            // shownum: false,
-            numtext: '1',
-            // numarr: ['数量1', '数量2'],
-            gohostingSession: ''
+            gohostingSession: '',
+            shownomodel: false
         }
     },
     created(){
@@ -165,7 +192,6 @@ export default {
             this.brandtext = gohostingSession.brandtext
             this.modeltext = gohostingSession.modeltext
             this.colortext = gohostingSession.colortext
-            this.numtext = gohostingSession.numtext
             this.gohostingSession = gohostingSession
         }
 
@@ -217,14 +243,6 @@ export default {
             this.modeltext = value
             this.showmodel = false
         },
-        // onConfirmColor(value, index){
-        //     this.colortext = value
-        //     this.showcolor = false
-        // },
-        // onConfirmNum(value, index){
-        //     this.numtext = value
-        //     this.shownum = false
-        // },
 
         gettype(){
             Toast.loading({ mask: true, message: "加载中..." });
@@ -294,29 +312,30 @@ export default {
                 return
             }
             if(this.colortext==''){
-                Toast("请选择颜色");
-                return
-            }
-            if(this.numtext==''){
-                Toast("请选择数量");
+                Toast("请输入颜色");
                 return
             }
 
             let gohostingSession = {
+                // notequipment:false,
                 typetext: this.typetext,
                 brandtext:this.brandtext,
                 modeltext:this.modeltext,
                 colortext:this.colortext,
-                numtext:this.numtext,
 
                 datetext: this.gohostingSession.datetext||'',
                 colourtext:this.gohostingSession.colourtext||'',
                 colourdes: this.gohostingSession.colourdes||'',
                 statetext: this.gohostingSession.statetext||'',
                 priceval: this.gohostingSession.priceval||'',
+                causetext: this.gohostingSession.causetext||'',
 
                 fittings: this.gohostingSession.fittings||[],
 
+                fileimg1: this.gohostingSession.fileimg1||'',
+                fileimg2: this.gohostingSession.fileimg2||'',
+                fileimg3: this.gohostingSession.fileimg3||'',
+                fileimg4: this.gohostingSession.fileimg4||'',
                 serialnumval:this.gohostingSession.serialnumval||'',
                 telval:this.gohostingSession.telval||'',
             }
@@ -370,5 +389,15 @@ export default {
 .goods .main{
     padding: 10px;
     box-sizing: border-box;
+}
+
+.nomain {
+    width: 280px;
+}
+.nomain .closeimg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 101;
 }
 </style>

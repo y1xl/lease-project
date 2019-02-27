@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="list.length==0" class="fc-grey text-c pd-15">没有更多了</div>
+    <div v-show="list.length==0&&!loading" class="fc-grey text-c pd-15">没有更多了</div>
     <div class="bgc tag" v-show="list.length!=0">
       <van-tag type="success">推荐</van-tag>
     </div>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { Toast,Dialog } from "vant";
 export default {
   data() {
     return {
@@ -45,9 +46,40 @@ export default {
       page: 0
     };
   },
-
+created() {
+    
+  },
   methods: {
+    getLocation() {
+      if (window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(position => {
+          var lat = position.coords.latitude; //纬度
+          var lng = position.coords.longitude; //经度
+
+          let center = {
+            lat,
+            lng
+          };
+          window.localStorage.setItem("center", JSON.stringify(center));
+          this.onLoad()
+        });
+      } else {
+        Toast("浏览器不支持地理定位,请升级");
+      }
+    },
     onLoad() {
+      if(!window.localStorage.getItem("center")){
+        this.finished = true;
+        // Toast('您未授权定位');
+        Dialog.alert({
+            message: '您未授权定位'
+        }).then((e) => {
+            this.getLocation();
+        });
+        
+        return
+      }
+
       let nowPageNum = ++this.page;
       let postData = this.$qs.stringify({
         lat: JSON.parse(window.localStorage.getItem("center")).lat,

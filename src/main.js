@@ -32,6 +32,7 @@ import qs from 'qs'
 Vue.prototype.$qs = qs
 
 Vue.prototype.API = 'https://newbee.zx-app.cn/'
+// Vue.prototype.API = 'https://www.newbeerent.com/'
 
 /* eslint-disable no-new */
 new Vue({

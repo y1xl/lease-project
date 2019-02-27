@@ -12,10 +12,10 @@
             <div class="flex-jc-center img_b1">
               <img class="img" :src="item.gd_img[0]" style="object-fit:contain">
             </div>
-            <div class="text-line pro_title mar-b-10">{{item.goods_name}}</div>
-            <div class="price-box">
-              <span class="price">{{item.hire_price.price}}</span>
-              <span class="f12">/{{item.hire_price.unt}}</span>
+            <div class="text-line pro_title mar-b-10 text-c">{{item.goods_name}}</div>
+            <div class="price-box text-c f12">
+              低至
+              <span class="price">￥{{item.hire_price.price}}</span><span>/{{item.hire_price.unt}}</span>
             </div>
           </div>
         </div>
@@ -122,10 +122,7 @@ export default {
   height: 100%;
 }
 .pro_title {
-  padding: 20px 20px 0 20px;
-}
-.price-box {
-  padding-left: 20px;
+  padding-top:20px;
 }
 .price {
   color: #f21e1e;

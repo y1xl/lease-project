@@ -10,7 +10,7 @@
     </div>
     <div class="bgc pd-15">
       <div class="mar-b-10 fc-grey">购买价格</div>
-      <input type="number" placeholder="请输入购买价格" v-model.trim.number="priceval">
+      <input style="width:100%" type="number" placeholder="请输入购买价格" v-model.trim.number="priceval">
     </div>
     <div class="flex-jc-between flex-align-items bgc pd-15" @click="showcolour=true">
       <div class="flex-1">
@@ -36,7 +36,7 @@
       <van-icon name="arrow"/>
     </div>
     <div class="bgc pd-15" v-show="statetext=='不正常（说明原因）'">
-      <input type="text" placeholder="请输入说明原因" v-model.trim="causetext">
+      <input style="width:100%" type="text" placeholder="请输入说明原因" v-model.trim="causetext">
     </div>
 
     <div class="pd-15">
