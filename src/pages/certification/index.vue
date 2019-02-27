@@ -11,24 +11,28 @@
     <router-link class="flex-jc-between pd-15 border-b" to="/realname">
       <div>实名认证</div>
       <div class="flex-align-items">
-        <span class="fc-blue mr" v-if="!realname">去认证</span>
+        <span class="fc-blue mr" v-if="realname==0">去认证</span>
         <span class="fc-grey mr" v-else>已认证</span>
         <van-icon name="arrow"/>
       </div>
     </router-link>
-    <router-link class="flex-jc-between pd-15 border-b" to="/school">
+    <div class="flex-jc-between pd-15 border-b" @click="getgo" v-if="school==2">
       <div>学籍认证</div>
       <div class="flex-align-items">
-        <span class="fc-blue mr">去认证</span>
+        <span class="fc-blue mr" >去认证</span>
+        <van-icon name="arrow"/>
+      </div>
+    </div>
+    <div class="flex-jc-between pd-15 border-b" @click="getgo" v-else>
+      <div>学籍认证</div>
+      <div class="flex-align-items">
         <span class="fc-grey mr">已认证</span>
         <van-icon name="arrow"/>
       </div>
-    </router-link>
+    </div>
     <router-link class="flex-jc-between pd-15 border-b" to>
       <div>邀请好友</div>
       <div class="flex-align-items">
-        <!-- <span class="fc-blue mr">去认证</span>
-        <span class="fc-grey mr">已认证</span>-->
         <van-icon name="arrow"/>
       </div>
     </router-link>
@@ -48,7 +52,7 @@ export default {
     return {
       users_money: "",
       realname:'',
-      users_name: ""
+      school:''
     };
   },
   created() {
@@ -71,15 +75,34 @@ export default {
               Toast.clear()
               this.users_money = resdata.data.users_money;
               this.realname = resdata.data.is_idcard
-              let users_name = "";
-              users_name = resdata.data.users_name;
+              this.school = resdata.data.is_chsi
             } else {
               Toast.clear()
               Toast(resdata.message);
             }
           });
       }
-    }
+    },
+
+    getgo() {
+      Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        });
+        this.axios.post(this.API + "api/Order/GetCHISUrl", postData)
+        .then(res => {
+            console.log(res.data, "goschool");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                window.location.href = resdata.data
+            } else {
+                Toast(resdata.message);
+            }
+        })
+        .catch(error => {
+            Toast('网络出错')
+        });
+    },
   }
 };
 </script>

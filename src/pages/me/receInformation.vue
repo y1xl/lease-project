@@ -21,7 +21,7 @@
             <img src="../../assets/bj.png" @click="edit(item.ads_id)" alt="编辑" class="left_img">
           </template>
         </van-cell>
-        <div slot="right" class="del" @click="getdel(item.ads_id)">删除</div>
+        <div slot="right" class="del bgc-red" @click="getdel(item.ads_id)">删除</div>
       </van-swipe-cell>
     </div>
     <router-link to="/AddInformation">
@@ -144,7 +144,7 @@ export default {
   color: #fff;
 }
 .del {
-  background-color: #d2d2d2;
+  /* background-color: #d2d2d2; */
   color: #fff;
   width: 60px;
   height: 100%;

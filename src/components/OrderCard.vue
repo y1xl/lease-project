@@ -21,7 +21,7 @@
                 <span class="fc-blue" v-if="data.order_status==11">已完成</span>
             </div>
             <div class="flexbox">
-                <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" style="object-fit:contain">
+                <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" >
                 <div class="flex-1 right">
                     <div class="mar-b-10">{{data.goods_name}}</div>
                     <div class="spec mar-b-10"><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>

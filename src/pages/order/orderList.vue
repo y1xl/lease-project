@@ -7,10 +7,10 @@
 
     <div id="ordernav">
       <van-tabs @click="ontag" v-model="active">
-        <van-tab :title="item" v-for="(item,index) in navarr" :key="index">
+        <van-tab :title="item.name" v-for="(item,index) in navarr" :key="index">
           <div slot="title" class="position tag">
-            <div class="dot" v-if="active==index"><van-tag plain round color="#4EA9F9" v-if="list">{{list.length}}</van-tag></div>
-            {{item}}
+            <div class="dot" v-if="item.count!=0"><van-tag plain round color="#4EA9F9">{{item.count}}</van-tag></div>
+            {{item.name}}
           </div>
         </van-tab>
       </van-tabs>
@@ -43,7 +43,7 @@
           <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}`}">评价</router-link>
         </div>
         <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div>
+        <!-- <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div> --> 
       </OrderCard> 
 
       <!-- <OrderCard status="待评价" v-show="active==5">
@@ -183,9 +183,36 @@ export default {
     return {
       selected: 0,
       active: 0,
-      navarr: ["待付款", "预租中", "已预定", "租赁中", "已超期", "待评价","已评价",'已取消'],
-      navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
+      // navarr: ["待付款", "预租中", "已预定", "租赁中", "已超期", "待评价","已评价",'已取消'],
+      // navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
       navarr1: ["待付款", "待发货", "待收货", "待评价", "已完成"],
+      navarr: [
+        {name:'待付款',count:0},
+        {name:'预租中',count:0},
+        {name:'已预定',count:0},
+        {name:'租赁中',count:0},
+        {name:'已超期',count:0},
+        {name:'待评价',count:0},
+        {name:'已评价',count:0},
+        {name:'已取消',count:0},
+      ],
+      navarr0: [
+        {name:'待付款',count:0},
+        {name:'预租中',count:0},
+        {name:'已预定',count:0},
+        {name:'租赁中',count:0},
+        {name:'已超期',count:0},
+        {name:'待评价',count:0},
+        {name:'已评价',count:0},
+        {name:'已取消',count:0},
+      ],
+      navarr1: [
+        {name:'待付款',count:0},
+        {name:'待发货',count:0},
+        {name:'待收货',count:0},
+        {name:'待评价',count:0},
+        {name:'已完成',count:0},
+      ],
       radio: 0,
       canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" },{ id: 6, text: "测试下单/误下单" }, { id: 7, text: "其他" }],
       showmodel: false,
@@ -291,7 +318,21 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear()
-            this.list = resdata.data
+            let countarr = []
+            let arr = []
+            for(let [k, v] of Object.entries(resdata.data)){
+              if(k=='count'){
+                countarr = v
+              }else{
+                arr.push(v)
+              }
+            }
+
+            for(let [k,v] of this.navarr.entries()){
+              v.count = countarr[k]
+            }
+            
+            this.list = arr
           } else {
             Toast.clear()
             this.list = []

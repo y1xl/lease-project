@@ -2,9 +2,9 @@
   <div>
     <div class="bgc" style="padding-bottom:10px;">
       <div class="flex-jc-center banner_box position">
-        <div class="caricon fc-red" @click="showinfocar=true">
+        <!-- <div class="caricon fc-red" @click="showinfocar=true">
           <van-icon name="shopping-cart"/>
-        </div>
+        </div> -->
         <div class="banner bgc" id="goodsbanner">
           <van-swipe :autoplay="autoplay" @change="onChange">
             <van-swipe-item v-if="detail.goods_video">
@@ -24,7 +24,7 @@
                 </video> -->
                 <video-player  class="video-player vjs-custom-skin"
                      ref="videoPlayer"
-                     :playsinline="true"
+                     :playsinline="playsinline"
                      :options="playerOptions"
                      @play="onPlayerPlay($event)"
                      @pause="onPlayerPause($event)">
@@ -46,12 +46,15 @@
               <div class="product_title">{{detail.goods_name}}</div>
             </div>
             <div class="flexbox">
-              <div class="text-c" @click="oncollection">
+              <!-- <div class="text-c" @click="oncollection">
                 <div>
                   <img v-if="iscollection" class="img_sc" src="../../assets/shoucang-red.png" alt>
                   <img v-else class="img_sc" src="../../assets/shoucang.png" alt>
                 </div>
                 <div class="grey_12">收藏</div>
+              </div> -->
+              <div class="flex-align-items p-c-icon fc-red" @click="showinfocar=true">
+                <van-icon name="shopping-cart"/>
               </div>
               <div class="text-c fenxiang_l" @click="showmodel = true">
                 <div>
@@ -236,7 +239,7 @@
     <div class="model full" v-show="showinfo||showinfocar">
       <div class="main bgc">
         <div class="goods1 flexbox pd-15">
-          <img :src="detail.gd_img[0]" alt style="object-fit:contain">
+          <img :src="detail.gd_img[0]" alt >
           <div class="flex-1">
             <div class="mar-b-10 position title">{{detail.goods_name}}
               <div class="closeicon" @click="showinfo=false,showinfocar=false">
@@ -311,6 +314,7 @@ export default {
         poster: "", 
         notSupportedMessage: '此视频暂无法播放，请稍后重试',
       },
+      playsinline: false,
       tel:''
     };
   },
@@ -521,9 +525,9 @@ export default {
 </script>
 
 <style>
-video {
+/* video {
   object-fit:fill;
-}
+} */
 </style>
 
 
@@ -557,6 +561,9 @@ video {
   width: 92%;
   height: 100%;
   padding-top: 10px;
+}
+.product .p-c-icon {
+  font-size: 24px;
 }
 .product_title {
   font-size: 17px;

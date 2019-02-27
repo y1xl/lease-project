@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { Toast,Dialog } from "vant";
+import { Toast,Dialog,Notify } from "vant";
 export default {
   data() {
     return {
@@ -46,8 +46,14 @@ export default {
       page: 0
     };
   },
-created() {
-    
+
+  created() {
+    if(!window.localStorage.getItem("center")){
+        this.getLocation();
+        // Toast("您未授权定位");
+        Notify('请先授权定位并刷新');
+        return
+      }
   },
   methods: {
     getLocation() {
@@ -69,13 +75,15 @@ created() {
     },
     onLoad() {
       if(!window.localStorage.getItem("center")){
+        this.loading = false;
         this.finished = true;
-        // Toast('您未授权定位');
-        Dialog.alert({
-            message: '您未授权定位'
-        }).then((e) => {
-            this.getLocation();
-        });
+        // Notify('请先授权定位并刷新');
+        // this.getLocation();
+        // Dialog.alert({
+        //     message: '您未授权定位'
+        // }).then((e) => {
+        //     this.getLocation();
+        // });
         
         return
       }

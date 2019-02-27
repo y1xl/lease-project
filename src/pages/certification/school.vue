@@ -1,22 +1,19 @@
 <template>
   <div>
-    <!-- <div class="bgc box">
-      <div class="pd-15 border-b">
-        <span class="w">姓名</span>
-        <input type="text" placeholder="请输入" v-model.trim="nameval">
-      </div>
-      <div class="pd-15">
-        <span class="w">身份证</span>
-        <input type="text" placeholder="请输入" v-model.trim="phoneval">
-      </div>
-    </div>
-    <div class="pd-t-100">
-      <div class="btn text-c" @click="submit">提交</div>
-    </div> -->
     <van-popup v-model="showmodel1" :close-on-click-overlay="false">
       <div class="model1">
         <div class="text-c pd-15" v-if="mxcode&&mxcode==1">认证成功</div>
         <div class="text-c pd-15" v-else>认证失败</div>
+        <div class="text-c pd-lr-15 mar-b-10"><router-link to="/" replace><van-button type="default" size="large">回到首页</van-button></router-link></div>
+        <div v-if="mxcode&&mxcode!=1" class="text-c pd-lr-15 mar-b-10" @click="getgo"><van-button type="danger" size="large">重新认证</van-button></div>
+      </div>
+    </van-popup>
+    <van-popup v-model="showmodel2" :close-on-click-overlay="false">
+      <div class="model1">
+        <div class="text-c pd-15">
+          <div>认证失败</div>
+          <div class="text-c">{{message}}</div>
+        </div>
         <div class="text-c pd-lr-15 mar-b-10"><router-link to="/" replace><van-button type="default" size="large">回到首页</van-button></router-link></div>
         <div v-if="mxcode&&mxcode!=1" class="text-c pd-lr-15 mar-b-10" @click="getgo"><van-button type="danger" size="large">重新认证</van-button></div>
       </div>
@@ -29,10 +26,10 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      // nameval: "",
-      // phoneval: ""
       showmodel1: false,
-      mxcode: null
+      showmodel2:false,
+      mxcode: null,
+      message:null
     };
   },
   created(){
@@ -40,18 +37,52 @@ export default {
     let mxcode = this.$route.query.mxcode
     if(mxcode){
       this.mxcode = this.$route.query.mxcode
-      // let taskType = this.$route.query.taskType
-      // let message = this.$route.query.message
-      // let loginDone = this.$route.query.loginDone
-      // let userId = this.$route.query.userId
-      // let account = this.$route.query.account
-      // let taskId = this.$route.query.taskId
-
+      if(this.$route.query.mxcode==1){
+        this.getinfo()
+      }else{
+        this.showmodel1 = true
+      } 
     }else{
-      // this.getgo()
+      this.getgo()
     }
   },
   methods: {
+    getinfo(){
+      let taskType = this.$route.query.taskType
+      let message = this.$route.query.message
+      let loginDone = this.$route.query.loginDone
+      let userId = this.$route.query.userId
+      let account = this.$route.query.account
+      let taskId = this.$route.query.taskId
+
+      Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+            userId: userId,
+            taskType:taskType,
+            message:message,
+            loginDone:loginDone,
+            account:account,
+            taskId:taskId,
+            mxcode: this.$route.query.mxcode
+        });
+        this.axios.post(this.API + "api/Order/CheckCHSI", postData)
+        .then(res => {
+            console.log(res.data, "post");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+               this.showmodel1 = true
+            } else {
+              this.message = resdata.message
+              this.showmodel2 = true
+              // Toast(resdata.message);
+            }
+        })
+        .catch(error => {
+           this.message = '网络出错'
+          this.showmodel2 = true
+          // Toast('网络出错')
+        });
+    },
     getgo() {
       Toast.loading({ mask: true, message: "加载中..." });
         let postData = this.$qs.stringify({
@@ -71,13 +102,6 @@ export default {
             Toast('网络出错')
         });
     },
-    // submit() {
-    //   if (this.nameval == "" || this.phoneval == "") {
-    //     Toast("请先填写完整");
-    //     return;
-    //   }
-    //   Toast("此功能未开通");
-    // }
   }
 };
 </script>

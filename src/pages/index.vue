@@ -53,6 +53,7 @@
                 <van-icon name="arrow"/>
               </div>
             </div>
+            
             <div class="flexbox border-b bgc camer_hm_box">
               <div
                 class="camer_hm"
@@ -70,6 +71,21 @@
                 </div>
               </div>
             </div>
+            <!-- <div class="flexbox border-b bgc camer_hm_box">
+              <div
+                class="camer_hm"
+                v-for="item in 4"
+              >
+                <div class="img_box2 flex-center">
+                  <img class="img" src="../assets/fls.png" style="object-fit:contain" alt="商品">
+                </div>
+                <div class="text-line pro_name">1</div>
+                <div class="f12">     
+                  低至
+                  <span style="color: #F21E1E;">¥</span><span class="price">2</span>/3
+                </div>
+              </div>
+            </div> -->
           </div>
         </van-tab>
 

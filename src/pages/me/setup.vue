@@ -1,5 +1,5 @@
 <template>
-  <div class="bgc page">
+  <div class="bgc ">
     <div class="flex-jc-between flex-align-items box ">
       <div>通知设置</div>
 
@@ -28,9 +28,7 @@ export default {
 </script>
 
 <style scoped>
-.page{
-  max-height: 100vh
-}
+
 .box {
   margin: 0 15px;
   height: 40px;

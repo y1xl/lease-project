@@ -1,9 +1,9 @@
 <template>
   <div>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action focus @search="onSearch" >
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action autofocus @search="onSearch" >
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
-
+      <!-- <input type="text" placeholder="11111" autofocus> -->
     <div class="history bgc ignore" v-show="flprolist.length==0">
       <p @click="historySearch(item)" v-for="(item,index) in historylist" :key="index" class="border-b">{{item}}</p>
     </div>

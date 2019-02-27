@@ -27,7 +27,7 @@
               <span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span>
             </div>
           </div>
-          <img :src="data.gd_img" :alt="data.goods_name" style="object-fit:contain">
+          <img :src="data.gd_img" :alt="data.goods_name">
         </div>
 
         <div v-if="!data.express_no==''">
@@ -188,7 +188,7 @@
             </div>
             <div class="flexbox">
               <span>优惠券</span>
-              <span class="flex-1">-¥{{data.vouchers||0}}</span>
+              <span class="flex-1">-¥{{data.coupons_money||0}}</span>
             </div>
             <div class="flexbox" v-if="data.delivery_way=='平台配送'">
               <span>配送运费</span>
@@ -265,7 +265,7 @@
       <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
       <div class="flex-center border" v-if="data.order_status==6" @click="gorelet(data.order_id)">续租</div>
       <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
-      <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
+      <!-- <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div> -->
       <div class="flex-center border" v-if="data.order_status==9&&user_validation==0">
         <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
       </div>

@@ -21,7 +21,7 @@
               </div>
             </div>
           </div>
-          <div slot="right" class="del" @click="getdel(item.cart_id)">删除</div>
+          <div slot="right" class="del bgc-red" @click="getdel(item.cart_id)">删除</div>
         </van-swipe-cell>
       </div>
     </van-radio-group>
@@ -176,7 +176,7 @@ export default {
   margin-left: 10px;
 }
 .del {
-  background-color: #d2d2d2;
+  /* background-color: #d2d2d2; */
   color: #fff;
   width: 60px;
   height: 100%;

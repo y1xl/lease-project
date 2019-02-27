@@ -51,6 +51,11 @@ export default {
         if (buySession) {
           if(buySession.getpeople.type){
             this.selected = buySession.getpeople.type||0
+            if(buySession.getpeople.type==1){
+              this.nameval = JSON.parse(
+                window.localStorage.getItem("userinfo")
+              ).users_name;
+            }
             if(buySession.getpeople.type == 0){
               this.nameval = buySession.getpeople.name||''
               this.phoneval = buySession.getpeople.phone||''
@@ -58,10 +63,10 @@ export default {
               this.nameval1 = buySession.getpeople.name||''
               this.phoneval1 = buySession.getpeople.phone||''
             }
-          }else{
-            this.nameval = JSON.parse(
-              window.localStorage.getItem("userinfo")
-            ).users_name;
+          }else{            
+              this.nameval = JSON.parse(
+                window.localStorage.getItem("userinfo")
+              ).users_name;
           }
         }
       }

@@ -157,6 +157,10 @@ export default {
     methods:{
         onRead1(file) {
             console.log(file)
+            if(Array.isArray(file)){
+                Toast('只能单选') 
+                return
+            }
             this.fileimg1 = file
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
             gohostingSession.fileimg1 = this.fileimg1
@@ -164,6 +168,10 @@ export default {
         },
         onRead2(file) {
             console.log(file)
+            if(Array.isArray(file)){
+                Toast('只能单选') 
+                return
+            }
             this.fileimg2 = file
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
             gohostingSession.fileimg2 = this.fileimg2
@@ -171,6 +179,10 @@ export default {
         },
         onRead3(file) {
             console.log(file)
+            if(Array.isArray(file)){
+                Toast('只能单选') 
+                return
+            }
             this.fileimg3 = file
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
             gohostingSession.fileimg3 = this.fileimg3
@@ -178,6 +190,10 @@ export default {
         },
         onRead4(file) {
             console.log(file)
+            if(Array.isArray(file)){
+                Toast('只能单选') 
+                return
+            }
             this.fileimg4 = file
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
             gohostingSession.fileimg4 = this.fileimg4

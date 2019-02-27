@@ -1,16 +1,16 @@
 <template>
   <div class="bgc">
     <div class="header" :style="bgimg">
-      <div class="text-c">500</div>
+      <div class="text-c">0</div>
       <div class="text-c">当前可用积分</div>
       <div class="flex-jc-around">
-        <span>可抵扣：5元</span>
+        <span>可抵扣：0元</span>
         <span>积分规则</span>
       </div>
     </div>
     <div class="mx">积分明细</div>
     <div class="box bgc">
-      <div v-for="(item,index) in 5">
+      <div v-for="(item,index) in 1">
         <div class="flex-center bgc">
           <div class="flex-jc-between flex-align-items inte_deta border-b">
             <div>

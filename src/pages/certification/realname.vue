@@ -96,11 +96,19 @@ export default {
     methods:{
         onRead1(file) {
             console.log(file)
+            if(Array.isArray(file)){
+                Toast('只能单选') 
+                return
+            }
             this.img1 = file.content
             this.file1 = file
         },
         onRead2(file) {
             console.log(file)
+            if(Array.isArray(file)){
+                Toast('只能单选') 
+                return
+            }
             this.img2 = file.content
             this.file2 = file
         },

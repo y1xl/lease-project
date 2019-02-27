@@ -1,24 +1,25 @@
 <template>
   <div>
     <div class="box">
-      <router-link to="BankCard">
+      <div v-if="bankcard">
+        <van-cell is-link to="/bankCard" >
+          <template slot="title">
+            <div class="cart">{{bankcard.open_bank}}（{{bankcard.bank_code}}）</div>
+          </template>
+        </van-cell>
+      </div>
+      <router-link to="/bankCard" v-else>
         <div class="add_card pd-15">
           <span class="jia">+</span>
           选择银行卡
         </div>
       </router-link>
-      <div>
-        <van-cell is-link to="BankCard">
-          <template slot="title">
-            <div class="cart">中国农业银行（4589）</div>
-          </template>
-        </van-cell>
-      </div>
+
       <div class="pd-15">提现金额</div>
       <div class="flex-jc-between flex-align-items pd-15">
         <div class="flex-align-items">
           <img class="qian_img" src="../../assets/qian_icon.png">
-          <input type="text" placeholder="可提现400元" v-model="money">
+          <input type="text" :placeholder="`可提现${balance}元`" v-model="money">
         </div>
         <div class="all" @click="allmoney">全部</div>
       </div>
@@ -35,12 +36,42 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      money: ""
+      money: "",
+      balance:0,
+      bankcard: null
     };
   },
+  created(){
+    this.getinfo()
+    let bankcardSession = window.sessionStorage.getItem("bankcardSession")
+    if(bankcardSession){
+      let bankcards = JSON.parse(bankcardSession)
+      bankcards.bank_code.slice(-4)
+      bankcards.bank_code = bankcards.bank_code.slice(-4)
+      this.bankcard = bankcards
+    }
+  },
   methods: {
+    getinfo(){
+      Toast.loading({ mask: true,message: '加载中...'})
+        let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        });
+        this.axios.post(this.API + "api/Order/GetCash", postData)
+        .then(res => {
+          console.log(res.data, "info");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.balance = resdata.data.users_balance
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
     allmoney() {
-      this.money = 400;
+      this.money = this.balance
     },
     submit(){
       Toast('此功能未开通')

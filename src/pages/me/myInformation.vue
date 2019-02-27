@@ -5,7 +5,10 @@
         <div class="flex-jc-between flex-align-items tx border-b">
           <div>我的头像</div>
           <div class="head_img">
-            <img src="../../assets/headimg.png" alt="头像">
+            <!-- <img src="../../assets/headimg.png" alt="头像"> -->
+            <van-uploader :after-read="onRead" multiple >
+                <img src="../../assets/headimg.png" alt="头像">
+            </van-uploader>
           </div>
         </div>
 
@@ -46,10 +49,21 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      file:''
+    };
   },
-  created() {},
-  methods: {}
+  created() {
+    // this.users_name = JSON.parse(
+    //   window.localStorage.getItem("userinfo")
+    // ).users_name;
+  },
+  methods: {
+    onRead(file) {
+        console.log(file)
+        this.file = file
+    },
+  }
 };
 </script>
 

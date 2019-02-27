@@ -4,11 +4,8 @@
       <div class="flex-jc-between border-b pd-15" @click="isshow = true">
         <div class="flexbox">
           <div class="left">开卡银行</div>
-          <!-- <span :class="text=='请选择开卡银行'?'select':''">{{text}}</span> -->
-          <!-- <div class="fc-grey" v-if="typetext==''">请选择托管品类</div>
-          <div v-else>{{typetext}}</div>-->
           <span class="select" v-if="text==''">请选择开卡银行</span>
-          <span v-else>{{text}}</span>
+          <span v-else>{{text.bank_name}}</span>
         </div>
         <van-icon name="arrow" color="#aeaeae" size="18px"/>
       </div>
@@ -34,7 +31,7 @@
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">手机号</div>
-          <input placeholder="请输入手机号" v-model.trim="tel" type="number" maxlength="11">
+          <input placeholder="请输入手机号" v-model.trim="phoneval" type="number" maxlength="11">
         </div>
       </div>
       <div class="flex-jc-between border-b pd-15 flex-align-items">
@@ -42,7 +39,7 @@
           <div class="left">验证码</div>
           <input placeholder="请输入验证码" class="input_b" v-model.trim="yzcode">
         </div>
-        <span class="yz" @click="countDown">{{content}}</span>
+        <span class="yz" @click="countDown" >{{content}}</span>
       </div>
     </div>
     <div class="flex-jc-center">
@@ -50,7 +47,7 @@
     </div>
 
     <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
-      <van-picker :columns="columns" show-toolbar @confirm="onConfirm" @cancel="isshow = false"/>
+      <van-picker :columns="columns"  show-toolbar @confirm="onConfirm" @cancel="isshow = false" value-key='bank_name'/>
     </van-popup>
   </div>
 </template>
@@ -61,12 +58,12 @@ export default {
   data() {
     return {
       isshow: false,
-      columns: ["中国农业银行", "中国工商银行", "测试", "测试", "测试"],
+      columns: [],
       text: "",
       cardnum: "",
       nickname: "",
       idcard: "",
-      tel: "",
+      phoneval: "",
       yzcode: "",
       content: "获取验证码",
       totalTime: 60, //倒计时
@@ -74,41 +71,64 @@ export default {
     };
   },
   created() {
-    let bindingCardSession = JSON.parse(
-      window.sessionStorage.getItem("bindingCardSession")
-    );
-
-    if (bindingCardSession) {
-      this.text = bindingCardSession.text;
-      this.cardnum = bindingCardSession.cardnum;
-      this.nickname = bindingCardSession.nickname;
-      this.idcard = bindingCardSession.idcard;
-      this.tel = bindingCardSession.tel;
-      this.yzcode = bindingCardSession.yzcode;
-    }
+    this.getdata()
   },
 
   methods: {
+    getdata(){
+      Toast.loading({ mask: true,message: '加载中...'})
+        this.axios.post(this.API + "api/Order/GetBank")
+        .then(res => {
+          console.log(res.data, "data");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.columns = resdata.data
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
     onConfirm(value, index) {
-      console.log(`当前值：${value}, 当前索引：${index}`);
+      console.log(value);
       this.text = value;
       this.isshow = false;
     },
     //倒计时
     countDown() {
       if (!this.canClick) return;
-      this.canClick = false;
-      this.content = this.totalTime + "s后重新发送";
-      let clock = window.setInterval(() => {
-        this.totalTime--;
-        this.content = this.totalTime + "s后重新发送";
-        if (this.totalTime < 0) {
-          window.clearInterval(clock);
-          this.content = "重新发送";
-          this.totalTime = 60;
-          this.canClick = true;
-        }
-      }, 1000);
+
+      if(!(/^1(3|4|5|7|8)\d{9}$/.test(this.phoneval))){ 
+        Toast("手机号格式不正确");
+        return;
+      }
+
+      let postData = this.$qs.stringify({
+              users_phone:this.phoneval
+          })
+      this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+      .then(res => {
+          console.log(res.data, "sendcode");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast('发送成功')
+              this.canClick = false;
+              this.content = this.totalTime + "s";
+              let clock = window.setInterval(() => {
+                this.totalTime--;
+                this.content = this.totalTime + "s";
+                if (this.totalTime < 0) {
+                  window.clearInterval(clock);
+                  this.content = "重新发送";
+                  this.totalTime = 60;
+                  this.canClick = true;
+                }
+              }, 1000);
+          } else {
+          Toast(resdata.message);
+          }
+      });
     },
 
     save() {
@@ -122,33 +142,38 @@ export default {
         Toast("请先填写完整");
         return;
       }
-      if (this.tel == "") {
-        Toast("请先填写手机号");
-        return;
-      }
-      if (this.tel.length != 11) {
-        Toast("手机号长度有误");
-        return;
-      }
 
-      var telphone = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
-      if (!telphone.test(this.tel)) {
-        Toast("手机号码有误，请重填");
+      if(!(/^1(3|4|5|7|8)\d{9}$/.test(this.phoneval))){ 
+        Toast("手机号格式不正确");
         return;
       }
-      let bindingCardSession = {
-        text: this.text,
-        cardnum: this.cardnum,
-        nickname: this.nickname,
-        idcard: this.idcard,
-        tel: this.tel,
-        yzcode: this.yzcode
-      };
-      window.sessionStorage.setItem(
-        "bindingCardSession",
-        JSON.stringify(bindingCardSession)
-      );
-      this.$router.go(-1);
+      
+      Toast.loading({ mask: true,message: '加载中...'})
+        let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          open_bank:this.text.bank_name,
+          bank_code: this.cardnum,
+          realname: this.nickname,
+          IDcrad: this.idcard,
+          phone: this.phoneval,
+          yzm: this.yzcode
+        });
+        this.axios.post(this.API + "api/Order/AddUserBank", postData)
+        .then(res => {
+          console.log(res.data, "submit");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.$router.go(-1);
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        })
+        .catch(error => {
+          Toast.clear()
+          Toast('网络出错')
+        });
     }
   }
 };
