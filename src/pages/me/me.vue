@@ -3,7 +3,8 @@
     <div class="flex-jc-between manber_b" @click="myInformat" :style="bgimg">
       <div class="flex-align-items flex_box">
         <div class="head_img">
-          <img src="../../assets/headimg.png" alt="头像">
+          <img src="../../assets/headimg.png" alt="头像" v-if="head_img==''">
+          <img :src="head_img" alt="头像" v-else>
         </div>
         <div class>
           <div class="name">{{users_name}}</div>
@@ -99,7 +100,8 @@ export default {
           "url(" + require("../../assets/me_bg.png") + ") no-repeat top",
         backgroundSize: "100% 100%"
       },
-      users_name: ""
+      users_name: "",
+      head_img: ''
     };
   },
   beforeCreate(){
@@ -109,6 +111,7 @@ export default {
   },
   created() {
     this.getuser()
+    this.getheadimg()
   },
   methods: {
     getuser() {
@@ -130,9 +133,31 @@ export default {
           }
         });
     },
+    getheadimg() {
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+      });
+      this.axios
+        .post(this.API + "api/Lease_Order/getHeadPicture", postData)
+        .then(res => {
+          console.log(res.data, "headimg");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear();
+            if(resdata.data.length==0){
+              this.head_img = ''
+            }
+            this.head_img = resdata.data;
+          } else {
+            Toast.clear();
+            // Toast(resdata.message);
+          }
+        });
+    },
     //我的资料
     myInformat(url) {
-      this.$router.push({ path: "/MyInformation" });
+      this.$router.push({ path: "/myInformation" });
     }
   }
 };
@@ -155,11 +180,12 @@ export default {
   /* border: 1px solid #fff; */
   margin-left: 14px;
   overflow: hidden;
+  font-size: 0;
 }
-.head_img > img {
+/* .head_img > img {
   width: 60px;
   height: 60px;
-}
+} */
 .name {
   font-size: 20px;
   color: #fff;

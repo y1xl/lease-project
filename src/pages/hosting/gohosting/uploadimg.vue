@@ -106,7 +106,7 @@
                 <div class="pd">审核结果将在48小时内通知您</div>
                 <div class="pd flex-align-items ">
                     <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
-                    <div class="pdl10">我已阅读并同意<router-link to="" class="fc-blue">《托管合约》</router-link></div>
+                    <div class="pdl10">我已阅读并同意<router-link to="/zagreement/deposit" class="fc-blue">《托管合约》</router-link></div>
                 </div>
             </div>
 
@@ -228,7 +228,53 @@ export default {
 
         submit(){
             if(this.isconsent){
-                Toast("此功能未开通");
+                // Toast("此功能未开通"); return
+                
+                let { 
+                    typetext, //品类
+                    brandtext, //品牌
+                    modeltext, //型号
+                    colortext, //颜色
+
+                    datetext ,//购买时间
+                    colourtext,//外观成色
+                    colourdes,//外观成色描述
+                    statetext,//功能状况
+                    priceval ,//购买价格
+                    causetext, //不正常（说明原因）
+                    fittings, //配件
+
+                    fileimg1,
+                    fileimg2,
+                    fileimg3,
+                    fileimg4,
+                    serialnumval, //序列号
+                    telval //联系方式
+                 } = this.gohostingSession
+
+                let config = {
+                    headers:{'Content-Type':'multipart/form-data'}
+                }
+
+                let formData = new FormData()
+                formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
+                formData.append('cate',typetext.cate_name)  //品类
+                formData.append('brand',brandtext.brand_name)  //品牌
+                formData.append('model',modeltext.model_name)  //型号
+                formData.append('standards',colortext)  //规格
+                formData.append('num',1)  //数量
+                // formData.append('buy_time',)  //购买时间
+                formData.append('exterior',colourtext)  //外观成色
+                formData.append('exterior_describe',colourdes)  //外观描述
+                formData.append('functional_status',statetext)  //功能状况
+                // formData.append('parts_list',)  //拥有配件列表
+                // formData.append('parts_picture',)  //产品配件的全家福
+                // formData.append('parts_picture',)  //看清型号的全家福 --字段有问题
+                formData.append('phone_picture',fileimg3)  //产品照片
+                formData.append('damage_picture',fileimg4)  //产品损坏处照片
+                formData.append('serial_number',serialnumval)  //产品序列号
+                formData.append('rate',30)  //费率 不要%号
+
                 // this.$router.replace({ path: '/gsuccessful' })
             }else{
                 Toast("您还未同意合约");

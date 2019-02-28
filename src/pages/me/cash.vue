@@ -19,7 +19,7 @@
       <div class="flex-jc-between flex-align-items pd-15">
         <div class="flex-align-items">
           <img class="qian_img" src="../../assets/qian_icon.png">
-          <input type="text" :placeholder="`可提现${balance}元`" v-model="money">
+          <input type="text" :placeholder="`可提现${balance}元`" v-model.trim.number="money">
         </div>
         <div class="all" @click="allmoney">全部</div>
       </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 export default {
   data() {
     return {
@@ -74,7 +74,42 @@ export default {
       this.money = this.balance
     },
     submit(){
-      Toast('此功能未开通')
+      if(!this.bankcard){
+        Toast('请选择银行卡');
+        return
+      }
+      if(this.money==''){
+        Toast('请输入提现金额');
+        return
+      }
+      if(this.money <= 0){
+        Toast('提现金额需大于零');
+        return
+      }
+
+      Toast.loading({ mask: true,message: '加载中...'})
+        let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          user_bank_id: this.bankcard.user_bank_id,
+          money: this.money
+        });
+        this.axios.post(this.API + "api/Order/AddCash", postData)
+        .then(res => {
+          console.log(res.data, "submit");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.money = ''
+            Dialog.alert({
+                message: '提现成功'
+            }).then((e) => {
+                this.getinfo()
+            });
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
     }
   }
 };

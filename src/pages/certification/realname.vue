@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <template v-if="info==''">
+        <!-- <template v-if="info==''"> -->
         <div class="bgc box-sizing">
             <div class="pt"></div>
             <div class="pd-lr-15">上传身份证 人像面</div>
@@ -46,9 +46,9 @@
                 </van-uploader>
             </div>
         </div>
-        </template>
+        <!-- </template> -->
 
-        <template v-if="info!=''">
+        <!-- <template v-if="info!=''">
         <div class="pd-15 border-b bgc flex-align-items fsz12" >
             <div class="flex-1">
                 <div class="mar-b-10 c6">姓名</div>
@@ -71,14 +71,15 @@
                 <img src="../../assets/idimg2.png" alt="" class="idimg">
             </div>
         </div>
-        </template>
+        </template> -->
 
-        <div class="pd-15"><div class="btn text-c" @click="submit" v-if="info==''">提交</div></div>
+        <!-- <div class="pd-15"><div class="btn text-c" @click="submit" v-if="info==''">提交</div></div> -->
+        <div class="pd-15"><div class="btn text-c" @click="submit">提交</div></div>
     </div>
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 export default {
     data(){
         return{
@@ -87,11 +88,11 @@ export default {
             file1:null,
             file2:null,
             maxsize: 2097152,
-            info:''
+            // info:''
         }
     },
     created(){
-        this.getinfo()
+        // this.getinfo()
     },
     methods:{
         onRead1(file) {
@@ -119,25 +120,25 @@ export default {
             Toast('文件不能超过2MB')
         },
 
-        getinfo(){
-            Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
-                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            })
+        // getinfo(){
+        //     Toast.loading({ mask: true,message: '加载中...'})
+        //     let postData = this.$qs.stringify({
+        //         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        //     })
 
-            this.axios.post(this.API + "api/Order/GetIDCard",postData)
-            .then(res => {
-                console.log(res.data, "info")
-                let resdata = res.data
-                if (resdata.code == 200) {
-                    Toast.clear()
-                    this.info = resdata.data
-                } else {
-                    Toast.clear()
-                    Toast(resdata.message)
-                }
-            })
-        },
+        //     this.axios.post(this.API + "api/Order/GetIDCard",postData)
+        //     .then(res => {
+        //         console.log(res.data, "info")
+        //         let resdata = res.data
+        //         if (resdata.code == 200) {
+        //             Toast.clear()
+        //             this.info = resdata.data
+        //         } else {
+        //             Toast.clear()
+        //             Toast(resdata.message)
+        //         }
+        //     })
+        // },
 
         submit(){
             Toast.loading({ mask: true,message: '加载中...'})
@@ -156,12 +157,12 @@ export default {
                 let resdata = res.data
                 if (resdata.code == 200) {
                     Toast.clear()
-                        // Dialog.alert({
-                        //     message: '操作成功'
-                        // }).then((e) => {
-                        //     this.$router.go(-1);
-                        // });
-                    this.getinfo()
+                    Dialog.alert({
+                        message: '操作成功'
+                    }).then((e) => {
+                        this.$router.push({ path: "/realnameSuc" });
+                    });
+                    // this.getinfo()
                 } else {
                     Toast.clear()
                     Toast(resdata.message)

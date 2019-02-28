@@ -120,7 +120,7 @@
       <div class="mar-b-10 flexbox">
         <van-checkbox checked-color="#2DBBF1" v-model="isconsent"></van-checkbox>
         <div class="pdl10">同意
-          <span @click="go('/zagreement')" class="fc-blue">租赁协议</span>
+          <span @click="go('/zagreement/lease')" class="fc-blue">租赁协议</span>
         </div>
       </div>
       <div>
@@ -156,12 +156,12 @@
         <div class="flex-jc-center">
           <div class="s_title border-b fsz text-c">优惠活动</div>
         </div>
-        <div class="flexbox">
+        <!-- <div class="flexbox">
           <div class="lineheight pd-lr-15 border-b">
             <span class="dis_clasify">[新用户]</span>
             <span class="grey_12">新人下单立减50元</span>
           </div>
-        </div>
+        </div> -->
 
         <div class="close text-c" @click="discountmodel = false">取消</div>
       </div>

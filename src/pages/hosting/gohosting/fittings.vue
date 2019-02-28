@@ -35,8 +35,12 @@ export default {
     },
     created(){
         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-        if(gohostingSession){
-            this.result = gohostingSession.fittings
+        if(gohostingSession){      
+            let arr = []
+            for(let v of gohostingSession.fittings){
+                arr.push(v.id)
+            }
+            this.result = arr
         }
 
         this.getqueryCate()
@@ -69,13 +73,9 @@ export default {
                 if (resdata.code == 200) {
                     Toast.clear();
                     let arr = []
-                    // let i = 1
                     for(let [k, v] of Object.entries(resdata.data)){
                         v.num = v.number
                         arr.push(v)
-                        // console.log(v);
-                        // v.index = i,
-                        // i++
                     }
                     
                     this.list = arr
@@ -88,24 +88,24 @@ export default {
         onchange(index,val){
             console.log('k:'+index,'val:'+val);
             this.list[index].num = val
-            console.log(this.list,'change');
-            
         },
         next(){
             // console.log(this.result);
             let arr = []
+            let fittingstring = []
             for(let v1 of this.result){
                 for(let v2 of this.list){
-                    if(v1==v2.cate_id){
-                        // console.log(v2.cate_name);
-                        arr.push(v2.cate_name)
+                    if(v1==v2.id){
+                        // console.log(v2.name);
+                        fittingstring.push(v2.name)
+                        arr.push(v2)
                     }
                 }
             }
             
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fittings = this.result
-            gohostingSession.fittingstring = arr.join()
+            gohostingSession.fittings = arr
+            gohostingSession.fittingstring = fittingstring.join()
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/uploadimg' })
         }

@@ -315,7 +315,6 @@ export default {
             }
 
             let gohostingSession = {
-                // notequipment:false,
                 typetext: this.typetext,
                 brandtext:this.brandtext,
                 modeltext:this.modeltext,

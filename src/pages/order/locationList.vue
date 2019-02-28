@@ -109,6 +109,8 @@ export default {
             }
           } else {
             Toast(resdata.message);
+            this.loading = false;
+            this.finished = true;
           }
         });
     },

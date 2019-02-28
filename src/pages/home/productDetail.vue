@@ -171,15 +171,17 @@
     <div class="bgc footer flex-align-items border-t">
       <div class="flex-jc-between">
         <div class="text-c margin_left">
-          <div>
-            <img class="img_kf" src="../../assets/kefu.png" alt>
-          </div>
-          <div class="f10_col">在线客服</div>
+          <a href="https://www.sobot.com/chat/h5/index.html?sysNum=0a99f38b20714891ace3e99607538829">
+            <div>
+              <img class="img_kf" src="../../assets/kefu.png" alt>
+            </div>
+            <div class="f10_col">在线客服</div>
+          </a>
         </div>
         <div class="text-c margin_left">
           <div>
             <a :href="`tel:${tel}`">
-            <img class="img_kf" src="../../assets/tel.png" alt>
+              <img class="img_kf" src="../../assets/tel.png" alt>
             </a>
           </div>
           <div class="f10_col">

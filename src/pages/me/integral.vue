@@ -5,7 +5,7 @@
       <div class="text-c">当前可用积分</div>
       <div class="flex-jc-around">
         <span>可抵扣：0元</span>
-        <span>积分规则</span>
+        <router-link to="/rules/integral">积分规则</router-link>
       </div>
     </div>
     <div class="mx">积分明细</div>
@@ -34,7 +34,6 @@ export default {
           "url(" + require("../../assets/in_bg.png") + ") no-repeat top",
           backgroundSize: "100% 100%"
       },
-      integral: [{}, {}]
     };
   },
   methods: {}

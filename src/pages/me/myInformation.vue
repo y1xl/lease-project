@@ -5,9 +5,11 @@
         <div class="flex-jc-between flex-align-items tx border-b">
           <div>我的头像</div>
           <div class="head_img">
-            <!-- <img src="../../assets/headimg.png" alt="头像"> -->
-            <van-uploader :after-read="onRead" multiple >
-                <img src="../../assets/headimg.png" alt="头像">
+            <van-uploader :after-read="onRead" multiple v-if="head_img==''">
+                <img src="../../assets/headimg.png" alt="头像" class="img">
+            </van-uploader>
+            <van-uploader :after-read="onRead" multiple v-else>
+                <img :src="head_img" alt="头像" class="img">
             </van-uploader>
           </div>
         </div>
@@ -47,21 +49,73 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      file:''
+      head_img:''
     };
   },
   created() {
-    // this.users_name = JSON.parse(
-    //   window.localStorage.getItem("userinfo")
-    // ).users_name;
+    this.getheadimg()
   },
   methods: {
     onRead(file) {
-        console.log(file)
-        this.file = file
+      console.log(file)
+      if(Array.isArray(file)){
+          Toast('只能单选') 
+          return
+      }
+      // this.file = file
+
+      Toast.loading({ mask: true, message: "加载中..." });
+      let config = {
+          headers:{'Content-Type':'multipart/form-data'}
+      }
+      let formData = new FormData()
+      formData.append('file',file.file)
+      formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
+
+      this.axios
+        .post(this.API + "api/Lease_Order/modifyHeadPicture",formData,config)
+        .then(res => {
+          console.log(res.data, "headimg");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear();
+            this.getheadimg()
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+          }
+        })
+        .catch(error => {
+          Toast.clear()
+          Toast('网络出错')
+        });
+    },
+
+    getheadimg() {
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+      });
+      this.axios
+        .post(this.API + "api/Lease_Order/getHeadPicture", postData)
+        .then(res => {
+          console.log(res.data, "headimg");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear();
+            if(resdata.data.length==0){
+              this.head_img = ''
+            }
+            this.head_img = resdata.data;
+          } else {
+            Toast.clear();
+            // Toast(resdata.message);
+          }
+        });
     },
   }
 };
@@ -93,8 +147,9 @@ export default {
   border-radius: 50%;
   margin-right: 10px;
   overflow: hidden;
+  font-size:0
 }
-.head_img > img {
+.head_img .img {
   width: 45px;
   height: 45px;
 }

@@ -12,7 +12,6 @@
       <div class="flex-jc-between border-b pd-15">
         <div class="flexbox">
           <div class="left">卡号</div>
-
           <input placeholder="请输入银行卡号" v-model.trim="cardnum">
         </div>
       </div>

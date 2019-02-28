@@ -25,13 +25,13 @@ import Shopping from '@/pages/order/shopping'
 import People from '@/pages/order/people'
 import LocationList from '@/pages/order/locationList'
 import Refund from '@/pages/order/refund'
-import TimeQuantum from '@/pages/order/timeQuantum'
 import AppointmentExpress from '@/pages/order/appointmentExpress'
 import Deny from '@/pages/order/deny'
 import Calendar from '@/pages/order/calendar'
 import Compensation from '@/pages/order/compensation'
 
 //个人中心
+import Rules from '@/pages/me/rules'
 import MyInformation from '@/pages/me/myInformation'
 import AddInformation from '@/pages/me/addInformation'
 import ReceInformation from '@/pages/me/receInformation'
@@ -59,6 +59,7 @@ import PasswordLogin from '@/pages/login/passwordLogin'
 import ForgetPassword from '@/pages/login/forgetPassword'
 import ResetPassword from '@/pages/login/resetPassword'
 import InputCode from '@/pages/login/inputCode'
+import AliLogin from '@/pages/login/aliLogin'
 
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
@@ -69,6 +70,8 @@ import School from '@/pages/certification/school'
 import cPeople from '@/pages/certification/people'
 import AddPeople from '@/pages/certification/addPeople'
 import Realname from '@/pages/certification/realname'
+import RealnameSuc from '@/pages/certification/realnameSuc'
+import RealnameUnbundling from '@/pages/certification/realnameUnbundling'
 import Face from '@/pages/certification/face'
 //托管
 import Gohosting from '@/pages/hosting/gohosting/index'
@@ -112,7 +115,6 @@ export default new Router({
     { path: '/locationList/:type', component: LocationList, meta: { title: '选择地点' } },
     { path: '/locationList/:type/:id', component: LocationList, meta: { title: '选择地点' } },
     { path: '/refund/:id', component: Refund, meta: { title: '退租' } },
-    { path: '/timeQuantum', component: TimeQuantum, meta: { title: '选择时间段' } },
     { path: '/appointmentExpress/:id', component: AppointmentExpress, meta: { title: '预约快递' } },
     { path: '/deny/:id', component: Deny, meta: { title: '否认' } },
     { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
@@ -126,12 +128,13 @@ export default new Router({
     { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy', component: Buy, meta: { title: '下单' } },
     { path: '/pay/:orderid', component: Pay, meta: { title: '额度' } },
-    { path: '/zagreement', component: Agreement, meta: { title: '协议' } },
+    { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索' } },
     { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, 
     { path: '/applyText', component: ApplyText, meta: { title: '支付' } }, 
 
     //个人中心
+    { path: '/rules/:title', component: Rules, meta: { title: '规则' } },
     { path: '/myInformation', component: MyInformation, meta: { title: '我的资料' } },
     { path: '/receInformation', component: ReceInformation, meta: { title: '收货信息' } },
     { path: '/addInformation/:id', component: AddInformation, meta: { title: '编辑收货信息' } },
@@ -162,6 +165,7 @@ export default new Router({
     { path: '/forgetPassword', component: ForgetPassword, meta: { title: '忘记密码' } },
     { path: '/resetPassword/:phone', component: ResetPassword, meta: { title: '重置密码' } },
     { path: '/inputCode/:phone', component: InputCode, meta: { title: '输入验证码' } },
+    { path: '/alilogin', component: AliLogin, meta: { title: '授权' } },
 
     //门店
     { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },
@@ -173,6 +177,8 @@ export default new Router({
     { path: '/addPeople', component: AddPeople },
     { path: '/addPeople/:id', component: AddPeople },
     { path: '/realname', component: Realname, meta: { title: '实名认证' } },
+    { path: '/realnameSuc', component: RealnameSuc, meta: { title: '实名认证' } },
+    { path: '/realnameUnbundling', component: RealnameUnbundling, meta: { title: '解绑实名认证' } },
     { path: '/face/:orderid', component: Face, meta: { title: '人脸识别' } },
 
     //托管
