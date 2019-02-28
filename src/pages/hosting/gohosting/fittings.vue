@@ -12,7 +12,7 @@
                     <van-checkbox :name="item.id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox>
                     <div class="pdl">
                         <div>{{item.name}}</div>
-                        <div v-if="item.number!=1"><van-stepper disable-input :value="item.number" :max="item.number" @change="onchange(index,$event)" /></div>
+                        <div v-if="item.number!=1"><van-stepper disable-input :value="item.num" :max="item.number" @change="onchange(index,$event)" /></div>
                     </div>
                 </div>
             </div>
@@ -46,9 +46,9 @@ export default {
         this.getqueryCate()
     },
     methods:{
-        toggle(index) {
-            this.$refs.checkboxes[index].toggle();
-        },
+        // toggle(index) {
+        //     this.$refs.checkboxes[index].toggle();
+        // },
         getqueryCate(){
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
             if(gohostingSession){

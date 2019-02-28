@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       navtitle: ["全部", "审核中", "托管中", "已退回"],
-      couponlist: [{}, {}, {}],
+      couponlist: [{}],
       ind: 0
     };
   },

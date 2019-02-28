@@ -34,12 +34,6 @@
         </div>
       </div>
 
-      <!-- <div style="overflow:hidden">
-        <div class="test">
-        <div class="border" v-for="item in 8">1</div>
-        </div>
-      </div> -->
-
       <div class="pdlr10 mar-b-10">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
@@ -104,22 +98,6 @@ export default {
 </script>
 
 <style scoped>
-/* .test {
-  width:100%;
-  white-space: nowrap;
-  overflow-x:scroll;
-  overflow-y:hidden;
-  display: inline;
-  float:left;
-}
-.test::-webkit-scrollbar {
-  display: none;
-}
-.test > div {
-  width: 100px;
-  height: 100px;
-  display: inline-block;
-} */
 
 .fs12{
   font-size: 12px

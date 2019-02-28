@@ -89,7 +89,7 @@
                     <span class="fc-grey">含配件</span>
                     <span class="flex-1 fittings">{{gohostingSession.fittingstring}}</span>
                 </div>
-                <div class="flex-jc-between pd"><span class="fc-grey">购买时间</span><span>2018-11-11</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">购买时间</span><span>{{`${gohostingSession.datetext[0]}-${gohostingSession.datetext[1]}-${gohostingSession.datetext[2]}`}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">购买价格</span><span>￥{{gohostingSession.priceval}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">外观成色</span><span>{{gohostingSession.colourtext}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">功能状况</span><span>{{gohostingSession.statetext}}</span></div>
@@ -228,7 +228,7 @@ export default {
 
         submit(){
             if(this.isconsent){
-                // Toast("此功能未开通"); return
+                Toast("此功能未开通"); return
                 
                 let { 
                     typetext, //品类
@@ -252,10 +252,18 @@ export default {
                     telval //联系方式
                  } = this.gohostingSession
 
+                 let fittingsarr = []
+                 for(let v of fittings){
+                     fittingsarr.push({
+                         id: v.id,
+                         number: v.num
+                     })
+                 }
+
                 let config = {
                     headers:{'Content-Type':'multipart/form-data'}
                 }
-
+                Toast.loading({ mask: true,message: '加载中...'})
                 let formData = new FormData()
                 formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
                 formData.append('cate',typetext.cate_name)  //品类
@@ -263,18 +271,34 @@ export default {
                 formData.append('model',modeltext.model_name)  //型号
                 formData.append('standards',colortext)  //规格
                 formData.append('num',1)  //数量
-                // formData.append('buy_time',)  //购买时间
+                formData.append('buy_time',`${datetext[0]}-${datetext[1]}-${datetext[2]}`)  //购买时间
                 formData.append('exterior',colourtext)  //外观成色
                 formData.append('exterior_describe',colourdes)  //外观描述
                 formData.append('functional_status',statetext)  //功能状况
-                // formData.append('parts_list',)  //拥有配件列表
+                formData.append('parts_list',fittingsarr.length==0?'':JSON.stringify(fittingsarr))  //拥有配件列表
                 // formData.append('parts_picture',)  //产品配件的全家福
                 // formData.append('parts_picture',)  //看清型号的全家福 --字段有问题
                 formData.append('phone_picture',fileimg3)  //产品照片
-                formData.append('damage_picture',fileimg4)  //产品损坏处照片
+                formData.append('damage_picture',fileimg4||'')  //产品损坏处照片
                 formData.append('serial_number',serialnumval)  //产品序列号
                 formData.append('rate',30)  //费率 不要%号
-
+                
+                this.axios.post(this.API + "",formData,config)
+                .then(res => {
+                    console.log(res.data, "res")
+                    let resdata = res.data
+                    if (resdata.code == 200) {
+                        Toast.clear()
+                        this.$router.replace({ path: '/gsuccessful' })
+                    } else {
+                        Toast.clear()
+                        Toast(resdata.message)
+                    }
+                })
+                .catch(error => {
+                    Toast.clear()
+                    Toast('网络出错')
+                });
                 // this.$router.replace({ path: '/gsuccessful' })
             }else{
                 Toast("您还未同意合约");

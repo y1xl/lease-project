@@ -54,7 +54,7 @@
               </div>
             </div>
             
-            <div class="flexbox border-b bgc camer_hm_box">
+            <!-- <div class="flexbox border-b bgc camer_hm_box">
               <div
                 class="camer_hm"
                 @click="toDetail(goods.goods_id)"
@@ -70,28 +70,32 @@
                   <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                 </div>
               </div>
-            </div>
-            <!-- <div class="flexbox border-b bgc camer_hm_box">
-              <div
-                class="camer_hm"
-                v-for="item in 4"
-              >
-                <div class="img_box2 flex-center">
-                  <img class="img" src="../assets/fls.png" style="object-fit:contain" alt="商品">
-                </div>
-                <div class="text-line pro_name">1</div>
-                <div class="f12">     
-                  低至
-                  <span style="color: #F21E1E;">¥</span><span class="price">2</span>/3
+            </div> -->
+              <div style="overflow:hidden">
+                <div class="border-b bgc indexbox">
+                  <div
+                    class="indexitem"
+                    @click="toDetail(goods.goods_id)"
+                    v-for="(goods,index) in item.goods"
+                    :key="index"
+                  >
+                    <div class="img_box2 flex-center">
+                      <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
+                    </div>
+                    <div class="text-line pro_name">{{goods.goods_name}}</div>
+                    <div class="f12">     
+                      低至
+                      <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div> -->
           </div>
         </van-tab>
 
         <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key="index">
           <div class="title" v-show="!hostlist.length==0">热门推荐</div>
-          <div class="flexbox border-b bgc camer_hm_box" v-show="!hostlist.length==0">
+          <!-- <div class="flexbox border-b bgc camer_hm_box" v-show="!hostlist.length==0">
             <div
               class="camer_hm"
               v-for="(goods,index) in hostlist"
@@ -105,6 +109,25 @@
               <div class="f12">
                 低至
                 <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
+              </div>
+            </div>
+          </div> -->
+          <div style="overflow:hidden" >
+            <div class="border-b bgc indexbox" v-show="!hostlist.length==0">
+              <div
+                class="indexitem"
+                @click="toDetail(goods.goods_id)"
+                v-for="(goods,index) in hostlist"
+                :key="index"
+              >
+                <div class="img_box2 flex-center">
+                  <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
+                </div>
+                <div class="text-line pro_name">{{goods.goods_name}}</div>
+                <div class="f12">     
+                  低至
+                  <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
+                </div>
               </div>
             </div>
           </div>
@@ -440,13 +463,6 @@ export default {
 .camer_hm_box > div {
   margin-left: 9px;
 }
-
-/* .camer_hm_box > div:nth-child(1) {
-  margin-left: 10px;
-}
-.camer_hm_box > div:nth-child(3) {
-  margin-right: 10px;
-} */
 .camer_hm {
   width: 95px;
   height: 175px;
@@ -456,6 +472,28 @@ export default {
   height: 95px;
   background: #f7f7f7;
 }
+
+.indexbox {
+  width:100%;
+  height: 175px;
+  white-space: nowrap;
+  overflow-x:scroll;
+  overflow-y:hidden;
+  display: inline;
+  float:left;
+}
+.indexbox > div {
+  margin-left: 9px;
+}
+.indexbox::-webkit-scrollbar {
+  display: none;
+}
+.indexitem {
+  width: 95px;
+  height: 175px;
+  display: inline-block;
+}
+
 
 /*分类 所有产品*/
 .fl_pro_list {

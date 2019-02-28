@@ -13,7 +13,7 @@
   </template>
 
   <style>
-    .amap-demo {
+    .amap-page-container {
       height: 300px;
     }
   </style>
@@ -33,6 +33,7 @@
               init(o) {
                 // o 是高德地图定位插件实例
                 o.getCurrentPosition((status, result) => {
+                  console.log(result);
                   if (result && result.position) {
                     self.lng = result.position.lng;
                     self.lat = result.position.lat;
