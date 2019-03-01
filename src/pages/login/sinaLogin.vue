@@ -21,24 +21,22 @@ export default {
         return{
             phoneval: '',
             codeval: '',
-            id: ''
+            id:''
         }
     },
     created(){
-        this.getali()
+        this.getsina()
     },
     methods:{
-        //{ "state": "7209fe525991a66918c8a7ead26b1f15", "app_id": "2018101261703006", "source": "alipay_wallet", "userOutputs": "auth_user", "scope": "auth_user", "auth_code": "7c70fb4954664a8497d07d762021UE65" }
-        getali(){
+        //{ "code": "02a8c4adda20473a0c8dfed94e966925" }
+        getsina(){
             Toast.loading({ mask: true, message: "加载中..." });
             let postData = this.$qs.stringify({
                 // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-                // state: '2bbf04412fa896e5346ea8a7d941f7f5',
-                // auth_code: '3a356bacbb624d31abb791d47e63SX00'
-                state: this.$route.query.state,
-                auth_code: this.$route.query.auth_code
+                code: this.$route.query.code
+                // code: '2057d00f914966c809df0bfbff3a8d71'
             });
-            this.axios.post(this.API + "api/Order/aliLogin",postData).then(res => {
+            this.axios.post(this.API + "api/Order/weibo",postData).then(res => {
                 console.log(res.data, "getali");
                 let resdata = res.data;
                 if (resdata.code == 200) {
@@ -57,7 +55,7 @@ export default {
             .catch(error => {
                 Toast.clear();
                 Dialog.alert({
-                    message: '授权失败'
+                    message: '网络错误，授权失败'
                 }).then(() => {
                     this.$router.replace({ path: "/login" });
                 });
@@ -81,13 +79,8 @@ export default {
                 } else {
                 Toast(resdata.message);
                 }
-            })
-            .catch(error => {
-                Toast.clear();
-                Toast('网络出错')
             });
         },
-
         login() {
             if (this.phoneval == "" || this.codeval == "") {
                 return;
@@ -99,13 +92,13 @@ export default {
 
             Toast.loading({ mask: true, message: "加载中..." });
             let postData = this.$qs.stringify({
-                type: 1,
+                type: 3,
                 phone: this.phoneval,
                 yzm: this.codeval,
                 user_auth_id: this.id 
             });
             this.axios.post(this.API + "api/Order/ThreeLogin", postData).then(res => {
-                console.log(res.data, "alilogin");
+                console.log(res.data, "sinalogin");
                 let resdata = res.data;
                 if (resdata.code == 200) {
                     Toast.clear();

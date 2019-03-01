@@ -264,6 +264,7 @@ export default {
                     headers:{'Content-Type':'multipart/form-data'}
                 }
                 Toast.loading({ mask: true,message: '加载中...'})
+                
                 let formData = new FormData()
                 formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
                 formData.append('cate',typetext.cate_name)  //品类

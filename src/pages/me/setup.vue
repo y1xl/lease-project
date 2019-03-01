@@ -6,7 +6,7 @@
       <van-switch v-model="checked" active-color="#4EA9F9" inactive-color="#fff"/>
     </div>
 
-    <div class="btn text-c" @click="logout">退出登陆</div>
+    <div class="btn text-c bgc-red" @click="logout">退出登陆</div>
   </div>
 </template>
 
@@ -40,6 +40,6 @@ export default {
   height: 40px;
   line-height: 40px;
   color: #fff;
-  background: #4ea9f9;
+  /* background: #4ea9f9; */
 }
 </style>

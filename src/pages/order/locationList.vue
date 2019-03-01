@@ -31,6 +31,8 @@
 
     <div class="height"></div>
     <div class="btn text-c" @click="submit" v-show="list.length!=0">完成</div>
+
+    <!-- <el-amap vid="amaplocation" :plugin="plugin" :center="center" class="myamap"></el-amap> -->
   </div>
 </template>
 
@@ -38,20 +40,48 @@
 import { Toast,Dialog,Notify } from "vant";
 export default {
   data() {
+    let self = this;
     return {
       loading: false,
       finished: false,
       list: [],
       radio: 0,
-      page: 0
+      page: 0,
+
+      // center: [121.59996, 31.197646],
+      // lng: 0,
+      // lat: 0,
+      // loaded: false,
+      // plugin: [{
+      //   pName: 'Geolocation',
+      //   events: {
+      //     init(o) {
+      //       // o 是高德地图定位插件实例
+      //       o.getCurrentPosition((status, result) => {
+      //         console.log(result);
+      //         if (result && result.position) {
+      //           self.lng = result.position.lng;
+      //           self.lat = result.position.lat;
+      //           self.center = [self.lng, self.lat];
+      //           self.loaded = true;
+      //           self.onLoad()
+      //           self.$nextTick();
+      //         }else{
+      //           Notify('获取定位失败');
+      //           self.loading = false;
+      //           self.finished = true;
+      //         }
+      //       });
+      //     }
+      //   }
+      // }]
     };
   },
 
   created() {
     if(!window.localStorage.getItem("center")){
         this.getLocation();
-        // Toast("您未授权定位");
-        Notify('请先授权定位并刷新');
+        Notify('获取定位失败');
         return
       }
   },
@@ -77,21 +107,18 @@ export default {
       if(!window.localStorage.getItem("center")){
         this.loading = false;
         this.finished = true;
-        // Notify('请先授权定位并刷新');
-        // this.getLocation();
-        // Dialog.alert({
-        //     message: '您未授权定位'
-        // }).then((e) => {
-        //     this.getLocation();
-        // });
-        
         return
       }
+      // if(!this.loaded){
+      //   return
+      // }
 
       let nowPageNum = ++this.page;
       let postData = this.$qs.stringify({
         lat: JSON.parse(window.localStorage.getItem("center")).lat,
         lng: JSON.parse(window.localStorage.getItem("center")).lng,
+        // lat:this.lat,
+        // lng:this.lng,
         goods_id: this.$route.params.id,
         page: nowPageNum
       });
@@ -159,6 +186,9 @@ export default {
 </script>
 
 <style scoped>
+.myamap{
+  opacity: 0;
+}
 .tag {
   padding-top: 15px;
   padding-left: 30px;

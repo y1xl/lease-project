@@ -60,6 +60,7 @@ import ForgetPassword from '@/pages/login/forgetPassword'
 import ResetPassword from '@/pages/login/resetPassword'
 import InputCode from '@/pages/login/inputCode'
 import AliLogin from '@/pages/login/aliLogin'
+import SinaLogin from '@/pages/login/sinaLogin'
 
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
@@ -166,6 +167,7 @@ export default new Router({
     { path: '/resetPassword/:phone', component: ResetPassword, meta: { title: '重置密码' } },
     { path: '/inputCode/:phone', component: InputCode, meta: { title: '输入验证码' } },
     { path: '/alilogin', component: AliLogin, meta: { title: '授权' } },
+    { path: '/sinalogin', component: SinaLogin, meta: { title: '授权' } },
 
     //门店
     { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },

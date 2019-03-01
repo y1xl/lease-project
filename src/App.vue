@@ -79,6 +79,12 @@ export default {
       if (url.includes('/login')) {
         return false
       }
+      if (url.includes('/sinalogin')) {
+        return false
+      }
+      if (url.includes('/alilogin')) {
+        return false
+      }
       if (url.includes('/passwordLogin')) {
         return false
       }
@@ -130,9 +136,7 @@ export default {
       if (url.includes('/zagreement')) {
         return false
       }
-      // if (url.includes('/receInformation')) {
-      //   return false
-      // }
+      
       return true
 
     }

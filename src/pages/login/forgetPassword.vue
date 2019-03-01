@@ -11,12 +11,14 @@
           <input v-model.trim="codeval" placeholder="请输入验证码" input-align="center">
         </div>
 
+        <div class="text-c resent" @click="sendcode">发送验证码</div>
+
         <button
           class="btn text-c"
           :class="phoneval!=''&&codeval!=''?'bgc-blue':'btn-grey'"
           @click="toNext"
         >下一步</button>
-        <div class="text-c resent" @click="sendcode">发送验证码</div>
+        
       </div>
     </div>
   </div>

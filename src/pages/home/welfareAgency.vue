@@ -10,11 +10,12 @@
           </div>
 
           <div class="time">
-            <span class="day">4</span>
+            <span class="day">{{day}}</span>
             <span>天</span>
           </div>
           <div class="flex-jc-center">
-            <div class="btn text-c">立即签到</div>
+            <div class="btn text-c bgc" style="color: #8bd0db;" @click="signin" v-if="issignin">立即签到</div>
+            <div class="btn text-c bgc-grey" v-else>已签到</div>
           </div>
         </div>
       </div>
@@ -122,11 +123,16 @@ export default {
         background:
           "url(" + require("../../assets/fls_bg.png") + ") no-repeat top",
           backgroundSize: "100% 100%"
-      }
+      },
+      day: 0,
+      issignin: true
     }
   },
   methods: {
-
+    signin(){
+      this.day = this.day+1
+      this.issignin = false
+    }
   }
 };
 </script>
@@ -138,8 +144,6 @@ export default {
   align-items: center;
   width: 100%;
   height: 230px;
-  /* background: url(../../assets/fls_bg.png) no-repeat;
-  background-size: 100% 100%; */
 }
 .qd_box {
   padding-top: 50px;
@@ -168,9 +172,8 @@ export default {
   width: 130px;
   height: 37px;
   line-height: 37px;
-  background: rgba(255, 255, 255, 1);
   border-radius: 20px;
-  color: #8bd0db;
+  
   font-size: 16px;
 }
 .jd_box {

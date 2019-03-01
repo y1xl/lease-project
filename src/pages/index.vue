@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="flex-jc-around bgc" v-show="active==0">
+    <div class="flex-jc-around bgc" v-show="active==0" >
       <div class="tg" @click="gohosting">
         <img src="../assets/tuoguan.png"> 我要托管
       </div>
@@ -170,6 +170,7 @@
       </van-tabs>
     </div>
 
+    <el-amap vid="amaplocation" :plugin="plugin" :center="center" class="myamap"></el-amap>
     <!-- <div class="em"></div> -->
   </div>
 </template>
@@ -188,7 +189,33 @@ export default {
       goodslist: [],
       hostlist: [],
       active: 0,
-      nearShop: ""
+      nearShop: "",
+
+      center: [121.59996, 31.197646],
+      plugin: [{
+        pName: 'Geolocation',
+        events: {
+          init(o) {
+            // o 是高德地图定位插件实例
+            o.getCurrentPosition((status, result) => {
+              console.log(result);
+              if (result && result.position) {
+                // self.lng = result.position.lng;
+                // self.lat = result.position.lat;
+                self.getNearShop(result.position.lat,result.position.lng)
+                let center = {
+                  lat:result.position.lat,
+                  lng:result.position.lng
+                };
+                window.localStorage.setItem("center", JSON.stringify(center));
+                self.$nextTick();
+              }else{
+                Toast('获取定位失败')
+              }
+            });
+          }
+        }
+      }]
     };
   },
   beforeCreate(){
@@ -197,7 +224,7 @@ export default {
     }
   },
   created() {
-    this.getLocation();
+    // this.getLocation();
     this.getnav();
     this.getindexlist();
     // this.getNearShop('22.54605355', '114.02597366') //测试 
@@ -206,24 +233,24 @@ export default {
     this.getbanner();
   },
   methods: {
-    getLocation() {
-      if (window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(position => {
-          var lat = position.coords.latitude; //纬度
-          var lng = position.coords.longitude; //经度
-          this.lat = lat;
-          this.lng = lng;
-          this.getNearShop(lat, lng);
-          let center = {
-            lat,
-            lng
-          };
-          window.localStorage.setItem("center", JSON.stringify(center));
-        });
-      } else {
-        Toast("浏览器不支持地理定位,请升级");
-      }
-    },
+    // getLocation() {
+    //   if (window.navigator.geolocation) {
+    //     window.navigator.geolocation.getCurrentPosition(position => {
+    //       var lat = position.coords.latitude; //纬度
+    //       var lng = position.coords.longitude; //经度
+    //       this.lat = lat;
+    //       this.lng = lng;
+    //       this.getNearShop(lat, lng);
+    //       let center = {
+    //         lat,
+    //         lng
+    //       };
+    //       window.localStorage.setItem("center", JSON.stringify(center));
+    //     });
+    //   } else {
+    //     Toast("浏览器不支持地理定位,请升级");
+    //   }
+    // },
     gohosting() {
       window.sessionStorage.removeItem("gohostingSession");
       this.$router.push({ path: "/gohosting" });
@@ -305,8 +332,6 @@ export default {
       let postData = this.$qs.stringify({
         lat: lat,
         lng: lng
-        // lat:'22.54605355',
-        // lng:'114.02597366'
       });
       this.axios
         .post(this.API + "api/Lease/Nearby_store", postData)
@@ -335,6 +360,9 @@ export default {
 </style>
 
 <style scoped>
+.myamap{
+  opacity: 0;
+}
 .f12 {
   font-size: 12px;
 }

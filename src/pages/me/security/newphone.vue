@@ -1,7 +1,7 @@
 <template>
     <div class="bgc full">
         <div class="pd-15">
-            <input type="text" maxlength="11" placeholder="请输入新手机号" v-model.trim="phoneval">
+            <input type="number" maxlength="11" placeholder="请输入新手机号" v-model.trim="phoneval">
         </div>
         <div class="pd-15 mar-b-10 flex-jc-between">
             <input type="text" placeholder="请输入验证码" v-model.trim="codeval">
@@ -25,6 +25,10 @@ export default {
     },
     methods:{
         sendcode(){
+            if (!(/^1\d{10}$/.test(this.phoneval))) {
+                Toast("手机号格式不正确");
+                return;
+            }
             let postData = this.$qs.stringify({
                     users_phone:this.phoneval
                 })
@@ -40,6 +44,10 @@ export default {
             });
         },
         submit(){
+            if (!(/^1\d{10}$/.test(this.phoneval))) {
+                Toast("手机号格式不正确");
+                return;
+            }
             Toast.loading({ mask: true,message: '加载中...'})
             let postData = this.$qs.stringify({
                 users_phone: this.phoneval,
@@ -52,6 +60,7 @@ export default {
                 let resdata = res.data;
                 if (resdata.code == 200) {
                     Toast.clear()
+                    Toast('修改成功')
                     this.$router.replace({ path: "/accountSecurity" })
                 } else {
                     Toast.clear()
