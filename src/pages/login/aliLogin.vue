@@ -57,7 +57,7 @@ export default {
             .catch(error => {
                 Toast.clear();
                 Dialog.alert({
-                    message: '授权失败'
+                    message: '网络错误，授权失败'
                 }).then(() => {
                     this.$router.replace({ path: "/login" });
                 });
