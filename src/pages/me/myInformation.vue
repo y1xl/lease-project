@@ -50,6 +50,7 @@
 
 <script>
 import { Toast } from "vant";
+import { Compress } from "@/utils/util.js";
 export default {
   data() {
     return {
@@ -66,15 +67,23 @@ export default {
           Toast('只能单选') 
           return
       }
-      // this.file = file
+      // this.upload(file.file)
 
+      Compress(file.content,file.file.type).then(res=>{
+        console.log(res,'compress')
+        this.upload(res)
+      })
+
+    },
+    upload(file){
       Toast.loading({ mask: true, message: "加载中..." });
       let config = {
           headers:{'Content-Type':'multipart/form-data'}
       }
       let formData = new FormData()
-      formData.append('file',file.file)
-      formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
+      // formData.append('file',file,file.name)
+      formData.append('file',file)
+      formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id||3)
 
       this.axios
         .post(this.API + "api/Lease_Order/modifyHeadPicture",formData,config)
@@ -83,6 +92,7 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear();
+            Toast('上传成功');
             this.getheadimg()
           } else {
             Toast.clear();
@@ -98,7 +108,7 @@ export default {
     getheadimg() {
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
-        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id||3
       });
       this.axios
         .post(this.API + "api/Lease_Order/getHeadPicture", postData)
@@ -109,8 +119,9 @@ export default {
             Toast.clear();
             if(resdata.data.length==0){
               this.head_img = ''
+            }else{
+              this.head_img = resdata.data;
             }
-            this.head_img = resdata.data;
           } else {
             Toast.clear();
             // Toast(resdata.message);

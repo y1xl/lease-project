@@ -78,7 +78,7 @@ export default {
       users_name: "",
 
       showarea: false,
-      areaval: "",
+      areaval: [],
       areaList: area,
 
       showsex: false,
@@ -166,10 +166,10 @@ export default {
         users_name: this.users_name,
         users_sex: sex_id,
         users_birthday: this.datetext,
-        users_province: this.areaval[0].name,
-        users_city: this.areaval[1].name,
-        users_district: this.areaval[2].name,
-        users_address: this.detailval || ""
+        users_province: this.areaval[0]?this.areaval[0].name:'',
+        users_city: this.areaval[1]?this.areaval[1].name:'',
+        users_district: this.areaval[2]?this.areaval[2].name:'',
+        users_address: this.detailval 
       });
       this.axios
         .post(this.API + "api/Lease/users_update", postData)

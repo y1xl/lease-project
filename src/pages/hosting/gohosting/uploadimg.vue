@@ -279,8 +279,8 @@ export default {
                 formData.append('parts_list',fittingsarr.length==0?'':JSON.stringify(fittingsarr))  //拥有配件列表
                 // formData.append('parts_picture',)  //产品配件的全家福
                 // formData.append('parts_picture',)  //看清型号的全家福 --字段有问题
-                formData.append('phone_picture',fileimg3)  //产品照片
-                formData.append('damage_picture',fileimg4||'')  //产品损坏处照片
+                formData.append('phone_picture',fileimg3.file,fileimg3.file.name)  //产品照片
+                formData.append('damage_picture',fileimg4.file,fileimg4.file.name)  //产品损坏处照片
                 formData.append('serial_number',serialnumval)  //产品序列号
                 formData.append('rate',30)  //费率 不要%号
                 

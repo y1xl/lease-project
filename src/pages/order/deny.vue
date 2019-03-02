@@ -2,7 +2,6 @@
     <div>
         <div class="textarea bgc"><textarea v-model.trim="contentval" name="" id="" rows="6" placeholder="输入否认的理由"></textarea></div>
         <div class="bgc imglist">
-            <!-- <img @click="onImagePreview(index)" :src="item.content" alt="" v-for="(item,index) in imgarr" :key="index"> -->
             <img @click="onImagePreview()" :src="img.content" v-show="!img==''">
             <van-uploader :after-read="onRead" accept="image/png, image/jpeg" multiple v-show="showupload">
                 <img src="../../assets/uploadimg.png" alt="">
@@ -36,26 +35,13 @@ export default {
         //图片
         onRead(file) {
             console.log(file)
-            // this.imgarr.push(file)
             this.img = file
         },
         //预览
         onImagePreview(index){
-            // let arr = []
-            // for(let v of this.imgarr){
-            //     arr.push(v.content)
-            // }
-            // ImagePreview({
-            //     images: arr,
-            //     startPosition: index,
-            // });
             ImagePreview([this.img]);
         },
         submit(){
-            // if(this.contentval==''||this.imgarr.length==0){
-            //     Toast('还有未填写')
-            //     return
-            // }
             if(this.contentval==''||this.img==''){
                 Toast('还有未填写')
                 return
@@ -67,9 +53,6 @@ export default {
             }
 
             let formData = new FormData()
-            // for(let v of this.imgarr){
-            //     formData.append('image',v.file,v.file.name)
-            // }
             formData.append('image',this.img.file,this.img.file.name)
             formData.append('order_id',this.$route.params.id)
             formData.append('content',this.contentval)

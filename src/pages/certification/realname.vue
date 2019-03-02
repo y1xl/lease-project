@@ -80,6 +80,7 @@
 
 <script>
 import { Toast,Dialog } from "vant";
+import { Compress } from "@/utils/util.js";
 export default {
     data(){
         return{

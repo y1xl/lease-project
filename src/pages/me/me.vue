@@ -147,8 +147,9 @@ export default {
             Toast.clear();
             if(resdata.data.length==0){
               this.head_img = ''
+            }else{
+              this.head_img = resdata.data;
             }
-            this.head_img = resdata.data;
           } else {
             Toast.clear();
             // Toast(resdata.message);

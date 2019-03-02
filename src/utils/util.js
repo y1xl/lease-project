@@ -55,10 +55,48 @@ function accAdd(arg1, arg2) {
       arg2 = Number(arg2.toString().replace(".", ""));
     }
     return ((arg1 + arg2) / m).toFixed(2);
-  }
+}
+
+/**
+ * base64压缩（图片-canvas互转）
+ * @param {file} base64 base64图片数据
+ * @param {string} mimeType 输出图片格式
+ * @return {base64} data 图片处理完成后的base64
+ */
+
+function Compress(base64, mimeType){
+  const MAX_WIDTH = 800
+
+  let cvs = document.createElement('canvas')
+  let img = document.createElement('img')
+  img.crossOrigin = 'anonymous'
+  return new Promise((resolve, reject) => {
+    img.src = base64
+    // 图片偏移值
+    let offetX = 0
+    img.onload = () => {
+      if (img.width > MAX_WIDTH) {
+        cvs.width = MAX_WIDTH
+        cvs.height = img.height * MAX_WIDTH / img.width
+        offetX = (img.width - MAX_WIDTH) / 2
+      } else {
+        cvs.width = img.width
+        cvs.height = img.height
+      }
+      let ctx = cvs.getContext("2d").drawImage(img, 0, 0, cvs.width, cvs.height)
+      // let imageData = cvs.toDataURL(mimeType)
+      // resolve(imageData)
+
+      cvs.toBlob((res)=>{
+        resolve(res)
+      }, mimeType)
+    }
+  })
+}
 
 export {
     accMul,
     accSub,
-    accAdd
+    accAdd,
+    Compress
 }

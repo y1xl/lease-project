@@ -194,14 +194,13 @@ export default {
       center: [121.59996, 31.197646],
       plugin: [{
         pName: 'Geolocation',
+        // noGeoLocation:3,
         events: {
           init(o) {
             // o 是高德地图定位插件实例
-            o.getCurrentPosition((status, result) => {
+            o.getCurrentPosition((status, result) => {          
               console.log(result);
               if (result && result.position) {
-                // self.lng = result.position.lng;
-                // self.lat = result.position.lat;
                 self.getNearShop(result.position.lat,result.position.lng)
                 let center = {
                   lat:result.position.lat,
@@ -246,6 +245,8 @@ export default {
     //         lng
     //       };
     //       window.localStorage.setItem("center", JSON.stringify(center));
+    //     },err=>{
+    //       Toast('获取定位失败');
     //     });
     //   } else {
     //     Toast("浏览器不支持地理定位,请升级");

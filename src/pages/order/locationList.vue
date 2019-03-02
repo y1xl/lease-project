@@ -81,9 +81,8 @@ export default {
   created() {
     if(!window.localStorage.getItem("center")){
         this.getLocation();
-        Notify('获取定位失败');
-        return
       }
+    this.getLocation();
   },
   methods: {
     getLocation() {
@@ -98,6 +97,8 @@ export default {
           };
           window.localStorage.setItem("center", JSON.stringify(center));
           this.onLoad()
+        },err=>{
+          Notify('获取定位失败');
         });
       } else {
         Toast("浏览器不支持地理定位,请升级");

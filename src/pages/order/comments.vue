@@ -105,7 +105,7 @@ export default {
 
       let formData = new FormData()
       for(let v of this.imgarr){
-          formData.append('eva_picture[]',v.file)  //多图上传
+          formData.append('eva_picture[]',v.file,v.file.name)  //多图上传
       }
       formData.append('order_id',this.$route.params.id)
       formData.append('goods_id',this.$route.params.goodid)
