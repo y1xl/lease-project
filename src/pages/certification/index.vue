@@ -1,5 +1,5 @@
 <template>
-  <div class="full bgc">
+  <div class="page bgc">
     <div class="pd-15">
       <div class="header">
         <div class="text-c">我的额度</div>
@@ -16,26 +16,26 @@
         <van-icon name="arrow"/>
       </div>
     </router-link>
-    <div class="flex-jc-between pd-15 border-b" @click="getgo" v-if="school==2">
-      <div>学籍认证</div>
-      <div class="flex-align-items">
-        <span class="fc-blue mr" >去认证</span>
-        <van-icon name="arrow"/>
-      </div>
-    </div>
-    <div class="flex-jc-between pd-15 border-b" @click="getgo" v-else>
+    <div class="flex-jc-between pd-15 border-b" @click="getgo" v-if="school==1">
       <div>学籍认证</div>
       <div class="flex-align-items">
         <span class="fc-grey mr">已认证</span>
         <van-icon name="arrow"/>
       </div>
     </div>
-    <router-link class="flex-jc-between pd-15 border-b" to>
+    <div class="flex-jc-between pd-15 border-b" @click="getgo" v-else>
+      <div>学籍认证</div>
+      <div class="flex-align-items">
+        <span class="fc-blue mr" >去认证</span>
+        <van-icon name="arrow"/>
+      </div>
+    </div>
+    <div class="flex-jc-between pd-15 border-b" @click="call">
       <div>邀请好友</div>
       <div class="flex-align-items">
         <van-icon name="arrow"/>
       </div>
-    </router-link>
+    </div>
     <router-link class="flex-jc-between pd-15 border-b" to="/cpeople">
       <div>添加紧急联系人</div>
       <div class="flex-align-items">
@@ -47,6 +47,10 @@
 
 <script>
 import { Toast } from 'vant';
+const nativeshare = () => import ('nativeshare') 
+const m_share = () => import ('m-share')
+var NativeShare, mShare
+
 export default {
   data() {
     return {
@@ -57,6 +61,10 @@ export default {
   },
   created() {
     this.userprice();
+  },
+  mounted() {
+    nativeshare().then(res =>  {NativeShare = res.default} )
+    m_share().then(res => {mShare = res})
   },
   methods: {
     userprice() {
@@ -103,11 +111,41 @@ export default {
             Toast('网络出错')
         });
     },
+
+    call(){
+      let config = {
+        title: '数码租赁',
+        link: window.location.origin + '#/login'
+      }
+      let shareData = {  //nativeShare的参数模型
+          title: config.title,
+          desc: '',
+          // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+          link: config.link,
+          icon: '',
+      }
+      let mShareData = {  //m-share的参数模型
+            title: config.title, // 标题，默认读取document.title
+            desc: '', // 描述, 默认读取head标签：<meta name="description" content="desc" />
+            link: config.link, // 网址，默认使用window.location.href
+            imgUrl: '', // 图片, 默认取网页中第一个img标签
+      }
+      let nativeShare = new NativeShare()
+      nativeShare.setShareData(shareData)
+      try {
+        nativeShare.call('wechatFriend')
+      } catch(e) {
+        mShare.to('wx', mShareData)
+      }
+    }
   }
 };
 </script>
 
 <style scoped>
+.page{
+  min-height: 100vh;
+}
 .mr {
   margin-right: 10px;
 }

@@ -67,10 +67,9 @@ export default {
           Toast('只能单选') 
           return
       }
-      // this.upload(file.file)
 
       Compress(file.content,file.file.type).then(res=>{
-        console.log(res,'compress')
+        // console.log(res,'compress')
         this.upload(res)
       })
 
@@ -81,9 +80,8 @@ export default {
           headers:{'Content-Type':'multipart/form-data'}
       }
       let formData = new FormData()
-      // formData.append('file',file,file.name)
       formData.append('file',file)
-      formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id||3)
+      formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
 
       this.axios
         .post(this.API + "api/Lease_Order/modifyHeadPicture",formData,config)

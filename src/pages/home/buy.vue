@@ -27,7 +27,7 @@
             <div>{{(getlocation.store_province||'')+(getlocation.store_city||'')+(getlocation.store_district||'')+(getlocation.store_Address||'')}}</div>
           </template>
         </van-cell>
-        <van-cell is-link center @click="go('/calendar/buy')">
+        <van-cell is-link center @click="go('/calendar/buy/pre')">
           <template slot="title">
             <div>自取时间</div>
             <div>{{getdate}}</div>

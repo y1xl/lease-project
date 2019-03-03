@@ -1,10 +1,9 @@
 <template>
   <div class="bgc ">
-    <div class="flex-jc-between flex-align-items box ">
+    <!-- <div class="flex-jc-between flex-align-items box ">
       <div>通知设置</div>
-
       <van-switch v-model="checked" active-color="#4EA9F9" inactive-color="#fff"/>
-    </div>
+    </div> -->
 
     <div class="btn text-c bgc-red" @click="logout">退出登陆</div>
   </div>

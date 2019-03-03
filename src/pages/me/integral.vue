@@ -10,7 +10,7 @@
     </div>
     <div class="mx">积分明细</div>
     <div class="box bgc">
-      <div v-for="(item,index) in 1">
+      <div v-for="(item,index) in 0">
         <div class="flex-center bgc">
           <div class="flex-jc-between flex-align-items inte_deta border-b">
             <div>
@@ -35,6 +35,11 @@ export default {
           backgroundSize: "100% 100%"
       },
     };
+  },
+  beforeCreate(){
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
+    }
   },
   methods: {}
 };

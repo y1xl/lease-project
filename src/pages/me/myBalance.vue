@@ -38,6 +38,11 @@ export default {
       money: null
     };
   },
+  beforeCreate(){
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
+    }
+  },
   created(){
     this.getlist()
   },

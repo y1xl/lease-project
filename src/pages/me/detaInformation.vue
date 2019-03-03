@@ -18,7 +18,7 @@
         <van-cell
           is-link
           center
-          :value="areaval==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name"
+          :value="!areaval[0].name||areaval[0].name==''||!areaval[1].name||areaval[1].name==''||!areaval[2].name||areaval[2].name==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name"
           @click="showarea=true"
         >
           <template slot="title">
@@ -139,7 +139,7 @@ export default {
             } else {
               this.sexval = this.sexList[1].val;
             }
-            let users_province = "";
+
             this.areaval = [
               { name: resdata.data.users_province },
               { name: resdata.data.users_city },

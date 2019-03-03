@@ -1,6 +1,8 @@
 <template>
   <div>
     <van-radio-group v-model="radio" @change="onchoose">
+      <div v-show="list.length==0" class="fc-grey text-c pd-15">没有更多了</div>
+      
       <div v-for="(item,index) in list" :key="index" class="card">
         <van-swipe-cell :right-width="65" :on-close="onClose">
           <div class="bgc flex-align-items item">

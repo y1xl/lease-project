@@ -27,7 +27,7 @@
             <div class="pt"></div>
             <div class="pd-lr-15">上传身份证 人像面</div>
             <div class="flex-center box">
-                <van-uploader :after-read="onRead1" multiple :max-size="maxsize" @oversize="oversize1">
+                <van-uploader :after-read="onRead1" multiple >
                     <div class="upload flex-center">
                         <img src="../../assets/icon-camera.png" alt="" class="icon" v-show="!img1" >
                         <img :src="img1" alt="" v-show="img1" style="object-fit:contain">
@@ -38,7 +38,7 @@
         <div class="bgc box-sizing">
             <div class="pd-lr-15">上传身份证 国徽面</div>
             <div class="flex-center box">
-                <van-uploader :after-read="onRead2" multiple :max-size="maxsize" @oversize="oversize2">
+                <van-uploader :after-read="onRead2" multiple  >
                     <div class="upload flex-center">
                         <img src="../../assets/icon-camera.png" alt="" class="icon" v-show="!img2" >
                         <img :src="img2" alt="" v-show="img2" style="object-fit:contain">
@@ -103,7 +103,10 @@ export default {
                 return
             }
             this.img1 = file.content
-            this.file1 = file
+            Compress(file.content,file.file.type).then(res=>{
+                // console.log(res,'compress')
+                this.file1 = res
+            })
         },
         onRead2(file) {
             console.log(file)
@@ -112,13 +115,10 @@ export default {
                 return
             }
             this.img2 = file.content
-            this.file2 = file
-        },
-        oversize1(){
-            Toast('文件不能超过2MB')
-        },
-        oversize2(){
-            Toast('文件不能超过2MB')
+            Compress(file.content,file.file.type).then(res=>{
+                // console.log(res,'compress')
+                this.file2 = res
+            })  
         },
 
         // getinfo(){
@@ -144,8 +144,8 @@ export default {
         submit(){
             Toast.loading({ mask: true,message: '加载中...'})
             let formData = new FormData()
-            formData.append('file',this.file1.file,this.file1.file.name)
-            formData.append('file1',this.file2.file,this.file2.file.name)
+            formData.append('file',this.file1)
+            formData.append('file1',this.file2)
             formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
 
             let config = {

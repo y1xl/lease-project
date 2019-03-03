@@ -6,7 +6,7 @@
     </div>
     <div class="pd-15 bgc border-b">
       <span>手机号</span>
-      <input type="text" maxlength="11" v-model.trim="phoneval">
+      <input type="number" maxlength="11" v-model.trim="phoneval">
     </div>
     <div class="pd-15 flex-jc-between bgc border-b" @click="showarea=true">
       <span>所在地区</span>

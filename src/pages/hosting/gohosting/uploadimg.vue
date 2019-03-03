@@ -227,6 +227,10 @@ export default {
         },
 
         submit(){
+            if (!window.localStorage.getItem("userinfo")) {
+                this.$router.replace({ path: "/login" });
+                return
+            }
             if(this.isconsent){
                 Toast("此功能未开通"); return
                 
@@ -284,7 +288,7 @@ export default {
                 formData.append('serial_number',serialnumval)  //产品序列号
                 formData.append('rate',30)  //费率 不要%号
                 
-                this.axios.post(this.API + "",formData,config)
+                this.axios.post(this.API + "api/Lease_Order/saveTrust",formData,config)
                 .then(res => {
                     console.log(res.data, "res")
                     let resdata = res.data
@@ -300,7 +304,6 @@ export default {
                     Toast.clear()
                     Toast('网络出错')
                 });
-                // this.$router.replace({ path: '/gsuccessful' })
             }else{
                 Toast("您还未同意合约");
             }

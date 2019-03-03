@@ -17,7 +17,7 @@
     </div>
 
     <div class="list" v-show="selected==0">
-      <div class="ordernull"  v-if="!list">
+      <div class="ordernull"  v-if="list.length==0">
         <img src="../../assets/order-null.png" alt="" class="mar-b-10">
         <div class="text-c fc-grey">暂无订单</div>
       </div>
@@ -43,7 +43,7 @@
           <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}`}">评价</router-link>
         </div>
         <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
-        <!-- <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div> --> 
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div> 
       </OrderCard> 
 
       <!-- <OrderCard status="待评价" v-show="active==5">
@@ -111,7 +111,7 @@
     </div>
 
     <div class="list" v-show="selected==1">
-      <div class="ordernull"  v-if="!list">
+      <div class="ordernull"  v-if="list.length==0">
         <img src="../../assets/order-null.png" alt="" class="mar-b-10">
         <div class="text-c fc-grey">暂无订单</div>
       </div>
@@ -217,7 +217,7 @@ export default {
       canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" },{ id: 6, text: "测试下单/误下单" }, { id: 7, text: "其他" }],
       showmodel: false,
       showcode: false,
-      list:null,
+      list:[],
       orderid:'',
       codeimg:''
     };
@@ -229,6 +229,15 @@ export default {
     }
   },
   created(){
+      // var date = '2019-03-01 16:18:07';
+      // date = date.substring(0,19);    
+      // date = date.replace(/-/g,'/'); 
+      // var timestamp = new Date(date).getTime()/1000;
+      // console.log(timestamp,'qqqqq');
+      // let newdata = Math.round(new Date() / 1000)
+      
+      // console.log(newdata-timestamp,'time');
+      
     this.getlist()
   },
   methods: {
@@ -254,7 +263,7 @@ export default {
       if (n == 1) {
         this.navarr = this.navarr1;
         this.active = 0
-        this.list = null //测试
+        this.list = [] //测试
       }
     },
     ontag(index, title) {
@@ -305,11 +314,12 @@ export default {
       } 
     },
 
-    getlist(){
+    getlist(){  
       if(this.selected==0){
         Toast.loading({ mask: true,message: '加载中...'})
         let postData = this.$qs.stringify({
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          // users_id: 3,
           order_status:this.active
         });
         this.axios.post(this.API + "api/Lease_Order/LeaseQuery", postData)

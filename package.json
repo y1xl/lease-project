@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "m-share": "^1.0.1",
+    "nativeshare": "^2.1.3",
     "vant": "^1.5.2",
     "vue": "^2.5.2",
     "vue-amap": "^0.5.8",

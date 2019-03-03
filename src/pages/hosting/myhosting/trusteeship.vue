@@ -45,6 +45,11 @@ export default {
       ind: 0
     };
   },
+  beforeCreate(){
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
+    }
+  },
   created() {
     this.getbrand();
   },

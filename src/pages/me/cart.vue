@@ -51,6 +51,11 @@ export default {
       delid:''
     };
   },
+  beforeCreate(){
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
+    }
+  },
   created(){
     this.getlist()
   },

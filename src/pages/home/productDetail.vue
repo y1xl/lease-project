@@ -85,7 +85,7 @@
       <van-cell is-link @click="discountmodel = true">
         <template slot="title">
           <span class="lab">活动</span>
-          <span class="custom-text">新人下单立减50元</span>
+          <!-- <span class="custom-text">新人下单立减50元</span> -->
         </template>
       </van-cell>
       <div class="flex-jc-around duo_mian">
@@ -199,23 +199,11 @@
           <div class="s_title border-b fsz">分享</div>
         </div>
         <div class="flex-jc-around border-b" style="padding:15px 0">
-          <div class="text-c">
+          <div class="text-c" v-for="(button, index) in shareButtons" :key="index" @click="call(button)">
             <div>
-              <img class="img_fx" src="../../assets/f_friend.png" alt>
+              <img class="img_fx" :src="button.src" :alt="button.text">
             </div>
-            <div class="grey_12">朋友圈</div>
-          </div>
-          <div class="text-c">
-            <div>
-              <img class="img_fx" src="../../assets/f_weixin.png" alt>
-            </div>
-            <div class="grey_12">微信</div>
-          </div>
-          <div class="text-c">
-            <div>
-              <img class="img_fx" src="../../assets/f_weibo.png" alt>
-            </div>
-            <div class="grey_12">微博</div>
+            <div class="grey_12">{{button.text}}</div>
           </div>
         </div>
         <div class="close" @click="showmodel = false">取消</div>
@@ -262,11 +250,6 @@
               <div :class="items.checked?'border-blue fc-blue':'border'" v-for="(items,indexs) in item.spec" :key="indexs" @click="onchooseguige(index,indexs)">{{items.attr_name}}</div>
             </div>
           </div>
-
-          <!-- <div class="mar-b-10 fsz12">数量</div>
-          <div>
-            <van-stepper v-model="numval"/>
-          </div>-->
         </div>
         <div class="pd-15" v-show="showinfo">
           <div class="gbtn text-c" @click="gobuy">开始下单</div>
@@ -283,6 +266,11 @@ import { Toast } from "vant";
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
 import { videoPlayer } from 'vue-video-player'
+
+const nativeshare = () => import ('nativeshare') 
+const m_share = () => import ('m-share')
+var NativeShare, mShare
+
 export default {
   components: {
     videoPlayer,
@@ -317,18 +305,27 @@ export default {
         notSupportedMessage: '此视频暂无法播放，请稍后重试',
       },
       playsinline: false,
-      tel:''
+      tel:'',
+
+      shareButtons:[
+        {text: '微信好友', nativeshare:'wechatFriend', m_share: 'wx' , src: require('@/assets/f_weixin.png')},
+        {text: '朋友圈', nativeshare:'wechatTimeline', m_share: 'wxline', src: require('@/assets/f_friend.png')},
+        {text: '新浪微博', nativeshare:'weibo', m_share: 'sina', src: require('@/assets/f_weibo.png')},
+      ]
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
+  // beforeCreate(){
+  //   if (!window.localStorage.getItem("userinfo")) {
+  //     this.$router.replace({ path: "/login" });
+  //   }
+  // },
   created(){
     this.getdetail()
   },
   mounted(){
+    nativeshare().then(res =>  {NativeShare = res.default} )
+    m_share().then(res => {mShare = res})
+
     this.gettel()
     this.getguige()
   },
@@ -426,10 +423,15 @@ export default {
     },
     //口碑
     toMouthw() {
-      this.$router.push({ path: "/WordMouth" });
+      this.$router.push({ path: "/wordMouth" });
     },
 
     gobuy() {
+      if (!window.localStorage.getItem("userinfo")) {
+        this.$router.replace({ path: "/login" });
+        return
+      }
+
       let arr = []
       for(let v of this.speclist){
         for (let v1 of v.spec){
@@ -463,6 +465,11 @@ export default {
       }
     },
     addcart(){
+      if (!window.localStorage.getItem("userinfo")) {
+        this.$router.replace({ path: "/login" });
+        return
+      }
+
       let arr = []
       let attr_ids = []
       let attr_names = []
@@ -520,6 +527,46 @@ export default {
 
       }else{
         Toast('请先选择规格')
+      }
+    },
+
+    call(command) {
+      let config = {
+        title: document.title,
+        desc: this.detail.goods_name,
+        img: this.detail.gd_img[0],
+        link: window.location.href
+      }
+      let shareData = {  //nativeShare的参数模型
+          title: config.title,
+          desc: config.desc,
+          // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+          link: config.link,
+          icon: config.img,
+          // 不要过于依赖以下两个回调，很多浏览器是不支持的
+          success: function() {
+              alert('success')
+          },
+          fail: function() {
+              alert('fail')
+          }
+      }
+      let mShareData = {  //m-share的参数模型
+            title: config.title, // 标题，默认读取document.title
+            desc: config.desc, // 描述, 默认读取head标签：<meta name="description" content="desc" />
+            link: config.link, // 网址，默认使用window.location.href
+            imgUrl: config.img, // 图片, 默认取网页中第一个img标签
+            fnDoShare(type) {
+                console.log('success')
+            }
+      }
+      let nativeShare = new NativeShare()
+      nativeShare.setShareData(shareData)
+      try {
+        nativeShare.call(command.nativeshare)
+      } catch(e) {
+        //在iphone的qq浏览器中比较奇葩，第一次调用nativeShare.call()会报错，第二次之后不报，这里是让每次调用nativeShare.call()之后都报错，然后统一去调m-share.to()方法
+        mShare.to(command.m_share, mShareData)
       }
     }
   }

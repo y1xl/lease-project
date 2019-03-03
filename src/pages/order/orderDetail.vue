@@ -265,7 +265,7 @@
       <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
       <div class="flex-center border" v-if="data.order_status==6" @click="gorelet(data.order_id)">续租</div>
       <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
-      <!-- <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div> -->
+      <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
       <div class="flex-center border" v-if="data.order_status==9&&user_validation==0">
         <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
       </div>

@@ -20,12 +20,12 @@
         </div>
       </div>
       <div class="flex-center jd_box">
-        <img src="../../assets/yiqd.png" class="true_img">
-        <!-- <div class="oneday text-c fc-blue">1</div> -->
-        <div class="yxian_blue"></div>
-        <!-- <div class="xian_blue"></div> -->
-        <!-- <div class="oneday text-c fc-blue">2</div> -->
-        <img src="../../assets/yiqd.png" class="true_img">
+        <!-- <img src="../../assets/yiqd.png" class="true_img"> -->
+        <div class="oneday text-c fc-blue">1</div>
+        <!-- <div class="yxian_blue"></div> -->
+        <div class="xian_blue"></div>
+        <div class="oneday text-c fc-blue">2</div>
+        <!-- <img src="../../assets/yiqd.png" class="true_img"> -->
 
         <div class="xian_blue"></div>
         <div class="oneday text-c fc-blue">3</div>
@@ -49,9 +49,9 @@
             晒图分享
           </div>
           <div>
-            <div class="btn1 text-c">领奖励</div>
+            <!-- <div class="btn1 text-c">领奖励</div> -->
             <!-- <div class="btn2 text-c">已领取</div> -->
-            <!-- <div class="btn3 text-c">去完成</div> -->
+            <div class="btn3 text-c">去完成</div>
           </div>
         </div>
       </div>
@@ -64,8 +64,8 @@
           </div>
           <div>
             <!-- <div class="btn1 text-c">领奖励</div> -->
-            <div class="btn2 text-c">已领取</div>
-            <!-- <div class="btn3 text-c">去完成</div> -->
+            <!-- <div class="btn2 text-c">已领取</div> -->
+            <div class="btn3 text-c">去完成</div>
           </div>
         </div>
       </div>

@@ -53,26 +53,9 @@
                 <van-icon name="arrow"/>
               </div>
             </div>
-            
-            <!-- <div class="flexbox border-b bgc camer_hm_box">
-              <div
-                class="camer_hm"
-                @click="toDetail(goods.goods_id)"
-                v-for="(goods,index) in item.goods"
-                :key="index"
-              >
-                <div class="img_box2 flex-center">
-                  <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
-                </div>
-                <div class="text-line pro_name">{{goods.goods_name}}</div>
-                <div class="f12">     
-                  低至
-                  <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
-                </div>
-              </div>
-            </div> -->
+        
               <div style="overflow:hidden">
-                <div class="border-b bgc indexbox">
+                <div class=" bgc indexbox">
                   <div
                     class="indexitem"
                     @click="toDetail(goods.goods_id)"
@@ -82,8 +65,8 @@
                     <div class="img_box2 flex-center">
                       <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
                     </div>
-                    <div class="text-line pro_name">{{goods.goods_name}}</div>
-                    <div class="f12">     
+                    <div class="text-line pro_name pdlr5">{{goods.goods_name}}</div>
+                    <div class="f12 pdlr5">     
                       低至
                       <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                     </div>
@@ -95,25 +78,8 @@
 
         <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key="index">
           <div class="title" v-show="!hostlist.length==0">热门推荐</div>
-          <!-- <div class="flexbox border-b bgc camer_hm_box" v-show="!hostlist.length==0">
-            <div
-              class="camer_hm"
-              v-for="(goods,index) in hostlist"
-              :key="index"
-              @click="toDetail(goods.goods_id)"
-            >
-              <div class="img_box2 flex-center">
-                <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
-              </div>
-              <div class="text-line pro_name">{{goods.goods_name}}</div>
-              <div class="f12">
-                低至
-                <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
-              </div>
-            </div>
-          </div> -->
           <div style="overflow:hidden" >
-            <div class="border-b bgc indexbox" v-show="!hostlist.length==0">
+            <div class=" bgc indexbox" v-show="!hostlist.length==0">
               <div
                 class="indexitem"
                 @click="toDetail(goods.goods_id)"
@@ -123,8 +89,8 @@
                 <div class="img_box2 flex-center">
                   <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
                 </div>
-                <div class="text-line pro_name">{{goods.goods_name}}</div>
-                <div class="f12">     
+                <div class="text-line pro_name pdlr5">{{goods.goods_name}}</div>
+                <div class="f12 pdlr5">     
                   低至
                   <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                 </div>
@@ -199,7 +165,7 @@ export default {
           init(o) {
             // o 是高德地图定位插件实例
             o.getCurrentPosition((status, result) => {          
-              console.log(result);
+              // console.log(result);
               if (result && result.position) {
                 self.getNearShop(result.position.lat,result.position.lng)
                 let center = {
@@ -209,7 +175,7 @@ export default {
                 window.localStorage.setItem("center", JSON.stringify(center));
                 self.$nextTick();
               }else{
-                Toast('获取定位失败')
+                // Toast('获取定位失败')
               }
             });
           }
@@ -356,7 +322,7 @@ export default {
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
 #banner .van-swipe {
-  border-radius: 5px
+  border-radius: 5px;
 }
 </style>
 
@@ -369,6 +335,10 @@ export default {
 }
 .pl10{
   padding-left:10px
+}
+.pdlr5{
+  padding-left:5px;
+  padding-right:5px
 }
 
 .top_sear {
@@ -497,9 +467,10 @@ export default {
   height: 175px;
 }
 .img_box2 {
-  width: 95px;
-  height: 95px;
-  background: #f7f7f7;
+  /* width: 95px; */
+  width: 100%;
+  height: 105px;
+  /* background: #f7f7f7; */
 }
 
 .indexbox {
@@ -510,6 +481,7 @@ export default {
   overflow-y:hidden;
   display: inline;
   float:left;
+  padding-top:5px;
 }
 .indexbox > div {
   margin-left: 9px;
@@ -518,9 +490,11 @@ export default {
   display: none;
 }
 .indexitem {
-  width: 95px;
-  height: 175px;
+  width: 105px;
+  height: 170px;
   display: inline-block;
+  box-shadow: 0px 0px 4px 1px #DAD7D7;
+  box-sizing: border-box;
 }
 
 
@@ -545,7 +519,7 @@ export default {
 }
 
 .pro_name {
-  margin-top: 5px;
+  /* margin-top: 5px; */
   line-height: 30px;
 }
 .com_like {

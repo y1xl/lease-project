@@ -3,6 +3,8 @@
     <div id="nav">
       <van-tabs @click="ontab" v-model="ind">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
+          <div v-show="couponlist.length==0&&ind!=3" class="fc-grey text-c pd-15">没有更多了</div>
+
           <div
             class="coupon_box position"
             v-for="(item,index) in couponlist"
@@ -54,6 +56,11 @@ export default {
       ind: 0,
       couponsCode:''
     };
+  },
+  beforeCreate(){
+    if (!window.localStorage.getItem("userinfo")) {
+      this.$router.replace({ path: "/login" });
+    }
   },
   created(){
     this.getdata()
