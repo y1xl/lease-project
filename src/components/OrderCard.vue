@@ -8,7 +8,7 @@
                 <span class="fc-blue" v-if="data.order_status==4">订单关闭</span>
                 <span class="fc-blue" v-if="status=='订单超时'">订单超时</span>
                 <span class="fc-blue" v-if="data.order_status==8">检测中</span>
-                <span class="fc-blue" v-if="data.order_status==9&&data.user_validation==0">售后中</span>
+                <span class="fc-blue" v-if="data.order_status==9">售后中</span>
                 <span class="fc-blue" v-if="data.order_status==9&&data.user_validation==1">待确认</span>
                 <span class="fc-blue" v-if="data.order_status==10">退押金中</span>
                 <span class="fc-blue" v-if="data.order_status==1">待付款</span>

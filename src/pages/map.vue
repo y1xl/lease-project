@@ -26,7 +26,7 @@ export default {
     return {
       zoom: 16,
       // center:[121.406051,31.179695],
-      center:[this.$route.params.center.split(",")[1],this.$route.params.center.split(",")[0]],
+      center:[this.$route.params.center.split(",")[0],this.$route.params.center.split(",")[1]],
       shopinfo: this.$route.params.shop.split(","),
     };
   },

@@ -63,7 +63,7 @@
                     :key="index"
                   >
                     <div class="img_box2 flex-center">
-                      <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
+                      <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
                     </div>
                     <div class="text-line pro_name pdlr5">{{goods.goods_name}}</div>
                     <div class="f12 pdlr5">     
@@ -87,7 +87,7 @@
                 :key="index"
               >
                 <div class="img_box2 flex-center">
-                  <img class="img" :src="goods.gd_img[0]" style="object-fit:contain" alt="商品">
+                  <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
                 </div>
                 <div class="text-line pro_name pdlr5">{{goods.goods_name}}</div>
                 <div class="f12 pdlr5">     
@@ -107,7 +107,7 @@
               @click="toDetail(item.goods_id)"
             >
               <div class="img_box">
-                <img class="sy_img" :src="item.gd_img[0]" style="object-fit:contain" alt="商品">
+                <img class="sy_img" :src="item.main_img" style="object-fit:contain" alt="商品">
               </div>
               <div class="f14 pro_name">{{item.goods_name}}</div>
               <div class="com_like">

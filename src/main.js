@@ -31,8 +31,8 @@ Vue.config.productionTip = false
 import qs from 'qs'
 Vue.prototype.$qs = qs
 
-Vue.prototype.API = 'https://newbee.zx-app.cn/'
-// Vue.prototype.API = 'https://www.newbeerent.com/'
+// Vue.prototype.API = 'https://newbee.zx-app.cn/'
+Vue.prototype.API = 'https://admin.newbeerent.com/'
 
 /* eslint-disable no-new */
 new Vue({

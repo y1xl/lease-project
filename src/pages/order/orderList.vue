@@ -34,7 +34,7 @@
           <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
         </div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==0" @click="onConfirmsales(item.order_id)">确认</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0" @click="gocompensation(item.order_id)">
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0&&item.service_money&&item.service_money>0" @click="gocompensation(item.order_id)">
           确认
         </div>
         <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
@@ -175,6 +175,7 @@
 <script>
 import OrderCard from "@/components/OrderCard";
 import { Toast,Dialog } from "vant";
+
 export default {
   components: {
     OrderCard
@@ -219,7 +220,7 @@ export default {
       showcode: false,
       list:[],
       orderid:'',
-      codeimg:''
+      codeimg:'',
     };
   },
   beforeCreate(){
@@ -228,16 +229,7 @@ export default {
       this.$router.replace({ path: "/login" })
     }
   },
-  created(){
-      // var date = '2019-03-01 16:18:07';
-      // date = date.substring(0,19);    
-      // date = date.replace(/-/g,'/'); 
-      // var timestamp = new Date(date).getTime()/1000;
-      // console.log(timestamp,'qqqqq');
-      // let newdata = Math.round(new Date() / 1000)
-      
-      // console.log(newdata-timestamp,'time');
-      
+  created(){  
     this.getlist()
   },
   methods: {

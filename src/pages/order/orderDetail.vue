@@ -5,7 +5,7 @@
         <span v-if="data.order_status==6">租赁中</span>
         <span v-if="data.order_status==4">订单关闭</span>
         <span v-if="data.order_status==8">检测中</span>
-        <span v-if="data.order_status==9&&user_validation==0">售后中</span>
+        <span v-if="data.order_status==9">售后中</span>
         <span v-if="data.order_status==10">退押金中</span>
         <span v-if="data.order_status==1">待付款</span>
         <span v-if="data.order_status==5">待收货</span>
@@ -14,8 +14,8 @@
         <span v-if="data.order_status==9&&user_validation==1">售后待确认</span>
         <span v-if="data.order_status==11">已完成</span>
       </div>
-      <!-- <div class="fc-blue fsz13">剩余29分钟36秒的支付时间</div> -->
-      <div class="fsz13 fc-grey">{{data.withouTreason}}</div>
+      <div class="fc-blue fsz13" v-if="data.order_status==1">剩余{{minutes}}分钟{{seconds}}秒的支付时间</div>
+      <div class="fsz13 fc-grey" v-if="active==7">{{data.withouTreason}}</div>
     </div>
 
     <div class="pd-lr-15">
@@ -206,6 +206,10 @@
               <span>免押额度</span>
               <span class="flex-1">-¥{{data.order_credit_rent||0}}</span>
             </div>
+            <div class="flexbox" v-if="data.service_money">
+              <span>维修费</span>
+              <span class="flex-1">¥{{data.service_money||0}}</span>
+            </div>
           </div>
         </div>
 
@@ -270,7 +274,7 @@
         <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
       </div>
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==0" @click="onConfirmsales(data.order_id)">确认</div>
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0" @click="gocompensation(data.order_id)">
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0&&data.service_money&&data.service_money>0" @click="gocompensation(data.order_id)">
         确认
       </div>
       <div class="flex-center border-blue fc-blue" v-if="active==5">
@@ -294,6 +298,8 @@
 <script>
 import { ImagePreview } from 'vant';
 import { Toast } from 'vant';
+let payCountdown = ''
+
 export default {
   data(){
     return {
@@ -322,6 +328,8 @@ export default {
       active: this.$route.query.active,
       codeimg:'',
       showcode: false,
+      minutes: '-',
+      seconds: '-'
     }
   },
   created(){
@@ -330,7 +338,32 @@ export default {
   mounted(){
     this.getSalesData()
   },
+
   methods:{
+    // 倒计时
+    countdown(val){
+      var date = val;
+      date = date.substring(0,19);    
+      date = date.replace(/-/g,'/'); 
+      var timestamp = new Date(date).getTime();
+      let newdata = new Date().getTime()
+      let timediff = newdata - timestamp
+
+      //计算出相差天数
+      var days=Math.floor(timediff/(24*3600*1000))
+      //计算出小时数
+      var leave1=timediff%(24*3600*1000)    //计算天数后剩余的毫秒数
+      var hours=Math.floor(leave1/(3600*1000))
+      //计算相差分钟数
+      var leave2=leave1%(3600*1000)        //计算小时数后剩余的毫秒数
+      var minutes=Math.floor(leave2/(60*1000))
+      //计算相差秒数
+      var leave3=leave2%(60*1000)      //计算分钟数后剩余的毫秒数
+      var seconds=Math.round(leave3/1000)
+      // console.log(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
+      this.minutes = 30-minutes
+      this.seconds = 60-seconds
+    },
     onImagePreview(imgurl){
       ImagePreview([
         imgurl,
@@ -360,8 +393,15 @@ export default {
           let resdata = res.data
           if (resdata.code == 200) {
             Toast.clear()
-              this.data = resdata.data[0]
-              this.queryLogistics()
+            this.data = resdata.data[0]
+
+            if(this.data.order_status==1){
+              payCountdown = setInterval(()=>{
+                this.countdown(this.data.create_time)
+              },1000)
+            }
+
+            this.queryLogistics()
           } else {
             Toast.clear()
               Toast(resdata.message)
@@ -508,7 +548,11 @@ export default {
         });
       } 
     },
-  }
+  },
+
+  beforeDestroy(){
+    clearInterval(payCountdown)
+  },
 };
 </script>
 

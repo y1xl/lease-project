@@ -76,7 +76,7 @@
       >
         <template slot="title">
           <div>期望收到的日期</div>
-          <div style="font-size:12px" class="fc-grey">收到货的次日起算租金</div>
+          <div class="fc-grey fs12">收到货的次日起算租金</div>
         </template>
       </van-cell>
       <van-cell
@@ -310,6 +310,7 @@ export default {
   },
   computed: {
     columns: function() {
+      console.log('columns')
       if (this.typenum == 0) {
         if (this.Dinsurance || this.isinsurance) {
           this.sum = accAdd(this.detail.pay_safe, this.detail.safe_price);
@@ -318,9 +319,11 @@ export default {
         }
 
         if (this.weektext == "天") {
+          console.log('columns天')
           this.weekval = "";
           this.isdisabled = false;
         } else if (this.weektext == "小时") {
+          this.weekval = 6;
           this.isdisabled = true;
         } else {
           this.weektext = "请选择";
@@ -328,6 +331,7 @@ export default {
           this.rent = 0;
         }
 
+        // return ["天", "小时"]; //111111111111111111111111111111111111111
         if (this.hire_cate == 1 || this.hire_cate == 3) {
           return ["天"];
         }
@@ -405,13 +409,13 @@ export default {
     onConfirmWeek(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
       this.weektext = value;
-      if (value == "小时") {
-        this.weekval = 6;
-        this.isdisabled = true;
-      }
-      if (value == "天") {
-        this.isdisabled = false;
-      }
+      // if (value == "小时") {
+      //   this.weekval = 6;
+      //   this.isdisabled = true;
+      // }
+      // if (value == "天") {
+      //   this.isdisabled = false;
+      // }
       this.showweek = false;
     },
     onConfirmTimequantum(value, index) {
@@ -800,6 +804,9 @@ export default {
 .nav {
   /* padding: 15px; */
   padding-bottom: 20px;
+}
+.fs12{
+  font-size: 12px;
 }
 .nav > div {
   width: 80px;

@@ -33,7 +33,7 @@
             </van-swipe-item>
             <van-swipe-item v-for="(item, index) in detail.gd_img" :key="index">
               <div class="img_box">
-                <img :src="item" >
+                <img :src="item" style="object-fit:contain">
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -229,7 +229,7 @@
     <div class="model full" v-show="showinfo||showinfocar">
       <div class="main bgc">
         <div class="goods1 flexbox pd-15">
-          <img :src="detail.gd_img[0]" alt >
+          <img :src="detail.gd_img[0]" alt style="object-fit:contain">
           <div class="flex-1">
             <div class="mar-b-10 position title">{{detail.goods_name}}
               <div class="closeicon" @click="showinfo=false,showinfocar=false">
@@ -304,7 +304,7 @@ export default {
         poster: "", 
         notSupportedMessage: '此视频暂无法播放，请稍后重试',
       },
-      playsinline: false,
+      playsinline: true,
       tel:'',
 
       shareButtons:[
@@ -579,7 +579,6 @@ export default {
 } */
 </style>
 
-
 <style scoped>
 .height {
   height: 50px;
@@ -597,13 +596,15 @@ export default {
 }
 .banner {
   width: 290px;
-  height: 230px;
+  height: 240px;
+  /* height: 290px; */
   box-shadow: 0px 1px 7px 1px rgba(233, 235, 237, 1);
   overflow: hidden;
 }
 .img_box {
   /* width: 290px; */
-  height: 230px;
+  height: 240px;
+  /* height: 290px; */
 }
 
 .product {
@@ -869,7 +870,7 @@ export default {
   width: 80px;
   height: 80px;
   margin-right: 10px;
-  background-color: #f6f6f6;
+  /* background-color: #f6f6f6; */
 }
 .goods1 .title {
   padding-right: 10px;
