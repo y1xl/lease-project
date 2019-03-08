@@ -4,6 +4,7 @@
       <van-tabs @click="ontab" v-model="ind">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
           <div v-show="couponlist.length==0&&ind!=3" class="fc-grey text-c pd-15">没有更多了</div>
+          <div v-show="getcouponlist.length==0&&ind==3" class="fc-grey text-c pd-15">没有更多了</div>
 
           <div
             class="coupon_box position"
@@ -30,7 +31,32 @@
             </div>
           </div>
 
-          <div id="dialog">
+          <div
+            class="coupon_box position"
+            v-for="(item,index) in getcouponlist"
+            :key="index"
+            v-show="ind ==3"
+            @click="receive"
+          >
+            <div>
+              <img src="../../assets/1.png">
+            </div>
+
+            <div class="coupon_con flex-jc-around flex-align-items">
+              <div>
+                <span class="num">{{item.coupons_money}}</span>
+                <span class="yuan">元</span>
+              </div>
+              <div>
+                <div class="coupon_fl">{{item.coupon_name}}</div>
+                <div class="limit">
+                  <div>满{{item.coupons_condition}}可用</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div id="dialog">
             <van-dialog v-model="show" show-cancel-button :before-close="beforeClose">
               <div class="mask_box text-c">
                 <img src="../../assets/2.png">
@@ -38,7 +64,7 @@
                 <input placeholder="请输入兑换码" v-model="couponsCode">
               </div>
             </van-dialog>
-          </div>
+          </div> -->
         </van-tab>
       </van-tabs>
     </div>
@@ -50,11 +76,12 @@ import { Dialog,Toast } from "vant";
 export default {
   data() {
     return {
-      navtitle: ["未使用", "已使用", "已失效", "领取/兑换"],
+      navtitle: ["未使用", "已使用", "已失效", "领取"],
       couponlist: [],
-      show: false,
+      getcouponlist:[],
+      // show: false,
       ind: 0,
-      couponsCode:''
+      // couponsCode:''
     };
   },
   beforeCreate(){
@@ -68,14 +95,19 @@ export default {
   methods: {
     ontab(index, title) {
       console.log(index, title);
-      if (this.ind == 3) {
-        this.show = true;
-        this.couponsCode=''
-        return
-      } else {
-        this.show = false;
+      // if (this.ind == 3) {
+      //   this.show = true;
+      //   this.couponsCode=''
+      //   return
+      // } else {
+      //   this.show = false;
+      // }
+      if(this.ind==3){
+        this.getcoupon()
+      }else{
+        this.getdata()
       }
-      this.getdata()
+      
     },
 
     getdata(){
@@ -101,6 +133,30 @@ export default {
             Toast(resdata.message);
           }
         });
+    },
+    getcoupon(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      });
+      this.axios
+        .post(this.API + "api/Lease/get_coupons", postData)
+        .then(res => {
+          console.log(res.data, "getcouponslist");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            
+            this.getcouponlist = resdata.data
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+          }
+        });
+    },
+    //领取
+    receive(){
+
     },
 
     beforeClose(action, done) {

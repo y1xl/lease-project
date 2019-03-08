@@ -32,7 +32,8 @@ import qs from 'qs'
 Vue.prototype.$qs = qs
 
 // Vue.prototype.API = 'https://newbee.zx-app.cn/'
-Vue.prototype.API = 'https://admin.newbeerent.com/'
+Vue.prototype.API = ' https://newbeeadmin.zx-xcx.com/'
+// Vue.prototype.API = 'https://admin.newbeerent.com/'
 
 /* eslint-disable no-new */
 new Vue({

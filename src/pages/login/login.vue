@@ -1,5 +1,6 @@
 <template>
   <div class="bgc bigbox">
+    <!-- <a href="weixin://dl/businessWebview/link/?appid=wxf80fb83b970838a2&url=https://newbee.zx-xcx.com/#/login">打开微信1</a> -->
     <div class="flex-jc-center login_box">
       <div class="login">
         <div class="tip_title text-c pdt50">Hi!</div>
@@ -17,7 +18,7 @@
           </div>
           <div class="flex-jc-around bott">
             <img src="../../assets/l_zhifubao.png" alt="支付宝" class="icon_img" @click="goali">
-            <img src="../../assets/l_weixin.png" alt="微信" class="icon_img" >
+            <img src="../../assets/l_weixin.png" alt="微信" class="icon_img" @click="gowx">
             <img src="../../assets/l_weibo.png" alt="新浪" class="icon_img" @click="gosina">
           </div>
         </div>
@@ -98,6 +99,31 @@ export default {
               message: '是否进行新浪授权'
             }).then(() => {
               window.location.href = resdata.data
+            }).catch(() => {
+              // on cancel
+            });
+        } else {
+          Toast.clear();
+          Toast(resdata.message);
+        }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
+    },
+    gowx(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      this.axios.post(this.API + "api/Order/GetCodeUrl").then(res => {
+        console.log(res.data, "gosina");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          Toast.clear();
+
+          Dialog.confirm({
+              message: '是否进行微信授权'
+            }).then(() => {
+              window.location.href = `${resdata.data}`
             }).catch(() => {
               // on cancel
             });

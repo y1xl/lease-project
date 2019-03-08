@@ -165,7 +165,7 @@ export default {
           init(o) {
             // o 是高德地图定位插件实例
             o.getCurrentPosition((status, result) => {          
-              // console.log(result);
+              console.log(result);
               if (result && result.position) {
                 self.getNearShop(result.position.lat,result.position.lng)
                 let center = {

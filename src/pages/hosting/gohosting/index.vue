@@ -123,19 +123,19 @@
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
                     <div class="flex-1">
                         <div class="mar-b-10 fc-grey">品类</div>
-                        <input style="width:100%" type="text" placeholder="请输入托管品类" >
+                        <input style="width:100%" type="text" placeholder="请输入托管品类" v-model.trim="notypetext">
                     </div>
                 </div>
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
                     <div class="flex-1">
                         <div class="mar-b-10 fc-grey">品牌</div>
-                        <input style="width:100%" type="text" placeholder="请输入品牌" >
+                        <input style="width:100%" type="text" placeholder="请输入品牌" v-model.trim="nobrandtext">
                     </div>
                 </div>
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
                     <div class="flex-1">
                         <div class="mar-b-10 fc-grey">型号</div>
-                        <input style="width:100%" type="text" placeholder="请输入型号" >
+                        <input style="width:100%" type="text" placeholder="请输入型号"  v-model.trim="nomodeltext">
                     </div>
                 </div>
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="pd-15">
-                    <div class="btn text-c" >下一步</div>
+                    <div class="btn text-c" @click="notnext">下一步</div>
                 </div>
             </div>
         </van-popup>
@@ -180,7 +180,11 @@ export default {
             colortext: '',
             // colorarr: ['颜色1', '颜色2'],
             gohostingSession: '',
-            shownomodel: false
+            shownomodel: false,
+
+            notypetext:'',
+            nobrandtext:'',
+            nomodeltext:''
         }
     },
     created(){
@@ -190,6 +194,7 @@ export default {
             this.brandtext = gohostingSession.brandtext
             this.modeltext = gohostingSession.modeltext
             this.colortext = gohostingSession.colortext
+            this.shownomodel = gohostingSession.notequipment
             this.gohostingSession = gohostingSession
         }
 
@@ -315,6 +320,7 @@ export default {
             }
 
             let gohostingSession = {
+                notequipment: false, 
                 typetext: this.typetext,
                 brandtext:this.brandtext,
                 modeltext:this.modeltext,
@@ -336,8 +342,12 @@ export default {
                 serialnumval:this.gohostingSession.serialnumval||'',
                 telval:this.gohostingSession.telval||'',
             }
+            
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/steps2' })
+        },
+        notnext(){
+
         }
     }
 }

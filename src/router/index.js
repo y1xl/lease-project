@@ -29,6 +29,7 @@ import AppointmentExpress from '@/pages/order/appointmentExpress'
 import Deny from '@/pages/order/deny'
 import Calendar from '@/pages/order/calendar'
 import Compensation from '@/pages/order/compensation'
+import SendBack from '@/pages/order/sendBack'
 
 //个人中心
 import Rules from '@/pages/me/rules'
@@ -61,6 +62,7 @@ import ResetPassword from '@/pages/login/resetPassword'
 import InputCode from '@/pages/login/inputCode'
 import AliLogin from '@/pages/login/aliLogin'
 import SinaLogin from '@/pages/login/sinaLogin'
+import WxLogin from '@/pages/login/wxLogin'
 
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
@@ -121,6 +123,7 @@ export default new Router({
     { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
     { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
     { path: '/compensation/:id', component: Compensation, meta: { title: '赔偿' } },
+    { path: '/sendBack/:id', component: SendBack, meta: { title: '自行寄回' } },
     //产品
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表' } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
@@ -168,6 +171,7 @@ export default new Router({
     { path: '/inputCode/:phone', component: InputCode, meta: { title: '输入验证码' } },
     { path: '/alilogin', component: AliLogin, meta: { title: '授权' } },
     { path: '/sinalogin', component: SinaLogin, meta: { title: '授权' } },
+    { path: '/wxlogin', component: WxLogin, meta: { title: '授权' } },
 
     //门店
     { path: '/shopDetail', component: ShopDetail, meta: { title: '门店详情' } },

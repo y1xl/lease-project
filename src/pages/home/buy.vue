@@ -302,6 +302,9 @@ export default {
         });
     },
     getaddress() {
+      if(this.getaddress == ""){
+        return
+      }
       if (this.typenum == 0) {
         return;
       }
@@ -348,6 +351,9 @@ export default {
           this.isdisabled = false;
         }
 
+        if(this.getaddress == ""){
+          return ["天"];
+        }
         this.getfreight();
         return ["天"];
       }
@@ -445,6 +451,7 @@ export default {
             }
           }
         } else {
+          this.getaddress = ''
           Toast(resdata.message);
         }
       });
@@ -526,7 +533,10 @@ export default {
     getfreight() {
       let postData = this.$qs.stringify({
         type: this.typenum,
-        ads_id: this.getaddress.ads_id
+        ads_id: this.getaddress.ads_id,
+        goods_id: this.detail.goods_id,
+        sku: this.guiges,
+        time: this.expectdate||''
       })
       this.axios
         .post(this.API + "api/Order/ExpressPrice", postData)
@@ -590,7 +600,7 @@ export default {
               }
             }
           } else {
-            Toast(resdata.message);
+            // Toast(resdata.message);
           }
         });
     },

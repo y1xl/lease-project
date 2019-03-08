@@ -1,10 +1,12 @@
 <template>
     <div>
         <div class="header bgc mar-b-10 box-sizing">
-            <div class="text-c">您的额度(元)</div>
+            <div class="text-c">您的可用额度(元)</div>
             <div class="text-c num">{{info.users_money}}</div>
             <div class="text-c marb30"><router-link class="lines" to="/certification">提升额度</router-link></div>
-            <div class="text-c">您的押金为{{info.order_credit_rent}}元,仍需支付<span class="fc-red"> ¥{{info.order_rent}}</span></div>
+            <div class="text-c">总租金{{info.order_rental||'-'}}元</div>
+            <div class="text-c mar-b-10">总押金{{info.order_total_rent||'-'}}元</div>
+            <div class="text-c">您需支付<span class="fc-red"> ¥{{info.order_rent||'-'}}</span></div>
         </div>
 
         <div class="bgc">
@@ -211,7 +213,7 @@ export default {
     margin-bottom: 30px;
 }
 .header {
-    height: 235px;
+    height: 300px;
     padding-top: 30px;
 }
 .header .num {

@@ -87,7 +87,7 @@ export default {
   },
   watch: {
     weekval() {
-      if (this.weekval <= 0) {
+      if (this.weekval < 0) {
         this.weekval = 1
         Toast('不能为小于0');
         return;
