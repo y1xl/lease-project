@@ -112,7 +112,7 @@
       <van-cell title="押金" center :value="'￥'+detail.gd_deposit"></van-cell>
       <van-cell title="租金" center :value="'￥'+rent"></van-cell>
       <van-cell title="应付总金额" center>
-        <span class="fc-red">￥{{sum}}</span>
+        <span class="fc-red">￥{{calculatesum}}</span>
       </van-cell>
     </div>
 
@@ -312,6 +312,12 @@ export default {
     }
   },
   computed: {
+    calculatesum: function(){
+      if(this.sum-0<0){
+        return 0
+      }
+      return this.sum
+    },
     columns: function() {
       console.log('columns')
       if (this.typenum == 0) {
@@ -634,6 +640,8 @@ export default {
       if(index+1==this.couponindex){
         this.couponindex = ''
         this.couponstext = ''
+        this.coupons_condition = ''
+        this.couponid = ''
         this.sum = accAdd(this.sum,item.coupons_money)
       }else{
         this.couponindex = index+1
@@ -646,15 +654,8 @@ export default {
     },
 
     nextface() {
+      console.log(this.couponid)
       if (this.isconsent) {
-        // if(this.couponindex!=''){
-        //   let sum = accAdd(this.sum,this.couponstext)   
-        //   if(this.coupons_condition < sum){            
-        //   // if('20.00'<50.00){
-        //     Toast("优惠券不满足使用条件")
-        //     return
-        //   }
-        // }
 
         if (this.typenum == 0) {
           if(this.getlocation == ""){

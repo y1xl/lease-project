@@ -190,9 +190,15 @@ export default {
     created(){
         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
         if(gohostingSession){
-            this.typetext = gohostingSession.typetext
-            this.brandtext = gohostingSession.brandtext
-            this.modeltext = gohostingSession.modeltext
+            if(gohostingSession.notequipment){
+                this.notypetext = gohostingSession.typetext.cate_name
+                this.nobrandtext = gohostingSession.brandtext.brand_name
+                this.nomodeltext = gohostingSession.modeltext.model_name
+            }else{
+                this.typetext = gohostingSession.typetext
+                this.brandtext = gohostingSession.brandtext
+                this.modeltext = gohostingSession.modeltext
+            }
             this.colortext = gohostingSession.colortext
             this.shownomodel = gohostingSession.notequipment
             this.gohostingSession = gohostingSession
@@ -347,7 +353,49 @@ export default {
             this.$router.push({ path: '/steps2' })
         },
         notnext(){
+            if(this.notypetext==''){
+                Toast("请选择品类");
+                return
+            }
+            if(this.nobrandtext==''){
+                Toast("请选择品牌");
+                return
+            }
+            if(this.nomodeltext==''){
+                Toast("请选择型号");
+                return
+            }
+            if(this.colortext==''){
+                Toast("请输入颜色");
+                return
+            }
 
+            let gohostingSession = {
+                notequipment: true, 
+                typetext: {cate_name:this.notypetext},
+                brandtext:{brand_name:this.nobrandtext},
+                modeltext:{model_name:this.nomodeltext},
+                colortext:this.colortext,
+
+                datetext: this.gohostingSession.datetext||'',
+                colourtext:this.gohostingSession.colourtext||'',
+                colourdes: this.gohostingSession.colourdes||'',
+                statetext: this.gohostingSession.statetext||'',
+                priceval: this.gohostingSession.priceval||'',
+                causetext: this.gohostingSession.causetext||'',
+
+                fittings: this.gohostingSession.fittings||[],
+
+                fileimg1: this.gohostingSession.fileimg1||'',
+                fileimg2: this.gohostingSession.fileimg2||'',
+                fileimg3: this.gohostingSession.fileimg3||'',
+                fileimg4: this.gohostingSession.fileimg4||'',
+                serialnumval:this.gohostingSession.serialnumval||'',
+                telval:this.gohostingSession.telval||'',
+            }
+
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+            this.$router.push({ path: '/steps2' })
         }
     }
 }

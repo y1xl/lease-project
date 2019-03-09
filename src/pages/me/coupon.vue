@@ -36,7 +36,7 @@
             v-for="(item,index) in getcouponlist"
             :key="index"
             v-show="ind ==3"
-            @click="receive"
+            @click="receive(item.coupons_id)"
           >
             <div>
               <img src="../../assets/1.png">
@@ -51,6 +51,7 @@
                 <div class="coupon_fl">{{item.coupon_name}}</div>
                 <div class="limit">
                   <div>满{{item.coupons_condition}}可用</div>
+                  <div>点击领取</div>
                 </div>
               </div>
             </div>
@@ -150,47 +151,69 @@ export default {
             this.getcouponlist = resdata.data
           } else {
             Toast.clear();
-            Toast(resdata.message);
+            this.getcouponlist = []
+            // Toast(resdata.message);
           }
         });
     },
     //领取
-    receive(){
-
-    },
-
-    beforeClose(action, done) {
-      if (action === "confirm") {
-        if(this.couponsCode==''){
-          done(false)
-          return
-        }
-        
-        let postData = this.$qs.stringify({
-          user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-          coupons_code: this.couponsCode
-        });
-        this.axios
-          .post(this.API + "api/Lease/Receive_coupons", postData)
-          .then(res => {
-            console.log(res.data, "couponslist");
-            let resdata = res.data;
-            if (resdata.code == 200) {
-              done()
-              Toast(resdata.message)
-            } else {
-              done(false)
-              Toast(resdata.message)
-            }
-          })
-          .catch(error => {
-            done(false)
+    receive(id){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        coupons_id: id
+      });
+      this.axios
+        .post(this.API + "api/Lease/Receive_coupon", postData)
+        .then(res => {
+          console.log(res.data, "getcoupons");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            Toast('领取成功');
+            this.getcoupon()
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+          }
+        })
+        .catch(error => {
             Toast('网络出错')
-          });
-      } else {
-        done()
-      }
+        });
     },
+
+    // beforeClose(action, done) {
+    //   if (action === "confirm") {
+    //     if(this.couponsCode==''){
+    //       done(false)
+    //       return
+    //     }
+        
+    //     let postData = this.$qs.stringify({
+    //       user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+    //       coupons_code: this.couponsCode
+    //     });
+    //     this.axios
+    //       .post(this.API + "api/Lease/Receive_coupons", postData)
+    //       .then(res => {
+    //         console.log(res.data, "couponslist");
+    //         let resdata = res.data;
+    //         if (resdata.code == 200) {
+    //           done()
+    //           Toast(resdata.message)
+    //         } else {
+    //           done(false)
+    //           Toast(resdata.message)
+    //         }
+    //       })
+    //       .catch(error => {
+    //         done(false)
+    //         Toast('网络出错')
+    //       });
+    //   } else {
+    //     done()
+    //   }
+    // },
   }
 };
 </script>
@@ -240,7 +263,7 @@ export default {
 }
 
 /* 领取优惠券弹窗 */
-.mask_box img {
+/* .mask_box img {
   width: 50px;
   height: 60px;
   margin: 12px 0 5px 0;
@@ -254,7 +277,7 @@ export default {
   background: #f6f6f7;
   text-align: center;
   margin: 12px 0 15px 0;
-}
+} */
 </style>
 
 

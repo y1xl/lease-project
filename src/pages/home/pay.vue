@@ -6,7 +6,7 @@
             <div class="text-c marb30"><router-link class="lines" to="/certification">提升额度</router-link></div>
             <div class="text-c">总租金{{info.order_rental||'-'}}元</div>
             <div class="text-c mar-b-10">总押金{{info.order_total_rent||'-'}}元</div>
-            <div class="text-c">您需支付<span class="fc-red"> ¥{{info.order_rent||'-'}}</span></div>
+            <div class="text-c">您需支付<span class="fc-red"> ¥{{info.total_price||'-'}}</span></div>
         </div>
 
         <div class="bgc">

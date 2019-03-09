@@ -136,10 +136,17 @@ export default {
               this.finished = true;
             }
           } else {
-            Toast(resdata.message);
+            Dialog.alert({
+                message: resdata.message
+            }).then((e) => {
+              //
+            });
             this.loading = false;
             this.finished = true;
           }
+        })
+        .catch(error => {
+            Toast('网络出错')
         });
     },
     submit() {

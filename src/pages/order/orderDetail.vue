@@ -68,6 +68,10 @@
               <span>租期</span>
               <span class="flex-1">{{data.rent_time}}天</span>
             </div>
+            <div class="flexbox">
+              <span>归还日期</span>
+              <span class="flex-1">{{data.returnDate}}</span>
+            </div>
             <div class="flexbox" v-if="data.delivery_way=='快递'||data.delivery_way=='平台配送'">
               <span>期望收到的日期</span>
               <span class="flex-1">{{data.qwsh_time}}</span>
@@ -132,7 +136,7 @@
             </div>
             <div class="flexbox">
               <span>自取时间</span>
-              <span class="flex-1">{{data.order_delivery_time}}</span>
+              <span class="flex-1">{{data.sh_time}}</span>
             </div>
             <div class="flexbox">
               <span>联系人</span>
@@ -206,9 +210,55 @@
               <span>免押额度</span>
               <span class="flex-1">-¥{{data.order_credit_rent||0}}</span>
             </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="title position">
+            其它信息
+            <div class="l dot"></div>
+            <div class="r dot"></div>
+          </div>
+          <div class="info">
+            <div class="flexbox" v-if="data.renewalFees!=0">
+              <span>续租费</span>
+              <span class="flex-1">¥{{data.renewalFees||0}}</span>
+            </div>
+            <div class="flexbox" v-if="data.renewalDay!=0">
+              <span>续租时间</span>
+              <span class="flex-1">{{data.renewalDay}}天</span>
+            </div>
+
+            <template v-if="data.order_back_way!='无'">
+              <div class="flexbox" >
+                <span>退款方式</span>
+                <span class="flex-1">{{data.order_back_way}}</span>
+              </div>
+              <div class="flexbox" v-if="data.order_back_way=='自还'">
+                <span>自还时间</span>
+                <span class="flex-1">{{data.sendTime}}</span>
+              </div>
+              <div class="flexbox" v-if="data.order_back_way=='平台配送'">
+                <span>配送时间</span>
+                <span class="flex-1">{{data.sendTime}}</span>
+              </div>
+              <div class="flexbox" v-if="data.order_back_way=='快递'">
+                <span>快递日期</span>
+                <span class="flex-1">{{data.sendTime}}</span>
+              </div>
+            </template>
+
+            <div class="flexbox" v-if="data.HireFreight">
+              <span>到付运费</span>
+              <span class="flex-1">￥{{data.HireFreight}}</span>
+            </div>
             <div class="flexbox" v-if="data.service_money">
               <span>维修费</span>
               <span class="flex-1">¥{{data.service_money||0}}</span>
+            </div>
+            <div class="flexbox" v-if="active==5||active==6">
+              <span>退款费</span>
+              <span class="flex-1">¥{{data.refundAmount}}</span>
             </div>
           </div>
         </div>
@@ -394,6 +444,15 @@ export default {
           if (resdata.code == 200) {
             Toast.clear()
             this.data = resdata.data[0]
+
+            if(resdata.data[0].sendTime){
+              if(resdata.data[0].sendTime instanceof Object){
+                let start_time = resdata.data[0].sendTime.start_time.split(' ')
+                let end_time = resdata.data[0].sendTime.end_time.split(' ')
+
+                resdata.data[0].sendTime = `${start_time[0]} ${start_time[1]}-${end_time[1]}`
+              }
+            }
 
             if(this.data.order_status==1){
               payCountdown = setInterval(()=>{

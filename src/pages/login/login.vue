@@ -115,7 +115,7 @@ export default {
     gowx(){
       Toast.loading({ mask: true, message: "加载中..." });
       this.axios.post(this.API + "api/Order/GetCodeUrl").then(res => {
-        console.log(res.data, "gosina");
+        console.log(res.data, "gowx");
         let resdata = res.data;
         if (resdata.code == 200) {
           Toast.clear();
