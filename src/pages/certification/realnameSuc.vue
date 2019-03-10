@@ -33,7 +33,7 @@ export default {
             info:''
         }
     },
-    created(){
+    mounted(){
         this.getinfo()
     },
     methods:{

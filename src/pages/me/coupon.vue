@@ -90,7 +90,7 @@ export default {
       this.$router.replace({ path: "/login" });
     }
   },
-  created(){
+  mounted(){
     this.getdata()
   },
   methods: {

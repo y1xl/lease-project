@@ -39,7 +39,7 @@ export default {
       store_name: ""
     };
   },
-  created() {
+  mounted() {
     this.getdetail();
   },
   methods: {

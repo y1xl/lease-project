@@ -2,7 +2,6 @@
   <div>
     <div class="bgc box">
       <van-cell :title="item.help_name" is-link :to="`/CommonProblem?id=${item.help_id}`" v-for="(item,index) in list" :key="index"/>
-      <!-- <van-cell title="租赁规则" is-link to="rules"/> -->
       <van-cell title="在线客服" is-link url="https://www.sobot.com/chat/h5/index.html?sysNum=0a99f38b20714891ace3e99607538829"/>
       <a :href="`tel:${tel}`">
         <van-cell title="电话客服" is-link/>
@@ -20,7 +19,7 @@ export default {
       tel:''
     };
   },
-  created(){
+  mounted(){
     this.getdata()
     this.gettel()
   },

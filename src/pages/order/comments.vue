@@ -45,9 +45,9 @@ export default {
             }
         }
     },
-    created(){
-      this.getdata()
-    },
+  mounted(){
+    this.getdata()
+  },
   methods: {
     getdata(){
       Toast.loading({ mask: true,message: '加载中...'})

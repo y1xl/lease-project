@@ -18,7 +18,7 @@ export default {
       list:[]
     };
   },
-  created(){
+  mounted(){
     this.getdata()
   },
   methods:{

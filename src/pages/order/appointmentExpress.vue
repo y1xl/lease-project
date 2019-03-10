@@ -56,6 +56,8 @@ export default {
         }
         //取缓存 end
         this.getdefaultshop()
+    },
+    mounted(){
         this.gettimequantumarr()
     },
     methods:{

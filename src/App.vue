@@ -1,6 +1,14 @@
 <template>
   <div id="app" class="fsz">
-    <router-view v-wechat-title="$route.meta.title" ></router-view>
+    <keep-alive>
+        <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title" >
+            <!-- 这里是会被缓存的视图组件，比如列表A页面 -->
+        </router-view>
+    </keep-alive>
+
+    <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title" >
+        <!-- 这里是不被缓存的视图组件，比如详情B页面-->
+    </router-view>
 
     <div class="nav-pd-b" v-if="navshow"></div>
 
@@ -141,7 +149,7 @@ export default {
 
     }
   },
-  created() {
+  mounted(){
     let vConsole = new VConsole()
   },
   methods: {}

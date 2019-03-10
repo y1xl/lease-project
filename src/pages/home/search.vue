@@ -40,6 +40,12 @@
 <script>
 import { Toast } from "vant";
 export default {
+  beforeRouteEnter(to, from, next) {
+    if(from.meta.title === 'SKU信息') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
+        to.meta.isBack = true;
+    }
+    next();
+  },
   data() {
     return {
       value: "",
@@ -49,16 +55,10 @@ export default {
     };
   },
   created() {
+    this.isFirstEnter = true;
     let goodshistory = window.localStorage.getItem("goodshistory")
     if(goodshistory){
       this.historylist = JSON.parse(goodshistory)
-    }
-
-    let searchSession = JSON.parse(
-      window.sessionStorage.getItem("searchSession")
-    );
-    if (searchSession) {
-      this.value = searchSession.value;
     }
   },
   methods: {
@@ -79,13 +79,6 @@ export default {
     },
     //产品详情
     toDetail(id) {
-      let searchSession = {
-        value: this.value
-      };
-      window.sessionStorage.setItem(
-        "searchSession",
-        JSON.stringify(searchSession)
-      );
       this.$router.push({ path: "/ProductDetail/" + id });
     },
     getsearch() {
@@ -125,7 +118,23 @@ export default {
           }
         });
     }
-  }
+  },
+  activated() {
+     if(!this.$route.meta.isBack || this.isFirstEnter){
+         // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+         // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+        this.flprolist = []
+        this.value = ""
+        let goodshistory = window.localStorage.getItem("goodshistory")
+        if(goodshistory){
+          this.historylist = JSON.parse(goodshistory)
+        }
+     }
+     // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+     this.$route.meta.isBack=false
+     // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+     this.isFirstEnter=false;
+  },
 };
 </script>
 

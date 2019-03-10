@@ -226,7 +226,7 @@
       </div>
     </van-popup>
     <!-- 选择规格 -->
-    <div class="model full" v-show="showinfo||showinfocar">
+    <div class="model full" v-if="showinfo||showinfocar">
       <div class="main bgc">
         <div class="goods1 flexbox pd-15">
           <img :src="detail.gd_img[0]" alt style="object-fit:contain">
@@ -314,18 +314,12 @@ export default {
       ]
     };
   },
-  // beforeCreate(){
-  //   if (!window.localStorage.getItem("userinfo")) {
-  //     this.$router.replace({ path: "/login" });
-  //   }
-  // },
-  created(){
-    this.getdetail()
-  },
+
   mounted(){
     nativeshare().then(res =>  {NativeShare = res.default} )
     m_share().then(res => {mShare = res})
 
+    this.getdetail()
     this.gettel()
     this.getguige()
   },

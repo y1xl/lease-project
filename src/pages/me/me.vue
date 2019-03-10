@@ -110,8 +110,10 @@ export default {
     }
   },
   created() {
-    this.getuser()
     this.getheadimg()
+  },
+  mounted(){
+    this.getuser()
   },
   methods: {
     getuser() {

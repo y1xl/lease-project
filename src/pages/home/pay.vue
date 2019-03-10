@@ -57,8 +57,10 @@ export default {
                 this.showWXpay = wxpaySession.state
             }
         }
-        this.getinfo()
         // this.getfaceRes() //111111111111111111111111111111111111111111
+    },
+    mounted(){
+        this.getinfo()
     },
     methods:{ 
         getfaceRes() {

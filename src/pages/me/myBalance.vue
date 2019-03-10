@@ -43,7 +43,7 @@ export default {
       this.$router.replace({ path: "/login" });
     }
   },
-  created(){
+  mounted(){
     this.getlist()
   },
   methods: {

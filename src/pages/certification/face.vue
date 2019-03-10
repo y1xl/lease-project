@@ -38,13 +38,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.btn{
-    height: 42px;
-    line-height: 42px;
-    border-radius: 20px;
-    color: #fff;
-    background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
-}
-</style>

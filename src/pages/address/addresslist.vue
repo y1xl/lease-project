@@ -42,7 +42,7 @@ export default {
       delid: ""
     };
   },
-  created() {
+  mounted() {
     this.getlist();
   },
   methods: {

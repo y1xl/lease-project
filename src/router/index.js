@@ -106,7 +106,8 @@ export default new Router({
 
   routes: [
     { path: '/', component: Index, meta: { title: '首页' } },
-    { path: '/shop', component: Shop, meta: { title: '门店' } },
+    { 
+      path: '/shop', component: Shop, meta: { title: '门店' } },
     { path: '/order', component: Order, meta: { title: '订单' } },
     { path: '/me', component: Me, meta: { title: '我的' } },
     //订单
@@ -125,7 +126,7 @@ export default new Router({
     { path: '/compensation/:id', component: Compensation, meta: { title: '赔偿' } },
     { path: '/sendBack/:id', component: SendBack, meta: { title: '自行寄回' } },
     //产品
-    { path: '/goods/:id', component: Goods, meta: { title: '产品列表' } },
+    { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
     { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },
@@ -133,7 +134,7 @@ export default new Router({
     { path: '/buy', component: Buy, meta: { title: '下单' } },
     { path: '/pay/:orderid', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },
-    { path: '/search', component: Search, meta: { title: '搜索' } },
+    { path: '/search', component: Search, meta: { title: '搜索', keepAlive: true, isBack: false } },
     { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, 
     { path: '/applyText', component: ApplyText, meta: { title: '支付' } }, 
 

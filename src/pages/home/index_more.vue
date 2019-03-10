@@ -28,6 +28,12 @@
 <script>
 import { Toast } from "vant";
 export default {
+  beforeRouteEnter(to, from, next) {
+    if(from.meta.title === 'SKU信息') {
+        to.meta.isBack = true;
+    }
+    next();
+  },
   data() {
     return {
       goodslist: [],
@@ -38,6 +44,7 @@ export default {
     };
   },
   created() {
+    this.isFirstEnter = true;
     this.gethender();
   },
   methods: {
@@ -81,7 +88,19 @@ export default {
           }
         });
     }
-  }
+  },
+  activated() {
+     if(!this.$route.meta.isBack || this.isFirstEnter){
+        this.gethender();
+        this.goodslist=[]
+        this.loading= false
+        this.finished= false
+        this.page= 0
+        this.onLoad()
+     }
+     this.$route.meta.isBack=false
+     this.isFirstEnter=false;
+  },
 };
 </script>
 <style>

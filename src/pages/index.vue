@@ -191,10 +191,10 @@ export default {
   created() {
     // this.getLocation();
     this.getnav();
-    this.getindexlist();
     // this.getNearShop('22.54605355', '114.02597366') //测试 
   },
   mounted(){
+    this.getindexlist();
     this.getbanner();
   },
   methods: {
@@ -231,7 +231,6 @@ export default {
       this.$router.push({ path: "/productDetail/" + id });
     },
     gosearch() {
-      window.sessionStorage.removeItem("searchSession");
       this.$router.push({ path: "/search" });
     },
 

@@ -83,6 +83,8 @@ export default {
         }else{
             this.getdefaultaddress()
         }
+    },
+    mounted(){
         this.gettimequantumarr()
     },
     methods:{

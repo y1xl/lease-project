@@ -59,12 +59,10 @@ export default {
       school:''
     };
   },
-  created() {
-    this.userprice();
-  },
   mounted() {
     nativeshare().then(res =>  {NativeShare = res.default} )
     m_share().then(res => {mShare = res})
+    this.userprice();
   },
   methods: {
     userprice() {
