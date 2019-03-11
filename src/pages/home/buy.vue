@@ -365,9 +365,8 @@ export default {
       }
     }
   },
-  created() {
+  created() {    
     this.getotherprice();
-    
     let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
     if (buySession) {
       this.typenum = buySession.gettype;

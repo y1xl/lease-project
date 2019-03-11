@@ -123,7 +123,8 @@ export default {
           Dialog.confirm({
               message: '是否进行微信授权'
             }).then(() => {
-              window.location.href = `${resdata.data}`
+              // window.location.href = `${resdata.data}`
+              window.location.href = `weixin://dl/businessWebview/link/?appid=wx1c8817f0d73d6913&url=${encodeURI('https://newbee.zx-xcx.com/')}`
             }).catch(() => {
               // on cancel
             });

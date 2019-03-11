@@ -127,35 +127,31 @@
 
     <div class="bgc flex-jc-center word_mouth_box">
       <div class="word_mouth">
-        <div class="flex-jc-between border-b word_num" @click="toMouthw">
+        <div class="flex-jc-between border-b word_num" @click="toMouthw(detail.goods_id)">
           <div>
             <span>口碑</span>
             <!-- <span>(0)</span> -->
           </div>
           <div class="flex-align-items">
-            <!-- <span>97.6%</span> -->
             <img class="img_r" src="../../assets/right.png" alt>
           </div>
         </div>
-        <div class="wordlist_box" v-for="(item,index ) in wordlist" :key="index">
+        <div class="wordlist_box" v-for="(item,index) in detail.comment" :key="index">
           <div class="flex-align-items head_name">
-            <img class="head_img" src="../../assets/my.png" alt>
-            <span>李***莉</span>
-            <span>
-              <van-rate disabled disabled-color="#FFB10E" size="12"/>
-            </span>
+            <img class="head_img" :src="item.head_picture" alt v-if="item.head_picture">
+            <img class="head_img" src="../../assets/headimg.png" alt v-else>
+            <div class="c-name">{{item.user_name}}</div>
+            <van-rate disabled disabled-color="#FFB10E" size="12" v-model="item.eva_score"/>
           </div>
           <div>
-            <span class="grey_12">2018-12-5 15:00</span>
-            <span class="grey_12">租期:1年</span>
+            <span class="grey_12">{{item.create_time}}</span>
+            <!-- <span class="grey_12">租期:1年</span> -->
           </div>
           <div class="com_det">
-            很优秀哦 相机很好看 拍出来的照片也很好看 总体都很优秀 超
-            级喜欢 加上水晶壳就更优秀了 很多模式可以玩 适合爱拍照的
-            人 如果只是想记录生活的话 我觉得mini9就够了 总之很喜欢！
+            {{item.eva_content}}
           </div>
-          <div class="imglist" v-for="(item,index) in imglist" :key="index">
-            <img class="itemimg" :src="item">
+          <div class="imglist" v-for="(url,index) in item.eva_picture" :key="index">
+            <img class="itemimg" :src="url" @click="onImagePreview(index,item.eva_picture)">
           </div>
         </div>
       </div>
@@ -262,7 +258,7 @@
   </div>
 </template>
 <script>
-import { Toast } from "vant";
+import { Toast,ImagePreview } from "vant";
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
 import { videoPlayer } from 'vue-video-player'
@@ -278,12 +274,6 @@ export default {
   data() {
     return {
       autoplay:3000,
-      imglist: [
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" 
-      ],
-      wordlist: [],
       discountlist: [],
       showmodel: false,
       discountmodel: false,
@@ -355,6 +345,13 @@ export default {
       console.log("pause");
       this.autoplay = 3000
     },
+    //预览
+    onImagePreview(index,arr){
+        ImagePreview({
+            images: arr,
+            startPosition: index, 
+        });
+    },
     
     getdetail(){
       Toast.loading({ mask: true,message: '加载中...'})
@@ -416,8 +413,8 @@ export default {
       this.iscollection = !this.iscollection;
     },
     //口碑
-    toMouthw() {
-      this.$router.push({ path: "/wordMouth" });
+    toMouthw(id) {
+      this.$router.push({ path: "/wordMouth/"+id });
     },
 
     gobuy() {
@@ -706,6 +703,9 @@ export default {
 }
 .wordlist_box {
   border-bottom: 1px solid #f0f0f0;
+}
+.c-name {
+  padding:0 10px;
 }
 .word_mouth :last-child {
   border-bottom: 1px solid #fff;

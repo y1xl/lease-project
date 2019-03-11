@@ -1,0 +1,49 @@
+<template>
+    <div>
+        <div class="nav bgc border-b flex-jc-center">
+            <div :class="{ selected: selected==0 }" @click="nav(0)">租赁单</div>
+            <div :class="{ selected: selected==1 }" @click="nav(1)">租转售</div>
+        </div>
+
+        <router-view v-wechat-title="$route.meta.title" />
+    </div>
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+            selected: 0
+        }
+    },
+    methods:{
+        nav(n) {
+            this.selected = n;
+            if(n == 0){
+                this.$router.push({ path: `/order` });
+            }
+            if(n == 1){
+                this.$router.push({ path: `/order/buyOrder` });
+            }
+        },
+    }
+}
+</script>
+
+<style scoped>
+.nav {
+  height: 42px;
+  line-height: 42px;
+}
+.nav > div {
+  color: #666;
+  font-size: 16px;
+}
+.nav > div:nth-of-type(1) {
+  margin-right: 50px;
+}
+.nav .selected {
+  color: #000;
+  font-weight: bold;
+}
+</style>

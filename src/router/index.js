@@ -3,7 +3,9 @@ import Router from 'vue-router'
 
 import Index from '@/pages/index'
 import Me from '@/pages/me/me'
-import Order from '@/pages/order/orderList'
+import LeaseOrder from '@/pages/order/leaseOrder'
+import BuyOrder from '@/pages/order/buyOrder'
+import Order from '@/pages/order/order'
 import Shop from '@/pages/shop/shopList'
 //产品
 import Goods from '@/pages/home/index_more'
@@ -106,9 +108,14 @@ export default new Router({
 
   routes: [
     { path: '/', component: Index, meta: { title: '首页' } },
+    { path: '/shop', component: Shop, meta: { title: '门店' } },
     { 
-      path: '/shop', component: Shop, meta: { title: '门店' } },
-    { path: '/order', component: Order, meta: { title: '订单' } },
+      path: '/order', component: Order, meta: { title: '订单' }, 
+      children:[
+        { path: '', component: LeaseOrder, meta: { title: '订单' } },
+        { path: 'buyOrder', component: BuyOrder, meta: { title: '订单' } },
+      ]
+    },
     { path: '/me', component: Me, meta: { title: '我的' } },
     //订单
     { path: '/comments/:id/:goodid', component: Comments, meta: { title: '评价' } },
@@ -130,7 +137,7 @@ export default new Router({
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
     { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },
-    { path: '/wordMouth', component: WordMouth, meta: { title: '口碑' } },
+    { path: '/wordMouth/:id', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy', component: Buy, meta: { title: '下单' } },
     { path: '/pay/:orderid', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },

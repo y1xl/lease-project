@@ -14,30 +14,47 @@
             <span>天</span>
           </div>
           <div class="flex-jc-center">
-            <div class="btn text-c bgc" style="color: #8bd0db;" @click="signin" v-if="issignin">立即签到</div>
+            <div class="btn text-c bgc" style="color: #8bd0db;" @click="signin" v-if="!issignin">立即签到</div>
             <div class="btn text-c bgc-grey" v-else>已签到</div>
           </div>
         </div>
       </div>
+      
       <div class="flex-center jd_box">
-        <!-- <img src="../../assets/yiqd.png" class="true_img"> -->
-        <div class="oneday text-c fc-blue">1</div>
-        <!-- <div class="yxian_blue"></div> -->
-        <div class="xian_blue"></div>
-        <div class="oneday text-c fc-blue">2</div>
-        <!-- <img src="../../assets/yiqd.png" class="true_img"> -->
+        <img src="../../assets/yiqd.png" class="true_img" v-if="day >= 1">
+        <div class="oneday text-c fc-blue" v-else>1</div>
+        <div class="yxian_blue" v-if="day >= 1"></div>
+        <div class="xian_blue" v-else></div>
 
-        <div class="xian_blue"></div>
-        <div class="oneday text-c fc-blue">3</div>
-        <div class="xian_blue"></div>
-        <div class="oneday text-c fc-blue">4</div>
-        <div class="xian_blue"></div>
-        <div class="oneday text-c fc-blue">5</div>
-        <div class="xian_blue"></div>
-        <div class="oneday text-c fc-blue">6</div>
-        <div class="xian_blue"></div>
-        <div class="oneday text-c fc-blue">7</div>
+        <img src="../../assets/yiqd.png" class="true_img" v-if="day >= 2">
+        <div class="oneday text-c fc-blue" v-else>2</div>
+        <div class="yxian_blue" v-if="day >= 2"></div>
+        <div class="xian_blue" v-else></div>
+
+        <img src="../../assets/yiqd.png" class="true_img" v-if="day >= 3">
+        <div class="oneday text-c fc-blue" v-else>3</div>
+        <div class="yxian_blue" v-if="day >= 3"></div>
+        <div class="xian_blue" v-else></div>
+
+        <img src="../../assets/yiqd.png" class="true_img" v-if="day >= 4">
+        <div class="oneday text-c fc-blue" v-else>4</div>
+        <div class="yxian_blue" v-if="day >= 4"></div>
+        <div class="xian_blue" v-else></div>
+
+        <img src="../../assets/yiqd.png" class="true_img" v-if="day >= 5">
+        <div class="oneday text-c fc-blue" v-else>5</div>
+        <div class="yxian_blue" v-if="day >= 5"></div>
+        <div class="xian_blue" v-else></div>
+
+        <img src="../../assets/yiqd.png" class="true_img" v-if="day >= 6">
+        <div class="oneday text-c fc-blue" v-else>6</div>
+        <div class="yxian_blue" v-if="day >= 6"></div>
+        <div class="xian_blue" v-else></div>
+
+        <img src="../../assets/yiqd.png" class="true_img" v-if="day >= 7">
+        <div class="oneday text-c fc-blue" v-else>7</div>
       </div>
+
       <div class="qd_img text-c">
         <img src="../../assets/qd.png">
       </div>
@@ -116,6 +133,7 @@
 </template>
 
 <script>
+import { Toast,Dialog } from "vant";
 export default {
   data(){
     return{
@@ -125,13 +143,57 @@ export default {
           backgroundSize: "100% 100%"
       },
       day: 0,
-      issignin: true
+      issignin: false,
+      signininfo:''
     }
+  },
+  mounted(){
+    this.getsignin()
   },
   methods: {
     signin(){
-      this.day = this.day+1
-      this.issignin = false
+      Toast.loading({ mask: true, message: "加载中..." });
+      let time = Date.now()/1000+''
+      let postData = this.$qs.stringify({ 
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          date_time: time.split('.')[0]
+      });
+      this.axios.post(this.API + "api/Order/UserSignin", postData)
+      .then(res => {
+          console.log(res.data, "signin");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              this.getsignin()
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
+    },
+    getsignin(){
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      });
+      this.axios.post(this.API + "api/Order/GetSigninData", postData)
+      .then(res => {
+          console.log(res.data, "GetSigninData");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              this.signininfo = resdata.data;
+              this.day = resdata.data.signin_days
+              this.issignin = resdata.data.is_signin==0?false:resdata.data.is_signin==1?true:false
+          } else {
+              Toast(resdata.message);
+          }
+      })
+      .catch(error => {
+          Toast('网络出错')
+      });
     }
   }
 };

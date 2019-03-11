@@ -93,7 +93,7 @@ export default {
       endDate: new Date()
     };
   },
-  created() {
+  mounted() {
     this.getuser();
   },
 

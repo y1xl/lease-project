@@ -1,31 +1,34 @@
 <template>
   <div class="bgc">
     <div class="header" :style="bgimg">
-      <div class="text-c">0</div>
+      <div class="text-c">{{info.score}}</div>
       <div class="text-c">当前可用积分</div>
       <div class="flex-jc-around">
-        <span>可抵扣：0元</span>
+        <span>可抵扣：{{info.rmb}}元</span>
         <router-link to="/rules/integral">积分规则</router-link>
       </div>
     </div>
     <div class="mx">积分明细</div>
     <div class="box bgc">
-      <div v-for="(item,index) in 0">
-        <div class="flex-center bgc">
-          <div class="flex-jc-between flex-align-items inte_deta border-b">
-            <div>
-              <div>签到</div>
-              <div class="time">2018-12-19</div>
+      <van-list v-model="loading" :finished="finished" @load="onLoad">
+        <div v-for="(item,index) in list" :key="index">
+          <div class="flex-center bgc">
+            <div class="flex-jc-between flex-align-items inte_deta border-b">
+              <div>
+                <div>{{item.content}}</div>
+                <div class="time">{{item.create_time}}</div>
+              </div>
+              <div class="money_deta">+{{item.score}}</div>
             </div>
-            <div class="money_deta">+670</div>
           </div>
         </div>
-      </div>
+      </van-list>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -34,6 +37,11 @@ export default {
           "url(" + require("../../assets/in_bg.png") + ") no-repeat top",
           backgroundSize: "100% 100%"
       },
+      info:'',
+      loading: false,
+      finished: false,
+      page: 0,
+      list:[]
     };
   },
   beforeCreate(){
@@ -41,8 +49,67 @@ export default {
       this.$router.replace({ path: "/login" });
     }
   },
-  methods: {}
-};
+  mounted(){
+    this.getinfo()
+  },
+  methods: {
+    getinfo() {
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        });
+        this.axios.post(this.API + "api/Order/GetUserScore", postData)
+        .then(res => {
+            console.log(res.data, "info");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                Toast.clear();
+                this.info = resdata.data;
+            } else {
+                Toast.clear();
+                Toast(resdata.message);
+            }
+        })
+        .catch(error => {
+            Toast.clear();
+            Toast('网络出错')
+        });
+    },
+
+    onLoad() {
+      let nowPageNum = ++this.page;
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        page: nowPageNum
+      });
+      this.axios
+        .post(this.API + "api/Order/GetUserScoreList", postData)
+        .then(res => {
+          console.log(res.data, "GetUserScoreList");
+
+          let resdata = res.data;
+
+          if (resdata.code == 200) {
+            this.list = this.list.concat(resdata.data);
+            // 加载状态结束
+            this.loading = false;
+            if (resdata.data.length < 10) {
+              this.finished = true;
+            }
+          } else {
+            Toast(resdata.message);
+            this.loading = false;
+            this.finished = true;
+          }
+        })
+        .catch(error => {
+            Toast('网络出错')
+        });
+    }
+  },
+
+}
+
 </script>
 
 

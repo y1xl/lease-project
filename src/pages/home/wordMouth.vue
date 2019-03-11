@@ -18,44 +18,71 @@
       </div>-->
 
       <div class="word_mouth">
-        <div v-for="(item,index ) in wordlist" :key="index">
+        <div v-for="(item,index ) in list" :key="index">
           <div class="flex-align-items head_name">
-            <img class="head_img" src="../../assets/my.png" alt>
-            <span>李***莉</span>
-            <span>
-              <van-rate v-model="value" disabled disabled-color="#FFB10E" size="12"/>
-            </span>
+            <img class="head_img" :src="item.head_picture" alt v-if="item.head_picture">
+            <img class="head_img" src="../../assets/headimg.png" alt v-else>
+            <div class="c-name">{{item.user_name}}</div>
+            <van-rate disabled disabled-color="#FFB10E" size="12" v-model="item.eva_score"/>
           </div>
           <div>
-            <span class="grey_12">2018-12-5 15:00</span>
-            <span class="grey_12">租期:1年</span>
+            <span class="grey_12">{{item.create_time}}</span>
+            <!-- <span class="grey_12">租期:1年</span> -->
           </div>
           <div class="com_det">
-            很优秀哦 相机很好看 拍出来的照片也很好看 总体都很优秀 超
-            级喜欢 加上水晶壳就更优秀了 很多模式可以玩 适合爱拍照的
-            人 如果只是想记录生活的话 我觉得mini9就够了 总之很喜欢！
+            {{item.eva_content}}
           </div>
-          <div class="imglist" v-for="(item,index) in imglist" :key="index">
-            <img class="itemimg" :src="item">
+          <div class="imglist" v-for="(url,index) in item.eva_picture" :key="index">
+            <img class="itemimg" :src="url" @click="onImagePreview(index,item.eva_picture)">
           </div>
         </div>
       </div>
     </div>
-    <div class="text-c fc-grey pd-15" v-show="wordlist.length==0">没有更多了</div>
+    <div class="text-c fc-grey pd-15" v-show="list.length==0">没有更多了</div>
   </div>
 </template>
+
 <script>
+import { Toast,ImagePreview } from "vant";
 export default {
   data() {
     return {
-      imglist: [
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-      ],
-      wordlist: [],
-      value: 5
+      list:[]
     };
+  },
+  mounted(){
+    this.getdetail()
+  },
+  methods:{
+    //预览
+    onImagePreview(index,arr){
+        ImagePreview({
+            images: arr,
+            startPosition: index, 
+        });
+    },
+    getdetail(){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+            goods_id:this.$route.params.id
+        })
+      this.axios.post(this.API + "api/Lease/GetComment",postData)
+      .then(res => {
+        console.log(res.data, "commit")
+        let resdata = res.data
+        if (resdata.code == 200) {
+          Toast.clear()
+          this.list = resdata.data
+        } else {
+          Toast.clear()
+          Toast(resdata.message)
+        }
+        
+      })
+      .catch(error => {
+        Toast('网络出错')
+      });
+    },
   }
 };
 </script>
@@ -182,7 +209,9 @@ export default {
   height: 30px;
   border-radius: 50%;
 }
-
+.c-name {
+  padding:0 10px;
+}
 .img_r {
   width: 7px;
   height: 11px;

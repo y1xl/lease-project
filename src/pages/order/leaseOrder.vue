@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="nav bgc border-b flex-jc-center">
+    <!-- <div class="nav bgc border-b flex-jc-center">
       <div :class="{ selected: selected==0 }" @click="nav(0)">租赁单</div>
       <div :class="{ selected: selected==1 }" @click="nav(1)">租转售</div>
-    </div>
+    </div> -->
 
     <div id="ordernav">
       <van-tabs @click="ontag" v-model="active">
@@ -16,7 +16,7 @@
       </van-tabs>
     </div>
 
-    <div class="list" v-show="selected==0">
+    <div class="list" >
       <div class="ordernull"  v-if="list.length==0">
         <img src="../../assets/order-null.png" alt="" class="mar-b-10">
         <div class="text-c fc-grey">暂无订单</div>
@@ -25,7 +25,7 @@
       <OrderCard v-for="(item,index) in list" :key="index" :data="item" :active="active">
         <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==1" @click="gopay(item.order_id)">
-          <!-- <router-link v-bind="{to: '/pay/'+item.order_id}">支付</router-link> -->支付
+          支付
         </div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
         <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
@@ -110,31 +110,6 @@
       </OrderCard> -->
     </div>
 
-    <div class="list" v-show="selected==1">
-      <div class="ordernull"  v-if="list.length==0">
-        <img src="../../assets/order-null.png" alt="" class="mar-b-10">
-        <div class="text-c fc-grey">暂无订单</div>
-      </div>
-      <!-- <OrderCard status="待发货"></OrderCard> 
-      <OrderCard status="待付款">
-        <div class="flex-center border" @click="onshowmodel">取消订单</div>
-        <div class="flex-center border-blue fc-blue">支付</div>
-      </OrderCard>
-      <OrderCard status="待评价">
-         <div class="flex-center border-blue fc-blue">
-          <router-link v-bind="{to: '/comments'}">去评价</router-link>
-        </div>
-      </OrderCard> 
-      <OrderCard status="待收货">
-        <div class="flex-center border">朋友代取</div>
-        <div class="flex-center border" @click="getcode">取货码</div>
-        <div class="flex-center border-blue fc-blue" >确认收货</div>
-      </OrderCard>
-      <OrderCard status="已完成"></OrderCard>  -->
-    </div>
-
-    <!-- <div class="height"></div> -->
-
     <div class="model full flex-column-center position" v-show="showcode">
       <div class="closeimg" @click="getcode"><van-icon name="close" color="#fff"/></div>
       <img
@@ -182,11 +157,8 @@ export default {
   },
   data() {
     return {
-      selected: 0,
+      // selected: 0,
       active: 0,
-      // navarr: ["待付款", "预租中", "已预定", "租赁中", "已超期", "待评价","已评价",'已取消'],
-      // navarr0: ["待付款", "预租中", "已预订", "租赁中", "已超期", "待评价","已评价",'已取消'],
-      navarr1: ["待付款", "待发货", "待收货", "待评价", "已完成"],
       navarr: [
         {name:'待付款',count:0},
         {name:'预租中',count:0},
@@ -197,23 +169,23 @@ export default {
         {name:'已评价',count:0},
         {name:'已取消',count:0},
       ],
-      navarr0: [
-        {name:'待付款',count:0},
-        {name:'预租中',count:0},
-        {name:'已预定',count:0},
-        {name:'租赁中',count:0},
-        {name:'已超期',count:0},
-        {name:'待评价',count:0},
-        {name:'已评价',count:0},
-        {name:'已取消',count:0},
-      ],
-      navarr1: [
-        {name:'待付款',count:0},
-        {name:'待发货',count:0},
-        {name:'待收货',count:0},
-        {name:'待评价',count:0},
-        {name:'已完成',count:0},
-      ],
+      // navarr0: [
+      //   {name:'待付款',count:0},
+      //   {name:'预租中',count:0},
+      //   {name:'已预定',count:0},
+      //   {name:'租赁中',count:0},
+      //   {name:'已超期',count:0},
+      //   {name:'待评价',count:0},
+      //   {name:'已评价',count:0},
+      //   {name:'已取消',count:0},
+      // ],
+      // navarr1: [
+      //   {name:'待付款',count:0},
+      //   {name:'待发货',count:0},
+      //   {name:'待收货',count:0},
+      //   {name:'待评价',count:0},
+      //   {name:'已完成',count:0},
+      // ],
       radio: 0,
       canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" },{ id: 6, text: "测试下单/误下单" }, { id: 7, text: "其他" }],
       showmodel: false,
@@ -245,19 +217,19 @@ export default {
       window.sessionStorage.removeItem("wxpayCompensationSession");
       this.$router.push({ path: `/compensation/${id}` });
     },
-    nav(n) {
-      this.selected = n;
-      if (n == 0) {
-        this.navarr = this.navarr0;
-        this.active = 0
-        this.getlist()
-      }
-      if (n == 1) {
-        this.navarr = this.navarr1;
-        this.active = 0
-        this.list = [] //测试
-      }
-    },
+    // nav(n) {
+    //   this.selected = n;
+    //   if (n == 0) {
+    //     this.navarr = this.navarr0;
+    //     this.active = 0
+    //     this.getlist()
+    //   }
+    //   if (n == 1) {
+    //     this.navarr = this.navarr1;
+    //     this.active = 0
+    //     this.list = [] //测试
+    //   }
+    // },
     ontag(index, title) {
       console.log(index, title);
       this.active = index;
@@ -307,7 +279,7 @@ export default {
     },
 
     getlist(){  
-      if(this.selected==0){
+      // if(this.selected==0){
         Toast.loading({ mask: true,message: '加载中...'})
         let postData = this.$qs.stringify({
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -345,7 +317,7 @@ export default {
           this.list = []
           Toast('网络出错')
         });
-      }  
+      // }  
     },
     //取消订单
     cancelOrder(id){
@@ -451,7 +423,7 @@ export default {
   margin-top:110px;
 }
 
-.height{
+/* .height{
   height: 50px;
 }
 .nav {
@@ -468,7 +440,7 @@ export default {
 .nav .selected {
   color: #000;
   font-weight: bold;
-}
+} */
 
 .tag .dot{
   position: absolute;

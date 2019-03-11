@@ -61,7 +61,7 @@ function accAdd(arg1, arg2) {
  * base64压缩（图片-canvas互转）
  * @param {file} base64 base64图片数据
  * @param {string} mimeType 输出图片格式
- * @return {base64} data 图片处理完成后的base64
+ * @return {Blob} data 图片处理完成后的Blob二进制
  */
 
 function Compress(base64, mimeType){

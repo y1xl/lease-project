@@ -22,11 +22,10 @@ VueAMap.initAMapApiLoader({
   // key: '7dd71e09ac3a903d60949151b6d53744',//公司的
   key: 'd2fb704760d2d6ff18b57df3147cb8cb',
   plugin: ['Autocomplete', 'Geolocation', 'PolyEditor', 'AMap.CircleEditor'],
-  // 默认高德 sdk 版本为 1.4.4
   v: '1.4.4'
 });
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false  //设置为 false 以阻止 vue 在启动时生成生产提示。
 
 import qs from 'qs'
 Vue.prototype.$qs = qs

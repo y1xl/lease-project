@@ -67,9 +67,9 @@ export default {
           Toast('只能单选') 
           return
       }
-
+      // this.upload(file.file)
       Compress(file.content,file.file.type).then(res=>{
-        // console.log(res,'compress')
+        console.log(res,'compress')
         this.upload(res)
       })
 

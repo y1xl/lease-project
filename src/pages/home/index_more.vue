@@ -85,7 +85,12 @@ export default {
             }
           } else {
             Toast(resdata.message);
+            this.loading = false;
+            this.finished = true;
           }
+        })
+        .catch(error => {
+            Toast('网络出错')
         });
     }
   },
