@@ -82,13 +82,13 @@
     </div>
 
     <div class="bgc" style="margin-top:10px;">
-      <van-cell is-link @click="discountmodel = true">
+      <van-cell is-link @click="discountmodel = true" :border="false" >
         <template slot="title">
           <span class="lab">活动</span>
           <!-- <span class="custom-text">新人下单立减50元</span> -->
         </template>
       </van-cell>
-      <div class="flex-jc-around duo_mian">
+      <div class="flex-jc-around duo_mian border-t">
         <div class="grey_12 flex-align-items">
           <img class="img_zq" src="../../assets/ziti.png" alt>多门店自取
         </div>

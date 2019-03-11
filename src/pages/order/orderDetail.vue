@@ -159,7 +159,7 @@
         <div>
           <div class="title flex-jc-between position">
             <span>应付总金额</span>
-            <span class="fc-red">¥{{data.total_price||0}}</span>
+            <span class="fc-red">¥{{data.total_price||'0.00'}}</span>
             <div class="l dot"></div>
             <div class="r dot"></div>
           </div>
@@ -176,11 +176,11 @@
             <!-- 租转售  end-->
             <div class="flexbox">
               <span>押金</span>
-              <span class="flex-1">¥{{data.order_rent||0}}</span>
+              <span class="flex-1">¥{{data.order_rent||'0.00'}}</span>
             </div>
             <div class="flexbox">
               <span>租金</span>
-              <span class="flex-1">¥{{data.rental||0}}</span>
+              <span class="flex-1">¥{{data.rental||'0.00'}}</span>
             </div>
             <!-- <div class="flexbox">
               <span>享受优惠</span>
@@ -188,19 +188,19 @@
             </div> -->
             <div class="flexbox">
               <span>保险费</span>
-              <span class="flex-1">¥{{data.order_safe||0}}</span>
+              <span class="flex-1">¥{{data.order_safe||'0.00'}}</span>
             </div>
             <div class="flexbox">
               <span>优惠券</span>
-              <span class="flex-1">-¥{{data.coupons_money||0}}</span>
+              <span class="flex-1">-¥{{data.coupons_money||'0.00'}}</span>
             </div>
             <div class="flexbox" v-if="data.delivery_way=='平台配送'">
               <span>配送运费</span>
-              <span class="flex-1">¥{{data.way_price||0}}</span>
+              <span class="flex-1">¥{{data.way_price||'0.00'}}</span>
             </div>
             <div class="flexbox" v-if="data.delivery_way=='快递'">
               <span>快递费</span>
-              <span class="flex-1">¥{{data.way_price||0}}</span>
+              <span class="flex-1">¥{{data.way_price||'0.00'}}</span>
             </div>
             <!-- <div class="flexbox">
               <span>已收定金</span>
@@ -208,7 +208,7 @@
             </div> -->
             <div class="flexbox">
               <span>免押额度</span>
-              <span class="flex-1">-¥{{data.order_credit_rent||0}}</span>
+              <span class="flex-1">-¥{{data.order_credit_rent||'0.00'}}</span>
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@
           <div class="info">
             <div class="flexbox" v-if="data.renewalFees!=0">
               <span>续租费</span>
-              <span class="flex-1">¥{{data.renewalFees||0}}</span>
+              <span class="flex-1">¥{{data.renewalFees}}</span>
             </div>
             <div class="flexbox" v-if="data.renewalDay!=0">
               <span>续租时间</span>
@@ -250,15 +250,15 @@
 
             <div class="flexbox" v-if="data.HireFreight">
               <span>到付运费</span>
-              <span class="flex-1">￥{{data.HireFreight}}</span>
+              <span class="flex-1">￥{{data.HireFreight||'0.00'}}</span>
             </div>
             <div class="flexbox" v-if="data.service_money">
               <span>维修费</span>
-              <span class="flex-1">¥{{data.service_money||0}}</span>
+              <span class="flex-1">¥{{data.service_money||'0.00'}}</span>
             </div>
             <div class="flexbox" v-if="active==5||active==6">
               <span>退款费</span>
-              <span class="flex-1">¥{{data.refundAmount}}</span>
+              <span class="flex-1">¥{{data.refundAmount||'0.00'}}</span>
             </div>
           </div>
         </div>
@@ -313,7 +313,7 @@
 
     <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10" :style="maintenance_pay==1||active==6?'opacity: 0;':''">
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)">
-        <!-- <router-link v-bind="{to: '/pay/'+data.order_id}">支付</router-link> -->支付
+        支付
       </div>
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
       <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>

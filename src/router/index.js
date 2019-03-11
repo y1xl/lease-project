@@ -112,8 +112,8 @@ export default new Router({
     { 
       path: '/order', component: Order, meta: { title: '订单' }, 
       children:[
-        { path: '', component: LeaseOrder, meta: { title: '订单' } },
-        { path: 'buyOrder', component: BuyOrder, meta: { title: '订单' } },
+        { path: '', component: LeaseOrder, meta: { title: '订单', keepAlive: true, isBack: false  } },
+        { path: 'buyOrder', component: BuyOrder, meta: { title: '订单', keepAlive: true, isBack: false  } },
       ]
     },
     { path: '/me', component: Me, meta: { title: '我的' } },

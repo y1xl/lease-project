@@ -42,6 +42,12 @@ import OrderCard from "@/components/OrderCard";
 import { Toast,Dialog } from "vant";
 
 export default {
+    beforeRouteEnter(to, from, next) {
+        if(from.meta.title === '订单详情') {
+            to.meta.isBack = true;
+        }
+        next();
+    },
     data(){
         return{
             navarr: [
@@ -61,12 +67,23 @@ export default {
         this.$router.replace({ path: "/login" })
         }
     },
+    created(){
+        this.isFirstEnter = true;
+    },
     methods:{
         ontag(index, title) {
             console.log(index, title);
             this.active = index;
         },
-    }
+    },
+    activated() {
+        if(!this.$route.meta.isBack || this.isFirstEnter){
+            this.active=0
+            this.list = []
+        }
+        this.$route.meta.isBack=false
+        this.isFirstEnter=false;
+    },
 }
 </script>
 

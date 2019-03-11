@@ -13,7 +13,6 @@
     <div class="nav-pd-b" v-if="navshow"></div>
 
     <div class="nav bgc flexbox" v-if="navshow">
-    <!-- <div class="nav bgc flexbox"> -->
       <div>
         <router-link to="/">
           <div class="img" v-if="selected=='index'">

@@ -155,6 +155,12 @@ export default {
   components: {
     OrderCard
   },
+  beforeRouteEnter(to, from, next) {
+    if(from.meta.title === '订单详情') {
+        to.meta.isBack = true;
+    }
+    next();
+  },
   data() {
     return {
       // selected: 0,
@@ -202,6 +208,7 @@ export default {
     }
   },
   created(){  
+    this.isFirstEnter = true;
     this.getlist()
   },
   methods: {
@@ -401,7 +408,18 @@ export default {
           }
         });
     }
-  }
+  },
+
+  activated() {
+     if(!this.$route.meta.isBack || this.isFirstEnter){
+       this.active=0,
+       this.list=[]
+       this.radio=0
+       this.getlist()
+     }
+     this.$route.meta.isBack=false
+     this.isFirstEnter=false;
+  },
 };
 </script>
 

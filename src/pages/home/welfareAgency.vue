@@ -82,7 +82,7 @@
           <div>
             <!-- <div class="btn1 text-c">领奖励</div> -->
             <!-- <div class="btn2 text-c">已领取</div> -->
-            <div class="btn3 text-c">去完成</div>
+            <div class="btn3 text-c"><router-link to="/order">去完成</router-link></div>
           </div>
         </div>
       </div>
@@ -124,7 +124,7 @@
           <div>
             <!-- <div class="btn1 text-c">领奖励</div> -->
             <!-- <div class="btn2 text-c">已领取</div> -->
-            <div class="btn3 text-c">去完成</div>
+            <div class="btn3 text-c"><router-link to="/">去完成</router-link></div>
           </div>
         </div>
       </div>
