@@ -30,9 +30,10 @@ export default {
     methods:{
         //{ "state": "7209fe525991a66918c8a7ead26b1f15", "app_id": "2018101261703006", "source": "alipay_wallet", "userOutputs": "auth_user", "scope": "auth_user", "auth_code": "7c70fb4954664a8497d07d762021UE65" }
         getali(){
+            console.log('请求aliLogin')
             Toast.loading({ mask: true, message: "加载中..." });
             let postData = this.$qs.stringify({
-                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id||'',
+                // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id||'',
                 // state: '2bbf04412fa896e5346ea8a7d941f7f5',
                 // auth_code: '3a356bacbb624d31abb791d47e63SX00'
                 state: this.$route.query.state,
@@ -102,7 +103,7 @@ export default {
                 type: 1,
                 phone: this.phoneval,
                 yzm: this.codeval,
-                user_auth_id: this.id ||''
+                user_auth_id: this.id 
             });
             this.axios.post(this.API + "api/Order/ThreeLogin", postData).then(res => {
                 console.log(res.data, "alilogin");

@@ -91,21 +91,18 @@ export default {
         },
         next(){
             // console.log(this.result);
-            let arr = []
             let fittingstring = []
             for(let v1 of this.result){
                 for(let v2 of this.list){
                     if(v1==v2.id){
-                        // console.log(v2.name);
-                        fittingstring.push(v2.name)
-                        arr.push(v2)
+                        // console.log(v2);
+                        fittingstring.push(`${v2.name} x${v2.number}`)
                     }
                 }
             }
-            
+            // console.log(fittingstring)
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fittings = arr
-            gohostingSession.fittingstring = fittingstring.join()
+            gohostingSession.fittingstring = fittingstring.join(',')
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/uploadimg' })
         }

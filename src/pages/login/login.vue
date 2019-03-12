@@ -18,7 +18,7 @@
           </div>
           <div class="flex-jc-around bott">
             <img src="../../assets/l_zhifubao.png" alt="支付宝" class="icon_img" @click="goali">
-            <img src="../../assets/l_weixin.png" alt="微信" class="icon_img" @click="gowx">
+            <!-- <img src="../../assets/l_weixin.png" alt="微信" class="icon_img" @click="gowx"> -->
             <img src="../../assets/l_weibo.png" alt="新浪" class="icon_img" @click="gosina">
           </div>
         </div>
@@ -112,32 +112,32 @@ export default {
           Toast('网络出错')
       });
     },
-    gowx(){
-      Toast.loading({ mask: true, message: "加载中..." });
-      this.axios.post(this.API + "api/Order/GetCodeUrl").then(res => {
-        console.log(res.data, "gowx");
-        let resdata = res.data;
-        if (resdata.code == 200) {
-          Toast.clear();
+    // gowx(){
+    //   Toast.loading({ mask: true, message: "加载中..." });
+    //   this.axios.post(this.API + "api/Order/GetCodeUrl").then(res => {
+    //     console.log(res.data, "gowx");
+    //     let resdata = res.data;
+    //     if (resdata.code == 200) {
+    //       Toast.clear();
 
-          Dialog.confirm({
-              message: '是否进行微信授权'
-            }).then(() => {
-              // window.location.href = `${resdata.data}`
-              window.location.href = `weixin://dl/businessWebview/link/?appid=wx1c8817f0d73d6913&url=${encodeURI('https://newbee.zx-xcx.com/')}`
-            }).catch(() => {
-              // on cancel
-            });
-        } else {
-          Toast.clear();
-          Toast(resdata.message);
-        }
-      })
-      .catch(error => {
-          Toast.clear();
-          Toast('网络出错')
-      });
-    }
+    //       Dialog.confirm({
+    //           message: '是否进行微信授权'
+    //         }).then(() => {
+    //           // window.location.href = `${resdata.data}`
+    //           window.location.href = ''
+    //         }).catch(() => {
+    //           // on cancel
+    //         });
+    //     } else {
+    //       Toast.clear();
+    //       Toast(resdata.message);
+    //     }
+    //   })
+    //   .catch(error => {
+    //       Toast.clear();
+    //       Toast('网络出错')
+    //   });
+    // }
   }
 };
 </script>

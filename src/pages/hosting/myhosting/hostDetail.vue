@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="box">
       <div class="flex-jc-center position">
         <div class="banner bgc">
@@ -13,44 +14,52 @@
         </div>
       </div>
 
-      <div class="title text-line">Canon/佳能 EOS 200D 单反相机入门级</div>
+      <div class="title">{{detail.model}}</div>
       <div class="detail">
         <div class="hang">
-          <span>型号：</span>
-          <span>x14886232548</span>
+          <span>品类：</span>
+          <span>{{detail.cate}}</span>
+        </div>
+        <div class="hang">
+          <span>品牌：</span>
+          <span>{{detail.brand}}</span>
         </div>
         <div class="hang">
           <span>序列号：</span>
-          <span>白</span>
+          <span>{{detail.serial_number}}</span>
         </div>
         <div class="hang">
           <span>颜色：</span>
-          <span>白</span>
+          <span>{{detail.standards}}</span>
         </div>
         <div class="hang">
           <span>成色：</span>
-          <span>9新</span>
+          <span>{{detail.exterior}}</span>
         </div>
         <div class="hang">
           <span>功能：</span>
-          <span>完好</span>
+          <span>{{detail.functional_status}}</span>
         </div>
         <div class="hang">
           <span>配件：</span>
-          <span>镜头盖 相机包 电池 sd卡</span>
+          <span>{{detail.parts_list}}</span>
         </div>
       </div>
     </div>
+
     <!-- 审核中 -->
-    <!-- <div class="state text-c">
+    <div class="state text-c" v-if="detail.trust_status==0">
       <div>您的物品正在审核中</div>
       <div>请耐心等候！</div>
-    </div> -->
+    </div>
     <!-- 未通过 -->
-    <!-- <div class="state text-c">
+    <div class="state text-c" v-if="detail.trust_status==2">
       <div>很抱歉！</div>
       <div>您的资料未通过审核</div>
-    </div> -->
+      <div>原因：{{detail.reasons_refusal}}</div>
+    </div>
+
+    <template v-if="detail.trust_status==1">
 
     <div class="bgc">
       <div class="pd-15">交付方式</div>
@@ -76,6 +85,8 @@
       <div class="btn text-c" @click="next">下一步</div>
     </div>
 
+    </template>
+
     <!-- 托管成功弹窗 -->
     <van-popup v-model="showmodel" :close-on-click-overlay="false">
       <div class="text-c position mask_box">
@@ -86,7 +97,7 @@
           </span>
         </div>
 
-        <div class="gongxi">恭喜，托管成功！</div>
+        <div class="gongxi">恭喜，审核成功！</div>
 
         <div class="gongxi">请将设备交给我们保管吧！</div>
 
@@ -98,17 +109,18 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      images: [
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-        "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-      ],
+      images: [],
       typenum: 0,
       showmodel: true,
+      detail:''
     };
+  },
+  mounted(){
+    this.getdetail()
   },
   methods: {
     onChange(index) {
@@ -121,6 +133,32 @@ export default {
         done();
       }
     },
+
+    getdetail(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          trust_id: this.$route.params.id
+      });
+      this.axios.post(this.API + "api/Trusteeship/trustDetails", postData)
+      .then(res => {
+          console.log(res.data, "detail");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              this.detail = resdata.data
+              this.images= [resdata.data.phone_picture]
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
+    },
+
     next(){
       if(this.typenum==0){
         window.sessionStorage.removeItem('sceneDeliSession');

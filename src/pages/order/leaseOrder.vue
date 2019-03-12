@@ -417,6 +417,7 @@ export default {
        this.radio=0
        this.getlist()
      }
+     this.getlist()
      this.$route.meta.isBack=false
      this.isFirstEnter=false;
   },

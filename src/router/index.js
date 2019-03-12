@@ -203,13 +203,13 @@ export default new Router({
     { path: '/gsuccessful', component: Gsuccessful, meta: { title: '提交成功' } },
 
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管' } },
-    { path: '/hostDetail', component: HostDetail, meta: { title: '审核详情' } },
+    { path: '/hostDetail/:id', component: HostDetail, meta: { title: '审核详情' } },
     { path: '/hostCancel', component: HostCancel, meta: { title: '取消托管' } },
     { path: '/sceneDeli', component: SceneDeli, meta: { title: '现场交付' } },
     { path: '/platformDeli', component: PlatformDeli, meta: { title: '平台配送' } },
     { path: '/postDeli', component: PostDeli, meta: { title: '快递交付' } },
-    { path: '/hostingDetail', component: HostingDetail, meta: { title: '托管详情' } },
-    { path: '/hostingExpress', component: HostingExpress, meta: { title: '审核详情' } },
+    { path: '/hostingDetail/:id', component: HostingDetail, meta: { title: '托管详情' } },
+    { path: '/hostingExpress/:id', component: HostingExpress, meta: { title: '审核详情' } },
 
     //收货地址
     { path: '/addresslist/:type', component: Addresslist, meta: { title: '收货地址' } },

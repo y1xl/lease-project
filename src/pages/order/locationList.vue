@@ -82,7 +82,7 @@ export default {
     if(!window.localStorage.getItem("center")){
         this.getLocation();
       }
-    this.getLocation();
+    // this.getLocation();
   },
   methods: {
     getLocation() {
@@ -136,11 +136,14 @@ export default {
               this.finished = true;
             }
           } else {
-            Dialog.alert({
-                message: resdata.message
-            }).then((e) => {
-              //
-            });
+            if(this.list.length==0){
+              Dialog.alert({
+                  message: resdata.message
+              }).then((e) => {
+                //
+              });
+            }
+            
             this.loading = false;
             this.finished = true;
           }

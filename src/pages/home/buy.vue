@@ -44,7 +44,7 @@
 
     <div class="pd-15 bgc">
       <div class="goods flexbox">
-        <img :src="detail.gd_img[0]" :alt="detail.goods_name" style="object-fit:contain">
+        <img :src="goodsimg" :alt="detail.goods_name" style="object-fit:contain">
         <div class="flex-1">
           <div class="mar-b-10">{{detail.goods_name}}</div>
           <div>
@@ -203,6 +203,7 @@ export default {
   data() {
     return {
       goodid: this.$route.query.id,
+      goodsimg:'',
       typenum: 0,
       showtime: false,
       timetext: "",
@@ -240,6 +241,14 @@ export default {
     };
   },
   watch: {
+    typenum(){
+      if(this.typenum==1||this.typenum==2){
+        if(this.getaddress == ""){
+          return
+        }
+        setTimeout(()=>{this.getfreight()},300)
+      }
+    },
     weekval() {
       if (this.weekval == "") {
         this.rent = 0;
@@ -301,15 +310,6 @@ export default {
           }
         });
     },
-    getaddress() {
-      if(this.getaddress == ""){
-        return
-      }
-      if (this.typenum == 0) {
-        return;
-      }
-      this.getfreight();
-    }
   },
   computed: {
     calculatesum: function(){
@@ -360,12 +360,11 @@ export default {
         if(this.getaddress == ""){
           return ["天"];
         }
-        this.getfreight();
         return ["天"];
       }
     }
   },
-  created() {    
+  mounted() {    
     this.getotherprice();
     let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
     if (buySession) {
@@ -420,13 +419,6 @@ export default {
     onConfirmWeek(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
       this.weektext = value;
-      // if (value == "小时") {
-      //   this.weekval = 6;
-      //   this.isdisabled = true;
-      // }
-      // if (value == "天") {
-      //   this.isdisabled = false;
-      // }
       this.showweek = false;
     },
     onConfirmTimequantum(value, index) {
@@ -480,6 +472,7 @@ export default {
             this.hire_cate = resdata.data.hire_cate;
             this.guiges = resdata.data.sku==''?'':JSON.parse(resdata.data.sku);
             this.detail = resdata.data;
+            this.goodsimg = resdata.data.gd_img[0]
 
             if (this.Dinsurance || this.isinsurance) {
               this.sum = accAdd(resdata.data.pay_safe, resdata.data.safe_price)
@@ -605,7 +598,7 @@ export default {
               }
             }
           } else {
-            // Toast(resdata.message);
+            Toast(resdata.message);
           }
         });
     },

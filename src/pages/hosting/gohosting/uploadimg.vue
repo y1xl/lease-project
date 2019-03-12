@@ -95,12 +95,12 @@
                 <div class="flex-jc-between pd"><span class="fc-grey">功能状况</span><span>{{gohostingSession.statetext}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">联系方式</span><span>{{gohostingSession.telval}}</span></div>
                 <div class="imglist flex-jc-between pd">
-                    <img :src="gohostingSession.fileimg1.content" alt="">
-                    <img :src="gohostingSession.fileimg2.content" alt="">
+                    <img :src="fileimg1.content" alt="">
+                    <img :src="fileimg2.content" alt="">
                 </div>
                 <div class="imglist flex-jc-between pd">
-                    <img :src="gohostingSession.fileimg3.content" alt="">
-                    <img :src="gohostingSession.fileimg4.content" alt="">
+                    <img :src="fileimg3.content" alt="">
+                    <img :src="fileimg4.content" alt="">
                 </div>
                 <div class="flex-jc-between pd"><span class="fc-grey">托管费率</span><span>30%</span></div>
                 <div class="pd">审核结果将在48小时内通知您</div>
@@ -146,10 +146,6 @@ export default {
     created(){
         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
         if(gohostingSession){
-            this.fileimg1 = gohostingSession.fileimg1
-            this.fileimg2 = gohostingSession.fileimg2
-            this.fileimg3 = gohostingSession.fileimg3
-            this.fileimg4 = gohostingSession.fileimg4
             this.serialnumval = gohostingSession.serialnumval
             this.telval = gohostingSession.telval
         }
@@ -162,9 +158,6 @@ export default {
                 return
             }
             this.fileimg1 = file
-            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fileimg1 = this.fileimg1
-            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
         },
         onRead2(file) {
             console.log(file)
@@ -173,9 +166,6 @@ export default {
                 return
             }
             this.fileimg2 = file
-            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fileimg2 = this.fileimg2
-            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
         },
         onRead3(file) {
             console.log(file)
@@ -184,9 +174,6 @@ export default {
                 return
             }
             this.fileimg3 = file
-            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fileimg3 = this.fileimg3
-            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
         },
         onRead4(file) {
             console.log(file)
@@ -195,9 +182,6 @@ export default {
                 return
             }
             this.fileimg4 = file
-            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fileimg4 = this.fileimg4
-            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
         },
 
         onshowmodel(){
@@ -217,7 +201,7 @@ export default {
                 Toast("手机号格式不正确");
                 return;
             }
-
+            
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             console.log(gohostingSession,'gohostingSession') 
@@ -232,8 +216,6 @@ export default {
                 return
             }
             if(this.isconsent){
-                Toast("此功能未开通"); return
-                
                 let { 
                     typetext, //品类
                     brandtext, //品牌
@@ -246,23 +228,11 @@ export default {
                     statetext,//功能状况
                     priceval ,//购买价格
                     causetext, //不正常（说明原因）
-                    fittings, //配件
+                    fittingstring, //配件
 
-                    fileimg1,
-                    fileimg2,
-                    fileimg3,
-                    fileimg4,
                     serialnumval, //序列号
                     telval //联系方式
                  } = this.gohostingSession
-
-                 let fittingsarr = []
-                 for(let v of fittings){
-                     fittingsarr.push({
-                         id: v.id,
-                         number: v.num
-                     })
-                 }
 
                 let config = {
                     headers:{'Content-Type':'multipart/form-data'}
@@ -280,15 +250,17 @@ export default {
                 formData.append('exterior',colourtext)  //外观成色
                 formData.append('exterior_describe',colourdes)  //外观描述
                 formData.append('functional_status',statetext)  //功能状况
-                formData.append('parts_list',fittingsarr.length==0?'':JSON.stringify(fittingsarr))  //拥有配件列表
-                // formData.append('parts_picture',)  //产品配件的全家福
-                // formData.append('parts_picture',)  //看清型号的全家福 --字段有问题
-                formData.append('phone_picture',fileimg3.file,fileimg3.file.name)  //产品照片
-                formData.append('damage_picture',fileimg4.file,fileimg4.file.name)  //产品损坏处照片
+                formData.append('functional_reason',causetext)  //不正常（说明原因）
+                formData.append('parts_list',fittingstring)  //拥有配件列表
+                formData.append('parts_picture',this.fileimg1.file,this.fileimg1.file.name)  //产品配件的全家福
+                formData.append('model_picture',this.fileimg2.file,this.fileimg2.file.name)  //看清型号的全家福 --字段有问题
+                formData.append('phone_picture',this.fileimg3.file,this.fileimg3.file.name)  //产品照片
+                formData.append('damage_picture',this.fileimg4.file,this.fileimg4.file.name)  //产品损坏处照片
                 formData.append('serial_number',serialnumval)  //产品序列号
-                formData.append('rate',30)  //费率 不要%号
+                formData.append('contact_way',telval)  //联系方式
+                formData.append('rate','30')  //费率 不要%号
                 
-                this.axios.post(this.API + "api/Lease_Order/saveTrust",formData,config)
+                this.axios.post(this.API + "api/Trusteeship/saveTrust",formData,config)
                 .then(res => {
                     console.log(res.data, "res")
                     let resdata = res.data

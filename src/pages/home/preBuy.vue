@@ -259,7 +259,7 @@ export default {
 
         nextface(){
             if(this.isconsent){
-                this.$router.push({ path: '/face' })
+                Toast('功能未开通');
             }else{
                 Toast('您还未同意协议');
             }
