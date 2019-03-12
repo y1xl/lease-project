@@ -19,13 +19,10 @@
                     <span v-if="item.trust_status==3||item.trust_status==4">待入库</span>
                     <span v-if="item.trust_status==5">在库</span>
                     <span v-if="item.trust_status==6">已退回</span>
-                    <!-- <span v-if="ind==1||ind==0">审核中</span>
-                    <span v-if="ind==2">在库</span>
-                    <span>出租中</span>
-                    <span v-if="ind==3">已退回</span> -->
+                    <!-- <span>出租中</span> -->
                   </div>
                   <div>
-                    <div class="btn border-blue" v-if="item.trust_status==5" @click.stop="cancelTg">取消托管</div>
+                    <div class="btn border-blue" v-if="item.trust_status==5" @click.stop="cancelTg(item.trust_id,)">取消托管</div>
                   </div>
                 </div>
               </div>
@@ -40,6 +37,13 @@
 <script>
 import { Toast } from "vant";
 export default {
+  beforeRouteEnter(to, from, next) {
+    let urlarr = ['审核详情','托管详情','取消托管']
+    if(urlarr.includes(from.meta.title)) {
+        to.meta.isBack = true;
+    }
+    next();
+  },
   data() {
     return {
       navtitle: ["全部", "审核中", "托管中", "已退回"],
@@ -53,6 +57,7 @@ export default {
     }
   },
   created() {
+    this.isFirstEnter = true;
     this.getlist()
   },
   methods: {
@@ -96,11 +101,23 @@ export default {
       }
     },
     //取消托管
-    cancelTg() {
+    cancelTg(id) {
       window.sessionStorage.removeItem("hostCancelSession");
-      this.$router.push({ path: "/hostCancel" });
+      this.$router.push({ path: "/hostCancel/"+id });
     },
-  }
+  },
+
+  activated() {
+     if(!this.$route.meta.isBack || this.isFirstEnter){
+       this.ind=0,
+       this.list=[]
+       this.getlist()
+     }else{
+       this.getlist()       
+     }
+     this.$route.meta.isBack=false
+     this.isFirstEnter=false;
+  },
 };
 </script>
 

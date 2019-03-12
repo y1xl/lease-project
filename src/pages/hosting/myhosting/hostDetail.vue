@@ -108,6 +108,7 @@
     </van-popup>
   </div>
 </template>
+
 <script>
 import { Toast } from "vant";
 export default {
@@ -125,13 +126,6 @@ export default {
   methods: {
     onChange(index) {
       this.current = index;
-    },
-    beforeClose(action, done) {
-      if (action === "confirm") {
-        setTimeout(done, 1000);
-      } else {
-        done();
-      }
     },
 
     getdetail(){

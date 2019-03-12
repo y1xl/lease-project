@@ -156,7 +156,8 @@ export default {
     OrderCard
   },
   beforeRouteEnter(to, from, next) {
-    if(from.meta.title === '订单详情') {
+    let urlarr = ['订单详情','评价','续租','退租','否认','预约快递','维修费','自行寄回']
+    if(urlarr.includes(from.meta.title)) {
         to.meta.isBack = true;
     }
     next();
@@ -290,7 +291,6 @@ export default {
         Toast.loading({ mask: true,message: '加载中...'})
         let postData = this.$qs.stringify({
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-          // users_id: 3,
           order_status:this.active
         });
         this.axios.post(this.API + "api/Lease_Order/LeaseQuery", postData)
@@ -416,8 +416,10 @@ export default {
        this.list=[]
        this.radio=0
        this.getlist()
+     }else{
+       this.getlist()       
      }
-     this.getlist()
+     
      this.$route.meta.isBack=false
      this.isFirstEnter=false;
   },

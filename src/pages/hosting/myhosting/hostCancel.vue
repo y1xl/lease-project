@@ -48,7 +48,7 @@
         </van-radio-group>
     </div>
 
-    <div class="flex-jc-center bgc btn_box">
+    <div class="flex-jc-center btn_box">
       <div class="btn text-c">立即支付</div>
     </div>
 

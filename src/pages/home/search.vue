@@ -1,6 +1,7 @@
 <template>
   <div>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action autofocus @search="onSearch" >
+    <button ref="btn" class="nobtn" @click="onfocus"></button>
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action  @search="onSearch" >
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
     <div class="history bgc ignore" v-show="flprolist.length==0">
@@ -61,16 +62,18 @@ export default {
       this.historylist = JSON.parse(goodshistory)
     }
   },
+  mounted(){
+    this.$refs.btn.click()
+  },
   methods: {
     onSearch() {
       console.log(this.value);
       this.getsearch();
     },
     onfocus(){
-      this.showhistory = true
-    },
-    onblur(){
-      this.showhistory = false
+      console.log(123)
+      let inputElem = document.querySelector('.van-field__control')
+      inputElem.focus()
     },
     historySearch(val){
       this.showhistory = false
@@ -139,6 +142,11 @@ export default {
 </script>
 
 <style scoped>
+.nobtn {
+  opacity: 0;
+  position: absolute;
+  top: -1000px
+}
 .history > p{
   padding: 10px;
   box-sizing: border-box;

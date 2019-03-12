@@ -18,7 +18,7 @@ import Pay from '@/pages/home/pay'
 import Agreement from '@/pages/home/agreement'
 import Search from '@/pages/home/search'
 import PreBuy from '@/pages/home/preBuy'
-import ApplyText from '@/pages/home/applyText'
+// import ApplyText from '@/pages/home/applyText'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -130,7 +130,7 @@ export default new Router({
     { path: '/deny/:id', component: Deny, meta: { title: '否认' } },
     { path: '/calendar/:type', component: Calendar, meta: { title: '时间' } },
     { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
-    { path: '/compensation/:id', component: Compensation, meta: { title: '赔偿' } },
+    { path: '/compensation/:id', component: Compensation, meta: { title: '维修费' } },
     { path: '/sendBack/:id', component: SendBack, meta: { title: '自行寄回' } },
     //产品
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
@@ -143,7 +143,7 @@ export default new Router({
     { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索', keepAlive: true, isBack: false } },
     { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, 
-    { path: '/applyText', component: ApplyText, meta: { title: '支付' } }, 
+    // { path: '/applyText', component: ApplyText, meta: { title: '支付' } }, 
 
     //个人中心
     { path: '/rules/:title', component: Rules, meta: { title: '规则' } },
@@ -168,8 +168,6 @@ export default new Router({
     { path: '/sendcode/:type/:phone', component: Sendcode, meta: { title: '发送验证码' } },
     { path: '/newphone', component: Newphone, meta: { title: '绑定新手机号' } },
     { path: '/newpassword', component: Newpassword, meta: { title: '修改密码' } },
-
-
 
     //登录
     { path: '/login', component: Login, meta: { title: '登录' } },
@@ -202,9 +200,9 @@ export default new Router({
     { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片' } },
     { path: '/gsuccessful', component: Gsuccessful, meta: { title: '提交成功' } },
 
-    { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管' } },
+    { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管', keepAlive: true, isBack: false } },
     { path: '/hostDetail/:id', component: HostDetail, meta: { title: '审核详情' } },
-    { path: '/hostCancel', component: HostCancel, meta: { title: '取消托管' } },
+    { path: '/hostCancel/:id', component: HostCancel, meta: { title: '取消托管' } },
     { path: '/sceneDeli', component: SceneDeli, meta: { title: '现场交付' } },
     { path: '/platformDeli', component: PlatformDeli, meta: { title: '平台配送' } },
     { path: '/postDeli', component: PostDeli, meta: { title: '快递交付' } },

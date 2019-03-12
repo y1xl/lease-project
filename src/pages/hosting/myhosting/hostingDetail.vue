@@ -13,33 +13,37 @@
             </div>
         </div>
 
-        <div class="title text-line">Canon/佳能 EOS 200D 单反相机入门级</div>
-        <div class="detail">
-            <div class="hang">
-            <span>型号：</span>
-            <span>x14886232548</span>
+          <div class="title">{{detail.model}}</div>
+            <div class="detail">
+                <div class="hang">
+                <span>品类：</span>
+                <span>{{detail.cate}}</span>
+                </div>
+                <div class="hang">
+                <span>品牌：</span>
+                <span>{{detail.brand}}</span>
+                </div>
+                <div class="hang">
+                <span>序列号：</span>
+                <span>{{detail.serial_number}}</span>
+                </div>
+                <div class="hang">
+                <span>颜色：</span>
+                <span>{{detail.standards}}</span>
+                </div>
+                <div class="hang">
+                <span>成色：</span>
+                <span>{{detail.exterior}}</span>
+                </div>
+                <div class="hang">
+                <span>功能：</span>
+                <span>{{detail.functional_status}}</span>
+                </div>
+                <div class="hang">
+                <span>配件：</span>
+                <span>{{detail.parts_list}}</span>
+                </div>
             </div>
-            <div class="hang">
-            <span>序列号：</span>
-            <span>白</span>
-            </div>
-            <div class="hang">
-            <span>颜色：</span>
-            <span>白</span>
-            </div>
-            <div class="hang">
-            <span>成色：</span>
-            <span>9新</span>
-            </div>
-            <div class="hang">
-            <span>功能：</span>
-            <span>完好</span>
-            </div>
-            <div class="hang">
-            <span>配件：</span>
-            <span>镜头盖 相机包 电池 sd卡</span>
-            </div>
-        </div>
         </div>
 
         <div id="hnav">
@@ -77,16 +81,43 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return {
-            images: [
-                "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-                "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg",
-                "http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg"
-            ],
+            images: [],
+            detail:'',
             active:0
         }
+    },
+    mounted(){
+        this.getdetail()
+    },
+    methods:{
+        getdetail(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                trust_id: this.$route.params.id
+            });
+            this.axios.post(this.API + "api/Trusteeship/trustDetails", postData)
+            .then(res => {
+                console.log(res.data, "detail");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear();
+                    this.detail = resdata.data
+                    this.images= [resdata.data.phone_picture]
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message);
+                }
+            })
+            .catch(error => {
+                Toast.clear();
+                Toast('网络出错')
+            });
+        },
     }
 }
 </script>
@@ -98,6 +129,9 @@ export default {
 #hnav .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
+}
+#hnav .van-tabs__wrap {
+  z-index: 0;
 }
 </style>
 
