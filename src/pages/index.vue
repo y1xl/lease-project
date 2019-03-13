@@ -10,7 +10,7 @@
       <div class="sear flex-align-items f12" @click="gosearch">
         <van-icon name="search"/>
         <!-- <span class="pl10">搜索你想要的商品</span> -->
-        <input type="text" placeholder="搜索你想要的商品">
+        <input type="text" placeholder="搜索你想要的商品" class="van-field__control">
       </div>
     </div>
     <div class="flex-jc-center bgc" v-show="active==0">

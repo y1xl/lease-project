@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- <button ref="btn" class="nobtn" @click="onfocus"></button> -->
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action autofocus  @search="onSearch" >
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action  @search="onSearch" >
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
     <div class="history bgc ignore" v-show="flprolist.length==0">
@@ -52,7 +51,6 @@ export default {
       value: "",
       flprolist: [],
       historylist:[],
-      // showhistory: false
     };
   },
   created() {
@@ -62,19 +60,18 @@ export default {
       this.historylist = JSON.parse(goodshistory)
     }
   },
-  // mounted(){
-  //   this.$refs.btn.click()
-  // },
+  mounted(){
+    this.onfocus()
+  },
   methods: {
     onSearch() {
       console.log(this.value);
       this.getsearch();
     },
-    // onfocus(){
-    //   console.log(123)
-    //   let inputElem = document.querySelector('.van-field__control')
-    //   inputElem.focus()
-    // },
+    onfocus(){
+      let inputElem = document.querySelector('.van-field__control')
+      inputElem.focus();
+    },
     historySearch(val){
       this.showhistory = false
       this.value = val
@@ -132,6 +129,7 @@ export default {
         if(goodshistory){
           this.historylist = JSON.parse(goodshistory)
         }
+        this.onfocus()
      }
      // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
      this.$route.meta.isBack=false
