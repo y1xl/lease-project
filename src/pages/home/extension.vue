@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="pdlr10" @click="showcode=true">
+      <div class="pdlr10" @click="getcode">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
@@ -101,6 +101,10 @@ export default {
     m_share().then(res => {mShare = res})
   },
   methods: {
+    getcode(){
+
+    },
+
     call(){
       let config = {
         title: '数码租赁',

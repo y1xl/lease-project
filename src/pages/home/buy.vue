@@ -636,6 +636,7 @@ export default {
         this.couponid = ''
         this.sum = accAdd(this.sum,item.coupons_money)
       }else{
+        this.sum = accAdd(this.sum,this.couponstext)
         this.couponindex = index+1
         this.couponstext = item.coupons_money
         this.coupons_condition = item.coupons_condition

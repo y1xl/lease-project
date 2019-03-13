@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="flex-jc-between pd-15 border-b bgc" >
+        <!-- <div class="flex-jc-between pd-15 border-b bgc" >
             <div>微信</div>
             <div class="flex-align-items fc-grey" v-show="userinfo!=''">
                 <span class="fc-blue mr" v-if="userinfo.user_wx==0" @click="gowx">去绑定</span>
                 <span class="fc-grey mr" v-else>已绑定</span>
                 <van-icon name="arrow" />
             </div>
-        </div>
+        </div> -->
         <div class="flex-jc-between pd-15 border-b bgc">
             <div>支付宝</div>
             <div class="flex-align-items fc-grey" v-show="userinfo!=''">

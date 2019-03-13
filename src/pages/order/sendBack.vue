@@ -1,12 +1,23 @@
 <template>
     <div>
-        <van-cell title="选择退租时间" is-link center :value="datetext" @click="go('/calendar/refund')"></van-cell>    
+        <div class="border-b"><van-cell title="选择退租时间" is-link center :value="datetext" @click="go('/calendar/refund')" :border="false"></van-cell></div> 
+        <div class="mar-b-10">
         <van-cell center :border="false">
             <div class="bgc flex-align-items" slot="title">
                 <span>快递单号</span>
                 <input type="text" placeholder="请输入(必须是顺丰)" class="pdl" v-model.trim="numval">
             </div>
         </van-cell>  
+        </div> 
+
+        <div class="address bgc flex-align-items pd-15">
+            <div class="left bgc-blue flex-center">收</div>
+            <div class="flex-1">
+                <div v-show="shopaddress==''" class="fc-grey">暂无收货地址</div>
+                <div class="mar-b-10">{{shopaddress.store_name}} {{shopaddress.store_phone}}</div>
+                <div>{{(shopaddress.store_partners||'')+(shopaddress.store_city||'')+(shopaddress.store_district||'')+(shopaddress.store_Address||'')}}</div>
+            </div>
+        </div>
 
         <div class="pd-t-100"><div class="btn text-c" @click="express">确定</div></div>  
     </div>
@@ -19,6 +30,7 @@ export default {
         return{
             datetext:'',
             numval:'',
+            shopaddress:'',
         }
     },
     created() {
@@ -27,6 +39,9 @@ export default {
             this.datetext = refundSession.backdate
             this.numval = refundSession.numval
         }
+    },
+    mounted(){
+        this.getdefaultshop()
     },
     methods:{
         go(url){
@@ -66,6 +81,22 @@ export default {
             }
             });
         },
+
+        getdefaultshop(){
+            let postData = this.$qs.stringify({
+                order_id: this.$route.params.id
+            })
+            this.axios.post(this.API + "api/Lease_Order/getStore",postData)
+            .then(res => {
+                console.log(res.data, "shop")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    this.shopaddress = resdata.data
+                } else {
+                    Toast(resdata.message)
+                }
+            });
+        },
     }
 }
 </script>
@@ -81,5 +112,13 @@ export default {
     border-radius: 20px;
     color: #fff;
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
+}
+
+.address .left{
+    width: 32px;
+    height: 32px;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 15px;
 }
 </style>

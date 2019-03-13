@@ -161,6 +161,16 @@ export default {
           JSON.stringify(postDeliSession)
         );
       }
+      if (this.$route.params.type == "platformDeli") {
+        let platformDeliSession = JSON.parse(
+          window.sessionStorage.getItem("platformDeliSession")
+        );
+        platformDeliSession.getaddress = this.list[val];
+        window.sessionStorage.setItem(
+          "platformDeliSession",
+          JSON.stringify(platformDeliSession)
+        );
+      }
       if (this.$route.params.type == "preBuy") {
         let prebuySession = JSON.parse(
           window.sessionStorage.getItem("prebuySession")

@@ -3,6 +3,8 @@
     <div id="nav">
       <van-tabs @click="ontab" v-model="ind">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
+          <div v-show="list.length==0" class="fc-grey text-c pd-15">没有更多了</div>
+          
           <div class="position" v-for="(item,index) in list" :key="index">
             <div class="box flex-jc-around bgc" @click="toDetail(item.trust_id,item.trust_status)">
               <div>
@@ -90,7 +92,7 @@ export default {
     },
     //托管详情
     toDetail(id,status) {
-      if (status==0||status==1||status==2) {
+      if (status==0||status==1||status==2||status==3||status==4) {
         this.$router.push({ path: "/hostDetail/"+id });
       }
       if (status==5) {

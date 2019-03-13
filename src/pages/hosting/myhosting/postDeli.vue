@@ -1,97 +1,86 @@
 <template>
   <div class="bgc full">
-    <div class>
-      <div class="flex-jc-between pd-15" @click="go('/locationList/postDeli')">
-        <div>选择交付门店</div>
-        <div class="flex-align-items fc-grey">
-          <van-icon name="arrow"/>
-        </div>
-      </div>
-
-      <div class="box" v-show="getlocation">
-        <div @click="go(`/ShopDetail`)">
-          <div class="flex-jc-between">
-            <div class="shop_title pd-15">{{getlocation.title}}</div>
-          </div>
-          <div class="txt pd-lr-15">{{getlocation.address}}</div>
-        </div>
-        <div class="dt text-c" @click="go(`/map`)">
-          <img class="ck_img" src="../../../assets/mddw.png">
-          <span class="txt">查看地图</span>
-        </div>
-      </div>
-    </div>
 
     <div class="nav bgc flex-jc-between">
       <div :class="{ 'fc-blue selected': typenum==0 }" @click="typenum=0">预约快递</div>
       <div :class="{ 'fc-blue selected': typenum==1 }" @click="typenum=1">已寄出</div>
     </div>
-    <div v-if="typenum==0">
+    <div v-show="typenum==0">
       <div
         class="flex-jc-between pd-15 bgc border-b flex-align-items"
         @click="go('/calendar/postDeli')"
       >
         <span class="custom-text">期望揽收日期</span>
-        <span class="flex-align-items fc-grey fsz12" :class="datetext==''?'fc-grey':''">
+        <span class="flex-align-items fsz12" :class="datetext==''?'fc-grey':''">
           {{datetext==''?'':datetext}}
-          <van-icon name="arrow"/>
+          <van-icon name="arrow" color="#aeaeae"/>
         </span>
       </div>
       <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true">
-        <span class="custom-text">时间</span>
-        <span class="flex-align-items fc-grey fsz12">
-          {{timetext}}
-          <van-icon name="arrow"/>
+        <span class="custom-text">时间段</span>
+        <span class="flex-align-items fsz12">
+          {{timequantum}}
+          <van-icon name="arrow" color="#aeaeae"/>
         </span>
       </div>
-      <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
-        <van-datetime-picker
-          type="time"
-          show-toolbar
-          @cancel="showtime=false"
-          @confirm="onConfirm"
-        />
-      </van-popup>
+
       <div
-        class="flex-jc-between pd-15 bgc border-b fc-grey flex-align-items"
+        class="flex-jc-between pd-15 bgc border-b flex-align-items"
         @click="go('/addresslist/postDeli')"
       >
         <div>
-          <div>选择发货地址</div>
-          <div class="fsz12">
-            {{getaddress.name}} {{getaddress.phone}}
-            <van-tag plain v-if="getaddress.default">默认</van-tag>
-          </div>
-          <div class="fsz12">{{getaddress.address}}</div>
+          <div class="fc-grey">选择发货地址</div>
+          <div class="fsz12">{{getaddress.ads_user||''}}  {{getaddress.ads_phone||''}} <van-tag plain v-if="getaddress.ads_state==2">默认</van-tag></div>
+          <div class="fsz12">{{(getaddress.ads_province||'')+(getaddress.ads_city||'')+(getaddress.ads_district||'')+(getaddress.ads_address||'')}}</div>
         </div>
-        <van-icon name="arrow"/>
+        <van-icon name="arrow" color="#aeaeae"/>
       </div>
 
-      <!-- <div class="inputbox border-b">
-        <input placeholder="收件地址">
-      </div>-->
-    </div>
-    <div v-if="typenum==1">
-      <input v-model="postnum" placeholder="请输入顺丰单号" type="text">
+      <div
+        class="flex-jc-between pd-15 bgc flex-align-items"
+        @click="go('/nearshop?type=postDeli')"
+      >
+        <div>
+          <div class="fc-grey">选择交付门店</div>
+          <div class="fsz12">{{getlocation.store_name||''}}</div>
+          <div class="fsz12">{{(getlocation.store_province||'')+(getlocation.store_city||'')+(getlocation.store_district||'')+(getlocation.store_Address||'')}}</div>
+        </div>
+        <van-icon name="arrow" color="#aeaeae"/>
+      </div>
+
+      <div class="flex-jc-center bgc btn_box">
+        <div class="btn text-c" @click="submit1">提交</div>
+      </div>
     </div>
 
-    <div class="flex-jc-center bgc btn_box">
-      <div class="btn text-c" @click="submit">提交</div>
+    <div v-show="typenum==1">
+      <input v-model.trim="postnum" placeholder="请输入顺丰单号" type="text">
+
+      <div class="flex-jc-center bgc btn_box">
+        <div class="btn text-c" @click="submit2">提交</div>
+      </div>
     </div>
+
+    <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
+      <van-picker show-toolbar :columns="timequantumarr" @cancel="showtime = false" @confirm="onConfirm"/>
+    </van-popup>
+
   </div>
 </template>
 
 <script>
+import { Toast,Dialog } from 'vant';
 export default {
   data() {
     return {
       typenum: 0,
       postnum: "",
-      timetext: "",
       datetext: "",
       showtime: false,
       getaddress: "",
-      getlocation: ""
+      getlocation: "",
+      timequantum:'',
+      timequantumarr:[]
     };
   },
   created() {
@@ -101,27 +90,135 @@ export default {
     if (postDeliSession) {
       this.getlocation = postDeliSession.getlocation;
       this.datetext = postDeliSession.date;
+      this.timequantum = postDeliSession.timequantum;
       this.getaddress = postDeliSession.getaddress;
+      this.postnum = postDeliSession.postnum;
+    }else{
+      this.getdefaultaddress()
     }
   },
+   mounted(){
+    this.gettimequantumarr()
+  },
   methods: {
-    toShopdet() {
-      this.$router.push({ path: "/shopDetail" });
+    getdefaultaddress(){
+        let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        })
+        this.axios.post(this.API + "api/Lease/ads_select",postData)
+        .then(res => {
+            console.log(res.data, "address")
+            let resdata = res.data
+            if (resdata.code == 200) {
+                for(let v of resdata.data){
+                    if(v.ads_state==2){
+                        this.getaddress = v
+                    }
+                }
+            } else {
+                Toast(resdata.message)
+            }
+        });
+    },
+    gettimequantumarr(){
+        this.axios.post(this.API + "api/Lease_Order/getSFTime")
+        .then(res => {
+            console.log(res.data, "timequantum")
+            let resdata = res.data
+            if (resdata.code == 200) {
+                let arr = []
+                for(let v of resdata.data){
+                    arr.push(v[0])  
+                }
+                this.timequantumarr = arr
+            } else {
+                Toast(resdata.message)
+            }
+        });
     },
     onConfirm(value) {
       console.log(`当前值：${value}`);
-      this.timetext = value;
+      this.timequantum = value;
       this.showtime = false;
     },
 
-    submit() {
-      this.$router.push({ path: "/trusteeship" });
+    submit1() {
+     if(this.datetext==''||this.timequantum==''||this.getaddress==''||this.getlocation==''){
+          Toast('还有未填写')
+          return
+      }
+
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          trust_id: this.$route.params.id,
+          year: this.datetext,
+          time: this.timequantum,
+          ads_id:this.getaddress.ads_id,
+          store_id: this.getlocation.store_id
+      });
+      this.axios.post(this.API + "api/Trusteeship/trustDetails", postData)
+      .then(res => {
+          console.log(res.data, "detail");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              Dialog.alert({
+                  message: '操作成功'
+              }).then((e) => {
+                  this.$router.go(-1);
+              });
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
     },
+    submit2() {
+     if(this.postnum==''){
+          Toast('还有未填写')
+          return
+      }
+
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          trust_id: this.$route.params.id,
+          express_no: this.postnum
+      });
+      this.axios.post(this.API + "api/Trusteeship/surrender", postData)
+      .then(res => {
+          console.log(res.data, "detail");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              Dialog.alert({
+                  message: '操作成功'
+              }).then((e) => {
+                  this.$router.go(-1);
+              });
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
+    },
+
     go(url) {
       let postDeliSession = {
         getlocation: this.getlocation,
         date: this.datetext,
-        getaddress: this.getaddress
+        timequantum: this.timequantum,
+        getaddress: this.getaddress,
+        postnum: this.postnum
       };
       window.sessionStorage.setItem(
         "postDeliSession",

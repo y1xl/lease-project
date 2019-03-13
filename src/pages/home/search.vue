@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button ref="btn" class="nobtn" @click="onfocus"></button>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action  @search="onSearch" >
+    <!-- <button ref="btn" class="nobtn" @click="onfocus"></button> -->
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action autofocus  @search="onSearch" >
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
     <div class="history bgc ignore" v-show="flprolist.length==0">
@@ -21,10 +21,10 @@
         <div class="f14 pro_name">{{item.goods_name}}</div>
         <div class="com_like">
           <van-rate v-model="item.rate" disabled disabled-color="#FFB10E"/>
-          <span class="f12">0</span>
+          <span class="f12">{{item.eva_score}}</span>
           <div>
             <img class="chat" src="../../assets/chat.png">
-            <span class="f12">0</span>
+            <span class="f12">{{item.eva_num}}</span>
           </div>
         </div>
         <div class="zj">
@@ -62,19 +62,19 @@ export default {
       this.historylist = JSON.parse(goodshistory)
     }
   },
-  mounted(){
-    this.$refs.btn.click()
-  },
+  // mounted(){
+  //   this.$refs.btn.click()
+  // },
   methods: {
     onSearch() {
       console.log(this.value);
       this.getsearch();
     },
-    onfocus(){
-      console.log(123)
-      let inputElem = document.querySelector('.van-field__control')
-      inputElem.focus()
-    },
+    // onfocus(){
+    //   console.log(123)
+    //   let inputElem = document.querySelector('.van-field__control')
+    //   inputElem.focus()
+    // },
     historySearch(val){
       this.showhistory = false
       this.value = val
@@ -157,12 +157,7 @@ export default {
   position: absolute;
   left: 0;
 }
-/* .ignore {
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 44px;
-} */
+
 /*分类 所有产品*/
 .fl_pro_list {
   width: 100%;

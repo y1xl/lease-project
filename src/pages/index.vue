@@ -9,7 +9,8 @@
       </div>
       <div class="sear flex-align-items f12" @click="gosearch">
         <van-icon name="search"/>
-        <span class="pl10">搜索你想要的商品</span>
+        <!-- <span class="pl10">搜索你想要的商品</span> -->
+        <input type="text" placeholder="搜索你想要的商品">
       </div>
     </div>
     <div class="flex-jc-center bgc" v-show="active==0">
@@ -350,6 +351,10 @@ export default {
   height: 32px;
   margin: 5px 12px 0 0;
   border-radius: 15px;
+  background: #f6f5f5;
+  overflow: hidden;
+}
+.sear input {
   background: #f6f5f5;
 }
 

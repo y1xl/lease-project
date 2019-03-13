@@ -27,13 +27,13 @@
     <div class="bgc">
       <div class="border-b pd-15">请选择支付方式</div>
       <van-radio-group v-model="radio">
-        <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
+        <!-- <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
           <div class>
             <img src="../../assets/weixin.png" alt="微信" class="payimg">
             微信
           </div>
           <van-radio name="1" checked-color="#2DBBF1"></van-radio>
-        </div>
+        </div> -->
         <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
           <div class>
             <img src="../../assets/ali.png" alt="支付宝" class="payimg">支付宝

@@ -93,6 +93,7 @@ import PostDeli from '@/pages/hosting/myhosting/postDeli'
 import SceneDeli from '@/pages/hosting/myhosting/sceneDeli'
 import HostingDetail from '@/pages/hosting/myhosting/hostingDetail'
 import HostingExpress from '@/pages/hosting/myhosting/hostingExpress'
+import Nearshop from '@/pages/hosting/myhosting/nearshop'
 
 //收货地址
 import Addresslist from '@/pages/address/addresslist'
@@ -203,11 +204,12 @@ export default new Router({
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管', keepAlive: true, isBack: false } },
     { path: '/hostDetail/:id', component: HostDetail, meta: { title: '审核详情' } },
     { path: '/hostCancel/:id', component: HostCancel, meta: { title: '取消托管' } },
-    { path: '/sceneDeli', component: SceneDeli, meta: { title: '现场交付' } },
-    { path: '/platformDeli', component: PlatformDeli, meta: { title: '平台配送' } },
-    { path: '/postDeli', component: PostDeli, meta: { title: '快递交付' } },
+    { path: '/sceneDeli/:id', component: SceneDeli, meta: { title: '现场交付' } },
+    { path: '/platformDeli/:id', component: PlatformDeli, meta: { title: '平台配送' } },
+    { path: '/postDeli/:id', component: PostDeli, meta: { title: '快递交付' } },
     { path: '/hostingDetail/:id', component: HostingDetail, meta: { title: '托管详情' } },
     { path: '/hostingExpress/:id', component: HostingExpress, meta: { title: '审核详情' } },
+    { path: '/nearshop', component: Nearshop, meta: { title: '选择门店' } },
 
     //收货地址
     { path: '/addresslist/:type', component: Addresslist, meta: { title: '收货地址' } },

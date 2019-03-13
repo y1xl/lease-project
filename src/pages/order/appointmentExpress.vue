@@ -54,10 +54,10 @@ export default {
         }else {
             this.getdefaultaddress();
         }
-        //取缓存 end
-        this.getdefaultshop()
+        //取缓存 end 
     },
     mounted(){
+        this.getdefaultshop()
         this.gettimequantumarr()
     },
     methods:{

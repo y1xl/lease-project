@@ -1,34 +1,25 @@
 <template>
   <div class="bgc full">
-    <div>
-      <div class="flex-jc-between pd-15" @click="go('/locationList/sceneDeli')">
-        <div>选择交付门店</div>
-        <div class="flex-align-items fc-grey">
-          <van-icon name="arrow"/>
-        </div>
-      </div>
 
-      <div class="box" v-show="getlocation">
-        <div @click="go(`/ShopDetail`)">
-          <div class="flex-jc-between">
-            <div class="shop_title pd-15">{{getlocation.title}}</div>
-          </div>
-          <div class="txt pd-lr-15">{{getlocation.address}}</div>
+    <div
+        class="flex-jc-between pd-15 bgc flex-align-items"
+        @click="go('/nearshop?type=sceneDeli')"
+      >
+        <div>
+          <div class="fc-grey">选择交付门店</div>
+          <div class="fsz12">{{getlocation.store_name||''}}</div>
+          <div class="fsz12">{{(getlocation.store_province||'')+(getlocation.store_city||'')+(getlocation.store_district||'')+(getlocation.store_Address||'')}}</div>
         </div>
-        <div class="dt text-c" @click="go(`/map`)">
-          <img class="ck_img" src="../../../assets/mddw.png">
-          <span class="txt">查看地图</span>
-        </div>
-      </div>
+        <van-icon name="arrow" color="#aeaeae"/>
     </div>
 
     <van-cell @click="go('/calendar/sceneDeli')">
       <template slot="title">
-        <div class="flex-jc-between flex-align-items" style="margin-top: 30px;">
+        <div class="flex-jc-between flex-align-items" >
           <div>
             <div class="custom-text fc-grey">交付日期</div>
             <div
-              class="custom-text f13"
+              class="f13"
               :class="datetext==''?'fc-grey':''"
             >{{datetext==''?'请选择日期':datetext}}</div>
           </div>
@@ -38,17 +29,30 @@
     </van-cell>
 
     <div class="flex-jc-center bgc btn_box">
-      <div class="btn text-c">提交</div>
+      <div class="btn text-c" @click="submit">提交</div>
+    </div>
+
+    <div class="model full flex-column-center position" v-show="showcode">
+      <div class="closeimg" @click="showcode = false"><van-icon name="close" color="#fff"/></div>
+      <img
+        :src="codeimg"
+        alt="QRcode"
+        class="codeimg"
+      >
+      <div style="color:#fff">请出示此二维码供门店扫码</div>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast,Dialog } from 'vant';
 export default {
   data() {
     return {
       datetext: "",
-      getlocation: ""
+      getlocation: "",
+      codeimg:'',
+      showcode:false,
     };
   },
   created() {
@@ -72,7 +76,15 @@ export default {
         JSON.stringify(sceneDeliSession)
       );
       this.$router.push({ path: url });
-    }
+    },
+
+    submit() {
+     if(this.datetext==''||this.getlocation==''){
+          Toast('还有未填写')
+          return
+      }
+
+    },
   }
 };
 </script>
@@ -102,7 +114,7 @@ export default {
 }
 
 .custom-text {
-  /* color: #aeaeae; */
+  color: #aeaeae;
   font-size: 14px;
 }
 .f13 {
@@ -127,6 +139,35 @@ input {
   background: linear-gradient(90deg, #60c0fd, #4ea9f9);
   border-radius: 20px;
   color: #fff;
+}
+
+
+.model {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.model .main {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.codeimg {
+  width: 180px;
+  height: 180px;
+  margin-bottom:20px;
+}
+.closeimg {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  right: 20px;
+  top: 100px;
+  font-size:34px;
 }
 </style>
 

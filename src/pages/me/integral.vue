@@ -8,6 +8,7 @@
         <router-link to="/rules/integral">积分规则</router-link>
       </div>
     </div>
+    
     <div class="mx">积分明细</div>
     <div class="box bgc">
       <van-list v-model="loading" :finished="finished" @load="onLoad">

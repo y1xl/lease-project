@@ -82,7 +82,6 @@ export default {
     if(!window.localStorage.getItem("center")){
         this.getLocation();
       }
-    // this.getLocation();
   },
   methods: {
     getLocation() {
@@ -96,6 +95,7 @@ export default {
             lng
           };
           window.localStorage.setItem("center", JSON.stringify(center));
+          this.page = 0,
           this.onLoad()
         },err=>{
           Toast('获取定位失败');
@@ -170,26 +170,7 @@ export default {
         buySession.getlocation = this.list[this.radio];
         window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
       }
-      if (this.$route.params.type == "sceneDeli") {
-        let sceneDeliSession = JSON.parse(
-          window.sessionStorage.getItem("sceneDeliSession")
-        );
-        sceneDeliSession.getlocation = this.list[this.radio];
-        window.sessionStorage.setItem(
-          "sceneDeliSession",
-          JSON.stringify(sceneDeliSession)
-        );
-      }
-      if (this.$route.params.type == "postDeli") {
-        let postDeliSession = JSON.parse(
-          window.sessionStorage.getItem("postDeliSession")
-        );
-        postDeliSession.getlocation = this.list[this.radio];
-        window.sessionStorage.setItem(
-          "postDeliSession",
-          JSON.stringify(postDeliSession)
-        );
-      }
+
       this.$router.go(-1);
     }
   }

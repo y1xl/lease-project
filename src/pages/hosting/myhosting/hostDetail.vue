@@ -76,10 +76,6 @@
         </div>
       </div>
     </div>
-    <div class="bgc hostcode flex-jc-between flex-align-items mar-b-10">
-      <span>托管码</span>
-      <img src="../../../assets/right.png" class="img_r">
-    </div>
     
     <div class="flex-jc-center btn_box">
       <div class="btn text-c" @click="next">下一步</div>
@@ -98,9 +94,7 @@
         </div>
 
         <div class="gongxi">恭喜，审核成功！</div>
-
         <div class="gongxi">请将设备交给我们保管吧！</div>
-
         <!-- <div class="zhiyin">
           说明
         </div> -->
@@ -116,7 +110,7 @@ export default {
     return {
       images: [],
       typenum: 0,
-      showmodel: true,
+      showmodel: false,
       detail:''
     };
   },
@@ -142,6 +136,10 @@ export default {
               Toast.clear();
               this.detail = resdata.data
               this.images= [resdata.data.phone_picture]
+
+              if(resdata.data.trust_status==1){
+                this.showmodel = true
+              }
           } else {
               Toast.clear();
               Toast(resdata.message);
@@ -154,17 +152,18 @@ export default {
     },
 
     next(){
+      let id = this.$route.params.id
       if(this.typenum==0){
         window.sessionStorage.removeItem('sceneDeliSession');
-        this.$router.push({ path: "/sceneDeli" })
+        this.$router.push({ path: "/sceneDeli/"+id })
       }
       if(this.typenum==1){
         window.sessionStorage.removeItem('postDeliSession');
-        this.$router.push({ path: "/postDeli" })
+        this.$router.push({ path: "/postDeli/"+id })
       }
       if(this.typenum==2){
         window.sessionStorage.removeItem('platformDeliSession');
-        this.$router.push({ path: "/platformDeli" })
+        this.$router.push({ path: "/platformDeli/"+id })
       }
     }
   }
@@ -212,6 +211,9 @@ export default {
   padding: 30px 0;
 }
 
+.nav {
+  padding-bottom: 15px;
+}
 .nav > div {
   width: 80px;
   height: 30px;
@@ -236,6 +238,7 @@ export default {
 }
 .btn_box {
   width: 100%;
+  padding-top: 30px;
 }
 .btn {
   width: 280px;
