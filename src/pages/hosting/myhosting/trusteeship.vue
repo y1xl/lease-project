@@ -82,6 +82,7 @@ export default {
               this.list = resdata.data
           } else {
               Toast.clear();
+              this.list = []
               Toast(resdata.message);
           }
       })

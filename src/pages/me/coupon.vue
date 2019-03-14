@@ -131,6 +131,7 @@ export default {
             this.couponlist = resdata.data
           } else {
             Toast.clear();
+            this.couponlist = []
             Toast(resdata.message);
           }
         });

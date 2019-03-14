@@ -7,10 +7,10 @@
           <span class="fc-blue">{{nearShop}}</span>
         </p>
       </div>
-      <div class="sear flex-align-items f12" @click="gosearch">
-        <van-icon name="search"/>
+      <div class="sear flex-align-items f12" id="sear">
+        <!-- <van-icon name="search"/> -->
         <!-- <span class="pl10">搜索你想要的商品</span> -->
-        <input type="text" placeholder="搜索你想要的商品" class="van-field__control">
+        <van-search placeholder="搜索你想要的商品" v-model.trim="searchval"  @search="gosearch"></van-search>
       </div>
     </div>
     <div class="flex-jc-center bgc" v-show="active==0">
@@ -181,7 +181,8 @@ export default {
             });
           }
         }
-      }]
+      }],
+      searchval:''
     };
   },
   beforeCreate(){
@@ -232,7 +233,7 @@ export default {
       this.$router.push({ path: "/productDetail/" + id });
     },
     gosearch() {
-      this.$router.push({ path: "/search" });
+      this.$router.push({ path: "/search?val="+this.searchval });
     },
 
     onClicknav(i) {
@@ -323,6 +324,12 @@ export default {
 }
 #banner .van-swipe {
   border-radius: 5px;
+}
+#sear .van-search{
+  padding: 0;
+}
+#sear .van-cell {
+  background: #f6f5f5;
 }
 </style>
 

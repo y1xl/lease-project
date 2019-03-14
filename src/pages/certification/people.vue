@@ -127,7 +127,6 @@ export default {
 }
 
 .add {
-  border-radius: 5px;
   height: 64px;
   color: #2dbbf1;
   border-radius: 5px;

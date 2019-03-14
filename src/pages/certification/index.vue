@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <div class="pd-15 border-b rz-style">认证免押金方式</div>
+    <div class="pd-15 rz-style">认证免押金方式</div>
     <router-link class="flex-jc-between pd-15 border-b" :to="realname==0?'/realname':'/realnameSuc'">
       <div>实名认证</div>
       <div class="flex-align-items">

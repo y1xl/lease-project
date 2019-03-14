@@ -1,9 +1,10 @@
 <template>
   <div>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action  @search="onSearch" >
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action  @search="onSearch" @focus="showhistory=true" @blur="showhistory=false" >
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
-    <div class="history bgc ignore" v-show="flprolist.length==0">
+
+    <div class="history bgc" v-show="showhistory">
       <p @click="historySearch(item)" v-for="(item,index) in historylist" :key="index" class="border-b">{{item}}</p>
     </div>
 
@@ -51,6 +52,7 @@ export default {
       value: "",
       flprolist: [],
       historylist:[],
+      showhistory:false
     };
   },
   created() {
@@ -61,7 +63,11 @@ export default {
     }
   },
   mounted(){
-    this.onfocus()
+    // this.onfocus()
+    if(this.$route.query.val){
+      this.value = this.$route.query.val
+    }
+    this.onSearch()
   },
   methods: {
     onSearch() {
@@ -72,6 +78,7 @@ export default {
       let inputElem = document.querySelector('.van-field__control')
       inputElem.focus();
     },
+
     historySearch(val){
       this.showhistory = false
       this.value = val
@@ -129,7 +136,11 @@ export default {
         if(goodshistory){
           this.historylist = JSON.parse(goodshistory)
         }
-        this.onfocus()
+        // this.onfocus()
+        if(this.$route.query.val){
+          this.value = this.$route.query.val
+        }
+        this.onSearch()
      }
      // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
      this.$route.meta.isBack=false
@@ -140,11 +151,6 @@ export default {
 </script>
 
 <style scoped>
-.nobtn {
-  opacity: 0;
-  position: absolute;
-  top: -1000px
-}
 .history > p{
   padding: 10px;
   box-sizing: border-box;

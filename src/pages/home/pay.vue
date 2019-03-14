@@ -57,7 +57,7 @@ export default {
                 this.showWXpay = wxpaySession.state
             }
         }
-        // this.getfaceRes() //111111111111111111111111111111111111111111
+        this.getfaceRes() 
     },
     mounted(){
         this.getinfo()
@@ -75,7 +75,7 @@ export default {
                     
                 } else {
                     Dialog.alert({
-                        message: '请先人脸识别认证'
+                        message: resdata.message
                     }).then((e) => {
                         this.$router.replace({ path: "/face/"+this.$route.params.orderid })
                     });

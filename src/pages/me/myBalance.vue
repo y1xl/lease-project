@@ -68,6 +68,7 @@ export default {
             this.money = resdata.data.users_balance
           } else {
             Toast.clear()
+            this.list = []
             Toast(resdata.message);
           }
         });
