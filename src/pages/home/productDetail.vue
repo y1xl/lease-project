@@ -236,7 +236,7 @@
               <span class="fc-red">¥{{detail.hire_price.price||'-'}}</span>
               <span class="fsz10">/{{detail.hire_price.unt||'-'}}</span>
             </div>
-            <div class="fsz10">请选择规格属性</div>
+            <div class="fsz10 fc-grey">请选择规格属性</div>
           </div>
         </div>
         <div class="pd-lr-15">

@@ -157,7 +157,7 @@ export default {
           ads_id:this.getaddress.ads_id,
           store_id: this.getlocation.store_id
       });
-      this.axios.post(this.API + "api/Trusteeship/trustDetails", postData)
+      this.axios.post(this.API + "api/Trusteeship/onlineAppointment", postData)
       .then(res => {
           console.log(res.data, "detail");
           let resdata = res.data;

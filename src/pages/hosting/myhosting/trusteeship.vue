@@ -17,10 +17,10 @@
                 <div class="goods_title newline">{{item.model}}</div>
                 <div class="flex-jc-between flex-align-items">
                   <div class="state">
-                    <span v-if="item.trust_status==0||item.trust_status==1||item.trust_status==2">审核中</span>
-                    <span v-if="item.trust_status==3||item.trust_status==4">待入库</span>
-                    <span v-if="item.trust_status==5">在库</span>
-                    <span v-if="item.trust_status==6">已退回</span>
+                    <span v-if="item.trust_status=='待审核'||item.trust_status=='审核通过'||item.trust_status=='审核未通过'">审核中</span>
+                    <span v-if="item.trust_status=='快递中'||item.trust_status=='主机入库中'">待入库</span>
+                    <span v-if="item.trust_status=='托管中'">在库</span>
+                    <span v-if="item.trust_status=='已退回'">已退回</span>
                     <!-- <span>出租中</span> -->
                   </div>
                   <div>
@@ -93,13 +93,13 @@ export default {
     },
     //托管详情
     toDetail(id,status) {
-      if (status==0||status==1||status==2||status==3||status==4) {
+      if (status=='待审核'||status=='审核通过'||status=='审核未通过'||status=='快递中'||status=='主机入库中') {
         this.$router.push({ path: "/hostDetail/"+id });
       }
-      if (status==5) {
+      if (status=='托管中') {
         this.$router.push({ path: "/hostingDetail/"+id });
       }
-      if (status==6) {
+      if (status=='已退回') {
         this.$router.push({ path: "/hostingExpress/"+id });
       }
     },

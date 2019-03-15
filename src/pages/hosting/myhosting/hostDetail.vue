@@ -48,18 +48,18 @@
     </div>
 
     <!-- 审核中 -->
-    <div class="state text-c" v-if="detail.trust_status==0">
+    <div class="state text-c" v-if="detail.trust_status=='待审核'">
       <div>您的物品正在审核中</div>
       <div>请耐心等候！</div>
     </div>
     <!-- 未通过 -->
-    <div class="state text-c" v-if="detail.trust_status==2">
+    <div class="state text-c" v-if="detail.trust_status=='审核未通过'">
       <div>很抱歉！</div>
       <div>您的资料未通过审核</div>
       <div>原因：{{detail.reasons_refusal}}</div>
     </div>
 
-    <template v-if="detail.trust_status==1">
+    <template v-if="detail.trust_status=='审核通过'">
 
     <div class="bgc">
       <div class="pd-15">交付方式</div>

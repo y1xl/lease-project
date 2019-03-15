@@ -100,7 +100,7 @@
                 </div>
                 <div class="imglist flex-jc-between pd">
                     <img :src="fileimg3.content" alt="">
-                    <img :src="fileimg4.content" alt="">
+                    <img :src="fileimg4?fileimg4.content:''" alt="">
                 </div>
                 <div class="flex-jc-between pd"><span class="fc-grey">托管费率</span><span>30%</span></div>
                 <div class="pd">审核结果将在48小时内通知您</div>
@@ -255,7 +255,7 @@ export default {
                 formData.append('parts_picture',this.fileimg1.file,this.fileimg1.file.name)  //产品配件的全家福
                 formData.append('model_picture',this.fileimg2.file,this.fileimg2.file.name)  //看清型号的全家福 --字段有问题
                 formData.append('phone_picture',this.fileimg3.file,this.fileimg3.file.name)  //产品照片
-                formData.append('damage_picture',this.fileimg4.file,this.fileimg4.file.name)  //产品损坏处照片
+                formData.append('damage_picture',this.fileimg4?this.fileimg4.file:'')  //产品损坏处照片
                 formData.append('serial_number',serialnumval)  //产品序列号
                 formData.append('contact_way',telval)  //联系方式
                 formData.append('rate','30')  //费率 不要%号

@@ -1,6 +1,5 @@
 <template>
   <div class="bgc full">
-
     <div
         class="flex-jc-between pd-15 bgc flex-align-items"
         @click="go('/nearshop?type=sceneDeli')"
@@ -13,7 +12,7 @@
         <van-icon name="arrow" color="#aeaeae"/>
     </div>
 
-    <van-cell @click="go('/calendar/sceneDeli')">
+    <van-cell @click="go('/calendar/sceneDeli')" :border="false">
       <template slot="title">
         <div class="flex-jc-between flex-align-items" >
           <div>
@@ -79,10 +78,35 @@ export default {
     },
 
     submit() {
-     if(this.datetext==''||this.getlocation==''){
+      if(this.datetext==''||this.getlocation==''){
           Toast('还有未填写')
           return
       }
+
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          trust_id: this.$route.params.id,
+          time: this.datetext,
+          store_id: this.getlocation.store_id
+      });
+      this.axios.post(this.API + "api/Trusteeship/fieldDelivery", postData)
+      .then(res => {
+          console.log(res.data, "detail");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              this.codeimg = resdata.data
+              this.showcode = true
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
 
     },
   }
