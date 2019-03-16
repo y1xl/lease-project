@@ -536,10 +536,10 @@ export default {
           icon: config.img,
           // 不要过于依赖以下两个回调，很多浏览器是不支持的
           success: function() {
-              alert('success')
+
           },
           fail: function() {
-              alert('fail')
+
           }
       }
       let mShareData = {  //m-share的参数模型
@@ -548,7 +548,7 @@ export default {
             link: config.link, // 网址，默认使用window.location.href
             imgUrl: config.img, // 图片, 默认取网页中第一个img标签
             fnDoShare(type) {
-                console.log('success')
+
             }
       }
       let nativeShare = new NativeShare()

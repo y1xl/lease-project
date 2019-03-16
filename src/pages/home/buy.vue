@@ -66,7 +66,6 @@
           </div>
         </div>
       </van-cell>
-      <!-- <van-cell title="期望收到的日期" is-link center v-show="typenum==0" @click="go('/calendar/expectdateTobuy/pre')" :value="expectdate"></van-cell> -->
       <van-cell
         is-link
         center
@@ -87,7 +86,6 @@
         v-show="typenum==2"
         @click="showtimequantum=true"
       ></van-cell>
-      <!-- <van-cell title="时间点" is-link center @click="showtime=true" :value="timetext" v-show="typenum==0"></van-cell> -->
     </div>
 
     <div class="mar-b-10">
@@ -110,7 +108,7 @@
 
     <div class="mar-b-10">
       <van-cell title="押金" center :value="'￥'+detail.gd_deposit"></van-cell>
-      <van-cell title="租金" center :value="'￥'+rent"></van-cell>
+      <van-cell title="租金" center :value="'￥'+calculaterent"></van-cell>
       <van-cell title="应付总金额" center>
         <span class="fc-red">￥{{calculatesum}}</span>
       </van-cell>
@@ -195,7 +193,7 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 import { accAdd, accSub } from "@/utils/util.js";
 import { log } from "util";
 
@@ -224,7 +222,7 @@ export default {
       isdisabled: true,
       weekval: "", //租期
       isinsurance: true, //保险
-      isconsent: true, //协议
+      isconsent: false, //协议
       discountmodel: false, //优惠活动
       couponlist: [], //优惠券
       remarkval: "",
@@ -276,15 +274,19 @@ export default {
               if (this.Dinsurance || this.isinsurance) {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 this.sum = accAdd(a, this.rent);
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               } else {
                 this.sum = accAdd(this.detail.pay_safe, this.rent)
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               }
             } else {
@@ -292,16 +294,20 @@ export default {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 let b = accAdd(a, this.rent);
                 this.sum = accAdd(b, this.freight)
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               } else {
                 let a = accAdd(this.detail.pay_safe, this.rent);
                 this.sum = accAdd(a, this.freight);
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               }
             }
@@ -317,6 +323,12 @@ export default {
         return 0
       }
       return this.sum
+    },
+    calculaterent: function(){
+      if(this.rent-0<0){
+        return 0
+      }
+      return this.rent
     },
     columns: function() {
       console.log('columns')
@@ -476,13 +488,19 @@ export default {
 
             if (this.Dinsurance || this.isinsurance) {
               this.sum = accAdd(resdata.data.pay_safe, resdata.data.safe_price)
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
               if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
             } else {
               this.sum = resdata.data.pay_safe
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
               if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
             }
 
@@ -494,15 +512,19 @@ export default {
               if (this.Dinsurance || this.isinsurance) {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 this.sum = accAdd(a, this.rent);
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               } else {
                 this.sum = accAdd(this.detail.pay_safe, this.rent);
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               }
             } else {
@@ -510,16 +532,20 @@ export default {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 let b = accAdd(a, this.rent);
                 this.sum = accAdd(b, this.freight)
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               } else {
                 let a = accAdd(this.detail.pay_safe, this.rent);
                 this.sum = accAdd(a, this.freight);
-
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
                 if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
+                  this.rent = accSub(this.rent,this.couponstext)
                 }
               }
             }
@@ -548,16 +574,14 @@ export default {
             if (this.Dinsurance || this.isinsurance) {
               let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
               this.sum = accAdd(a, this.freight);
-
-              if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
-                }
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
             } else {
               this.sum = accAdd(this.detail.pay_safe, this.freight);
-
-              if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
-                }
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
             }
 
             if (this.weekval == "") {
@@ -568,33 +592,29 @@ export default {
               if (this.Dinsurance || this.isinsurance) {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 this.sum = accAdd(a, this.rent);
-
-                if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
-                }
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
               } else {
                 this.sum = accAdd(this.detail.pay_safe, this.rent);
-
-                if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
-                }
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
               }
             } else {
               if (this.Dinsurance || this.isinsurance) {
                 let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
                 let b = accAdd(a, this.rent);
                 this.sum = accAdd(b, this.freight);
-
-                if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
-                }
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
               } else {
                 let a = accAdd(this.detail.pay_safe, this.rent);
                 this.sum = accAdd(a, this.freight);
-
-                if(this.couponstext!=''){
-                  this.sum = accSub(this.sum,this.couponstext)
-                }
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
               }
             }
           } else {
@@ -629,25 +649,45 @@ export default {
     },
     choosecoupon(item,index){
       // console.log(item,index);
+      // if(index+1==this.couponindex){
+      //   this.couponindex = ''
+      //   this.couponstext = ''
+      //   this.coupons_condition = ''
+      //   this.couponid = ''
+      //   this.sum = accAdd(this.sum,item.coupons_money)
+      // }else{
+      //   this.sum = accAdd(this.sum,this.couponstext)
+      //   this.couponindex = index+1
+      //   this.couponstext = item.coupons_money
+      //   this.coupons_condition = item.coupons_condition
+      //   this.couponid = item.user_cp_id
+      //   this.sum = accSub(this.sum,item.coupons_money)
+      //   this.showcoupon = false
+      // }
+
+      //扣租金
+      if (this.weekval == "") {
+        Toast("请填写租期")
+        return;
+      }
       if(index+1==this.couponindex){
         this.couponindex = ''
         this.couponstext = ''
         this.coupons_condition = ''
         this.couponid = ''
-        this.sum = accAdd(this.sum,item.coupons_money)
+        this.rent = accAdd(this.rent,item.coupons_money)
       }else{
-        this.sum = accAdd(this.sum,this.couponstext)
+        this.rent = accAdd(this.rent,this.couponstext)
         this.couponindex = index+1
         this.couponstext = item.coupons_money
         this.coupons_condition = item.coupons_condition
         this.couponid = item.user_cp_id
-        this.sum = accSub(this.sum,item.coupons_money)
+        this.rent = accSub(this.rent,item.coupons_money)
         this.showcoupon = false
       }
     },
 
     nextface() {
-      console.log(this.couponid)
       if (this.isconsent) {
 
         if (this.typenum == 0) {
@@ -684,10 +724,8 @@ export default {
             order_delivery_time: this.getdate,
             safe_status: this.isinsurance ? 1 : 2,
             delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
-            // qwsh_time: this.expectdate,
             qwsh_time: "",
             sku: this.detail.sku||'',
-            // time: this.timetext,
             time: "",
             ads_id: "",
             way_price: "",
@@ -762,8 +800,7 @@ export default {
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
             goods_id: this.$route.query.id,
-            users_id: JSON.parse(window.localStorage.getItem("userinfo"))
-              .users_id,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             safe_status: this.isinsurance ? 1 : 2,
             delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
             qwsh_time: this.expectdate,
@@ -781,22 +818,65 @@ export default {
             coupons_id: this.couponid
           });
         }
-        Toast.loading({ mask: true, message: "加载中..." });
-        this.axios.post(this.API + "api/Order/AddOrder", postData).then(res => {
-          console.log(res.data, "order");
+        //是否实名认证
+        this.isrealname(postData)
+      } else {
+        Toast("请先同意租赁协议");
+      }
+    },
+
+    face(postData){
+      Toast.loading({ mask: true, message: "加载中..." });
+      this.axios.post(this.API + "api/Order/AddOrder", postData).then(res => {
+        console.log(res.data, "order");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          Toast.clear();
+          this.$router.push({ path: "/face/" + resdata.data });
+        } else {
+          Toast.clear();
+          Toast(resdata.message||'操作失败');
+        }
+      });
+    },
+
+    isrealname(postDataOrder) {
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      });
+      this.axios
+        .post(this.API + "api/Lease/user_price", postData)
+        .then(res => {
+          console.log(res.data, "user_price");
           let resdata = res.data;
           if (resdata.code == 200) {
-            Toast.clear();
-            this.$router.push({ path: "/face/" + resdata.data });
+            Toast.clear()
+            // resdata.data.is_idcard
+            if(resdata.data.is_idcard==0){
+                Dialog.confirm({
+                  title: "",
+                  message: "您还未实名认证，是否前往?",
+                  confirmButtonText: '前往',
+                  cancelButtonText:'继续'
+                })
+                .then(() => {
+                  // on confirm
+                  this.$router.push({ path: "/realname" });
+                })
+                .catch(() => {
+                  this.face(postDataOrder)
+                });
+            }
+            if(resdata.data.is_idcard==1){
+              this.face(postDataOrder)
+            }
           } else {
-            Toast.clear();
-            Toast(resdata.message||'操作失败');
+            Toast.clear()
+            Toast(resdata.message);
           }
         });
-      } else {
-        Toast("您还未同意协议");
-      }
-    }
+    },
   }
 };
 </script>

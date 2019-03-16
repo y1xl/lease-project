@@ -238,6 +238,7 @@ export default {
             this.typetext = value
             this.showtype = false
             this.getbrand()
+            this.brandtext = ''
         },
         onConfirmType1(value, index){
             this.typetext1 = value
@@ -247,6 +248,7 @@ export default {
             this.brandtext = value
             this.showbrand = false
             this.getmodel()
+            this.modeltext = ''
         },
         onConfirmModel(value, index){
             this.modeltext = value
@@ -451,8 +453,8 @@ export default {
 }
 .nomain .closeimg {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5px;
+    top: 5px;
     z-index: 101;
 }
 </style>

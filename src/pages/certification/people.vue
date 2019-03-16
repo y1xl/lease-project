@@ -67,36 +67,35 @@ export default {
       }
     },
     del(urgent_id) {
-      console.log(urgent_id);
 
       Dialog.confirm({
         title: "",
         message: "是否删除?"
       })
-        .then(() => {
-          // on confirm
-          console.log(this.urgent_id, "111");
-          Toast.loading({ mask: true, message: "加载中..." });
-          let postData = this.$qs.stringify({
-            urgent_id: urgent_id
-          });
-          this.axios
-            .post(this.API + "api/Lease/urgent_delete", postData)
-            .then(res => {
-              console.log(res.data, "delete");
-              let resdata = res.data;
-              if (resdata.code == 200) {
-                Toast.clear();
-                this.list.splice(this.urgent_id, 1);
-              } else {
-                Toast.clear();
-                Toast(resdata.message);
-              }
-            });
-        })
-        .catch(() => {
-          Toast('网络出错');
+      .then(() => {
+        // on confirm
+        console.log(this.urgent_id, "111");
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+          urgent_id: urgent_id
         });
+        this.axios
+          .post(this.API + "api/Lease/urgent_delete", postData)
+          .then(res => {
+            console.log(res.data, "delete");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast.clear();
+              this.list.splice(this.urgent_id, 1);
+            } else {
+              Toast.clear();
+              Toast(resdata.message);
+            }
+          });
+      })
+      .catch(() => {
+        
+      });
     }
   }
 };

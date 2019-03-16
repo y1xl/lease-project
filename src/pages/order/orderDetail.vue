@@ -136,7 +136,7 @@
             </div>
             <div class="flexbox">
               <span>自取时间</span>
-              <span class="flex-1">{{data.sh_time}}</span>
+              <span class="flex-1">{{data.qwsh_time}}</span>
             </div>
             <div class="flexbox">
               <span>联系人</span>
@@ -192,7 +192,7 @@
             </div>
             <div class="flexbox">
               <span>优惠券</span>
-              <span class="flex-1">-¥{{data.coupons_money||'0.00'}}</span>
+              <span class="flex-1">¥{{data.coupons_money||'0.00'}}</span>
             </div>
             <div class="flexbox" v-if="data.delivery_way=='平台配送'">
               <span>配送运费</span>
@@ -208,7 +208,7 @@
             </div> -->
             <div class="flexbox">
               <span>免押额度</span>
-              <span class="flex-1">-¥{{data.order_credit_rent||'0.00'}}</span>
+              <span class="flex-1">¥{{data.order_credit_rent||'0.00'}}</span>
             </div>
           </div>
         </div>
@@ -264,6 +264,16 @@
         </div>
 
         <!-- 售后中 -->
+        <div v-if="salesData==''&&data.order_status==9">
+          <div class="title position">
+            协商信息
+            <div class="l dot"></div>
+            <div class="r dot"></div>
+          </div>
+          <div class="mar-b-10 fc-blue">
+            信息上传中
+          </div>
+        </div>
         <div v-if="!salesData==''">
           <div class="title position">
             协商信息
