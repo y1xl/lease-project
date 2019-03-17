@@ -9,19 +9,6 @@
           <van-swipe :autoplay="autoplay" @change="onChange">
             <van-swipe-item v-if="detail.goods_video">
               <div class="img_box" style="background: #000">
-                <!-- <video 
-                id="video" 
-                ref="video"
-                :src="detail.goods_video" 
-                controls preload muted 
-                playsinline="true"
-                x-webkit-airplay="true" 
-                x5-playsinline="true"
-                webkit-playsinline="true" 
-                x5-video-player-type="h5"
-                style="width:100%;height:100%;object-fit:fill" 
-                >
-                </video> -->
                 <video-player  class="video-player vjs-custom-skin"
                      ref="videoPlayer"
                      :playsinline="playsinline"
@@ -141,7 +128,7 @@
             <img class="head_img" :src="item.head_picture" alt v-if="item.head_picture">
             <img class="head_img" src="../../assets/headimg.png" alt v-else>
             <div class="c-name">{{item.user_name}}</div>
-            <van-rate disabled disabled-color="#FFB10E" size="12" v-model="item.eva_score"/>
+            <van-rate disabled disabled-color="#FFB10E" :size="size" v-model="item.eva_score"/>
           </div>
           <div>
             <span class="grey_12">{{item.create_time}}</span>
@@ -156,11 +143,9 @@
         </div>
       </div>
     </div>
-    <div class="bgc flex-jc-center" style="margin-top:10px">
-      <div class="product_det">
+    <div class="bgc" style="margin-top:10px">
         <div class="dettail">产品详情</div>
-        <div v-html="detail.gd_desc"></div>
-      </div>
+        <div class="content box-sizing" v-html="detail.gd_desc"></div>
     </div>
 
     <div class="height"></div>
@@ -296,6 +281,7 @@ export default {
       },
       playsinline: true,
       tel:'',
+      size:12,
 
       shareButtons:[
         {text: '微信好友', nativeshare:'wechatFriend', m_share: 'wx' , src: require('@/assets/f_weixin.png')},
@@ -737,15 +723,15 @@ export default {
   border-radius: 5px;
   margin-right: 10px;
 }
-.product_det {
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-}
+
 .dettail {
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 10px;
+  padding-left:10px;
+}
+.content{
+  padding: 0 10px;  
 }
 .weight {
   padding: 10px 0;

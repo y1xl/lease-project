@@ -8,7 +8,6 @@
         <div :class="{ 'fc-blue selected': typenum==2 }" @click="typenum=2">配送</div>
       </div>
     </div>
-
     <div class="mar-b-10 main">
       <van-cell is-link center @click="go('/addresslist/buy')" v-show="typenum==1||typenum==2">
         <div slot="title">
@@ -20,7 +19,6 @@
           <div>{{(getaddress.ads_province||'')+(getaddress.ads_city||'')+(getaddress.ads_district||'')+(getaddress.ads_address||'')}}</div>
         </div>
       </van-cell>
-
       <template v-if="typenum==0">
         <van-cell is-link center @click="go(`/locationList/buy/${goodid}`)">
           <template slot="title">
@@ -60,7 +58,7 @@
       <van-cell title="租期" center>
         <div class="time">
           <div class="border text-line flex-center" @click="showweek = true">
-            {{changeweektext}}
+            {{weektext}}
             <img src="../../assets/icon-triangle.png" class="triangleimg">
           </div>
           <div class="border flex-center">
@@ -68,7 +66,6 @@
           </div>
         </div>
       </van-cell>
-
       <van-cell
         is-link
         center
@@ -130,6 +127,10 @@
     </div>
 
     <!-- 弹框 -->
+    <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
+      <van-datetime-picker type="time" show-toolbar @cancel="showtime=false" @confirm="onConfirm"/>
+    </van-popup>
+
     <van-popup v-model="showtimequantum" position="bottom" :close-on-click-overlay="false">
       <van-picker
         :columns="timequantumarr"
@@ -138,10 +139,10 @@
         @confirm="onConfirmTimequantum"
       />
     </van-popup>
-    <!-- 租期  -->
+
     <van-popup v-model="showweek" position="bottom" :close-on-click-overlay="false">
       <van-picker
-        :columns="weekcolumns"
+        :columns="columns"
         show-toolbar
         @cancel="showweek = false"
         @confirm="onConfirmWeek"
@@ -197,18 +198,12 @@ import { accAdd, accSub } from "@/utils/util.js";
 import { log } from "util";
 
 export default {
-  beforeRouteEnter(to, from, next) {
-    let urlarr = ['选择地点','时间','自取联系人','协议','收货地址']
-    if(urlarr.includes(from.meta.title)) {
-        to.meta.isBack = true;
-    }
-    next();
-  },
   data() {
     return {
       goodid: this.$route.query.id,
       goodsimg:'',
       typenum: 0,
+      showtime: false,
       timetext: "",
       getdate: "",//自取时间
       expectdate: "", //期望收到日期
@@ -218,12 +213,13 @@ export default {
       couponstext: "", //优惠券
       showcoupon: false, //优惠券
       couponindex: '', //优惠券
+      // coupons_condition:'', //优惠券
       couponid:'', //优惠券
       activitytext: "", //优惠活动
       showweek: false, //租期
-      weekcolumns: [],
+      // columns: ['天', '小时'],
       weektext: "请选择", //租期
-      isdisabled: true, //租期
+      isdisabled: true,
       weekval: "", //租期
       isinsurance: true, //保险
       isconsent: false, //协议
@@ -238,38 +234,22 @@ export default {
       hire_cate: 1,
       guiges: [],
       rent: 0, //租金
-      rented:0, //用作计算
       freight: 0, //运费
       sum: 0
     };
   },
   watch: {
     typenum(){
-      if(this.typenum==0){
-        if (this.hire_cate == 1 || this.hire_cate == 3) {
-          this.weekcolumns = ["天"]
-        }
-        if (this.hire_cate == 2) {
-          this.weekcolumns =  ["天", "小时"]
-        }
-
-        this.calculateRules()
-      }
       if(this.typenum==1||this.typenum==2){
-        if(this.getaddress != ""){
-          this.getfreight()
-        }else{
-          this.calculateRules()
+        if(this.getaddress == ""){
+          return
         }
-
-        this.weekcolumns = ["天"]
+        setTimeout(()=>{this.getfreight()},300)
       }
     },
     weekval() {
       if (this.weekval == "") {
         this.rent = 0;
-        this.rented=0
-        this.calculateRules()
         return;
       }
       if (this.weekval <= 0) {
@@ -288,200 +268,177 @@ export default {
           console.log(res.data, "weekval");
           let resdata = res.data;
           if (resdata.code == 200) {
-            let rent = this.rent 
-            let rented = this.rented 
             this.rent = resdata.data;
-            this.rented = resdata.data;
-            
-            if(this.couponstext!=''){
-              let o = accSub(rented,this.couponstext) 
-              let r = accSub(resdata.data,this.couponstext) // -优惠券
-              console.log(r,o);
-              
-              if(r-0<0){
-                this.calculateRules()
-                return 
-              }
 
-              if(o-0<0){
-                this.sum = accAdd(this.sum,r)
-              }else{
-                let rentSum = accSub(this.sum,o) //减原来的
-                this.sum = accAdd(rentSum,r)
+            if (this.typenum == 0) {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                this.sum = accAdd(a, this.rent);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
+              } else {
+                this.sum = accAdd(this.detail.pay_safe, this.rent)
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
               }
-              
-            }else{
-              let rentSum = accSub(this.sum,rented) //减原来的
-              this.sum = accAdd(rentSum,resdata.data) //加现在的
+            } else {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                let b = accAdd(a, this.rent);
+                this.sum = accAdd(b, this.freight)
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
+              } else {
+                let a = accAdd(this.detail.pay_safe, this.rent);
+                this.sum = accAdd(a, this.freight);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
+              }
             }
-            
           } else {
             Toast(resdata.message);
           }
         });
     },
-
-    getaddress(){
-      if(this.typenum==1||this.typenum==2){
-        if(this.getaddress != ""){
-          this.getfreight()
-        }
-      }
-    },
   },
   computed: {
-    //总价
     calculatesum: function(){
       if(this.sum-0<0){
         return 0
       }
       return this.sum
     },
-    //租金
     calculaterent: function(){
-      console.log('rent');
       if(this.rent-0<0){
         return 0
       }
-      if(this.couponstext!=''){
-        let rentSum = accSub(this.rented,this.couponstext) // -优惠券
-        if(rentSum-0<0){
-          return 0
-        }else{
-          return rentSum
-        }
-      }
-      // this.calculateRules()
       return this.rent
     },
-    //租期选择
-    changeweektext(){
-      if(this.typenum == 0){
+    columns: function() {
+      console.log('columns')
+      if (this.typenum == 0) {
+        if (this.Dinsurance || this.isinsurance) {
+          this.sum = accAdd(this.detail.pay_safe, this.detail.safe_price);
+        } else {
+          this.sum = this.detail.pay_safe;
+        }
+
         if (this.weektext == "天") {
-          this.weekval = ''
+          console.log('columns天')
+          this.weekval = "";
           this.isdisabled = false;
-          return this.weektext
         } else if (this.weektext == "小时") {
           this.weekval = 6;
           this.isdisabled = true;
-          return this.weektext
         } else {
           this.weektext = "请选择";
           this.weekval = "";
           this.rent = 0;
-          this.rented=0
-          return this.weektext
         }
-      }else{
+
+        // return ["天", "小时"]; //111111111111111111111111111111111111111
+        if (this.hire_cate == 1 || this.hire_cate == 3) {
+          return ["天"];
+        }
+        if (this.hire_cate == 2) {
+          return ["天", "小时"];
+        }
+      } else {
         if (this.weektext == "天") {
           this.isdisabled = false;
-          return this.weektext
         } else {
           this.weektext = "天";
           this.weekval = "";
           this.rent = 0;
-          this.rented=0
           this.isdisabled = false;
-          return this.weektext
         }
-      }
-    },
-  },
 
-  created(){
-    this.isFirstEnter = true;
+        if(this.getaddress == ""){
+          return ["天"];
+        }
+        return ["天"];
+      }
+    }
   },
   mounted() {    
     this.getotherprice();
-    this.getdefaultaddress();
+    let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
+    if (buySession) {
+      this.typenum = buySession.gettype;
+      this.getlocation = buySession.getlocation;
+      this.getdate = buySession.getdate;
+      this.expectdate = buySession.expectdate;
+      this.timetext = buySession.gettime;
+      this.people = buySession.getpeople;
+      this.getaddress = buySession.getaddress;
+      this.weektext = buySession.weektext;
+      this.weekval = buySession.weekval;
+      this.isinsurance = buySession.isinsurance;
+      this.couponstext = buySession.couponstext;
+      this.activitytext = buySession.activitytext;
+      this.remarkval = buySession.remarkval;
+      this.timequantumtext = buySession.timequantumtext;
+      this.couponindex = buySession.couponindex;
+      this.couponid = buySession.couponid;
+    } else {
+      this.getdefaultaddress();
+    }
   },
   methods: {
-    calculateRules(){
-      console.log('calculateRules');
-      
-      if (this.typenum == 0) {
-        if (this.Dinsurance || this.isinsurance) {
-          let a = accAdd(this.detail.pay_safe||'', this.detail.safe_price||''); //+保险
-          if(this.couponstext!=''){
-            let rentSum = accSub(this.rented,this.couponstext) // -优惠券
-            if(rentSum-0<0){
-              this.sum = accAdd(a,0) 
-              return 
-            }
-
-            this.sum = accAdd(a,rentSum) 
-          }else{
-            this.sum = accAdd(a, this.rented); //+租金
-          }
-        } else {  
-          if(this.couponstext!=''){
-            let rentSum = accSub(this.rented,this.couponstext) // -优惠券
-            if(rentSum-0<0){
-              this.sum = accAdd(this.detail.pay_safe||'', 0)
-              return 
-            }
-            this.sum = accAdd(this.detail.pay_safe||'', rentSum)
-          }else{
-            this.sum = accAdd(this.detail.pay_safe||'', this.rented)
-          }
-        }
-      } else {
-        if (this.Dinsurance || this.isinsurance) {
-          let a = accAdd(this.detail.pay_safe||'', this.detail.safe_price||'');
-          let b = 0
-          if(this.couponstext!=''){
-            let rentSum = accSub(this.rented,this.couponstext) // -优惠券
-            if(rentSum-0<0){
-              b = accAdd(a, 0);
-            }else{
-              b = accAdd(a, rentSum);
-            }
-          }else{
-            b = accAdd(a, this.rented);
-          }
-
-          this.sum = accAdd(b, this.freight) //+运费  
-        } else {
-          let a = 0
-          if(this.couponstext!=''){
-            let rentSum = accSub(this.rented,this.couponstext) // -优惠券
-            if(rentSum-0<0){
-              a = accAdd(this.detail.pay_safe||'', 0); 
-            }else{
-              a = accAdd(this.detail.pay_safe||'', rentSum);
-            }
-          }else{
-            a = accAdd(this.detail.pay_safe||'', this.rented);
-          }
-
-          this.sum = accAdd(a, this.freight);
-        }
-      }
-    },
     go(url) {
       let buySession = {
-        getlocation: this.getlocation, 
+        gettype: String(this.typenum), //取货方式
+        getlocation: this.getlocation, //自取地点
         getdate: this.getdate,
         expectdate: this.expectdate,
         gettime: this.timetext,
         getpeople: this.people,
         getaddress: this.getaddress,
+        weektext: this.weektext, //租期
+        weekval: this.weekval, //租期
+        isinsurance: this.isinsurance,
+        couponstext: this.couponstext,
+        activitytext: this.activitytext,
+        remarkval: this.remarkval,
+        timequantumtext: this.timequantumtext,
+        couponindex: this.couponindex,
+        couponid: this.couponid
       };
       window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
       this.$router.push({ path: url });
     },
+    onConfirm(value) {
+      console.log(`当前值：${value}`);
+      this.timetext = value;
+      this.showtime = false;
+    },
     onConfirmWeek(value, index) {
-      // console.log(`当前值：${value}, 当前索引：${index}`);
+      console.log(`当前值：${value}, 当前索引：${index}`);
       this.weektext = value;
       this.showweek = false;
     },
     onConfirmTimequantum(value, index) {
-      // console.log(`当前值：${value}, 当前索引：${index}`);
+      console.log(`当前值：${value}, 当前索引：${index}`);
       this.timequantumtext = value;
       this.showtimequantum = false;
     },
     onswitch(val) {
-      //保险费计算
       if (val) {
         this.sum = accAdd(this.sum, this.detail.safe_price);
       } else {
@@ -508,7 +465,6 @@ export default {
         }
       });
     },
-    //页面数据
     getotherprice() {
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -531,30 +487,79 @@ export default {
             this.goodsimg = resdata.data.gd_img[0]
 
             if (this.Dinsurance || this.isinsurance) {
-              // if买保险
               this.sum = accAdd(resdata.data.pay_safe, resdata.data.safe_price)
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
+              if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
             } else {
               this.sum = resdata.data.pay_safe
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
+              if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
             }
 
-            if (resdata.data.hire_cate == 1 || resdata.data.hire_cate == 3) {
-              this.weekcolumns = ["天"]
+            if (this.weekval == "") {
+              this.rent = 0
+              return;
             }
-            if (resdata.data.hire_cate == 2) {
-              this.weekcolumns =  ["天", "小时"]
+            if (this.typenum == 0) {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                this.sum = accAdd(a, this.rent);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
+              } else {
+                this.sum = accAdd(this.detail.pay_safe, this.rent);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
+              }
+            } else {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                let b = accAdd(a, this.rent);
+                this.sum = accAdd(b, this.freight)
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
+              } else {
+                let a = accAdd(this.detail.pay_safe, this.rent);
+                this.sum = accAdd(a, this.freight);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+                if(this.couponstext!=''){
+                  this.rent = accSub(this.rent,this.couponstext)
+                }
+              }
             }
           } else {
             Toast(resdata.message);
           }
         });
     },
-    //运费
     getfreight() {
       let postData = this.$qs.stringify({
         type: this.typenum,
         ads_id: this.getaddress.ads_id,
-        goods_id: this.$route.query.id,
-        sku: this.guiges||'',
+        goods_id: this.detail.goods_id,
+        sku: this.guiges,
         time: this.expectdate||''
       })
       this.axios
@@ -565,10 +570,54 @@ export default {
           if (resdata.code == 200) {
             this.freight = resdata.data.price;
             this.timequantumarr = resdata.data.timelist;
-            this.calculateRules()
+
+            if (this.Dinsurance || this.isinsurance) {
+              let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+              this.sum = accAdd(a, this.freight);
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
+            } else {
+              this.sum = accAdd(this.detail.pay_safe, this.freight);
+              // if(this.couponstext!=''){
+              //     this.sum = accSub(this.sum,this.couponstext)
+              //   }
+            }
+
+            if (this.weekval == "") {
+              this.rent = 0
+              return;
+            }
+            if (this.typenum == 0) {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                this.sum = accAdd(a, this.rent);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+              } else {
+                this.sum = accAdd(this.detail.pay_safe, this.rent);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+              }
+            } else {
+              if (this.Dinsurance || this.isinsurance) {
+                let a = accAdd(this.detail.pay_safe, this.detail.safe_price);
+                let b = accAdd(a, this.rent);
+                this.sum = accAdd(b, this.freight);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+              } else {
+                let a = accAdd(this.detail.pay_safe, this.rent);
+                this.sum = accAdd(a, this.freight);
+                // if(this.couponstext!=''){
+                //   this.sum = accSub(this.sum,this.couponstext)
+                // }
+              }
+            }
           } else {
-            this.freight = 0
-            this.calculateRules()
             Toast(resdata.message);
           }
         });
@@ -600,6 +649,22 @@ export default {
     },
     choosecoupon(item,index){
       // console.log(item,index);
+      // if(index+1==this.couponindex){
+      //   this.couponindex = ''
+      //   this.couponstext = ''
+      //   this.coupons_condition = ''
+      //   this.couponid = ''
+      //   this.sum = accAdd(this.sum,item.coupons_money)
+      // }else{
+      //   this.sum = accAdd(this.sum,this.couponstext)
+      //   this.couponindex = index+1
+      //   this.couponstext = item.coupons_money
+      //   this.coupons_condition = item.coupons_condition
+      //   this.couponid = item.user_cp_id
+      //   this.sum = accSub(this.sum,item.coupons_money)
+      //   this.showcoupon = false
+      // }
+
       //扣租金
       if (this.weekval == "") {
         Toast("请填写租期")
@@ -611,7 +676,6 @@ export default {
         this.coupons_condition = ''
         this.couponid = ''
         this.rent = accAdd(this.rent,item.coupons_money)
-        this.calculateRules()
       }else{
         this.rent = accAdd(this.rent,this.couponstext)
         this.couponindex = index+1
@@ -619,7 +683,6 @@ export default {
         this.coupons_condition = item.coupons_condition
         this.couponid = item.user_cp_id
         this.rent = accSub(this.rent,item.coupons_money)
-        this.calculateRules()
         this.showcoupon = false
       }
     },
@@ -814,60 +877,6 @@ export default {
           }
         });
     },
-  },
-
-  activated() {
-     if(!this.$route.meta.isBack || this.isFirstEnter){
-        this.goodid = this.$route.query.id
-        this.goodsimg =''
-        this.typenum = 0
-        this.timetext = ""
-        this.getdate = ""//自取时间
-        this.expectdate = "" //期望收到日期
-        this.people = ""
-        this.getlocation = ""
-        this.getaddress = ""
-        this.couponstext = "" //优惠券
-        this.showcoupon = false //优惠券
-        this.couponindex = '' //优惠券
-        this.couponid ='' //优惠券
-        this.activitytext = "" //优惠活动
-        this.showweek = false //租期
-        this.weekcolumns = []
-        this.weektext = "请选择" //租期
-        this.isdisabled = true
-        this.weekval = "" //租期
-        this.isinsurance = true //保险
-        this.isconsent = false //协议
-        this.discountmodel = false //优惠活动
-        this.couponlist = [] //优惠券
-        this.remarkval = ""
-        this.timequantumtext = "" //时间段
-        this.showtimequantum = false //时间段
-        this.timequantumarr = [] //时间段
-        this.detail = ""
-        this.Dinsurance = false //保险
-        this.hire_cate = 1
-        this.guiges = []
-        this.rent = 0 //租金
-        this.rented=0 //用作计算
-        this.freight = 0 //运费
-        this.sum = 0
-        this.getotherprice()
-        this.getdefaultaddress()
-     }else{
-       let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
-        if (buySession) {
-          this.getlocation = buySession.getlocation;
-          this.getdate = buySession.getdate;
-          this.expectdate = buySession.expectdate;
-          this.timetext = buySession.gettime;
-          this.people = buySession.getpeople;
-          this.getaddress = buySession.getaddress;
-        }
-     }
-     this.$route.meta.isBack=false
-     this.isFirstEnter=false;
   }
 };
 </script>
@@ -877,6 +886,7 @@ export default {
   padding-left: 10px;
 }
 .nav {
+  /* padding: 15px; */
   padding-bottom: 20px;
 }
 .fs12{
@@ -886,8 +896,10 @@ export default {
   width: 80px;
   height: 30px;
   line-height: 30px;
+  /* color: #666; */
   display: inline-block;
   box-shadow: 0 1px 7px 1px #e8e9ea;
+  /* margin-left: 10px; */
   border-radius: 20px;
   text-align: center;
   box-sizing: border-box;
@@ -923,6 +935,7 @@ export default {
   height: 25px;
   border-radius: 5px;
   overflow: hidden;
+  /* font-size: 12px; */
 }
 .time > div:nth-of-type(1) {
   margin-right: 5px;
@@ -985,6 +998,7 @@ export default {
 }
 .num {
   font-size: 60px;
+  /* font-weight: lighter; */
   color: #4ea9f9;
 }
 

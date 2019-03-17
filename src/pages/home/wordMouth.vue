@@ -23,7 +23,7 @@
             <img class="head_img" :src="item.head_picture" alt v-if="item.head_picture">
             <img class="head_img" src="../../assets/headimg.png" alt v-else>
             <div class="c-name">{{item.user_name}}</div>
-            <van-rate disabled disabled-color="#FFB10E" size="12" v-model="item.eva_score"/>
+            <van-rate disabled disabled-color="#FFB10E" :size="size" v-model="item.eva_score"/>
           </div>
           <div>
             <span class="grey_12">{{item.create_time}}</span>
@@ -47,7 +47,8 @@ import { Toast,ImagePreview } from "vant";
 export default {
   data() {
     return {
-      list:[]
+      list:[],
+      size:12,
     };
   },
   mounted(){

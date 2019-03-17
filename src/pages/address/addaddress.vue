@@ -17,7 +17,7 @@
     </div>
     <div class="pd-15 bgc mar-b-10">
       <div>
-        <input type="text" v-model.trim="detailval" placeholder="街道、小区门牌等详情地址">
+        <input style="width:100%" type="text" v-model.trim="detailval" placeholder="街道、小区门牌等详情地址">
       </div>
     </div>
     <div class="pd-15 bgc flex-jc-between flex-align-items">

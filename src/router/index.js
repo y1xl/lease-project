@@ -18,7 +18,6 @@ import Pay from '@/pages/home/pay'
 import Agreement from '@/pages/home/agreement'
 import Search from '@/pages/home/search'
 import PreBuy from '@/pages/home/preBuy'
-// import ApplyText from '@/pages/home/applyText'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -133,18 +132,17 @@ export default new Router({
     { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
     { path: '/compensation/:id', component: Compensation, meta: { title: '维修费' } },
     { path: '/sendBack/:id', component: SendBack, meta: { title: '自行寄回' } },
-    //产品
+    //产品&&首页
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
     { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },
     { path: '/wordMouth/:id', component: WordMouth, meta: { title: '口碑' } },
-    { path: '/buy', component: Buy, meta: { title: '下单' } },
+    { path: '/buy', component: Buy, meta: { title: '下单', keepAlive: true, isBack: false  } },
     { path: '/pay/:orderid', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索', keepAlive: true, isBack: false } },
     { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, 
-    // { path: '/applyText', component: ApplyText, meta: { title: '支付' } }, 
 
     //个人中心
     { path: '/rules/:title', component: Rules, meta: { title: '规则' } },

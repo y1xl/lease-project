@@ -18,7 +18,7 @@
               <img src="../../assets/icon-editor.png" alt="编辑" class="editorimg">
             </router-link>
           </div>
-          <div slot="right" class="del" @click="getdel(item.ads_id)">删除</div>
+          <div slot="right" class="del bgc-red" @click="getdel(item.ads_id)">删除</div>
         </van-swipe-cell>
       </div>
     </van-radio-group>
@@ -208,7 +208,6 @@ export default {
 }
 
 .del {
-  background-color: #d2d2d2;
   color: #fff;
   width: 60px;
   height: 100%;
