@@ -122,6 +122,9 @@ export default {
       if (url.includes('/orderDetail')) {
         return false
       }
+      if (url.includes('/buyOrderDetail')) {
+        return false
+      }
       if (url.includes('/cart')) {
         return false
       }

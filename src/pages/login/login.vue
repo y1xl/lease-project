@@ -9,7 +9,7 @@
           <input v-model.trim="newPhone" placeholder="请输入手机号" type="number" maxlength="11">
         </div>
         <div class="text-r pw_login" @click="password">使用密码登陆</div>
-        <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'act'">下一步</button>
+        <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'act'">获取验证码</button>
         <div class="other">
           <div class="flex-center disan_box">
             <div class="line"></div>

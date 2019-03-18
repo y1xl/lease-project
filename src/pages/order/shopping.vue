@@ -2,30 +2,34 @@
   <div>
     <div class="bgc pd-15">选择购买产品</div>
     <div class="nav bgc pd-lr-15">
-      <div :class="{ 'fc-blue selected': selected==0 }" @click="selected=0">全新正品</div>
-      <div :class="{ 'fc-blue selected': selected==1 }" @click="selected=1">本机</div>
+      <div :class="{ 'fc-blue selected': selected==1 }" @click="selected=1">全新正品</div>
+      <div :class="{ 'fc-blue selected': selected==2 }" @click="selected=2">本机</div>
     </div>
     <div class="pd-lr-15 bgc mar-b-10">
       <div class="goods flexbox">
-        <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" style="object-fit:contain" alt>
+        <img :src="goodsimg" alt>
         <div class="flex-1">
-          <div class="mar-b-10">日本 instax拍立得</div>
-          <div v-if="selected==0">该新品官方价格 ¥6000.00</div>
-          <div v-if="selected==1">本机原价 ¥6000.00</div>
+          <div class="mar-b-10">{{info.goods_name}}</div>
+          <div>
+            <span v-for="(item,index) in guiges" :key="index">{{item.attr_name}}</span>
+          </div>
+          <!-- <div v-if="selected==1" class="fc-grey fsz12">该新品官方价格 ¥6000.00</div> -->
+          <!-- <div v-if="selected==2" class="fc-grey fsz12">本机原价 ¥6000.00</div> -->
         </div>
       </div>
       <div class="price">目前销售价格
-        <span class="fc-red">¥6000.00</span>
+        <span class="fc-red">¥{{info.selling_price}}</span>
       </div>
     </div>
 
-    <template v-if="selected==0">
-      <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showinfo=true">
-        <span>选择规格参数</span>
-        <span class="flex-align-items fc-grey fsz12">黑色
+    <template v-if="selected==1">
+      <!-- <div class="flex-jc-between pd-15 bgc border-b flex-align-items">
+        <span>规格参数</span>
+        <span class="flex-align-items fc-grey fsz12">
+          {{guiges}}
           <van-icon name="arrow"/>
         </span>
-      </div>
+      </div> -->
 
       <div class="bgc">
         <div class="pd-15">取货方式</div>
@@ -44,10 +48,11 @@
         >
           <div>
             <div>收货地址</div>
-            <div class="fsz12">{{getaddress.name}} {{getaddress.phone}}
-              <van-tag plain v-if="getaddress.default">默认</van-tag>
+            <div class="fsz12">
+              {{getaddress.ads_user||''}} {{getaddress.ads_phone||''}}
+              <van-tag plain v-if="getaddress.ads_state==2">默认</van-tag>
             </div>
-            <div class="fsz12">{{getaddress.address}}</div>
+            <div class="fsz12">{{(getaddress.ads_province||'')+(getaddress.ads_city||'')+(getaddress.ads_district||'')+(getaddress.ads_address||'')}}</div>
           </div>
           <span class="fc-grey fsz12">
             <van-icon name="arrow"/>
@@ -57,12 +62,12 @@
         <template v-if="typenum==0">
           <div
             class="flex-jc-between flex-align-items pd-15 bgc border-b"
-            @click="go(`/locationList/shopping`)"
+            @click="go(`/locationList/shopping/${leaseid}`)"
           >
             <div>
               <div>自取地点</div>
-              <div class="fsz12">{{getlocation.title}}</div>
-              <div class="fsz12">{{getlocation.address}}</div>
+              <div class="fsz12">{{getlocation.store_name||''}}</div>
+              <div class="fsz12">{{(getlocation.store_province||'')+(getlocation.store_city||'')+(getlocation.store_district||'')+(getlocation.store_Address||'')}}</div>
             </div>
             <span class="fc-grey fsz12">
               <van-icon name="arrow"/>
@@ -75,16 +80,16 @@
               <van-icon name="arrow"/>
             </span>
           </div>
-          <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true">
+          <!-- <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true">
             <span>时间点</span>
             <span class="flex-align-items fc-grey fsz12">
               {{timetext}}
               <van-icon name="arrow"/>
             </span>
-          </div>
+          </div> -->
           <div class="flex-jc-between flex-align-items pd-15 bgc" @click="go('/people/shopping')">
             <div>
-              <div>自取联系人</div>
+              <div>自取人</div>
               <div class="fsz12">{{people.name}} {{people.phone}}</div>
             </div>
             <span class="fc-grey fsz12">
@@ -96,39 +101,50 @@
     </template>
 
     <div class="bgc mar-b-10">
-      <template v-if="selected==0">
-        <div class="flex-jc-between border-b pd-15">
-          <span>租金抵扣</span>
-          <span>¥3000.00</span>
+      <template v-if="selected==1">
+        <div class="flex-jc-between border-b pd-15" v-show="typenum==2" @click="showtimequantum=true">
+          <span>配送时间段</span>
+          <span style="color:#666" class="flex-align-items">
+            {{timequantumtext}}
+            <van-icon name="arrow"/>
+          </span>
+        </div>
+        <div class="flex-jc-between border-b pd-15" v-show="typenum!=0">
+          <span>运费</span>
+          <span style="color:#666">￥{{freight}}</span>
         </div>
         <div class="flex-jc-between border-b pd-15">
+          <span>租金抵扣</span>
+          <span style="color:#666">¥{{info.ded_rent}}</span>
+        </div>
+        <div class="flex-jc-between border-b pd-15" v-show="typenum!=0">
           <span>到货时间</span>
-          <span>1-3天</span>
+          <span style="color:#666">{{arrivaltime}}</span>
         </div>
         <div class="flex-jc-between border-b pd-15">
           <span>享受优惠</span>
-          <span>-¥50.00</span>
+          <span style="color:#666">￥0</span>
         </div>
       </template>
-      <div class="flex-jc-between border-b pd-15" v-show="selected==1">
+      <div class="flex-jc-between border-b pd-15" v-show="selected==2">
         <span>租金抵扣</span>
-        <span>¥2050.00</span>
+        <span style="color:#666">¥{{info.ded_rent}}</span>
       </div>
       <div class="flex-jc-between pd-15">
         <span>应付总额</span>
-        <span class="fc-red">¥2050.00</span>
+        <span class="fc-red">¥{{calculatesum}}</span>
       </div>
     </div>
 
     <div class="bgc">
       <div class="border-b pd-15">请选择支付方式</div>
       <van-radio-group v-model="radio">
-        <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
+        <!-- <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
           <div>
             <img src="../../assets/weixin.png" alt="微信" class="payimg">微信
           </div>
           <van-radio name="1" checked-color="#2DBBF1"></van-radio>
-        </div>
+        </div> -->
         <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
           <div>
             <img src="../../assets/ali.png" alt="支付宝" class="payimg">支付宝
@@ -138,7 +154,7 @@
         <div class="flex-jc-between pd-15" @click="radio = '3'">
           <div>
             <img src="../../assets/balance.png" alt="余额" class="payimg">余额
-            <span class="fc-red">¥2.00</span>
+            <span class="fc-red">¥{{info.users_balance}}</span>
           </div>
           <van-radio name="3" checked-color="#2DBBF1"></van-radio>
         </div>
@@ -149,106 +165,450 @@
       <div class="btn text-c" @click="submit">支付</div>
     </div>
 
-    <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
+    <!-- <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
       <van-datetime-picker type="time" show-toolbar @cancel="showtime=false" @confirm="onConfirm"/>
+    </van-popup> -->
+    <van-popup v-model="showtimequantum" position="bottom" :close-on-click-overlay="false">
+      <van-picker
+        :columns="timequantumarr"
+        show-toolbar
+        @cancel="showtimequantum = false"
+        @confirm="onConfirmTimequantum"
+      />
     </van-popup>
 
-    <van-popup v-model="showinfo" position="bottom" :close-on-click-overlay="false">
-      <div class="model">
-        <div class="goods1 flexbox pd-15">
-          <img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt>
-          <div class="flex-1">
-            <div class="mar-b-10 position title">日本 instax拍立得日本 instax拍立得
-              <div class="closeicon" @click="showinfo=false">
-                <van-icon name="close"/>
-              </div>
-            </div>
-            <div class="mar-b-10">
-              <span class="fc-red">¥1.08</span>
-              <span class="fsz10">/日</span>
-            </div>
-            <div class="fsz10">请选择规格属性</div>
-          </div>
-        </div>
-        <div class="pd-lr-15">
-          <div class="mar-b-10 fsz12">颜色</div>
-          <div class="items mar-b-10">
-            <div class="border-blue fc-blue">黑色</div>
-            <div class="border">褐色</div>
-          </div>
-
-          <div class="mar-b-10 fsz12">型号</div>
-          <div class="items mar-b-10">
-            <div class="border">型号1</div>
-            <div class="border">型号2</div>
-          </div>
-
-          <!-- <div class="mar-b-10 fsz12">数量</div>
-          <div>
-            <van-stepper v-model="numval"/>
-          </div> -->
-        </div>
-        <div class="pd-15">
-          <div class="btn text-c">确认</div>
-        </div>
-      </div>
-    </van-popup>
   </div>
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
+import { accAdd,accSub } from "@/utils/util.js";
 export default {
+  beforeRouteEnter(to, from, next) {
+    let urlarr = ['选择地点','时间','自取联系人','收货地址']
+    if(urlarr.includes(from.meta.title)) {
+        to.meta.isBack = true;
+    }
+    next();
+  },
   data() {
     return {
-      radio:'1',
-      selected: 0,
+      leaseid: this.$route.params.id,
+      radio:'3',
+      selected: 1,
       typenum: 0,
-      showtime: false,
-      timetext: "",
+      // showtime: false,
+      // timetext: "",
       people: "",
-      numval: "",
-      showinfo: false,
       datechoose: "",
       getlocation:'',
-      getaddress: ''
+      getaddress: '',
+      info:'',
+      guiges:'',
+      goodsimg:'',
+      freight: 0, //运费
+      arrivaltime: '',//到货时间
+      timequantumtext: "", //时间段
+      showtimequantum: false, //时间段
+      timequantumarr: [], //时间段
+      sum:0
     };
+  },
+  watch:{
+    selected(){
+      if(this.selected==1){
+        this.getinfo()
+      }
+      if(this.selected==2){
+        this.getinfo()
+      }
+    },
+    typenum(){
+      if(this.typenum==0){
+        this.calculateRules()
+      }
+      if(this.typenum==1||this.typenum==2){
+        if(this.getaddress != ""){
+          this.getfreight()
+        }else{
+          this.calculateRules()
+        }
+      }
+    },
+
+    getaddress(){
+      if(this.typenum==1||this.typenum==2){
+        if(this.getaddress != ""){
+          this.getfreight()
+        }
+      }
+    },
+  },
+  computed:{
+    calculatesum(){
+      if(this.sum-0<0){
+        return 0
+      }
+      return this.sum
+    },
   },
 
   created() {
-    let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
-    if(shoppingSession){
-      this.typenum = shoppingSession.gettype
-      this.datechoose = shoppingSession.getdate
-      this.timetext = shoppingSession.gettime
-      this.people = shoppingSession.getpeople
-      this.getlocation = shoppingSession.getlocation
-      this.getaddress = shoppingSession.getaddress
-    }
-    //取缓存 end
+    this.isFirstEnter = true;
   },
-
+  mounted() {    
+    this.getinfo()
+    this.getdefaultaddress();
+  },
   methods: {
+    calculateRules(){
+      if(this.selected==1){
+        console.log(1)
+        if(this.typenum==0){
+          this.sum = accSub(this.info.yf_price||'',this.info.ded_rent||'')
+          console.log(2)
+        }else{
+          let a = accSub(this.info.yf_price||'',this.info.ded_rent||'')
+          this.sum = accAdd(a, this.freight)
+          console.log(3)
+        }
+      }
+      if(this.selected==2){
+        this.sum = accSub(this.info.yf_price||'',this.info.ded_rent||'')
+        console.log(4)
+      }
+    },
     go(url){
       let shoppingSession = {
-        gettype: String(this.typenum), //取货方式
         getlocation: this.getlocation, //自取地点
         getdate: this.datechoose,
-        gettime: this.timetext,
         getpeople: this.people,
         getaddress:this.getaddress
       }
       window.sessionStorage.setItem("shoppingSession", JSON.stringify(shoppingSession));
       this.$router.push({ path: url });
     },
-    onConfirm(value) {
-      console.log(`当前值：${value}`);
-      this.timetext = value;
-      this.showtime = false;
+
+    onConfirmTimequantum(value, index) {
+      // console.log(`当前值：${value}, 当前索引：${index}`);
+      this.timequantumtext = value;
+      this.showtimequantum = false;
     },
+
+    getdefaultaddress() {
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+      });
+      this.axios.post(this.API + "api/Lease/ads_select", postData).then(res => {
+        console.log(res.data, "address");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          for (let v of resdata.data) {
+            if (v.ads_state == 2) {
+              this.getaddress = v;
+            }
+          }
+        } else {
+          this.getaddress = ''
+          Toast(resdata.message);
+        }
+      });
+    },
+
+    getfreight(){
+      let postData = this.$qs.stringify({
+        type: this.typenum,
+        ads_id: this.getaddress.ads_id,
+        order_id: this.$route.params.id,
+      })
+      this.axios
+        .post(this.API + "api/Buy_Order/BuyExpressPrice", postData)
+        .then(res => {
+          console.log(res.data, "freight");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.freight = resdata.data.price;
+            this.timequantumarr = resdata.data.timelist;
+            this.arrivaltime = resdata.data.arrival_time
+            this.calculateRules()
+          } else {
+            this.freight = 0
+            this.calculateRules()
+            Toast(resdata.message);
+          }
+        });
+    },
+
+    getinfo(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        type: this.selected,
+        order_id: this.$route.params.id,
+      });
+      this.axios.post(this.API + "api/Buy_Order/BuyGoodsDetail", postData).then(res => {
+        console.log(res.data, "info");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          Toast.clear();
+          this.info = resdata.data
+          this.goodsimg = resdata.data.gd_img[0]
+          this.guiges = resdata.data.sku==''?'':JSON.parse(resdata.data.sku);
+          this.calculateRules()
+        } else {
+          Toast.clear();
+          // Toast(resdata.message);
+          Dialog.alert({
+              message: resdata.message
+          }).then((e) => {
+              this.$router.go(-1);
+          });
+        }
+      });
+    },
+    // onConfirm(value) {
+    //   console.log(`当前值：${value}`);
+    //   this.timetext = value;
+    //   this.showtime = false;
+    // },
     submit(){
-      Toast('此功能未开通')
+      if(this.selected==1){
+        if(this.typenum == 0){
+          if(this.getlocation == ""){
+            Toast("请填写自取地点")
+            return
+          }
+          if(this.datechoose == ""){
+            Toast("请填写自取时间")
+            return
+          }
+          if(this.people == ""){
+            Toast("请填写自取人")
+            return
+          }
+
+          var postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            type: this.selected,
+            order_id: this.$route.params.id,
+            qwsh_time: this.arrivaltime,
+            pay_way: this.radio,
+            delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
+            store_id: this.getlocation.store_id,
+            order_delivery_time: this.datechoose,
+            users_name: this.people.name,
+            users_phone: this.people.phone,
+            users_type: this.people.type == 0 ? 1 : 2,
+            ads_id: '',
+            way_price: '',
+            timelist:'',
+            time:'',
+            remark:'',
+            coupons_id:''
+          });
+        }
+
+        if(this.typenum == 1){
+          if(this.getaddress == ""){
+            Toast("请选择收货地址")
+            return
+          }
+
+          var postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            type: this.selected,
+            order_id: this.$route.params.id,
+            qwsh_time: this.arrivaltime,
+            pay_way: this.radio,
+            delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
+            store_id: '',
+            order_delivery_time: '',
+            users_name: '',
+            users_phone: '',
+            users_type: '',
+            ads_id: this.getaddress.ads_id,
+            way_price: this.freight,
+            timelist:'',
+            time:'',
+            remark:'',
+            coupons_id:''
+          });
+        }
+
+        if(this.typenum == 2){
+          if(this.getaddress == ""){
+            Toast("请选择收货地址")
+            return
+          }
+          if(this.timequantumtext == ""){
+            Toast("请选择配送时间段")
+            return
+          }
+
+           var postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            type: this.selected,
+            order_id: this.$route.params.id,
+            qwsh_time: this.arrivaltime,
+            pay_way: this.radio,
+            delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
+            store_id: '',
+            order_delivery_time: '',
+            users_name: '',
+            users_phone: '',
+            users_type: '',
+            ads_id: this.getaddress.ads_id,
+            way_price: this.freight,
+            timelist:this.timequantumtext,
+            time:'',
+            remark:'',
+            coupons_id:''
+          });
+        }
+
+        if(this.radio==2){
+          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          .then(res => {
+              console.log(res.data, "alipay");
+              window.sessionStorage.removeItem("wxpaySession");
+              Toast.clear()
+              
+              const form = res.data;
+              const div = document.createElement('div');
+              div.id = 'alipay';
+              div.style.opacity='0'
+              div.innerHTML = form;
+              document.body.appendChild(div);
+              document.querySelector('#alipay').children[0].submit(); 
+          })
+          .catch(error => {
+              Toast.clear()
+              Toast('网络出错')
+          });
+        }
+        if(this.radio==3){
+          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData).then(res => {
+            console.log(res.data, "submit");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast.clear();
+              Dialog.alert({
+                  message: '支付成功'
+              }).then((e) => {
+                  this.$router.go(-1);
+              });
+            } else {
+              Toast.clear();
+              Toast(resdata.message);
+            }
+          })
+          .catch(error => {
+              Toast.clear()
+              Toast('网络出错')
+          });
+        }
+      }
+
+      if(this.selected==2){
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          type: this.selected,
+          order_id: this.$route.params.id,
+          qwsh_time: this.arrivaltime,
+          pay_way: this.radio,
+          delivery_way: '',
+          store_id: '',
+          order_delivery_time: '',
+          users_name: '',
+          users_phone: '',
+          users_type: '',
+          ads_id: '',
+          way_price: '',
+          timelist:'',
+          time:'',
+          remark:'',
+          coupons_id:''
+        });
+
+        if(this.radio==2){
+          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          .then(res => {
+              console.log(res.data, "alipay");
+              window.sessionStorage.removeItem("wxpaySession");
+              Toast.clear()
+              
+              const form = res.data;
+              const div = document.createElement('div');
+              div.id = 'alipay';
+              div.style.opacity='0'
+              div.innerHTML = form;
+              document.body.appendChild(div);
+              document.querySelector('#alipay').children[0].submit(); 
+          })
+          .catch(error => {
+              Toast.clear()
+              Toast('网络出错')
+          });
+        }
+
+        if(this.radio==3){
+          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData).then(res => {
+            console.log(res.data, "submit");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast.clear();
+              Dialog.alert({
+                  message: '支付成功'
+              }).then((e) => {
+                  this.$router.go(-1);
+              });
+            } else {
+              Toast.clear();
+              Toast(resdata.message);
+            }
+          })
+          .catch(error => {
+              Toast.clear()
+              Toast('网络出错')
+          });
+        }
+      }
     }
+  },
+
+  activated() {
+     if(!this.$route.meta.isBack || this.isFirstEnter){
+      this.leaseid= this.$route.params.id
+      this.radio ='3'
+      this.selected = 1
+      this.typenum = 0
+      this.people = ""
+      this.datechoose = ""
+      this.getlocation =''
+      this.getaddress = ''
+      this.info = ''
+      this.guiges=''
+      this.goodsimg = ''
+      this.freight = 0
+      this.arrivaltime = ''
+      this.timequantumtext= ""//时间段
+      this.showtimequantum= false //时间段
+      this.timequantumarr= [] //时间段
+      this.sum = 0
+      this.getinfo()
+      this.getdefaultaddress()
+     }else{
+      let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
+      if(shoppingSession){
+        this.datechoose = shoppingSession.getdate
+        this.people = shoppingSession.getpeople
+        this.getlocation = shoppingSession.getlocation
+        this.getaddress = shoppingSession.getaddress
+      }
+     }
+     this.$route.meta.isBack=false
+     this.isFirstEnter=false;
   }
 };
 </script>

@@ -182,10 +182,6 @@
               <span>租金</span>
               <span class="flex-1">¥{{data.rental||'0.00'}}</span>
             </div>
-            <!-- <div class="flexbox">
-              <span>享受优惠</span>
-              <span class="flex-1">-¥50.00</span>
-            </div> -->
             <div class="flexbox">
               <span>保险费</span>
               <span class="flex-1">¥{{data.order_safe||'0.00'}}</span>

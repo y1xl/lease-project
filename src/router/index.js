@@ -31,6 +31,8 @@ import Deny from '@/pages/order/deny'
 import Calendar from '@/pages/order/calendar'
 import Compensation from '@/pages/order/compensation'
 import SendBack from '@/pages/order/sendBack'
+import Buypay from '@/pages/order/buypay'
+import BuyOrderDetail from '@/pages/order/buyOrderDetail'
 
 //个人中心
 import Rules from '@/pages/me/rules'
@@ -121,7 +123,7 @@ export default new Router({
     { path: '/comments/:id/:goodid', component: Comments, meta: { title: '评价' } },
     { path: '/orderDetail/:id', component: OrderDetail, meta: { title: '订单详情' } },
     { path: '/relet/:id', component: Relet, meta: { title: '续租' } },
-    { path: '/shopping', component: Shopping, meta: { title: '购买' } },
+    { path: '/shopping/:id', component: Shopping, meta: { title: '购买', keepAlive: true, isBack: false } },
     { path: '/people/:type', component: People, meta: { title: '自取联系人' } },
     { path: '/locationList/:type', component: LocationList, meta: { title: '选择地点' } },
     { path: '/locationList/:type/:id', component: LocationList, meta: { title: '选择地点' } },
@@ -132,6 +134,8 @@ export default new Router({
     { path: '/calendar/:type/:type1', component: Calendar, meta: { title: '时间' } },
     { path: '/compensation/:id', component: Compensation, meta: { title: '维修费' } },
     { path: '/sendBack/:id', component: SendBack, meta: { title: '自行寄回' } },
+    { path: '/buypay/:id', component: Buypay, meta: { title: '支付' } },
+    { path: '/buyOrderDetail/:id', component: BuyOrderDetail, meta: { title: '订单详情' } },
     //产品&&首页
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },

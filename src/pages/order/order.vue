@@ -21,6 +21,18 @@ export default {
             selected: 0
         }
     },
+    watch: {
+        $route(to,from){
+            // console.log(to.path)
+            if(to.path){
+                if(to.path=='/order/buyOrder'){
+                    this.selected=1
+                }else{
+                    this.selected=0
+                }
+            }
+        }
+    },
     methods:{
         nav(n) {
             this.selected = n;

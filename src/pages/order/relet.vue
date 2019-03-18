@@ -74,7 +74,7 @@ import { Toast, Dialog } from "vant";
 export default {
   data() {
     return {
-      radio: "1",
+      radio: "3",
       isshow: false,
       columns: ["天"],
       weektext: "请选择",

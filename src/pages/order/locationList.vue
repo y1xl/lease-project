@@ -115,42 +115,79 @@ export default {
       // }
 
       let nowPageNum = ++this.page;
-      let postData = this.$qs.stringify({
-        lat: JSON.parse(window.localStorage.getItem("center")).lat,
-        lng: JSON.parse(window.localStorage.getItem("center")).lng,
-        // lat:this.lat,
-        // lng:this.lng,
-        goods_id: this.$route.params.id,
-        page: nowPageNum
-      });
-      this.axios
-        .post(this.API + "api/Order/GetSelfShop", postData)
-        .then(res => {
-          console.log(res.data, "list");
-          let resdata = res.data;
-          if (resdata.code == 200) {
-            this.list = this.list.concat(resdata.data);
-            // 加载状态结束
-            this.loading = false;
-            if (resdata.data.length < 10) {
+      if(this.$route.params.type == "buy"){
+        let postData = this.$qs.stringify({
+          lat: JSON.parse(window.localStorage.getItem("center")).lat,
+          lng: JSON.parse(window.localStorage.getItem("center")).lng,
+          goods_id: this.$route.params.id,
+          page: nowPageNum
+        });
+        this.axios
+          .post(this.API + "api/Order/GetSelfShop", postData)
+          .then(res => {
+            console.log(res.data, "list");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              this.list = this.list.concat(resdata.data);
+              // 加载状态结束
+              this.loading = false;
+              if (resdata.data.length < 10) {
+                this.finished = true;
+              }
+            } else {
+              if(this.list.length==0){
+                Dialog.alert({
+                    message: resdata.message
+                }).then((e) => {
+                  //
+                });
+              }
+              
+              this.loading = false;
               this.finished = true;
             }
-          } else {
-            if(this.list.length==0){
-              Dialog.alert({
-                  message: resdata.message
-              }).then((e) => {
-                //
-              });
-            }
-            
-            this.loading = false;
-            this.finished = true;
-          }
-        })
-        .catch(error => {
-            Toast('网络出错')
+          })
+          .catch(error => {
+              Toast('网络出错')
+          });
+      }
+
+      if(this.$route.params.type == "shopping"){
+        let postData = this.$qs.stringify({
+          lat: JSON.parse(window.localStorage.getItem("center")).lat,
+          lng: JSON.parse(window.localStorage.getItem("center")).lng,
+          order_id: this.$route.params.id,
+          page: nowPageNum
         });
+        this.axios
+          .post(this.API + "api/Buy_Order/BuySelfShop", postData)
+          .then(res => {
+            console.log(res.data, "list");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              this.list = this.list.concat(resdata.data);
+              // 加载状态结束
+              this.loading = false;
+              if (resdata.data.length < 10) {
+                this.finished = true;
+              }
+            } else {
+              if(this.list.length==0){
+                Dialog.alert({
+                    message: resdata.message
+                }).then((e) => {
+                  //
+                });
+              }
+              
+              this.loading = false;
+              this.finished = true;
+            }
+          })
+          .catch(error => {
+              Toast('网络出错')
+          });
+      }
     },
     submit() {
       if (this.$route.params.type == "shopping") {

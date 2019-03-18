@@ -293,27 +293,39 @@ export default {
             this.rent = resdata.data;
             this.rented = resdata.data;
             
-            if(this.couponstext!=''){
-              let o = accSub(rented,this.couponstext) 
-              let r = accSub(resdata.data,this.couponstext) // -优惠券
-              console.log(r,o);
+            // if(this.couponstext!=''){
+            //   let o = accSub(rented,this.couponstext) 
+            //   let r = accSub(resdata.data,this.couponstext) // -优惠券
+            //   console.log(r,o);
               
-              if(r-0<0){
-                this.calculateRules()
-                return 
-              }
+            //   if(r-0<0){
+            //     this.calculateRules()
+            //     return 
+            //   }
 
-              if(o-0<0){
-                this.sum = accAdd(this.sum,r)
-              }else{
-                let rentSum = accSub(this.sum,o) //减原来的
-                this.sum = accAdd(rentSum,r)
-              }
+            //   if(o-0<0){
+            //     this.sum = accAdd(this.sum,r)
+            //   }else{
+            //     let rentSum = accSub(this.sum,o) //减原来的
+            //     this.sum = accAdd(rentSum,r)
+            //   }
               
+            // }else{
+            //   let rentSum = accSub(this.sum,rented) //减原来的
+            //   this.sum = accAdd(rentSum,resdata.data) //加现在的
+            // }
+
+            if(this.couponstext!=''){
+              this.couponindex = ''
+              this.couponstext = ''
+              this.coupons_condition = ''
+              this.couponid = ''
+
+              this.calculateRules()
             }else{
               let rentSum = accSub(this.sum,rented) //减原来的
               this.sum = accAdd(rentSum,resdata.data) //加现在的
-            }
+            }  
             
           } else {
             Toast(resdata.message);
@@ -590,6 +602,7 @@ export default {
             Toast.clear()
             for(let v of resdata.data){
               v.end_time = v.end_time.split(" ")[0]
+              v.coupons_condition = '10.00'
             }
             this.couponlist = resdata.data
           } else {
@@ -603,6 +616,10 @@ export default {
       //扣租金
       if (this.weekval == "") {
         Toast("请填写租期")
+        return;
+      }
+      if(this.rent<(item.coupons_condition-0)){
+        Toast(`未满${item.coupons_condition}元条件`)
         return;
       }
       if(index+1==this.couponindex){

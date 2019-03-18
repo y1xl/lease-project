@@ -46,7 +46,7 @@ export default {
     };
   },
   created() {
-    if (this.$route.params.type == "buy") {
+    if (this.$route.params.type == "buy"||this.$route.params.type == "shopping") {
         let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
         if (buySession) {
           if(buySession.getpeople.type){

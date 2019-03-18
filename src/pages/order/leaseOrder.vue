@@ -43,7 +43,7 @@
           <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}`}">评价</router-link>
         </div>
         <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping">购买</div> 
+        <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping(item.order_id)">购买</div> 
       </OrderCard> 
 
       <!-- <OrderCard status="待评价" v-show="active==5">
@@ -156,7 +156,7 @@ export default {
     OrderCard
   },
   beforeRouteEnter(to, from, next) {
-    let urlarr = ['订单详情','评价','续租','退租','否认','预约快递','维修费','自行寄回']
+    let urlarr = ['订单详情','评价','续租','退租','否认','预约快递','维修费','自行寄回','购买']
     if(urlarr.includes(from.meta.title)) {
         to.meta.isBack = true;
     }
@@ -251,9 +251,9 @@ export default {
           this.showmodel = true
       } 
     },
-    goshopping(){
+    goshopping(id){
       window.sessionStorage.removeItem('shoppingSession');
-      this.$router.push({ path: "/shopping" });
+      this.$router.push({ path: "/shopping/"+id });
     },
     gorefund(id){
       window.sessionStorage.removeItem('refundSession');
@@ -411,6 +411,7 @@ export default {
   },
 
   activated() {
+    Dialog.close()
      if(!this.$route.meta.isBack || this.isFirstEnter){
        this.active=0,
        this.list=[]

@@ -45,7 +45,7 @@ import { Toast,Dialog } from "vant";
 export default {
     data(){
         return{
-            radio:'1',
+            radio:'3',
             info:'',
             showWXpay:false
         }
