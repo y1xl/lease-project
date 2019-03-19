@@ -3,9 +3,10 @@
     <div class="header text-c">
       <div class="mar-b-10 fsz18">
         <span v-if="data.buyorder_status==1">待付款</span>
-        <span v-if="data.buyorder_status==5">待收货</span>
-        <span v-if="data.buyorder_status==12">待发货</span>
-        <span v-if="data.buyorder_status==11">已完成</span>
+        <span v-if="data.buyorder_status==2||data.buyorder_status==3">待发货</span>
+        <span v-if="data.buyorder_status==4">待收货</span>
+        <span v-if="data.buyorder_status==6">已完成</span>
+        <span v-if="data.buyorder_status==5">待评价</span>
       </div>
       <div class="fc-blue fsz13" v-if="data.buyorder_status==1">剩余{{minutes}}分钟{{seconds}}秒的支付时间</div>
     </div>
@@ -18,10 +19,15 @@
             <div class="spec mar-b-10">
               <span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span>
             </div>
+            <div style="color:#666">
+              <span v-if="data.buyorder_type==1">全新正品</span>
+              <span v-if="data.buyorder_type==2">本机</span>
+            </div>
           </div>
           <img :src="data.gd_img" :alt="data.goods_name">
         </div>
 
+        <template v-if="data.buyorder_type==1">
         <div v-if="!data.express_no==''">
           <div class="title position">
             快递信息
@@ -32,7 +38,7 @@
           <div v-if="logistics.length==0" class="flex-align-items mar-b-10 fc-blue">
             暂无物流信息
           </div>
-          <div class="flex-align-items mar-b-10" @click="showlogistics=true" v-else>
+          <div class="flex-align-items mar-b-10" @click="onshowlogistics" v-else>
             <div class="flex-1">
               <div class="fc-blue mar-b-10">{{logistics[logistics.length-1].AcceptStation}}</div>
               <div class="fsz12">{{logistics[logistics.length-1].AcceptTime}}</div>
@@ -40,6 +46,7 @@
             <van-icon name="arrow" />
           </div>
         </div>
+        </template>
 
         <div>
           <div class="title position">
@@ -56,14 +63,14 @@
               <span>下单时间</span>
               <span class="flex-1">{{data.create_time}}</span>
             </div>
-            <div class="flexbox">
+            <div class="flexbox" v-if="data.buyorder_type==1">
               <span>取货方式</span>
               <span class="flex-1">
                 {{data.delivery_way==1?'快递':data.delivery_way==2?'平台配送':data.delivery_way==3?'自取':''}}
               </span>
             </div>
 
-            <!-- <template v-if="data.delivery_way=='快递'||data.delivery_way=='平台配送'"> -->
+            <template v-if="(data.delivery_way==1&&data.buyorder_type==1)||(data.delivery_way==2&&data.buyorder_type==1)">
             <div class="flexbox" >
               <span>收货地址</span>
               <span class="flex-1">
@@ -73,35 +80,35 @@
             <div class="flexbox">
               <span>收货人</span>
               <span class="flex-1">
-                {{data.order_name}}
+                {{data.buyorder_name}}
               </span>
             </div>
             <div class="flexbox">
               <span>收货人手机号码</span>
               <span class="flex-1">
-                {{data.order_phone}}
+                {{data.buyorder_phone}}
               </span>
             </div>
             <div class="flexbox" >
               <span>到货时间</span>
               <span class="flex-1">
-                {{data.sh_time}}
+                {{data.qwsh_time}}
               </span>
             </div>
-            <!-- </template> -->
+            </template>
             
-            <div class="flexbox" v-if="data.delivery_way==2">
+            <div class="flexbox" v-if="data.delivery_way==2&&data.buyorder_type==1">
               <span>配送时间段</span>
               <span class="flex-1">
                 {{data.timelist}}
               </span>
             </div>
 
-            <!-- <template v-if="data.delivery_way=='自取'"> -->
+            <template v-if="data.delivery_way==3&&data.buyorder_type==1">
             <div class="flexbox">
               <span>自取地点</span>
               <span class="flex-1">
-                {{data.store_province+data.store_city+data.store_district+(data.store_Address||'')}}
+                {{data.province+data.city+data.district+(data.buyorder_address||'')}}
               </span>
             </div>
             <div class="flexbox">
@@ -116,7 +123,7 @@
               <span>手机号码</span>
               <span class="flex-1">{{data.buyorder_phone}}</span>
             </div> 
-            <!-- </template> -->
+            </template>
           </div>
         </div>
 
@@ -131,7 +138,7 @@
             <!-- 租转售 -->
             <div class="flexbox">
               <span>商品价格</span>
-              <span class="flex-1">¥1000.00</span>
+              <span class="flex-1">¥{{data.selling_price||'0.00'}}</span>
             </div>
             <div class="flexbox">
               <span>租金抵扣</span>
@@ -142,11 +149,11 @@
               <span>优惠券</span>
               <span class="flex-1">¥{{data.coupons_money||'0.00'}}</span>
             </div>
-            <div class="flexbox" v-if="data.delivery_way==2">
+            <div class="flexbox" v-if="data.delivery_way==2&&data.buyorder_type==1">
               <span>配送运费</span>
               <span class="flex-1">¥{{data.way_price||'0.00'}}</span>
             </div>
-            <div class="flexbox" v-if="data.delivery_way==1">
+            <div class="flexbox" v-if="data.delivery_way==1&&data.buyorder_type==1">
               <span>快递费</span>
               <span class="flex-1">¥{{data.way_price||'0.00'}}</span>
             </div>
@@ -172,8 +179,13 @@
     <div class="height"></div>
 
     <div class="tools bgc border-t" :style="active==1||active==4?'opacity: 0;':''">
-      <div class="flex-center border-blue fc-blue" v-if="data.buyorder_status==1" @click="gopay(data.order_id)">
+      <div class="flex-center border-blue fc-blue" v-if="data.buyorder_status==1" @click="gopay(data.buyorder_id)">
         支付
+      </div>
+      <div class="flex-center border" @click="getcode(data.buyorder_id)" v-if="data.buyorder_status==4">取货码</div>
+      <div class="flex-center border-blue fc-blue" v-if="data.buyorder_status==4" @click="onConfirmGoods(data.buyorder_id)">确认收货</div>
+      <div class="flex-center border-blue fc-blue" v-if="data.buyorder_status==5">
+          <router-link v-bind="{to: `/comments/${data.buyorder_id}/${data.goods_id}?type=buyorder`}">评价</router-link>
       </div>
     </div>
 
@@ -273,22 +285,15 @@ export default {
             Toast.clear()
             this.data = resdata.data[0]
 
-            // if(resdata.data[0].sendTime){
-            //   if(resdata.data[0].sendTime instanceof Object){
-            //     let start_time = resdata.data[0].sendTime.start_time.split(' ')
-            //     let end_time = resdata.data[0].sendTime.end_time.split(' ')
-
-            //     resdata.data[0].sendTime = `${start_time[0]} ${start_time[1]}-${end_time[1]}`
-            //   }
-            // }
-
             if(this.data.buyorder_status==1){
               payCountdown = setInterval(()=>{
                 this.countdown(this.data.create_time)
               },1000)
             }
 
-            // this.queryLogistics()
+            if(!this.data.express_no==''){
+                this.queryLogistics()
+            }
           } else {
             Toast.clear()
               Toast(resdata.message)
@@ -299,12 +304,16 @@ export default {
         Toast('网络出错')
       });
     },
+    onshowlogistics(){
+      this.queryLogistics()
+      this.showlogistics=true
+    },
         //物流
     queryLogistics(){
       let postData = this.$qs.stringify({
           order_id: this.data.order_id,
         });
-        this.axios.post(this.API + "api/Lease_Order/queryLogistics", postData)
+        this.axios.post(this.API + "api/Buy_Order/queryLogistics", postData)
         .then(res => {
           console.log(res.data, "queryLogistics");
           let resdata = res.data;
@@ -327,31 +336,49 @@ export default {
         } 
         },
     //二维码
-    getcode(id,type) {
+    getcode(id) {
       if(this.showcode){
           this.showcode = false
       }else{
-        // Toast.loading({ mask: true,message: '加载中...'})
-        // let postData = this.$qs.stringify({
-        //   users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        //   order_id:id,
-        //   way: type
-        // });
-        // this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
-        // .then(res => {
-        //   console.log(res.data, "code");
-        //   let resdata = res.data;
-        //   if (resdata.code == 200) {
-        //     Toast.clear()
-        //     this.codeimg = resdata.data
-        //     this.showcode = true
-        //   } else {
-        //     Toast.clear()
-        //     Toast(resdata.message);
-        //   }
-        // });
+        Toast.loading({ mask: true,message: '加载中...'})
+        let postData = this.$qs.stringify({
+            buyorder_id:id
+        });
+        this.axios.post(this.API + "api/Buy_Order/createCode", postData)
+        .then(res => {
+          console.log(res.data, "code");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.codeimg = resdata.data
+            this.showcode = true
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
       } 
     },
+    //确认收货
+        onConfirmGoods(id){
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                buyorder_id:id,
+            });
+            this.axios.post(this.API + "api/Buy_Order/confirmReceipt", postData)
+            .then(res => {
+                console.log(res.data, "onConfirmGoods");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    this.getlist()
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message);
+                }
+            });
+        },
   },
 
   beforeDestroy(){

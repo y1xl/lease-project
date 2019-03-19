@@ -8,8 +8,10 @@
         <div class="border-b pdt50">
           <input v-model.trim="newPhone" placeholder="请输入手机号" type="number" maxlength="11">
         </div>
-        <div class="text-r pw_login" @click="password">使用密码登陆</div>
+
         <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'act'">获取验证码</button>
+        <div class="text-c pw_login " @click="password">使用密码登陆</div>
+
         <div class="other">
           <div class="flex-center disan_box">
             <div class="line"></div>
@@ -170,6 +172,10 @@ input {
 .disan {
   color: #aeaeae;
   line-height: 40px;
+}
+.pw_login {
+  position: relative;
+  top: 20px;
 }
 .disan_box {
   margin: 100px 0 20px 0;

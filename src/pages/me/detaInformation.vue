@@ -110,7 +110,7 @@ export default {
       this.showsex = false;
     },
     onConfirmDate(val) {
-      console.log(val.getFullYear(), val.getMonth() + 1, val.getDate());
+      // console.log(val.getFullYear(), val.getMonth() + 1, val.getDate());
       this.dateval = val;
       let datet = [val.getFullYear(), val.getMonth() + 1, val.getDate()];
       console.log(datet);

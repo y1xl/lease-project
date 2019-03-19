@@ -21,10 +21,10 @@
                 <div class="flex-center border-blue fc-blue" v-if="item.buyorder_status==1" @click="gopay(item.buyorder_id)">
                 支付
                 </div>
-                <div class="flex-center border" @click="getcode(item.buyorder_id,1)" v-if="item.buyorder_status==2||item.buyorder_status==3">取货码</div>
-                <div class="flex-center border-blue fc-blue" v-if="item.buyorder_status==2||item.buyorder_status==3" >确认收货</div>
+                <div class="flex-center border" @click="getcode(item.buyorder_id)" v-if="item.buyorder_status==4">取货码</div>
+                <div class="flex-center border-blue fc-blue" v-if="item.buyorder_status==4" @click="onConfirmGoods(item.buyorder_id)">确认收货</div>
                 <div class="flex-center border-blue fc-blue" v-if="item.buyorder_status==5">
-                    <router-link v-bind="{to: `/comments/${item.buyorder_id}/${item.goods_id}`}">评价</router-link>
+                    <router-link v-bind="{to: `/comments/${item.buyorder_id}/${item.goods_id}?type=buyorder`}">评价</router-link>
                 </div>
             </buyOrderCard>
 
@@ -44,6 +44,16 @@
                 <div class="flex-center border-blue fc-blue" >确认收货</div>
             </OrderCard>
             <OrderCard status="已完成"></OrderCard>  -->
+        </div>
+
+        <div class="model full flex-column-center position" v-show="showcode">
+            <div class="closeimg" @click="getcode"><van-icon name="close" color="#fff"/></div>
+            <img
+                :src="codeimg"
+                alt="QRcode"
+                class="codeimg"
+            >
+            <div style="color:#fff">请出示此二维码供门店扫码</div>
         </div>
 
         <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
@@ -81,7 +91,8 @@ export default {
         buyOrderCard
     },
     beforeRouteEnter(to, from, next) {
-        if(from.meta.title === '订单详情') {
+        let urlarr = ['订单详情','评价','支付']
+        if(urlarr.includes(from.meta.title)) {
             to.meta.isBack = true;
         }
         next();
@@ -97,10 +108,12 @@ export default {
             ],
             active: 0,
             list:[],
-            canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" },{ id: 6, text: "测试下单/误下单" }, { id: 7, text: "其他" }],
+            canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" }, { id: 6, text: "其他" }],
             showmodel: false,
             orderid:'',
             radio: 0,
+            showcode: false,
+            codeimg:'',
         }
     },
     beforeCreate(){
@@ -171,36 +184,55 @@ export default {
             this.showmodel = true
         } 
         },
+
+        //确认收货
+        onConfirmGoods(id){
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                buyorder_id:id,
+            });
+            this.axios.post(this.API + "api/Buy_Order/confirmReceipt", postData)
+            .then(res => {
+                console.log(res.data, "onConfirmGoods");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    this.getlist()
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message);
+                }
+            });
+        },
         //二维码
-        getcode(id,type) {
-        if(this.showcode){
-            this.showcode = false
-        }else{
-            // Toast.loading({ mask: true,message: '加载中...'})
-            // let postData = this.$qs.stringify({
-            // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            // order_id:id,
-            // way: type
-            // });
-            // this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
-            // .then(res => {
-            // console.log(res.data, "code");
-            // let resdata = res.data;
-            // if (resdata.code == 200) {
-            //     Toast.clear()
-            //     this.codeimg = resdata.data
-            //     this.showcode = true
-            // } else {
-            //     Toast.clear()
-            //     Toast(resdata.message);
-            // }
-            // });
-        } 
+        getcode(id) {
+            if(this.showcode){
+                this.showcode = false
+            }else{
+                Toast.loading({ mask: true,message: '加载中...'})
+                let postData = this.$qs.stringify({
+                    buyorder_id:id
+                });
+                this.axios.post(this.API + "api/Buy_Order/createCode", postData)
+                .then(res => {
+                console.log(res.data, "code");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    this.codeimg = resdata.data
+                    this.showcode = true
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message);
+                }
+                });
+            } 
         },
         //取消订单
         cancelOrder(id){
-        Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             buyorder_id:id,
             withouTreason: this.canceltext[this.radio].text
@@ -221,6 +253,7 @@ export default {
         },
     },
     activated() {
+        Dialog.close()
         if(!this.$route.meta.isBack || this.isFirstEnter){
             this.active=0
             this.radio= 0

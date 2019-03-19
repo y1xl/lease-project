@@ -100,7 +100,7 @@
           <van-switch @change="onswitch" v-model="isinsurance" size="20px" :disabled="Dinsurance"/>
         </div>
       </van-cell>
-      <van-cell title="享受优惠" is-link center :value="activitytext" @click="discountmodel=true"></van-cell>
+      <van-cell title="享受优惠" is-link center @click="discountmodel=true"></van-cell>
       <van-cell center v-show="typenum==2">
         <div slot="title" class="flex-align-items">
           <span>特殊需求备注</span>
@@ -219,7 +219,6 @@ export default {
       showcoupon: false, //优惠券
       couponindex: '', //优惠券
       couponid:'', //优惠券
-      activitytext: "", //优惠活动
       showweek: false, //租期
       weekcolumns: [],
       weektext: "请选择", //租期
@@ -489,6 +488,16 @@ export default {
     },
     onConfirmTimequantum(value, index) {
       // console.log(`当前值：${value}, 当前索引：${index}`);
+      let newdate = new Date()
+      if(this.expectdate == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
+        let end = value.split('-')[1].split(':')[0]
+        let newhours = newdate.getHours()
+        if(newhours > end){
+          Toast("不在配送时间段")
+          this.timequantumtext = ''
+          return
+        }
+      }
       this.timequantumtext = value;
       this.showtimequantum = false;
     },
@@ -602,7 +611,6 @@ export default {
             Toast.clear()
             for(let v of resdata.data){
               v.end_time = v.end_time.split(" ")[0]
-              v.coupons_condition = '10.00'
             }
             this.couponlist = resdata.data
           } else {
@@ -749,6 +757,18 @@ export default {
             Toast("请选择配送时间段")
             return
           }
+          
+          let newdate = new Date()
+          if(this.expectdate == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
+            // console.log(newdate.getHours());
+            let end = this.timequantumtext.split('-')[1].split(':')[0]
+            let newhours = newdate.getHours()
+            // console.log(start,end)
+            if(newhours > end){
+              Toast("不在配送时间段")
+              return
+            }
+          }
 
           var postData = this.$qs.stringify({
             unt: this.weektext == "天" ? 1 : 2,
@@ -848,7 +868,6 @@ export default {
         this.showcoupon = false //优惠券
         this.couponindex = '' //优惠券
         this.couponid ='' //优惠券
-        this.activitytext = "" //优惠活动
         this.showweek = false //租期
         this.weekcolumns = []
         this.weektext = "请选择" //租期

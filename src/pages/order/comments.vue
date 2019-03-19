@@ -1,13 +1,5 @@
 <template>
   <div>
-    <div class="goods bgc mar-b-10 flex-align-items box-sizing">
-      <div class="flex-1">
-        <div style="font-weight: bold;" class="mar-b-10">{{data.goods_name}}</div>
-        <div><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>
-      </div>
-      <img :src="data.gd_img" alt >
-    </div>
-
     <div class="border-b text-c bgc ratebox">
       <van-rate v-model="rateval" @change="onRating" :size="size"/>
     </div>
@@ -35,7 +27,6 @@ export default {
       contentval:'',
       imgarr:[],
       showupload:true,
-      data:''
     };
   },
   watch:{
@@ -45,33 +36,7 @@ export default {
             }
         }
     },
-  mounted(){
-    this.getdata()
-  },
   methods: {
-    getdata(){
-      Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
-          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-          order_id:this.$route.params.id,
-      })
-      this.axios.post(this.API + "api/Lease_Order/orderDetails",postData)
-      .then(res => {
-          console.log(res.data, "data")
-          let resdata = res.data
-          if (resdata.code == 200) {
-            Toast.clear()
-              this.data = resdata.data[0]
-          } else {
-            Toast.clear()
-              Toast(resdata.message)
-          }
-      })
-      .catch(error => {
-        Toast.clear()
-        Toast('网络出错')
-      });
-    },
       //评星
     onRating(e) {
       console.log(e);
@@ -107,7 +72,12 @@ export default {
       for(let v of this.imgarr){
           formData.append('eva_picture[]',v.file,v.file.name)  //多图上传
       }
-      formData.append('order_id',this.$route.params.id)
+      if(this.$route.query.type=='buyorder'){
+        formData.append('buyorder_id',this.$route.params.id)
+      }
+      if(this.$route.query.type=='leaseorder'){
+        formData.append('order_id',this.$route.params.id)
+      }
       formData.append('goods_id',this.$route.params.goodid)
       formData.append('eva_content',this.contentval)
       formData.append('eva_service',this.rateval)
@@ -122,7 +92,7 @@ export default {
                   Dialog.alert({
                       message: '操作成功'
                   }).then((e) => {
-                      this.$router.go(-2);
+                      this.$router.go(-1);
                   });
           } else {
               Toast.clear()
@@ -135,13 +105,13 @@ export default {
 </script>
 
 <style scoped>
-.goods{
+/* .goods{
   padding: 10px;
 }
 .goods img{
   width: 90px;
   height: 90px;
-}
+} */
 .ratebox {
   padding: 10px 0;
 }

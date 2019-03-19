@@ -40,7 +40,7 @@
         <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
         <div class="flex-center border" v-if="item.order_status==6" @click="gorelet(item.order_id)">续租</div>
         <div class="flex-center border-blue fc-blue" v-if="active==5">
-          <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}`}">评价</router-link>
+          <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}?type=leaseorder`}">评价</router-link>
         </div>
         <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping(item.order_id)">购买</div> 
@@ -87,6 +87,7 @@
         <div class="flex-center border-blue fc-blue" >确认收货</div>
       </OrderCard>
       <OrderCard status="已预定" v-show="active==2">
+        <div class="flex-center border" @click="onshowmodel">取消订单</div>
         <div class="flex-center border-blue fc-blue">支付</div>
       </OrderCard>
       <OrderCard status="待收货" v-show="active==2">
@@ -194,7 +195,7 @@ export default {
       //   {name:'已完成',count:0},
       // ],
       radio: 0,
-      canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" },{ id: 6, text: "测试下单/误下单" }, { id: 7, text: "其他" }],
+      canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" }, { id: 6, text: "其他" }],
       showmodel: false,
       showcode: false,
       list:[],

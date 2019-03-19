@@ -46,7 +46,7 @@ export default {
     };
   },
   created() {
-    if (this.$route.params.type == "buy"||this.$route.params.type == "shopping") {
+    if (this.$route.params.type == "buy") {
         let buySession = JSON.parse(window.sessionStorage.getItem("buySession"));
         if (buySession) {
           if(buySession.getpeople.type){
@@ -69,7 +69,31 @@ export default {
               ).users_name;
           }
         }
-      }
+    }
+    if (this.$route.params.type == "shopping") {
+        let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
+        if (shoppingSession) {
+          if(shoppingSession.getpeople.type){
+            this.selected = shoppingSession.getpeople.type||0
+            if(shoppingSession.getpeople.type==1){
+              this.nameval = JSON.parse(
+                window.localStorage.getItem("userinfo")
+              ).users_name;
+            }
+            if(shoppingSession.getpeople.type == 0){
+              this.nameval = shoppingSession.getpeople.name||''
+              this.phoneval = shoppingSession.getpeople.phone||''
+            }else{
+              this.nameval1 = shoppingSession.getpeople.name||''
+              this.phoneval1 = shoppingSession.getpeople.phone||''
+            }
+          }else{            
+              this.nameval = JSON.parse(
+                window.localStorage.getItem("userinfo")
+              ).users_name;
+          }
+        }
+    }
       
   },
   methods: {

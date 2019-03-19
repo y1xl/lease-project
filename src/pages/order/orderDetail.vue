@@ -40,7 +40,7 @@
           <div v-if="logistics.length==0" class="flex-align-items mar-b-10 fc-blue">
             暂无物流信息
           </div>
-          <div class="flex-align-items mar-b-10" @click="showlogistics=true" v-else>
+          <div class="flex-align-items mar-b-10" @click="onshowlogistics" v-else>
             <div class="flex-1">
               <div class="fc-blue mar-b-10">{{logistics[logistics.length-1].AcceptStation}}</div>
               <div class="fsz12">{{logistics[logistics.length-1].AcceptTime}}</div>
@@ -164,16 +164,6 @@
             <div class="r dot"></div>
           </div>
           <div class="info">
-            <!-- 租转售 -->
-            <!-- <div class="flexbox">
-              <span>商品价格</span>
-              <span class="flex-1">¥1000.00</span>
-            </div>
-            <div class="flexbox">
-              <span>租金抵扣</span>
-              <span class="flex-1">¥1000.00</span>
-            </div> -->
-            <!-- 租转售  end-->
             <div class="flexbox">
               <span>押金</span>
               <span class="flex-1">¥{{data.order_rent||'0.00'}}</span>
@@ -285,20 +275,6 @@
           </div>
         </div>
 
-        <!-- 租转售 -->
-        <!-- <div>
-          <div class="title position">
-            订单信息
-            <div class="l dot"></div>
-            <div class="r dot"></div>
-          </div>
-          <div class="info">
-            <div class="flexbox">
-              <span>到货时间</span>
-              <span class="flex-1">1-3天</span>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
 
@@ -334,7 +310,7 @@
         维修费
       </div>
       <div class="flex-center border-blue fc-blue" v-if="active==5">
-          <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}`}">评价</router-link>
+          <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}?type=leaseorder`}">评价</router-link>
       </div>
       <div class="flex-center border" @click="getcode(data.order_id,1)" v-if="data.order_status==5">取货码</div>
     </div>
@@ -466,7 +442,9 @@ export default {
               },1000)
             }
 
-            this.queryLogistics()
+            if(!this.data.express_no==''){
+                this.queryLogistics()
+            }
           } else {
             Toast.clear()
               Toast(resdata.message)
@@ -495,6 +473,10 @@ export default {
               // Toast(resdata.message)
           }
       })
+    },
+    onshowlogistics(){
+      this.queryLogistics()
+      this.showlogistics=true
     },
         //物流
     queryLogistics(){

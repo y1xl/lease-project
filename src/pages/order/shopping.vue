@@ -121,9 +121,9 @@
           <span>到货时间</span>
           <span style="color:#666">{{arrivaltime}}</span>
         </div>
-        <div class="flex-jc-between border-b pd-15">
-          <span>享受优惠</span>
-          <span style="color:#666">￥0</span>
+        <div class="flex-jc-between border-b pd-15" @click="onshowcoupon">
+          <span>优惠卷</span>
+          <span style="color:#666" class="flex-align-items">{{couponstext}}<van-icon name="arrow"/></span>
         </div>
       </template>
       <div class="flex-jc-between border-b pd-15" v-show="selected==2">
@@ -177,6 +177,31 @@
       />
     </van-popup>
 
+    <van-actionsheet v-model="showcoupon" title="优惠券">
+      <div class="coupon_box">
+        <div  class="text-c fc-grey pd-15" v-if="couponlist.length==0">暂无优惠券</div>
+        <div class="position mar-b-10" v-for="(item,index) in couponlist" :key="index" @click="choosecoupon(item,index)">
+          <div class="couponcard" :class="index+1==couponindex?'boxshadow-blue':'boxshadow'">
+            <!-- <img src="../../assets/1.png"> -->
+          </div>
+
+          <div class="coupon_con flex-jc-around flex-align-items" >
+            <div>
+              <span class="num">{{item.coupons_money}}</span>
+              <span class="yuan">元</span>
+            </div>
+            <div>
+              <div class="coupon_fl">{{item.coupon_name}}</div>
+              <div class="limit">
+                <div>有效期至{{item.end_time}}</div>
+                <div>满{{item.coupons_condition}}可用</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </van-actionsheet>
+
   </div>
 </template>
 
@@ -198,7 +223,7 @@ export default {
       selected: 1,
       typenum: 0,
       // showtime: false,
-      // timetext: "",
+      // timetext: "", 
       people: "",
       datechoose: "",
       getlocation:'',
@@ -211,7 +236,12 @@ export default {
       timequantumtext: "", //时间段
       showtimequantum: false, //时间段
       timequantumarr: [], //时间段
-      sum:0
+      sum:0,
+      couponstext: "", //优惠券
+      showcoupon: false, //优惠券
+      couponindex: '', //优惠券
+      couponid:'', //优惠券
+      couponlist: [], //优惠券
     };
   },
   watch:{
@@ -267,10 +297,16 @@ export default {
         if(this.typenum==0){
           this.sum = accSub(this.info.yf_price||'',this.info.ded_rent||'')
           console.log(2)
+          if(this.couponstext!=''){
+            this.sum = accSub(this.sum,this.couponstext) // -优惠券
+          }
         }else{
           let a = accSub(this.info.yf_price||'',this.info.ded_rent||'')
           this.sum = accAdd(a, this.freight)
           console.log(3)
+          if(this.couponstext!=''){
+            this.sum = accSub(this.sum,this.couponstext) // -优惠券
+          }
         }
       }
       if(this.selected==2){
@@ -357,7 +393,7 @@ export default {
           this.calculateRules()
         } else {
           Toast.clear();
-          // Toast(resdata.message);
+          Toast(resdata.message);
           Dialog.alert({
               message: resdata.message
           }).then((e) => {
@@ -365,6 +401,54 @@ export default {
           });
         }
       });
+    },
+
+    //优惠卷
+    onshowcoupon(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        state: 1
+      });
+      this.axios
+        .post(this.API + "api/Lease/user_coupons", postData)
+        .then(res => {
+          console.log(res.data, "couponslist");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.showcoupon = true
+            Toast.clear()
+            for(let v of resdata.data){
+              v.end_time = v.end_time.split(" ")[0]
+            }
+            this.couponlist = resdata.data
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
+    choosecoupon(item,index){
+      // console.log(item,index);
+      if(this.rent<(item.coupons_condition-0)){
+        Toast(`未满${item.coupons_condition}元条件`)
+        return;
+      }
+      if(index+1==this.couponindex){
+        this.couponindex = ''
+        this.couponstext = ''
+        this.coupons_condition = ''
+        this.couponid = ''
+        this.sum = accAdd(this.sum,item.coupons_money)
+      }else{
+        this.sum = accAdd(this.sum,this.couponstext)
+        this.couponindex = index+1
+        this.couponstext = item.coupons_money
+        this.coupons_condition = item.coupons_condition
+        this.couponid = item.user_cp_id
+        this.sum = accSub(this.sum,item.coupons_money)
+        this.showcoupon = false
+      }
     },
     // onConfirm(value) {
     //   console.log(`当前值：${value}`);
@@ -391,7 +475,7 @@ export default {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             type: this.selected,
             order_id: this.$route.params.id,
-            qwsh_time: this.arrivaltime,
+            qwsh_time: '',
             pay_way: this.radio,
             delivery_way: this.typenum == 0 ? 3 : this.typenum == 1 ? 1 : 2,
             store_id: this.getlocation.store_id,
@@ -595,6 +679,11 @@ export default {
       this.timequantumtext= ""//时间段
       this.showtimequantum= false //时间段
       this.timequantumarr= [] //时间段
+      this.couponstext= "" //优惠券
+      this.showcoupon= false //优惠券
+      this.couponindex= '' //优惠券
+      this.couponid='' //优惠券
+      this.couponlist= [] //优惠券
       this.sum = 0
       this.getinfo()
       this.getdefaultaddress()
@@ -682,22 +771,45 @@ export default {
   background-image: linear-gradient(90deg, #2dbbf1 0%, #4ea9f9 100%);
 }
 
-.model .main {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+
+/* 优惠券 */
+.coupon_box {
+  padding: 10px;
 }
-.model .items > div {
-  padding: 2px 10px;
-  display: inline-block;
-  border-radius: 2px;
-  margin-right: 10px;
+.couponcard {
+  height: 100px;
+  border-radius: 5px;
+  overflow: hidden;
+  border-bottom: 3px solid #4ea9f9;
+  box-sizing: border-box;
 }
-.model .closeicon {
+.boxshadow{
+  box-shadow: 0px 1px 7px 1px #DAD7D7;
+}
+.boxshadow-blue{
+  box-shadow: 0px 1px 7px 1px #4ea9f9;
+}
+.coupon_con {
   position: absolute;
-  right: -5px;
-  top: -5px;
-  font-size: 18px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+.num {
+  font-size: 60px;
+  color: #4ea9f9;
+}
+
+.yuan {
+  font-size: 20px;
+  color: #4ea9f9;
+}
+
+.coupon_fl {
+  font-size: 14px;
+}
+.limit {
+  font-size: 10px;
+  color: #aeaeae;
 }
 </style>

@@ -67,9 +67,8 @@ export default {
         getinfo() {
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-                order_id : this.$route.params.id
             });
-            this.axios.post(this.API + "api/Order/GetPayData", postData)
+            this.axios.post(this.API + "api/Buy_Order/GetPayData", postData)
             .then(res => {
                 console.log(res.data, "info");
                 let resdata = res.data;

@@ -69,7 +69,13 @@
         </div>
 
         <div v-show="active==1">
-
+            
+            <div class="flex-jc-between flex-align-items bgc pd-15" >
+                <div class="flex-1">
+                    <div class="mar-b-10 fc-grey">托管设备金额</div>
+                    <input style="width:100%" type="text" placeholder="请输入托管金额" v-model.trim="figureval">
+                </div>
+            </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showtype1=true">
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">品类</div>
@@ -77,6 +83,26 @@
                     <div v-else>{{typetext1.cate_name}}</div>
                 </div>
                 <van-icon name="arrow" />
+            </div>
+            <div class="flex-jc-between flex-align-items bgc pd-15" @click="showequipment=true">
+                <div class="flex-1">
+                    <div class="mar-b-10 fc-grey">设备类型</div>
+                    <div class="fc-grey" v-if="equipmenttext==''">请选择设备类型</div>
+                    <div v-else>{{equipmenttext}}</div>
+                </div>
+                <van-icon name="arrow"/>
+            </div>
+            <div class="flex-jc-between flex-align-items bgc pd-15" @click="showpay=true">
+                <div class="flex-1">
+                    <div class="mar-b-10 fc-grey">支付方式</div>
+                    <div class="fc-grey" v-if="paytext==''">请选择支付方式</div>
+                    <div v-else>{{paytext}}</div>
+                </div>
+                <van-icon name="arrow"/>
+            </div>
+
+            <div class="pd-15">
+                <div class="btn text-c" >提交</div>
             </div>
 
             <div class="describe bgc">
@@ -113,6 +139,22 @@
 
             <van-popup v-model="showtype1" position="bottom" :close-on-click-overlay="false">
                 <van-picker :columns="typearr1" show-toolbar @cancel="showtype1 = false" @confirm="onConfirmType1" value-key='cate_name'/>
+            </van-popup>
+            <van-popup v-model="showequipment" position="bottom" :close-on-click-overlay="false">
+                <van-picker
+                    :columns="equipmentarr"
+                    show-toolbar
+                    @cancel="showequipment = false"
+                    @confirm="onConfirmequipment"
+                />
+            </van-popup>
+            <van-popup v-model="showpay" position="bottom" :close-on-click-overlay="false">
+                <van-picker
+                    :columns="payarr"
+                    show-toolbar
+                    @cancel="showpay = false"
+                    @confirm="onConfirmpay"
+                />
             </van-popup>
         </div>
 
@@ -184,7 +226,15 @@ export default {
 
             notypetext:'',
             nobrandtext:'',
-            nomodeltext:''
+            nomodeltext:'',
+
+            figureval:'',
+            showequipment:false,
+            equipmenttext:'',
+            equipmentarr:['全新品','二手品'],
+            showpay:false,
+            paytext:'',
+            payarr:['微信','支付宝','余额']
         }
     },
     created(){
@@ -253,6 +303,15 @@ export default {
         onConfirmModel(value, index){
             this.modeltext = value
             this.showmodel = false
+        },
+
+        onConfirmequipment(value, index) {
+            this.equipmenttext = value;
+            this.showequipment = false;
+        },
+        onConfirmpay(value, index) {
+            this.paytext = value;
+            this.showpay = false;
         },
 
         gettype(){

@@ -3,7 +3,8 @@
     <div class="box" id="pse">
       <van-collapse v-model="activeNames">
         <van-collapse-item :name="index" v-for="(item,index) in list" :key="index">
-          <div slot="title">{{item.tetail_name}}</div>{{item.tetail_content}}
+          <div slot="title">{{item.tetail_name}}</div>
+          <pre class="content-inner">{{item.tetail_content}}</pre>
         </van-collapse-item>
       </van-collapse>
     </div>
@@ -55,5 +56,11 @@ export default {
   border-radius: 5px;
   margin: 10px 15px;
   overflow: hidden;
+}
+.content-inner{
+    white-space:pre-wrap;
+    white-space:-moz-pre-wrap;
+    white-space:-o-pre-wrap;
+    word-wrap:break-word;
 }
 </style>

@@ -5,8 +5,8 @@
             <div class="flex-jc-between border-b mar-b-10 pb10" >
                 <span>订单号:<span class="fsz12">{{data.buyorder_no}}</span></span>
                 <span class="fc-blue" v-if="data.buyorder_status==1">待付款</span>
-                <span class="fc-blue" v-if="data.buyorder_status==2||data.buyorder_status==3">待收货</span>
-                <span class="fc-blue" v-if="data.buyorder_status==4">待发货</span>
+                <span class="fc-blue" v-if="data.buyorder_status==2||data.buyorder_status==3">待发货</span>
+                <span class="fc-blue" v-if="data.buyorder_status==4">待收货</span>
                 <span class="fc-blue" v-if="data.buyorder_status==6">已完成</span>
                 <span class="fc-blue" v-if="data.buyorder_status==5">待评价</span>
             </div>
@@ -28,7 +28,7 @@
 
 <script>
 export default {
-    props: ['status','data','active'],
+    props: ['data','active'],
     data(){
         return{
             

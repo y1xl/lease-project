@@ -6,16 +6,15 @@
                 <span>订单号:<span class="fsz12">{{data.order_no}}</span></span>
                 <span class="fc-blue" v-if="data.order_status==6">租赁中</span>
                 <span class="fc-blue" v-if="data.order_status==4">订单关闭</span>
-                <span class="fc-blue" v-if="status=='订单超时'">订单超时</span>
                 <span class="fc-blue" v-if="data.order_status==8">检测中</span>
                 <span class="fc-blue" v-if="(data.order_status==9&&data.user_validation==0)||(data.order_status==9&&!data.user_validation)">售后中</span>
                 <span class="fc-blue" v-if="data.order_status==9&&data.user_validation==1">待确认</span>
                 <span class="fc-blue" v-if="data.order_status==10">退押金中</span>
                 <span class="fc-blue" v-if="data.order_status==1">待付款</span>
-                <span class="fc-blue" v-if="status=='已确认'">已确认</span>
-                <span class="fc-blue" v-if="status=='已预定'">已预定</span>
+                <!-- <span class="fc-blue" v-if="status=='已确认'">已确认</span> -->
+                <!-- <span class="fc-blue" v-if="status=='已预定'">已预定</span> -->
                 <span class="fc-blue" v-if="data.order_status==5">待收货</span>
-                <span class="fc-blue" v-if="status=='预租待确认'">预租待确认</span>
+                <!-- <span class="fc-blue" v-if="status=='预租待确认'">预租待确认</span> -->
                 <span class="fc-blue" v-if="data.order_status==7">退租中</span>
                 <span class="fc-blue" v-if="data.order_status==12">待发货</span>
                 <span class="fc-blue" v-if="data.order_status==11">已完成</span>
@@ -35,9 +34,9 @@
             <div class="fc-red text-c overdue" v-if="active==4">
                 <span>您的订单已超期{{data.day}}天!</span>
             </div>
-            <div class="fc-red text-c overdue" v-if="status=='已预定'">
+            <!-- <div class="fc-red text-c overdue" v-if="status=='已预定'">
                 <span>要支付完剩余费用后才能发货哦!</span>
-            </div>
+            </div> -->
         </router-link>
         <div class="tools ">
             <slot></slot>
@@ -48,7 +47,7 @@
 
 <script>
 export default {
-    props: ['status','data','active'],
+    props: ['data','active'],
     data(){
         return{
             
