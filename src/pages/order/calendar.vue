@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="pd-15 bgc">请选择日期</div>
-    <div id="calendar">
-      <Calendar @choseDay="clickDay" :agoDayHide="nowdate" :markDate=arr></Calendar>
+    <div>
+      <Calendar ref="Calendar" @choseDay="clickDay" @changeMonth="changeDate" :agoDayHide="nowdate" :markDate=arr></Calendar>
     </div>
     <div class="fc-red tip pd-15" v-if="type1=='pre'">
       如当前没有您所需要的档期，请选择预租下单，我们将在24小时内
       回复是否可以满足您的需求.
     </div>
-    <div class="pd-t-100" v-if="type1=='pre'">
+    <div class="pd-lr-15" v-if="type1=='pre'">
       <div class="btn text-c" @click="goprebuy">预租下单</div>
     </div>
   </div>
@@ -23,20 +23,73 @@ export default {
   },
   data() {
     return {
-      value: "",
       nowdate: String(Date.now() - 86400000).slice(0, 10),
       type1: this.$route.params.type1,
       arr:[]
     };
   },
-  created() {},
+  created() {
+    console.log(this.$route.query)
+    if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+      this.getdata()
+    }
+  },
   methods: {
+    getdata(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let newdate = new Date()
+      let postData = this.$qs.stringify({
+          type: this.$route.query == 0 ? 3 : this.$route.query == 1 ? 1 : 2,
+          ads_id: this.$route.query.ads_id,
+          goods_id: this.$route.query.goods_id,
+          sku: this.$route.query.sku,
+          month: `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`
+      });
+      this.axios.post(this.API + "api/Order/displayDate", postData)
+      .then(res => {
+          console.log(res.data, "data");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              this.arr = resdata.data
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+    },
+    changeDate(date) {
+      Toast.loading({ mask: true, message: "加载中..." });
+      let newdate = new Date()
+      let postData = this.$qs.stringify({
+          type: this.$route.query == 0 ? 3 : this.$route.query == 1 ? 1 : 2,
+          ads_id: this.$route.query.ads_id,
+          goods_id: this.$route.query.goods_id,
+          sku: this.$route.query.sku,
+          month: date
+      });
+      this.axios.post(this.API + "api/Order/displayDate", postData)
+      .then(res => {
+          console.log(res.data, "data");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              this.arr = resdata.data
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+    },
+    
+    add0(m){return m<10?'0'+m:m },
     clickDay(date) {
+      let datetext = date.split('/')
+      if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${this.add0(datetext[2])}`)) {
+        Toast('没档期')
+        return
+      }
       console.log(date);
-      // this.arr.push(date)
-      // if(this.arr.length==2){
-      //   this.$router.go(-1);
-      // }
       if (this.$route.params.type == "shopping") {
         let shoppingSession = JSON.parse(
           window.sessionStorage.getItem("shoppingSession")
@@ -147,7 +200,7 @@ export default {
           JSON.stringify(prebuySession)
         );
       }
-      this.$router.go(-1);
+      // this.$router.go(-1);
     },
 
     goprebuy(){
@@ -158,44 +211,39 @@ export default {
 };
 </script>
 
-<style>
-#calendar .wh_content_all {
+<style scoped>
+.wh_container >>> .wh_content_all {
   background-color: #fff;
 }
-#calendar .wh_jiantou1 {
+.wh_container >>> .wh_jiantou1 {
   border-color: #000;
 }
-#calendar .wh_jiantou2 {
+.wh_container >>> .wh_jiantou2 {
   border-color: #000;
 }
-#calendar .wh_top_changge li {
+.wh_container >>> .wh_top_changge li {
   color: #000;
 }
-#calendar .wh_content_item {
+.wh_container >>> .wh_content_item {
   color: #000;
 }
-#calendar .wh_content_item .wh_chose_day {
+.wh_container >>> .wh_content_item .wh_isToday{
+  background-color: transparent;
+  color: #50abf9;
+}
+.wh_container >>> .wh_content_item .wh_chose_day {
   background-color: #50abf9;
   color: #fff;
+} 
+.wh_container >>> .wh_content_item > .wh_isMark {
+  background: #fff;
+  color: #bfbfbf;
 }
-/* #calendar .wh_content_item .wh_isToday{
-  background-color: transparent;
-}
-#calendar .wh_content_item>.wh_isMark{
-  background-color:#00f;
-  color: #fff;
-} */
-</style>
 
-<style scoped>
 .tip {
   font-size: 12px;
 }
-.pd-t-100 {
-  padding: 0 15px;
-  padding-top: 100px;
-  padding-bottom: 15px;
-}
+
 .btn {
   height: 42px;
   line-height: 42px;

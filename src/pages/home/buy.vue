@@ -29,7 +29,7 @@
             <div>{{(getlocation.store_province||'')+(getlocation.store_city||'')+(getlocation.store_district||'')+(getlocation.store_Address||'')}}</div>
           </template>
         </van-cell>
-        <van-cell is-link center @click="go('/calendar/buy/pre')">
+        <van-cell is-link center @click="chooseCalendar('/calendar/buy/pre')">
           <template slot="title">
             <div>自取时间</div>
             <div>{{getdate}}</div>
@@ -73,7 +73,7 @@
         is-link
         center
         v-show="typenum==1||typenum==2"
-        @click="go('/calendar/expectdateTobuy/pre')"
+        @click="chooseCalendar('/calendar/expectdateTobuy/pre')"
         :value="expectdate"
       >
         <template slot="title">
@@ -486,6 +486,28 @@ export default {
       this.weektext = value;
       this.showweek = false;
     },
+    chooseCalendar(url){
+      if(this.typenum == 0){
+        if(this.getlocation == ""){
+          Toast("请填写自取地点")
+          return
+        }
+      }else {
+        if(this.getaddress == ""){
+          Toast("请选择收货地址")
+          return
+        }
+      }
+
+      if(this.typenum == 0){
+        let urls = url + `?type=${this.typenum}&&ads_id=${this.getlocation.store_id}&&goods_id=${this.$route.query.id}&&sku=${this.detail.sku||''}`
+        this.go(urls)
+      }else{
+        let urls = url + `?type=${this.typenum}&&ads_id=${this.getaddress.ads_id}&&goods_id=${this.$route.query.id}&&sku=${this.detail.sku||''}`
+        this.go(urls)
+      }
+      
+    },
     onConfirmTimequantum(value, index) {
       // console.log(`当前值：${value}, 当前索引：${index}`);
       let newdate = new Date()
@@ -626,10 +648,7 @@ export default {
         Toast("请填写租期")
         return;
       }
-      if(this.rent<(item.coupons_condition-0)){
-        Toast(`未满${item.coupons_condition}元条件`)
-        return;
-      }
+      
       if(index+1==this.couponindex){
         this.couponindex = ''
         this.couponstext = ''
@@ -638,6 +657,10 @@ export default {
         this.rent = accAdd(this.rent,item.coupons_money)
         this.calculateRules()
       }else{
+        if(this.rent<(item.coupons_condition-0)){
+          Toast(`未满${item.coupons_condition}元条件`)
+          return;
+        }
         this.rent = accAdd(this.rent,this.couponstext)
         this.couponindex = index+1
         this.couponstext = item.coupons_money

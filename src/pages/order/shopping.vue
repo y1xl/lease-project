@@ -430,10 +430,6 @@ export default {
     },
     choosecoupon(item,index){
       // console.log(item,index);
-      if(this.rent<(item.coupons_condition-0)){
-        Toast(`未满${item.coupons_condition}元条件`)
-        return;
-      }
       if(index+1==this.couponindex){
         this.couponindex = ''
         this.couponstext = ''
@@ -441,6 +437,10 @@ export default {
         this.couponid = ''
         this.sum = accAdd(this.sum,item.coupons_money)
       }else{
+        if(this.rent<(item.coupons_condition-0)){
+          Toast(`未满${item.coupons_condition}元条件`)
+          return;
+        }
         this.sum = accAdd(this.sum,this.couponstext)
         this.couponindex = index+1
         this.couponstext = item.coupons_money

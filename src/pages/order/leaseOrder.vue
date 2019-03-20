@@ -24,6 +24,7 @@
 
       <OrderCard v-for="(item,index) in list" :key="index" :data="item" :active="active">
         <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
+        <div class="flex-center border" @click="onshowDelivery(item.order_id)" v-if="item.order_status==12&&item.users_surrender_id==0">取消订单</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==1" @click="gopay(item.order_id)">
           支付
         </div>
@@ -145,6 +146,30 @@
         </div>
     </van-popup>
 
+    <van-popup v-model="showdelivery" position="bottom" :close-on-click-overlay="false">
+        <div class="text-c position title" >
+          取消订单
+          <div class="closeicon"><van-icon name="close" @click="onshowDelivery"/></div>
+        </div>
+        <div class="pd-lr-15">
+          <div style="padding:20px 0">请选择取消订单的原因,帮助我们改进(必选):</div>
+          <van-radio-group v-model="radio">
+            <div
+              class="flex-jc-between mar-b-10"
+              @click="radio = index"
+              v-for="(item,index) in canceltext"
+              :key="index"
+            >
+              <span>{{index+1}}、{{item.text}}</span>
+              <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
+            </div>
+          </van-radio-group>
+        </div>
+        <div class="pd-15">
+          <div class="btn text-c" @click="cancelDelivery(orderid)">1提交</div>
+        </div>
+    </van-popup>
+
   </div>
 </template>
 
@@ -197,6 +222,7 @@ export default {
       radio: 0,
       canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" }, { id: 6, text: "其他" }],
       showmodel: false,
+      showdelivery: false,
       showcode: false,
       list:[],
       orderid:'',
@@ -250,6 +276,14 @@ export default {
           this.showmodel = false
       }else{
           this.showmodel = true
+      } 
+    },
+    onshowDelivery(id){
+      this.orderid = id
+      if(this.showdelivery){
+          this.showdelivery = false
+      }else{
+          this.showdelivery = true
       } 
     },
     goshopping(id){
@@ -349,6 +383,28 @@ export default {
           }
         });
     },
+    //取消收货
+    cancelDelivery(id){
+      Toast.loading({ mask: true,message: '加载中...'})
+      let postData = this.$qs.stringify({
+          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          order_id:id,
+          reason: this.canceltext[this.radio].text
+        });
+        this.axios.post(this.API + "api/Lease_Order/usersSurrender", postData)
+        .then(res => {
+          console.log(res.data, "cancelDelivery");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear()
+            this.showdelivery = false
+            this.getlist()
+          } else {
+            Toast.clear()
+            Toast(resdata.message);
+          }
+        });
+    },
     //确认收货
     onConfirmGoods(id){
       Toast.loading({ mask: true,message: '加载中...'})
@@ -417,8 +473,11 @@ export default {
        this.active=0,
        this.list=[]
        this.radio=0
+       this.showmodel= false,
+       this.showdelivery= false,
+       this.showcode= false,
        this.getlist()
-     }else{
+     }else{       
        this.getlist()       
      }
      

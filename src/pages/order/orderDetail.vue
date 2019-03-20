@@ -232,6 +232,13 @@
                 <span>快递日期</span>
                 <span class="flex-1">{{data.sendTime}}</span>
               </div>
+              <div class="flexbox" v-if="data.order_back_way=='快递'&&data.sendExpressNumber">
+                <span>物流单号</span>
+                <span class="flex-1 flex-jc-between flex-align-items">
+                  <span>{{data.sendExpressNumber}}</span>
+                  <span class="fc-blue">查看</span>
+                </span>
+              </div>
             </template>
 
             <div class="flexbox" v-if="data.HireFreight">
@@ -445,6 +452,8 @@ export default {
             if(!this.data.express_no==''){
                 this.queryLogistics()
             }
+        this.queryLogisticsBack() //11111111111111111111111111111111111
+
           } else {
             Toast.clear()
               Toast(resdata.message)
@@ -489,6 +498,25 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             this.logistics = resdata.data.Traces
+          } else {
+            Toast(resdata.message);
+          }
+        })
+        .catch(error => {
+          Toast('网络出错')
+        });
+    },
+    //退租物流
+    queryLogisticsBack(){
+      let postData = this.$qs.stringify({
+          order_id: this.data.order_id,
+        });
+        this.axios.post(this.API + "api/Lease_Order/querySurrenderExpress", postData)
+        .then(res => {
+          console.log(res.data, "queryLogisticsBack");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            // this.logistics = resdata.data.Traces
           } else {
             Toast(resdata.message);
           }

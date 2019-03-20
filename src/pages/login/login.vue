@@ -1,6 +1,5 @@
 <template>
   <div class="bgc bigbox">
-    <!-- <a href="weixin://dl/businessWebview/link/?appid=wxf80fb83b970838a2&url=https://newbee.zx-xcx.com/#/login">打开微信1</a> -->
     <div class="flex-jc-center login_box">
       <div class="login">
         <div class="tip_title text-c pdt50">Hi!</div>

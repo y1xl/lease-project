@@ -102,7 +102,7 @@
             </div>
 
             <div class="pd-15">
-                <div class="btn text-c" >提交</div>
+                <div class="btn text-c" @click="nosubmit">提交</div>
             </div>
 
             <div class="describe bgc">
@@ -457,6 +457,25 @@ export default {
 
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/steps2' })
+        },
+
+        nosubmit(){
+            if(this.figureval==''){
+                Toast("请输入托管金额");
+                return
+            }
+            if(this.typetext1==''){
+                Toast("请选择托管品类");
+                return
+            }
+            if(this.equipmenttext==''){
+                Toast("请选择设备类型");
+                return
+            }
+            if(this.paytext==''){
+                Toast("请选择支付方式");
+                return
+            }
         }
     }
 }
