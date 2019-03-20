@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="fsz">
-    <keep-alive>
+    <keep-alive :max="10">
         <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title" >
             <!-- 这里是会被缓存的视图组件，比如列表A页面 -->
         </router-view>

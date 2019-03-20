@@ -124,14 +124,11 @@ export default {
 };
 </script>
 
-<style>
-#nav .van-tabs__line {
+<style scoped>
+#nav >>> .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
-}
-</style>
-
-<style scoped>
+} 
 .box {
   margin: 10px 15px 0 15px;
   border-radius: 10px;

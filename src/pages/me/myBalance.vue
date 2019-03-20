@@ -81,18 +81,15 @@ export default {
   }
 };
 </script>
-<style>
-#navBalance .van-tab {
-  background-color: #f6f6f6;
-}
 
-#navBalance .van-tabs__line {
+<style scoped>
+#navBalance >>> .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
-</style>
-
-<style scoped>
+#navBalance >>> .van-tab {
+  background-color: #f6f6f6;
+}
 .all_bal {
   width: 100%;
   height: 150px;

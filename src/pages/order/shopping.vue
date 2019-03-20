@@ -245,19 +245,14 @@ export default {
     };
   },
   watch:{
-    selected(){
-      if(this.selected==1){
-        this.getinfo()
-      }
-      if(this.selected==2){
-        this.getinfo()
-      }
+    selected(val){
+      this.getinfo()
     },
-    typenum(){
-      if(this.typenum==0){
+    typenum(val){
+      if(val==0){
         this.calculateRules()
       }
-      if(this.typenum==1||this.typenum==2){
+      if(val==1||val==2){
         if(this.getaddress != ""){
           this.getfreight()
         }else{
@@ -266,9 +261,9 @@ export default {
       }
     },
 
-    getaddress(){
+    getaddress(val){
       if(this.typenum==1||this.typenum==2){
-        if(this.getaddress != ""){
+        if(val != ""){
           this.getfreight()
         }
       }
@@ -293,17 +288,17 @@ export default {
   methods: {
     calculateRules(){
       if(this.selected==1){
-        console.log(1)
+        // console.log(1)
         if(this.typenum==0){
           this.sum = accSub(this.info.yf_price||'',this.info.ded_rent||'')
-          console.log(2)
+          // console.log(2)
           if(this.couponstext!=''){
             this.sum = accSub(this.sum,this.couponstext) // -优惠券
           }
         }else{
           let a = accSub(this.info.yf_price||'',this.info.ded_rent||'')
           this.sum = accAdd(a, this.freight)
-          console.log(3)
+          // console.log(3)
           if(this.couponstext!=''){
             this.sum = accSub(this.sum,this.couponstext) // -优惠券
           }
@@ -311,7 +306,7 @@ export default {
       }
       if(this.selected==2){
         this.sum = accSub(this.info.yf_price||'',this.info.ded_rent||'')
-        console.log(4)
+        // console.log(4)
       }
     },
     go(url){
