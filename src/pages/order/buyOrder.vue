@@ -269,16 +269,16 @@ export default {
 </script>
 
 <style>
-#ordernav .van-tabs__line {
-  background-color: #fff;
-  background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
-}
 /* #ordernav .van-tab span {
   font-size: 8px;
 } */
 </style>
 
 <style scoped>
+#ordernav >>> .van-tabs__line {
+  background-color: #fff;
+  background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
+}
 .ordernull {
   width: 85px;
   height: 66px;

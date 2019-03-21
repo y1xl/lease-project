@@ -234,7 +234,7 @@
               </div>
               <div class="flexbox" v-if="data.order_back_way=='快递'&&data.sendExpressNumber">
                 <span>物流单号</span>
-                <span class="flex-1 flex-jc-between flex-align-items">
+                <span class="flex-1 flex-jc-between flex-align-items" @click="queryLogisticsBack">
                   <span>{{data.sendExpressNumber}}</span>
                   <span class="fc-blue">查看</span>
                 </span>
@@ -297,6 +297,19 @@
           </div>
       </div>
     </van-popup>
+    <van-popup v-model="showlogisticsBack" >
+      <div class="text-c pd-15">
+        快递信息
+        <div class="fr"><van-icon name="close" @click="showlogisticsBack=false"/></div>
+      </div>
+      <div v-if="logisticsBack.length==0" class="text-c">暂无物流信息</div>
+      <div class="express" >
+          <div class="item" v-for="(item,index) in logisticsBack" :key="index">
+              <p style="color:#666">{{item.AcceptTime}}</p>
+              <p>{{item.AcceptStation}}</p>
+          </div>
+      </div>
+    </van-popup>
 
     <div class="height"></div>
 
@@ -342,9 +355,11 @@ let payCountdown = ''
 export default {
   data(){
     return {
-      showlogistics:false,
+      showlogisticsBack:false,
+      logisticsBack:[],
       data:'',
       salesData: '',
+      showlogistics:false,
       logistics:[
         // {
         //   AcceptTime: "2014/06/25 08:05:37",
@@ -452,8 +467,6 @@ export default {
             if(!this.data.express_no==''){
                 this.queryLogistics()
             }
-        this.queryLogisticsBack() //11111111111111111111111111111111111
-
           } else {
             Toast.clear()
               Toast(resdata.message)
@@ -516,7 +529,8 @@ export default {
           console.log(res.data, "queryLogisticsBack");
           let resdata = res.data;
           if (resdata.code == 200) {
-            // this.logistics = resdata.data.Traces
+            this.logisticsBack = resdata.data.Traces
+            this.showlogisticsBack = true
           } else {
             Toast(resdata.message);
           }

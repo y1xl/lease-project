@@ -612,7 +612,11 @@ export default {
           } else {
             this.freight = 0
             this.calculateRules()
-            Toast(resdata.message);
+            if(resdata.message=='请选择其他起租时间！'&&this.expectdate==''){
+              
+            }else{
+              Toast(resdata.message);
+            }
           }
         });
     },

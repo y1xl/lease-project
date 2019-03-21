@@ -113,25 +113,11 @@
             <div class="box bgc">
                 <div class="mar-b-10">热租型号</div>
                 <div class="list">
-                    <div class="goods">
-                        <div style="font-size: 0;"><img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt=""></div>
+                    <div class="goods" v-for="(item,index) in hosts" :key="index">
+                        <div style="font-size: 0;"><img :src="item.img" alt=""></div>
                         <div class="main">
-                            <div>商品1</div>
-                            <div class="fc-grey fsz12">预计收益 60%</div>
-                        </div>
-                    </div>
-                    <div class="goods">
-                        <div style="font-size: 0;"><img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt=""></div>
-                        <div class="main">
-                            <div>商品1</div>
-                            <div class="fc-grey fsz12">预计收益 60%</div>
-                        </div>
-                    </div>
-                    <div class="goods">
-                        <div style="font-size: 0;"><img src="http://img0.imgtn.bdimg.com/it/u=2486649772,2680843008&fm=26&gp=0.jpg" alt=""></div>
-                        <div class="main">
-                            <div>商品1</div>
-                            <div class="fc-grey fsz12">预计收益 60%</div>
+                            <div>{{item.name}}</div>
+                            <div class="fc-grey fsz12">{{item.content}}</div>
                         </div>
                     </div>
                 </div>
@@ -196,7 +182,7 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 export default {
     data(){
         return{
@@ -234,7 +220,16 @@ export default {
             equipmentarr:['全新品','二手品'],
             showpay:false,
             paytext:'',
-            payarr:['微信','支付宝','余额']
+            payarr:['微信','支付宝','余额'],
+
+            hosts:[]
+        }
+    },
+    watch:{
+        active(val){
+            if(val==1){
+                this.host()
+            }
         }
     },
     created(){
@@ -265,6 +260,21 @@ export default {
         }
     },
     methods:{
+        host(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            this.axios.post(this.API + "api/Trusteeship/queryRecommendProducts")
+            .then(res => {
+                console.log(res.data, "host")
+                let resdata = res.data
+                if (resdata.code == 200) {
+                    Toast.clear();
+                    this.hosts = resdata.data
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message)
+                }
+            })
+        },
         onshowbrand(){
             if(this.typetext==''){
                 Toast('请先选择品类')
@@ -476,19 +486,45 @@ export default {
                 Toast("请选择支付方式");
                 return
             }
+
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                trust_price: this.figureval,
+                cate: this.typetext1.cate_name,
+                style: this.equipmenttext=='全新品'?0:this.equipmenttext=='二手品'?1:'',
+                pay_way: this.paytext=='微信'?1:this.paytext=='支付宝'?2:this.paytext=='余额'?3:''
+            });
+            this.axios.post(this.API + "api/Trusteeship/saveNoHardware", postData)
+            .then(res => {
+                console.log(res.data, "nosubmit");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    Dialog.alert({
+                        message: '操作成功'
+                    }).then((e) => {
+                        //
+                    });
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message);
+                }
+            })
+            .catch(error => {
+                Toast.clear()
+                Toast('网络出错')
+            });
         }
     }
 }
 </script>
 
-<style>
-#nav .van-tabs__line {
+<style scoped>
+#nav >>> .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
-</style>
-
-<style scoped>
 .fsz12 {
     font-size: 12px
 }

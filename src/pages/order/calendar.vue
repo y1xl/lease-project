@@ -4,13 +4,13 @@
     <div>
       <Calendar ref="Calendar" @choseDay="clickDay" @changeMonth="changeDate" :agoDayHide="nowdate" :markDate=arr></Calendar>
     </div>
-    <div class="fc-red tip pd-15" v-if="type1=='pre'">
+    <!-- <div class="fc-red tip pd-15" v-if="type1=='pre'">
       如当前没有您所需要的档期，请选择预租下单，我们将在24小时内
       回复是否可以满足您的需求.
     </div>
     <div class="pd-lr-15" v-if="type1=='pre'">
       <div class="btn text-c" @click="goprebuy">预租下单</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -59,36 +59,41 @@ export default {
       })
     },
     changeDate(date) {
-      Toast.loading({ mask: true, message: "加载中..." });
-      let newdate = new Date()
-      let postData = this.$qs.stringify({
-          type: this.$route.query == 0 ? 3 : this.$route.query == 1 ? 1 : 2,
-          ads_id: this.$route.query.ads_id,
-          goods_id: this.$route.query.goods_id,
-          sku: this.$route.query.sku,
-          month: date
-      });
-      this.axios.post(this.API + "api/Order/displayDate", postData)
-      .then(res => {
-          console.log(res.data, "data");
-          let resdata = res.data;
-          if (resdata.code == 200) {
-              Toast.clear();
-              this.arr = resdata.data
-          } else {
-              Toast.clear();
-              Toast(resdata.message);
-          }
-      })
+      if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+        Toast.loading({ mask: true, message: "加载中..." });
+        let newdate = new Date()
+        let postData = this.$qs.stringify({
+            type: this.$route.query == 0 ? 3 : this.$route.query == 1 ? 1 : 2,
+            ads_id: this.$route.query.ads_id,
+            goods_id: this.$route.query.goods_id,
+            sku: this.$route.query.sku,
+            month: date
+        });
+        this.axios.post(this.API + "api/Order/displayDate", postData)
+        .then(res => {
+            console.log(res.data, "data");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                Toast.clear();
+                this.arr = resdata.data
+            } else {
+                Toast.clear();
+                Toast(resdata.message);
+            }
+        })
+      }
     },
     
     add0(m){return m<10?'0'+m:m },
     clickDay(date) {
-      let datetext = date.split('/')
-      if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${this.add0(datetext[2])}`)) {
-        Toast('没档期')
-        return
+      if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+        let datetext = date.split('/')
+        if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${this.add0(datetext[2])}`)) {
+          Toast('没档期')
+          return
+        }
       }
+      
       console.log(date);
       if (this.$route.params.type == "shopping") {
         let shoppingSession = JSON.parse(
@@ -200,7 +205,7 @@ export default {
           JSON.stringify(prebuySession)
         );
       }
-      // this.$router.go(-1);
+      this.$router.go(-1);
     },
 
     goprebuy(){

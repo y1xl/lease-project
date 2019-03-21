@@ -388,7 +388,7 @@ export default {
           this.calculateRules()
         } else {
           Toast.clear();
-          Toast(resdata.message);
+          // Toast(resdata.message);
           Dialog.alert({
               message: resdata.message
           }).then((e) => {
