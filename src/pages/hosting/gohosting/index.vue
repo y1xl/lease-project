@@ -69,13 +69,6 @@
         </div>
 
         <div v-show="active==1">
-            
-            <div class="flex-jc-between flex-align-items bgc pd-15" >
-                <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">托管设备金额</div>
-                    <input style="width:100%" type="text" placeholder="请输入托管金额" v-model.trim="figureval">
-                </div>
-            </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showtype1=true">
                 <div class="flex-1">
                     <div class="mar-b-10 fc-grey">品类</div>
@@ -83,6 +76,12 @@
                     <div v-else>{{typetext1.cate_name}}</div>
                 </div>
                 <van-icon name="arrow" />
+            </div>
+            <div class="flex-jc-between flex-align-items bgc pd-15" >
+                <div class="flex-1">
+                    <div class="mar-b-10 fc-grey">托管设备金额</div>
+                    <input style="width:100%" type="text" placeholder="请输入托管金额" v-model.trim="figureval">
+                </div>
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showequipment=true">
                 <div class="flex-1">

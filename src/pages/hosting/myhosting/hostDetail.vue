@@ -42,7 +42,7 @@
         </div>
         <div class="hang">
           <span>配件：</span>
-          <span>{{detail.parts_list}}</span>
+          <span>{{detail.parts_list==''?'无':detail.parts_list}}</span>
         </div>
       </div>
     </div>
@@ -100,6 +100,16 @@
         </div> -->
       </div>
     </van-popup>
+
+    <div class="model full flex-column-center position" v-show="showcode">
+      <div class="closeimg" @click="showcode = false"><van-icon name="close" color="#fff"/></div>
+      <img
+        :src="codeimg"
+        alt="QRcode"
+        class="codeimg"
+      >
+      <div style="color:#fff">请出示此二维码供门店扫码</div>
+    </div>
   </div>
 </template>
 
@@ -111,7 +121,10 @@ export default {
       images: [],
       typenum: 0,
       showmodel: false,
-      detail:''
+      detail:'',
+
+      codeimg:'',
+      showcode:false,
     };
   },
   mounted(){
@@ -137,7 +150,7 @@ export default {
               this.detail = resdata.data
               this.images= [resdata.data.phone_picture]
 
-              if(resdata.data.trust_status==1){
+              if(resdata.data.trust_status=='审核通过'){
                 this.showmodel = true
               }
           } else {
@@ -154,8 +167,30 @@ export default {
     next(){
       let id = this.$route.params.id
       if(this.typenum==0){
-        window.sessionStorage.removeItem('sceneDeliSession');
-        this.$router.push({ path: "/sceneDeli/"+id })
+        // window.sessionStorage.removeItem('sceneDeliSession');
+        // this.$router.push({ path: "/sceneDeli/"+id })
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+            // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            trust_id: id,
+        });
+        this.axios.post(this.API + "api/Trusteeship/fieldDelivery", postData)
+        .then(res => {
+            console.log(res.data, "code");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                Toast.clear();
+                this.codeimg = resdata.data
+                this.showcode = true
+            } else {
+                Toast.clear();
+                Toast(resdata.message);
+            }
+        })
+        .catch(error => {
+            Toast.clear();
+            Toast('网络出错')
+        });
       }
       if(this.typenum==1){
         window.sessionStorage.removeItem('postDeliSession');
@@ -273,6 +308,35 @@ export default {
 .zhiyin {
   color: #aeaeae;
   margin-top: 10px;
+}
+
+
+.model {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.model .main {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.codeimg {
+  width: 180px;
+  height: 180px;
+  margin-bottom:20px;
+}
+.closeimg {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  right: 20px;
+  top: 100px;
+  font-size:34px;
 }
 </style>
 

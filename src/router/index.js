@@ -95,6 +95,8 @@ import SceneDeli from '@/pages/hosting/myhosting/sceneDeli'
 import HostingDetail from '@/pages/hosting/myhosting/hostingDetail'
 import HostingExpress from '@/pages/hosting/myhosting/hostingExpress'
 import Nearshop from '@/pages/hosting/myhosting/nearshop'
+import NotDetail from '@/pages/hosting/myhosting/notDetail'
+import NotPay from '@/pages/hosting/myhosting/pay'
 
 //收货地址
 import Addresslist from '@/pages/address/addresslist'
@@ -212,6 +214,8 @@ export default new Router({
     { path: '/hostingDetail/:id', component: HostingDetail, meta: { title: '托管详情' } },
     { path: '/hostingExpress/:id', component: HostingExpress, meta: { title: '审核详情' } },
     { path: '/nearshop', component: Nearshop, meta: { title: '选择门店' } },
+    { path: '/notDetail/:id', component: NotDetail, meta: { title: '详情' } },
+    { path: '/notpay/:id', component: NotPay, meta: { title: '支付' } },
 
     //收货地址
     { path: '/addresslist/:type', component: Addresslist, meta: { title: '收货地址' } },

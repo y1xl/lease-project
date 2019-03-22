@@ -18,7 +18,7 @@
         <van-cell
           is-link
           center
-          :value="!areaval[0].name||areaval[0].name==''||!areaval[1].name||areaval[1].name==''||!areaval[2].name||areaval[2].name==''?'请选择所在地区':areaval[0].name+areaval[1].name+areaval[2].name"
+          :value="isareaval"
           @click="showarea=true"
         >
           <template slot="title">
@@ -92,6 +92,19 @@ export default {
       startDate: new Date("1899/01/01 00:00"),
       endDate: new Date()
     };
+  },
+  computed:{
+    isareaval(){
+      let areaval = this.areaval
+      if(areaval.length==0){
+        return '请选择所在地区'
+      }
+      if(!areaval[0].name||areaval[0].name==''||!areaval[1].name||areaval[1].name==''||!areaval[2].name||areaval[2].name==''){
+        return '请选择所在地区'
+      }else{
+        return areaval[0].name+areaval[1].name+areaval[2].name
+      }
+    }
   },
   mounted() {
     this.getuser();
