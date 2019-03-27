@@ -116,6 +116,7 @@ export default {
     this.getuser()
   },
   methods: {
+    //15816893020
     getuser() {
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({

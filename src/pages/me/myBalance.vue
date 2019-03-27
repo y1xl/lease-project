@@ -11,6 +11,7 @@
     <div id="navBalance">
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
+        <div v-show="list.length==0" class="fc-grey text-c pd-15" style="background-color: #f6f6f6;">没有更多了</div>
           <div v-for="(item,index) in list" :key="index">
             <div class="flex-center bgc">
               <div class="flex-jc-between flex-align-items pd-15 bala_deta border-b">

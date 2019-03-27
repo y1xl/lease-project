@@ -16,7 +16,8 @@
                 <span class="fc-blue" v-if="data.order_status==5">待收货</span>
                 <!-- <span class="fc-blue" v-if="status=='预租待确认'">预租待确认</span> -->
                 <span class="fc-blue" v-if="data.order_status==7">退租中</span>
-                <span class="fc-blue" v-if="data.order_status==12">待发货</span>
+                <span class="fc-blue" v-if="data.order_status==12&&data.backstage!='未审批'">待发货</span>
+                <span class="fc-blue" v-if="data.order_status==12&&data.backstage=='未审批'">取消中</span>
                 <span class="fc-blue" v-if="data.order_status==11">已完成</span>
             </div>
             <div class="flexbox">

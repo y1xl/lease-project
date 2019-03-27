@@ -39,7 +39,7 @@ export default {
       Toast.loading({ mask: true, message: "加载中..." });
       let newdate = new Date()
       let postData = this.$qs.stringify({
-          type: this.$route.query == 0 ? 3 : this.$route.query == 1 ? 1 : 2,
+          type: this.$route.query.type == 0 ? 3 : this.$route.query.type == 1 ? 1 : 2,
           ads_id: this.$route.query.ads_id,
           goods_id: this.$route.query.goods_id,
           sku: this.$route.query.sku,
@@ -63,7 +63,7 @@ export default {
         Toast.loading({ mask: true, message: "加载中..." });
         let newdate = new Date()
         let postData = this.$qs.stringify({
-            type: this.$route.query == 0 ? 3 : this.$route.query == 1 ? 1 : 2,
+            type: this.$route.query.type == 0 ? 3 : this.$route.query.type == 1 ? 1 : 2,
             ads_id: this.$route.query.ads_id,
             goods_id: this.$route.query.goods_id,
             sku: this.$route.query.sku,
@@ -89,7 +89,7 @@ export default {
       if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
         let datetext = date.split('/')
         if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${this.add0(datetext[2])}`)) {
-          Toast('没档期')
+          Toast('请选择其他起租时间！')
           return
         }
       }

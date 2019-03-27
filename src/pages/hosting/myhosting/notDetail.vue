@@ -32,6 +32,21 @@
             <div>原因：{{detail.reasons_refusal}}</div>
         </div>
 
+        <div class="pd-lr-15" v-if="detail.state=='托管中'">出租记录</div>
+        <div class="tab_box" v-if="detail.state=='托管中'">
+            <div class="fc-grey pd-15" v-if="earnings.length==0">暂无记录</div>
+            <div class="flex-jc-between flex-align-items pd-15" v-for="(item,index) in earnings" :key="index">
+            <div>
+                <div>共计{{item.rent_time}}天</div>
+                <div class="time">{{item.rent_start}}～{{item.tenancy_term}}</div>
+            </div>
+            <div>
+                <div class="money text-c">+{{item.users_rental}}</div>
+                <div class="fc-grey fsz12">租金{{item.rental}}</div>
+            </div>
+            </div>
+        </div>
+
         <!-- 托管成功弹窗 -->
         <van-popup v-model="showmodel" :close-on-click-overlay="false">
         <div class="text-c position mask_box">
@@ -61,6 +76,8 @@ export default {
             typenum: 0,
             detail:'',
             showmodel: false,
+            active:0,
+            earnings:[]
         };
     },
     mounted(){
@@ -84,6 +101,7 @@ export default {
                     if(resdata.data.state=='审批通过'){
                         this.showmodel = true
                     }
+                     this.getEarnings()
                 } else {
                     Toast.clear();
                     Toast(resdata.message);
@@ -93,7 +111,30 @@ export default {
                 Toast.clear();
                 Toast('网络出错')
             });
-        }
+        },
+        getEarnings(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                host_number: this.detail.host_number
+            });
+            // this.axios.post(this.API + "api/Trusteeship/queryEarnings", postData)
+            this.axios.post(this.API + "api/Trusteeship/rentalRecord", postData)
+            .then(res => {
+                console.log(res.data, "earnings");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear();
+                    this.earnings = resdata.data
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message);
+                }
+            })
+            .catch(error => {
+                Toast.clear();
+                Toast('网络出错')
+            });
+        },
     }
 }
 </script>
@@ -150,5 +191,30 @@ export default {
 .zhiyin {
   color: #aeaeae;
   margin-top: 10px;
+}
+
+.tab_box {
+  margin: 15px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 0px 18px 0px rgba(188, 188, 188, 0.32);
+  border-radius: 10px;
+}
+.jia {
+  color: #4ea9f9;
+}
+.money {
+  color: #4ea9f9;
+  font-size: 16px;
+}
+.fc_money {
+  color: #4ea9f9;
+  font-size: 50px;
+}
+.time {
+  color: #aeaeae;
+  font-size: 12px;
+}
+.fsz12{
+    font-size:12px
 }
 </style>

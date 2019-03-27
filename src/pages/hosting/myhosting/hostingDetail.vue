@@ -41,12 +41,12 @@
                 </div>
                 <div class="hang">
                 <span>配件：</span>
-                <span>{{detail.parts_list}}</span>
+                <span>{{detail.parts_list==''?'无':detail.parts_list}}</span>
                 </div>
             </div>
         </div>
 
-        <div id="hnav">
+        <!-- <div id="hnav">
             <van-tabs v-model="active">
                 <van-tab title=" 出租记录">
                 <div class="tab_box">
@@ -65,16 +65,31 @@
                 <van-tab title="收益记录">
                 <div class="tab_box text-c">
                     <div class="time pd-15">可分成</div>
-                    <div class="fc_money">670</div>
+                    <div class="fc_money">{{earnings.users_rent||0}}</div>
                     <div class="flex-jc-between pd-15">
                     <div>
                         <div class="time">当月总租金</div>
                     </div>
-                    <div class="time">690</div>
+                    <div class="time">{{earnings.total_rent||0}}</div>
                     </div>
                 </div>
                 </van-tab>
             </van-tabs>
+        </div> -->
+
+        <div class="pd-lr-15">出租记录</div>
+        <div class="tab_box">
+            <div class="fc-grey pd-15" v-if="earnings.length==0">暂无记录</div>
+            <div class="flex-jc-between flex-align-items pd-15" v-for="(item,index) in earnings" :key="index">
+            <div>
+                <div>共计{{item.rent_time}}天</div>
+                <div class="time">{{item.rent_start}}～{{item.tenancy_term}}</div>
+            </div>
+            <div>
+                <div class="money text-c">+{{item.users_rental}}</div>
+                <div class="fc-grey fsz12">租金{{item.rental}}</div>
+            </div>
+            </div>
         </div>
 
     </div>
@@ -87,7 +102,8 @@ export default {
         return {
             images: [],
             detail:'',
-            active:0
+            active:0,
+            earnings:[]
         }
     },
     mounted(){
@@ -108,6 +124,30 @@ export default {
                     Toast.clear();
                     this.detail = resdata.data
                     this.images= [resdata.data.phone_picture]
+                    this.getEarnings()
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message);
+                }
+            })
+            .catch(error => {
+                Toast.clear();
+                Toast('网络出错')
+            });
+        },
+        getEarnings(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                host_number: this.detail.serial_number
+            });
+            // this.axios.post(this.API + "api/Trusteeship/queryEarnings", postData)
+            this.axios.post(this.API + "api/Trusteeship/rentalRecord", postData)
+            .then(res => {
+                console.log(res.data, "earnings");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear();
+                    this.earnings = resdata.data
                 } else {
                     Toast.clear();
                     Toast(resdata.message);
@@ -136,6 +176,9 @@ export default {
 </style>
 
 <style scoped>
+.fsz12{
+    font-size:12px
+}
 .box {
   margin: 15px;
   border-radius: 10px;

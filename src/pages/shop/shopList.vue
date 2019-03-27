@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" show-action>
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" @search="onSearch" show-action>
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
 
@@ -33,10 +33,16 @@
 <script>
 import { Toast } from "vant";
 export default {
+  beforeRouteEnter(to, from, next) {
+    if(from.meta.title === '门店详情'||from.meta.title === '地图') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
+        to.meta.isBack = true;
+    }
+    next();
+  },
   data() {
     return {
       list: [],
-      value: ""
+      value: "",
     };
   },
   beforeCreate(){
@@ -45,11 +51,38 @@ export default {
     }
   },
   created() {
+    this.isFirstEnter = true;
     this.getlist();
   },
   methods: {
     onSearch() {
       console.log(this.value);
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+        keyword: this.value
+      });
+      this.axios
+        .post(this.API + "api/Trusteeship/searchStore", postData)
+        .then(res => {
+          console.log(res.data, "onSearch");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            if (resdata.data.length == 0) {
+              Toast.clear();
+              Toast({
+                message: " 没有匹配的产品",
+              });
+              this.list = []
+            } else {
+              Toast.clear();
+              this.list = resdata.data;
+            }
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+            this.list = []
+          }
+        });
     },
     getlist() {
       Toast.loading({ mask: true, message: "加载中..." });
@@ -65,6 +98,15 @@ export default {
         }
       });
     }
+  },
+  activated(){
+    if(!this.$route.meta.isBack || this.isFirstEnter){
+        this.list = []
+        this.value = ""
+        this.getlist()
+     }
+     this.$route.meta.isBack=false
+     this.isFirstEnter=false;
   }
 };
 </script>

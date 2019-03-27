@@ -72,6 +72,16 @@ export default {
         },
         onConfirmTimequantum(value,index){
             console.log(`当前值：${value}, 当前索引：${index}`);
+            let newdate = new Date()
+            if(this.datetext == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
+                let end = value.split('-')[1].split(':')[0]
+                let newhours = newdate.getHours()
+                if(newhours > end){
+                Toast("不在配送时间段")
+                this.timequantumtext = ''
+                return
+                }
+            }
             this.timequantumtext = value
             this.showtimequantum = false
         },
@@ -130,6 +140,16 @@ export default {
             if(this.datetext==''||this.timequantumtext==''||!this.getaddress.ads_id||!this.shopaddress.store_id){
                 Toast('还有未填写')
                 return
+            }
+            let newdate = new Date()
+            if(this.datetext == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
+                let end = this.timequantumtext.split('-')[1].split(':')[0]
+                let newhours = newdate.getHours()
+                if(newhours > end){
+                Toast("不在配送时间段")
+                this.timequantumtext = ''
+                return
+                }
             }
             
             Toast.loading({ mask: true,message: '加载中...'})

@@ -17,8 +17,8 @@
         <div class="flex-jc-between flex-align-items" style="padding: 10px 0;">
           <div>
             <div class="fc-grey">退回地址</div>
-            <div>{{getaddress.name}} {{getaddress.phone}}</div>
-            <div>{{getaddress.address}}</div>
+            <div>{{getaddress.ads_user||''}}  {{getaddress.ads_phone||''}} <van-tag plain v-if="getaddress.ads_state==2">默认</van-tag></div>
+            <div>{{(getaddress.ads_province||'')+(getaddress.ads_city||'')+(getaddress.ads_district||'')+(getaddress.ads_address||'')}}</div>
           </div>
           <van-icon name="arrow" color="#aeaeae" size="20px"/>
         </div>
@@ -27,7 +27,7 @@
 
     <div class="post flex-jc-between mar-b-10 bgc pd-15" >
       <span>退回运费</span>
-      <span>36</span>
+      <span>￥{{freight||'0.00'}}</span>
     </div>
 
     <div class="bgc mar-b-10">
@@ -42,36 +42,51 @@
                 <van-radio name="2" checked-color="#2DBBF1"></van-radio>
             </div>
             <div class="flex-jc-between pd-15" @click="radio = '3'">
-                <div><img src="../../../assets/balance.png" alt="余额" class="payimg">余额<span class="fc-red"> ¥2.00</span></div>
+                <div><img src="../../../assets/balance.png" alt="余额" class="payimg">余额<span class="fc-red"> ¥{{info.users_balance}}</span></div>
                 <van-radio name="3" checked-color="#2DBBF1"></van-radio>
             </div>
         </van-radio-group>
     </div>
 
     <div class="flex-jc-center btn_box">
-      <div class="btn text-c">立即支付</div>
+      <div class="btn text-c" @click="submit">立即支付</div>
     </div>
 
   </div>
 </template>
 
 <script>
+import { Toast,Dialog } from "vant";
 export default {
   data(){
     return{
-      radio:'1',
+      radio:'3',
       datetext:'',
-      getaddress:''
+      getaddress:'',
+      info:'',
+      freight: 0
     }
   },
+  watch:{
+    getaddress(val){
+      if(val != ""){
+        this.getfreight()
+      }
+    },
+  },
+
   created() {
         let hostCancelSession = JSON.parse(window.sessionStorage.getItem("hostCancelSession"));
         if(hostCancelSession){
             this.datetext = hostCancelSession.date
             this.getaddress = hostCancelSession.getaddress
+        }else{
+          this.getdefaultaddress()
         }
         //取缓存 end
-    },
+        this.getinfo()
+  },
+
   methods:{
     go(url){
         let hostCancelSession = {
@@ -81,6 +96,119 @@ export default {
         window.sessionStorage.setItem("hostCancelSession", JSON.stringify(hostCancelSession));
         this.$router.push({ path: url });
     },
+    getinfo() {
+        let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        });
+        this.axios.post(this.API + "api/Buy_Order/GetPayData", postData)
+        .then(res => {
+            console.log(res.data, "info");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                this.info = resdata.data;
+            } else {
+            Toast(resdata.message);
+            }
+        })
+        .catch(error => {
+            Toast('网络出错')
+        });
+    },
+    getdefaultaddress(){
+        let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        })
+        this.axios.post(this.API + "api/Lease/ads_select",postData)
+        .then(res => {
+            console.log(res.data, "address")
+            let resdata = res.data
+            if (resdata.code == 200) {
+                for(let v of resdata.data){
+                    if(v.ads_state==2){
+                        this.getaddress = v
+                        this.getfreight()
+                    }
+                }
+            } else {
+                Toast(resdata.message)
+            }
+        });
+    },
+    getfreight(){
+      let postData = this.$qs.stringify({
+          ads_id: this.getaddress.ads_id,
+          host_number: this.$route.params.number
+      })
+      this.axios.post(this.API + "api/Trusteeship/getCarriage",postData)
+      .then(res => {
+          console.log(res.data, "getfreight")
+          let resdata = res.data
+          if (resdata.code == 200) {
+            this.freight = resdata.data.freight
+            this.store_id = resdata.data.store_id
+          } else {
+              Toast(resdata.message)
+          }
+      });
+    },
+
+    submit(){
+      if(this.datetext==''||this.getaddress==''){
+        Toast("请先填写完整");
+        return
+      }
+      Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+            carriage: this.freight,
+            pay_way: this.radio,
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            trust_id: this.$route.params.id,
+            ads_id: this.getaddress.ads_id,
+            time: this.datetext,
+            money: this.freight,
+            store_id: this.store_id
+        })
+
+      if(this.radio==2){
+        this.axios.post(this.API + "api/Trusteeship/cancelTrust", postData)
+        .then(res => {
+            console.log(res.data, "alipay");
+            window.sessionStorage.removeItem("wxpaySession");
+            Toast.clear()
+            
+            const form = res.data;
+            const div = document.createElement('div');
+            div.id = 'alipay';
+            div.style.opacity='0'
+            div.innerHTML = form;
+            document.body.appendChild(div);
+            document.querySelector('#alipay').children[0].submit(); 
+        })
+        .catch(error => {
+            Toast.clear()
+            Toast('网络出错')
+        });
+      }
+      if(this.radio==3){
+        this.axios.post(this.API + "api/Trusteeship/cancelTrust", postData)
+        .then(res => {
+          console.log(res.data, "submit");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear();
+            Dialog.alert({
+                message: '操作成功'
+            }).then((e) => {
+                this.$router.go(-1);
+            });
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+          }
+        });
+      }
+    }
+
   }
 };
 </script>

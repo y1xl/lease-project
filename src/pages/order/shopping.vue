@@ -190,10 +190,18 @@
               <span class="num">{{item.coupons_money}}</span>
               <span class="yuan">元</span>
             </div>
-            <div>
+            <div v-if="item.activity_name==''">
               <div class="coupon_fl">{{item.coupon_name}}</div>
               <div class="limit">
                 <div>有效期至{{item.end_time}}</div>
+                <div>满{{item.coupons_condition}}可用</div>
+              </div>
+            </div>
+            <div v-else>
+              <div class="coupon_fl">{{item.coupon_name}}</div>
+              <div class="limit">
+                <div>活动{{item.activity_name}}</div>
+                <div>有效期至{{item.start_activity}}</div>
                 <div>满{{item.coupons_condition}}可用</div>
               </div>
             </div>
@@ -290,18 +298,20 @@ export default {
       if(this.selected==1){
         // console.log(1)
         if(this.typenum==0){
-          this.sum = accSub(this.info.yf_price||'',this.info.ded_rent||'')
+          if(this.couponstext!=''){
+            this.sum = accSub(this.info.yf_price,this.couponstext) // -优惠券
+          }else{
+            this.sum = this.info.yf_price
+          } 
           // console.log(2)
-          if(this.couponstext!=''){
-            this.sum = accSub(this.sum,this.couponstext) // -优惠券
-          }
         }else{
-          let a = accSub(this.info.yf_price||'',this.info.ded_rent||'')
-          this.sum = accAdd(a, this.freight)
-          // console.log(3)
           if(this.couponstext!=''){
-            this.sum = accSub(this.sum,this.couponstext) // -优惠券
+            let a = accSub(this.info.yf_price,this.couponstext)// -优惠券
+            this.sum = accAdd(a, this.freight)
+          }else{
+            this.sum = accAdd(this.info.yf_price||'', this.freight)
           }
+          // console.log(3)
         }
       }
       if(this.selected==2){
@@ -388,7 +398,7 @@ export default {
           this.calculateRules()
         } else {
           Toast.clear();
-          // Toast(resdata.message);
+          Toast(resdata.message);
           Dialog.alert({
               message: resdata.message
           }).then((e) => {
@@ -403,7 +413,7 @@ export default {
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        state: 1
+        state:1
       });
       this.axios
         .post(this.API + "api/Lease/user_coupons", postData)
@@ -413,10 +423,10 @@ export default {
           if (resdata.code == 200) {
             this.showcoupon = true
             Toast.clear()
-            for(let v of resdata.data){
-              v.end_time = v.end_time.split(" ")[0]
-            }
-            this.couponlist = resdata.data
+            // for(let v of resdata.data){
+            //   v.end_time = v.end_time.split(" ")[0]
+            // }
+            // this.couponlist = resdata.data
           } else {
             Toast.clear()
             Toast(resdata.message);
@@ -424,24 +434,23 @@ export default {
         });
     },
     choosecoupon(item,index){
-      // console.log(item,index);
+      console.log(item,index);
       if(index+1==this.couponindex){
         this.couponindex = ''
         this.couponstext = ''
         this.coupons_condition = ''
         this.couponid = ''
-        this.sum = accAdd(this.sum,item.coupons_money)
+        this.calculateRules()
       }else{
         if(this.rent<(item.coupons_condition-0)){
           Toast(`未满${item.coupons_condition}元条件`)
           return;
         }
-        this.sum = accAdd(this.sum,this.couponstext)
         this.couponindex = index+1
         this.couponstext = item.coupons_money
         this.coupons_condition = item.coupons_condition
         this.couponid = item.user_cp_id
-        this.sum = accSub(this.sum,item.coupons_money)
+        this.calculateRules()
         this.showcoupon = false
       }
     },

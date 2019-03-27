@@ -112,7 +112,7 @@ export default new Router({
 
   routes: [
     { path: '/', component: Index, meta: { title: '首页' } },
-    { path: '/shop', component: Shop, meta: { title: '门店' } },
+    { path: '/shop', component: Shop, meta: { title: '门店', keepAlive: true, isBack: false } },
     { 
       path: '/order', component: Order, meta: { title: '订单' }, 
       children:[
@@ -207,7 +207,7 @@ export default new Router({
 
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管', keepAlive: true, isBack: false } },
     { path: '/hostDetail/:id', component: HostDetail, meta: { title: '审核详情' } },
-    { path: '/hostCancel/:id', component: HostCancel, meta: { title: '取消托管' } },
+    { path: '/hostCancel/:id/:number', component: HostCancel, meta: { title: '取消托管' } },
     { path: '/sceneDeli/:id', component: SceneDeli, meta: { title: '现场交付' } },
     { path: '/platformDeli/:id', component: PlatformDeli, meta: { title: '平台配送' } },
     { path: '/postDeli/:id', component: PostDeli, meta: { title: '快递交付' } },

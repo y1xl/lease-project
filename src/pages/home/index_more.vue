@@ -56,7 +56,7 @@ export default {
         console.log(res.data, "gethender");
         let resdata = res.data;
         if (resdata.code == 200) {
-          this.adpic_img = resdata.data[0].adpic_img;
+          this.adpic_img = resdata.data.length==0?'':resdata.data[0].adpic_img;
         } else {
           Toast(resdata.message);
         }

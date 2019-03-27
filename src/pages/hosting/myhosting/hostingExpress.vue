@@ -41,24 +41,23 @@
                 </div>
                 <div class="hang">
                 <span>配件：</span>
-                <span>{{detail.parts_list}}</span>
+                <span>{{detail.parts_list==''?'无':detail.parts_list}}</span>
                 </div>
             </div>
         </div>
 
         <div class="pd-lr-15">
             <div class="mar-b-10">快递：顺丰</div>
-            <div>运单号：1234564879</div>
+            <div>运单号：{{detail.express_no==''?'无':detail.express_no}}</div>
         </div>
 
-        <div class="box express">
-            <div class="item flex-align-items">
-                <span>11:00</span>
-                <span class="flex-1">物流信息物流信息物流信息物流信息物流信息物流信息</span>
-            </div>
-            <div class="item flex-align-items">
-                <span>11:00</span>
-                <span class="flex-1">物流信息物流信息物流信息物流信息物流信息物流信息</span>
+        <div class="pd-15 box" v-if="logistics.length==0">
+            暂无物流信息
+        </div>
+        <div class="box express" v-else>
+            <div class="item flex-align-items" v-for="(item,index) in logistics" :key="index">
+                <span>{{item.AcceptTime}}</span>
+                <span class="flex-1">{{item.AcceptStation}}</span>
             </div>
         </div>
     </div>
@@ -70,7 +69,8 @@ export default {
     data(){
         return {
             images: [],
-            detail:''
+            detail:'',
+            logistics: []
         }
     },
     mounted(){
@@ -91,6 +91,9 @@ export default {
                     Toast.clear();
                     this.detail = resdata.data
                     this.images= [resdata.data.phone_picture]
+                    if(resdata.data.express_no!=''){
+                        this.queryLogistics()
+                    }  
                 } else {
                     Toast.clear();
                     Toast(resdata.message);
@@ -101,6 +104,30 @@ export default {
                 Toast('网络出错')
             });
         },
+
+        queryLogistics(){
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                express_number: this.detail.express_number,
+                express_no:this.detail.express_no
+            });
+            this.axios.post(this.API + "api/Trusteeship/queryTrustLogistics", postData)
+            .then(res => {
+                console.log(res.data, "queryLogistics");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear();
+                    this.logistics = resdata.data.Traces
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message);
+                }
+            })
+            .catch(error => {
+                Toast.clear();
+                Toast('网络出错')
+            });
+        }
     }
 }
 </script>
@@ -142,6 +169,8 @@ export default {
     padding: 10px;
 }
 .express .item > span:nth-of-type(1){
-    width: 50px;
+    width: 60px;
+    font-size: 12px;
+    word-wrap:break-word;
 }
 </style>

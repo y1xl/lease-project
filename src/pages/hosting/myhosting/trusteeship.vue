@@ -29,7 +29,7 @@
                     <!-- <span>出租中</span> -->
                   </div>
                   <div>
-                    <div class="btn border fc-grey" v-if="item.trust_status=='托管中'" @click.stop="cancelTg(item.trust_id)">取消托管</div>
+                    <div class="btn border fc-grey" v-if="item.trust_status=='托管中'" @click.stop="cancelTg(item.trust_id,item.serial_number)">取消托管</div>
                   </div>
                 </div>
               </div>
@@ -221,9 +221,9 @@ export default {
       }
     },
     //取消托管
-    cancelTg(id) {
+    cancelTg(id,serial_number) {
       window.sessionStorage.removeItem("hostCancelSession");
-      this.$router.push({ path: "/hostCancel/"+id });
+      this.$router.push({ path: "/hostCancel/"+id + '/' + serial_number });
     },
     //确认
     onConfirm(id){

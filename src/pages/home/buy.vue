@@ -177,10 +177,18 @@
               <span class="num">{{item.coupons_money}}</span>
               <span class="yuan">元</span>
             </div>
-            <div>
+            <div v-if="item.activity_name==''">
               <div class="coupon_fl">{{item.coupon_name}}</div>
               <div class="limit">
                 <div>有效期至{{item.end_time}}</div>
+                <div>满{{item.coupons_condition}}可用</div>
+              </div>
+            </div>
+            <div v-else>
+              <div class="coupon_fl">{{item.coupon_name}}</div>
+              <div class="limit">
+                <div>活动{{item.activity_name}}</div>
+                <div>有效期至{{item.start_activity}}</div>
                 <div>满{{item.coupons_condition}}可用</div>
               </div>
             </div>
@@ -622,22 +630,27 @@ export default {
     },
     //优惠卷
     onshowcoupon(){
+      if (this.weekval == "") {
+        Toast("请填写租期")
+        return;
+      }
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
-        user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        state: 1
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        goods_id: this.$route.query.id,
+        money:this.rent
       });
       this.axios
-        .post(this.API + "api/Lease/user_coupons", postData)
+        .post(this.API + "api/Order/GetUserCoupons", postData)
         .then(res => {
           console.log(res.data, "couponslist");
           let resdata = res.data;
           if (resdata.code == 200) {
             this.showcoupon = true
             Toast.clear()
-            for(let v of resdata.data){
-              v.end_time = v.end_time.split(" ")[0]
-            }
+            // for(let v of resdata.data){
+            //   v.end_time = v.end_time.split(" ")[0]
+            // }
             this.couponlist = resdata.data
           } else {
             Toast.clear()

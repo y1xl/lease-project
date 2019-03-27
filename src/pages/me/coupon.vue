@@ -8,8 +8,7 @@
 
           <div
             class="coupon_box position"
-            v-for="(item,index) in couponlist"
-            :key="index"
+            v-for="(item,i) in couponlist"
             v-show="ind ==0||ind==1||ind==2"
           >
             <div>
@@ -21,9 +20,17 @@
                 <span class="num">{{item.coupons_money}}</span>
                 <span class="yuan">元</span>
               </div>
-              <div>
+              <div v-if="item.activity_name==''">
                 <div class="coupon_fl">{{item.coupon_name}}</div>
                 <div class="limit">
+                  <div>有效期至{{item.end_time}}</div>
+                  <div>满{{item.coupons_condition}}可用</div>
+                </div>
+              </div>
+              <div v-else>
+                <div class="coupon_fl">{{item.coupon_name}}</div>
+                <div class="limit">
+                  <div>活动{{item.activity_name}}</div>
                   <div>有效期至{{item.end_time}}</div>
                   <div>满{{item.coupons_condition}}可用</div>
                 </div>
@@ -33,10 +40,9 @@
 
           <div
             class="coupon_box position"
-            v-for="(item,index) in getcouponlist"
-            :key="index"
+            v-for="(item,i) in getcouponlist"
             v-show="ind ==3"
-            @click="receive(item.coupons_id)"
+            @click="receive(item)"
           >
             <div>
               <img src="../../assets/1.png">
@@ -47,10 +53,19 @@
                 <span class="num">{{item.coupons_money}}</span>
                 <span class="yuan">元</span>
               </div>
-              <div>
+              <div v-if="item.is_activity==0">
                 <div class="coupon_fl">{{item.coupon_name}}</div>
                 <div class="limit">
                   <div>满{{item.coupons_condition}}可用</div>
+                  <div>点击领取</div>
+                </div>
+              </div>
+              <div v-if="item.is_activity==1">
+                <div class="coupon_fl">{{item.coupon_name}}</div>
+                <div class="limit">
+                  <div>活动{{item.activity_name}}</div>
+                  <div>满{{item.coupons_condition}}可用</div>
+                  <div>有效期至{{item.start_activity}}</div>
                   <div>点击领取</div>
                 </div>
               </div>
@@ -158,29 +173,57 @@ export default {
         });
     },
     //领取
-    receive(id){
-      Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
-        user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        coupons_id: id
-      });
-      this.axios
-        .post(this.API + "api/Lease/Receive_coupon", postData)
-        .then(res => {
-          console.log(res.data, "getcoupons");
-          let resdata = res.data;
-          if (resdata.code == 200) {
-            Toast.clear()
-            Toast('领取成功');
-            this.getcoupon()
-          } else {
-            Toast.clear();
-            Toast(resdata.message);
-          }
-        })
-        .catch(error => {
-            Toast('网络出错')
+    receive(item){
+      if(item.is_activity==0){
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+          user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          coupons_id: item.coupons_id,
+          activity_id: 0
         });
+        this.axios
+          .post(this.API + "api/Lease/Receive_coupon", postData)
+          .then(res => {
+            console.log(res.data, "getcoupons");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast.clear()
+              Toast('领取成功');
+              this.getcoupon()
+            } else {
+              Toast.clear();
+              Toast(resdata.message);
+            }
+          })
+          .catch(error => {
+              Toast('网络出错')
+          });
+      }else{
+        Toast.loading({ mask: true, message: "加载中..." });
+        let postData = this.$qs.stringify({
+          user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+          activity_id: item.activity_id,
+          coupons_id:item.coupons_id
+        });
+        this.axios
+          .post(this.API + "api/Lease/Receive_coupon", postData)
+          .then(res => {
+            console.log(res.data, "getcoupons");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+              Toast.clear()
+              Toast('领取成功');
+              this.getcoupon()
+            } else {
+              Toast.clear();
+              Toast(resdata.message);
+            }
+          })
+          .catch(error => {
+              Toast('网络出错')
+          });
+      }
+      
     },
 
     // beforeClose(action, done) {

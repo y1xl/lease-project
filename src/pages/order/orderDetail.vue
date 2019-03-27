@@ -9,7 +9,8 @@
         <span v-if="data.order_status==10">退押金中</span>
         <span v-if="data.order_status==1">待付款</span>
         <span v-if="data.order_status==5">待收货</span>
-        <span v-if="data.order_status==12">待发货</span>
+        <span v-if="data.order_status==12&&data.backstage!='未审批'">待发货</span>
+        <span v-if="data.order_status==12&&data.backstage=='未审批'">取消中</span>
         <span v-if="data.order_status==7">退租中</span>
         <span v-if="data.order_status==9&&user_validation==1">售后待确认</span>
         <span v-if="data.order_status==11">已完成</span>
