@@ -72,7 +72,7 @@
       <van-cell is-link @click="discountmodel = true" :border="false" >
         <template slot="title">
           <span class="lab">活动</span>
-          <!-- <span class="custom-text">新人下单立减50元</span> -->
+          <span class="custom-text">{{discountlist.length==0?'':discountlist[0].activity_name}}</span>
         </template>
       </van-cell>
       <div class="flex-jc-around duo_mian border-t">
@@ -197,9 +197,9 @@
           <div class="s_title border-b fsz text-c">优惠活动</div>
         </div>
         <div class="flexbox" v-for="(item,index) in discountlist" :key="index">
-          <div class="lineheight pd-lr-15 border-b">
-            <span class="dis_clasify">[新用户]</span>
-            <span class="grey_12">新人下单立减50元</span>
+          <div class="pd-15 border-b ">
+            <div>{{item.activity_name}}</div>
+            <div class="grey_12">{{item.activity_time}}</div>
           </div>
         </div>
 
@@ -298,6 +298,7 @@ export default {
     this.getdetail()
     this.gettel()
     this.getguige()
+    this.getactivity()
   },
   computed: {
     player() {
@@ -338,7 +339,21 @@ export default {
             startPosition: index, 
         });
     },
-    
+    getactivity(){
+      let postData = this.$qs.stringify({
+            goods_id:this.$route.params.id
+        })
+      this.axios.post(this.API + "api/Order/GetGoodsActivity",postData)
+      .then(res => {
+        console.log(res.data, "activity")
+        let resdata = res.data
+        if (resdata.code == 200) {
+          this.discountlist = resdata.data
+        } else {
+          // Toast(resdata.message)
+        } 
+      })
+    },
     getdetail(){
       Toast.loading({ mask: true,message: '加载中...'})
       let postData = this.$qs.stringify({

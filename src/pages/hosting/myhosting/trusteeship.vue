@@ -24,7 +24,8 @@
                   <div class="state">
                     <span v-if="item.trust_status=='待审核'||item.trust_status=='审核通过'||item.trust_status=='审核未通过'">审核中</span>
                     <span v-if="item.trust_status=='快递中'||item.trust_status=='主机入库中'">待入库</span>
-                    <span v-if="item.trust_status=='托管中'">在库</span>
+                    <span v-if="item.trust_status=='托管中'&&item.host_state=='在库'">在库</span>
+                    <span v-if="item.trust_status=='托管中'&&item.host_state=='租赁中'">出租中</span>
                     <span v-if="item.trust_status=='已退回'">已退回</span>
                     <!-- <span>出租中</span> -->
                   </div>
@@ -55,7 +56,8 @@
                     <span v-if="item.state=='用户待确认'">待确认</span>
                     <span v-if="item.state=='待支付'">待支付</span>
                     <span v-if="item.state=='托管采购中'||item.state=='托管入库中'">待入库</span>
-                    <span v-if="item.state=='托管中'">在库</span>
+                    <span v-if="item.state=='托管中'&&item.equipment.host_state=='在库'">在库</span>
+                    <span v-if="item.state=='托管中'&&item.equipment.host_state=='租赁中'">出租中</span>
                     <!-- <span>出租中</span> -->
                   </div>
                   <div>

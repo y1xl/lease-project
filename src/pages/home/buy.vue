@@ -100,7 +100,7 @@
           <van-switch @change="onswitch" v-model="isinsurance" size="20px" :disabled="Dinsurance"/>
         </div>
       </van-cell>
-      <van-cell title="享受优惠" is-link center @click="discountmodel=true"></van-cell>
+      <!-- <van-cell title="享受优惠" is-link center @click="discountmodel=true"></van-cell> -->
       <van-cell center v-show="typenum==2">
         <div slot="title" class="flex-align-items">
           <span>特殊需求备注</span>
