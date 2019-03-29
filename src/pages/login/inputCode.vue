@@ -67,9 +67,10 @@ export default {
 
       Toast.loading({ mask: true, message: "加载中..." })
       let postData = this.$qs.stringify({
-            users_phone:this.$route.params.phone,
-            yzm: this.value
-        })
+        users_phone:this.$route.params.phone,
+        yzm: this.value,
+        token: this.$route.query.token||''
+      })
       this.axios.post(this.API + "api/Lease/Yzm_Login",postData)
       .then(res => {
         console.log(res.data, "login");

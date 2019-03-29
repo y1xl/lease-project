@@ -11,10 +11,8 @@
                 <span class="fc-blue" v-if="data.order_status==9&&data.user_validation==1">待确认</span>
                 <span class="fc-blue" v-if="data.order_status==10">退押金中</span>
                 <span class="fc-blue" v-if="data.order_status==1">待付款</span>
-                <!-- <span class="fc-blue" v-if="status=='已确认'">已确认</span> -->
-                <!-- <span class="fc-blue" v-if="status=='已预定'">已预定</span> -->
                 <span class="fc-blue" v-if="data.order_status==5">待收货</span>
-                <!-- <span class="fc-blue" v-if="status=='预租待确认'">预租待确认</span> -->
+                <span class="fc-blue" v-if="data.order_status==2">预租中</span>
                 <span class="fc-blue" v-if="data.order_status==7">退租中</span>
                 <span class="fc-blue" v-if="data.order_status==12&&data.backstage!='未审批'">待发货</span>
                 <span class="fc-blue" v-if="data.order_status==12&&data.backstage=='未审批'">取消中</span>

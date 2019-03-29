@@ -5,7 +5,7 @@
         <span v-if="data.order_status==6">租赁中</span>
         <span v-if="data.order_status==4">订单关闭</span>
         <span v-if="data.order_status==8">检测中</span>
-        <span v-if="data.order_status==9&&!data.user_validation&&data.user_validation==0">售后中</span>
+        <span v-if="(data.order_status==9&&data.user_validation==0)||(data.order_status==9&&!data.user_validation)">售后中</span>
         <span v-if="data.order_status==10">退押金中</span>
         <span v-if="data.order_status==1">待付款</span>
         <span v-if="data.order_status==5">待收货</span>
@@ -14,6 +14,7 @@
         <span v-if="data.order_status==7">退租中</span>
         <span v-if="data.order_status==9&&user_validation==1">售后待确认</span>
         <span v-if="data.order_status==11">已完成</span>
+        <span v-if="data.order_status==2">预租中</span>
       </div>
       <div class="fc-blue fsz13" v-if="data.order_status==1">剩余{{minutes}}分钟{{seconds}}秒的支付时间</div>
       <div class="fsz13 fc-grey" v-if="active==7">{{data.withouTreason}}</div>
@@ -73,14 +74,14 @@
               <span>归还日期</span>
               <span class="flex-1">{{data.returnDate}}</span>
             </div>
-            <div class="flexbox" v-if="data.delivery_way=='快递'||data.delivery_way=='平台配送'">
+            <div class="flexbox" v-if="(data.order_type=='正式订单'&&data.delivery_way=='快递')||(data.order_type=='正式订单'&&data.delivery_way=='平台配送')">
               <span>期望收到的日期</span>
               <span class="flex-1">{{data.qwsh_time}}</span>
             </div>
-            <!-- <div class="flexbox">
+            <div class="flexbox" v-if="(data.order_type=='预约订单'&&data.delivery_way=='快递')||(data.order_type=='预约订单'&&data.delivery_way=='平台配送')">
               <span>预约期望档期</span>
               <span class="flex-1">{{data.qwsh_time}}</span>
-            </div> -->
+            </div>
             <div class="flexbox">
               <span>取货方式</span>
               <span class="flex-1">
@@ -314,7 +315,7 @@
 
     <div class="height"></div>
 
-    <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10" :style="maintenance_pay==1||active==6?'opacity: 0;':''">
+    <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10&&data.order_status!=2" :style="maintenance_pay==1||active==6?'opacity: 0;':''">
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)">
         支付
       </div>

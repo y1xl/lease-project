@@ -79,7 +79,7 @@
     </div>
 
     <van-popup v-model="showcode">
-      <div style="font-size:0"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1016728805,4031130995&fm=26&gp=0.jpg" alt="" class="codeimg"></div>
+      <div style="font-size:0"><img :src="imgcode" alt="" class="codeimg"></div>
     </van-popup>
   </div>
 </template>
@@ -93,7 +93,8 @@ var NativeShare, mShare
 export default {
   data() {
     return {
-      showcode:false
+      showcode:false,
+      imgcode:''
     };
   },
   mounted() {
@@ -102,7 +103,27 @@ export default {
   },
   methods: {
     getcode(){
-
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      });
+      this.axios.post(this.API + "api/Generalize/getQrCode", postData)
+      .then(res => {
+          console.log(res.data, "code");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+              this.imgcode = resdata.message;
+              this.showcode = true
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
     },
 
     call(){

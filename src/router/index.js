@@ -148,7 +148,7 @@ export default new Router({
     { path: '/pay/:orderid', component: Pay, meta: { title: '额度' } },
     { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索', keepAlive: true, isBack: false } },
-    { path: '/preBuy', component: PreBuy, meta: { title: '预下单' } }, 
+    { path: '/preBuy', component: PreBuy, meta: { title: '预下单', keepAlive: true, isBack: false } }, 
 
     //个人中心
     { path: '/rules/:title', component: Rules, meta: { title: '规则' } },

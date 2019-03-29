@@ -22,7 +22,7 @@
                   class="fsz12"
                 >{{(item.store_province||'')+(item.store_city||'')+(item.store_district||'')+(item.store_Address||'')}}</div>
               </div>
-              <div class="right fsz12">距您{{item.juli}}m</div>
+              <div class="right fsz12">距您{{item.juli | distance}}</div>
             </div>
           </div>
         </van-radio-group>
@@ -115,7 +115,7 @@ export default {
       // }
 
       let nowPageNum = ++this.page;
-      if(this.$route.params.type == "buy"){
+      if(this.$route.params.type == "buy"||this.$route.params.type == "prebuy"){
         let postData = this.$qs.stringify({
           lat: JSON.parse(window.localStorage.getItem("center")).lat,
           lng: JSON.parse(window.localStorage.getItem("center")).lng,
@@ -206,6 +206,13 @@ export default {
         );
         buySession.getlocation = this.list[this.radio];
         window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
+      }
+      if (this.$route.params.type == "prebuy") {
+        let prebuySession = JSON.parse(
+          window.sessionStorage.getItem("prebuySession")
+        );
+        prebuySession.getlocation = this.list[this.radio];
+        window.sessionStorage.setItem("prebuySession", JSON.stringify(prebuySession));
       }
 
       this.$router.go(-1);

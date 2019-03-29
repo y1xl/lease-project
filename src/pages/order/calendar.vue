@@ -4,11 +4,11 @@
     <div>
       <Calendar ref="Calendar" @choseDay="clickDay" @changeMonth="changeDate" :agoDayHide="nowdate" :markDate=arr></Calendar>
     </div>
-    <!-- <div class="fc-red tip pd-15" v-if="type1=='pre'">
+    <div class="fc-red tip pd-15" v-if="type1=='pre'">
       如当前没有您所需要的档期，请选择预租下单，我们将在24小时内
       回复是否可以满足您的需求.
     </div>
-    <div class="pd-lr-15" v-if="type1=='pre'">
+    <!-- <div class="pd-lr-15" v-if="type1=='pre'">
       <div class="btn text-c" @click="goprebuy">预租下单</div>
     </div> -->
   </div>
@@ -16,7 +16,7 @@
 
 <script>
 import Calendar from "vue-calendar-component";
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 export default {
   components: {
     Calendar
@@ -88,8 +88,23 @@ export default {
     clickDay(date) {
       if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
         let datetext = date.split('/')
-        if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${this.add0(datetext[2])}`)) {
-          Toast('请选择其他起租时间！')
+        if(this.add0(datetext[1])!=this.arr[0].split('/')[1]){
+          return
+        }
+        if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${datetext[2]}`)) {
+          // Toast('请选择其他起租时间！')
+          Dialog.confirm({
+            title: "",
+            message: "请选择其他起租时间，或选择预租下单",
+            confirmButtonText: '预租下单',
+          })
+          .then(() => {
+            // on confirm
+            this.goprebuy(date)
+          })
+          .catch(() => {
+            //
+          });
           return
         }
       }
@@ -208,9 +223,16 @@ export default {
       this.$router.go(-1);
     },
 
-    goprebuy(){
+    goprebuy(date){
       window.sessionStorage.removeItem("prebuySession");
-      this.$router.replace({ path: "/preBuy" });
+      this.$router.push({ 
+        path: "/preBuy", 
+        query: {
+          id: this.$route.query.goods_id,
+          guige: this.$route.query.sku,
+          date: date
+        }
+      });
     }
   }
 };

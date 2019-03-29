@@ -202,7 +202,7 @@
 <script>
 import { Toast,Dialog } from "vant";
 import { accAdd, accSub } from "@/utils/util.js";
-import { log } from "util";
+// import { log } from "util";
 
 export default {
   beforeRouteEnter(to, from, next) {
@@ -733,7 +733,8 @@ export default {
             way_price: "",
             remark: "",
             timelist: "",
-            coupons_id: this.couponid
+            coupons_id: this.couponid,
+            order_type:1
           });
         }
         if (this.typenum == 1) {
@@ -773,7 +774,8 @@ export default {
             time: "",
             remark: "",
             timelist: "",
-            coupons_id: this.couponid
+            coupons_id: this.couponid,
+            order_type:1
           });
         }
         if (this.typenum == 2) {
@@ -829,7 +831,8 @@ export default {
             store_id: "",
             order_delivery_time: "",
             time: "",
-            coupons_id: this.couponid
+            coupons_id: this.couponid,
+            order_type:1
           });
         }
         //是否实名认证

@@ -126,7 +126,6 @@ export default {
       // console.log(val.getFullYear(), val.getMonth() + 1, val.getDate());
       this.dateval = val;
       let datet = [val.getFullYear(), val.getMonth() + 1, val.getDate()];
-      console.log(datet);
       this.datetext = `${datet[0]}年${datet[1]}月${datet[2]}日`;
       this.showdate = false;
     },
@@ -142,15 +141,18 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear();
+            let bdate = resdata.data.users_birthday.split('/')
             this.users_name = resdata.data.users_name;
             this.users_id = resdata.data.users_id;
-            this.datetext = resdata.data.users_birthday;
+            this.datetext = `${bdate[0]}年${bdate[1]}月${bdate[2]}日`;
             this.detailval = resdata.data.users_address || "";
             let sex_id = resdata.data.users_sex;
-            if (sex_id == 0) {
+            if (sex_id == 1) {
               this.sexval = this.sexList[0].val;
-            } else {
+            } else if(sex_id == 2) {
               this.sexval = this.sexList[1].val;
+            } else {
+              this.sexval = '未知'
             }
 
             this.areaval = [
@@ -168,9 +170,9 @@ export default {
       
       let sex_id = "";
       if (this.sexval == "男") {
-        sex_id = 0;
-      } else {
         sex_id = 1;
+      } else {
+        sex_id = 2;
       }
 
       Toast.loading({ mask: true, message: "加载中..." });
@@ -178,7 +180,7 @@ export default {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         users_name: this.users_name,
         users_sex: sex_id,
-        users_birthday: this.datetext,
+        users_birthday: `${this.dateval.getFullYear()}/${this.dateval.getMonth() + 1}/${this.dateval.getDate()}`,
         users_province: this.areaval[0]?this.areaval[0].name:'',
         users_city: this.areaval[1]?this.areaval[1].name:'',
         users_district: this.areaval[2]?this.areaval[2].name:'',

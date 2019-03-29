@@ -70,6 +70,30 @@ export default {
           }
         }
     }
+    if (this.$route.params.type == "prebuy") {
+        let prebuySession = JSON.parse(window.sessionStorage.getItem("prebuySession"));
+        if (prebuySession) {
+          if(prebuySession.getpeople.type){
+            this.selected = prebuySession.getpeople.type||0
+            if(prebuySession.getpeople.type==1){
+              this.nameval = JSON.parse(
+                window.localStorage.getItem("userinfo")
+              ).users_name;
+            }
+            if(prebuySession.getpeople.type == 0){
+              this.nameval = prebuySession.getpeople.name||''
+              this.phoneval = prebuySession.getpeople.phone||''
+            }else{
+              this.nameval1 = prebuySession.getpeople.name||''
+              this.phoneval1 = prebuySession.getpeople.phone||''
+            }
+          }else{            
+              this.nameval = JSON.parse(
+                window.localStorage.getItem("userinfo")
+              ).users_name;
+          }
+        }
+    }
     if (this.$route.params.type == "shopping") {
         let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
         if (shoppingSession) {
@@ -167,7 +191,7 @@ export default {
         buySession.getpeople = people;
         window.sessionStorage.setItem("buySession", JSON.stringify(buySession));
       }
-      if (this.$route.params.type == "preBuy") {
+      if (this.$route.params.type == "prebuy") {
         let prebuySession = JSON.parse(
           window.sessionStorage.getItem("prebuySession")
         );

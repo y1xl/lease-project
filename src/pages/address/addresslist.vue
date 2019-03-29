@@ -171,7 +171,7 @@ export default {
           JSON.stringify(platformDeliSession)
         );
       }
-      if (this.$route.params.type == "preBuy") {
+      if (this.$route.params.type == "prebuy") {
         let prebuySession = JSON.parse(
           window.sessionStorage.getItem("prebuySession")
         );

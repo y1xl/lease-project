@@ -166,7 +166,7 @@
           </van-radio-group>
         </div>
         <div class="pd-15">
-          <div class="btn text-c" @click="cancelDelivery(orderid)">1提交</div>
+          <div class="btn text-c" @click="cancelDelivery(orderid)">提交</div>
         </div>
     </van-popup>
 

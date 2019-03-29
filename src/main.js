@@ -32,6 +32,15 @@ Vue.prototype.$qs = qs
 Vue.prototype.API = ' https://newbeeadmin.zx-xcx.com/'
 // Vue.prototype.API = 'https://admin.newbeerent.com/'
 
+
+Vue.filter('distance', function (value) {
+  if(value < 1000){
+    return value+"m"
+  }else if(value > 1000){
+    return (Math.round(value/100)/10).toFixed(1) + "km"
+  } 
+})
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

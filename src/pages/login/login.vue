@@ -50,7 +50,7 @@ export default {
         return;
       }
       
-      this.$router.push({ path: "/inputCode/" + this.newPhone });
+      this.$router.push({ path: `/inputCode/${this.newPhone}?token=${this.$route.query.token||''}` });
     },
     //密码登录
     password() {
