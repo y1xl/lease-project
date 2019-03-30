@@ -99,9 +99,11 @@ export default {
                     this.detail = resdata.data
 
                     if(resdata.data.state=='审批通过'){
-                        this.showmodel = true
+                      this.showmodel = true
                     }
-                     this.getEarnings()
+                    if(resdata.data.state=='托管中'){
+                      this.getEarnings()
+                    }
                 } else {
                     Toast.clear();
                     Toast(resdata.message);
@@ -127,13 +129,9 @@ export default {
                     this.earnings = resdata.data
                 } else {
                     Toast.clear();
-                    Toast(resdata.message);
+                    // Toast(resdata.message);
                 }
             })
-            .catch(error => {
-                Toast.clear();
-                Toast('网络出错')
-            });
         },
     }
 }

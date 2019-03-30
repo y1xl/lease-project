@@ -8,28 +8,28 @@
               <div class="grey_f">推广佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
-                <span class="money">0</span>
+                <span class="money">{{info.PTC||0}}</span>
               </div>
             </div>
             <div class="text-c">
               <div class="grey_f">订单佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
-                <span class="money">0</span>
+                <span class="money">{{info.POC||0}}</span>
               </div>
             </div>
             <div class="text-c">
               <div class="grey_f">未结算佣金</div>
               <div>
                 <img class="yuan_img" src="../../assets/qian.png">
-                <span class="money">0</span>
+                <span class="money">{{info.OC||0}}</span>
               </div>
             </div>
           </div>
           <div class="grey_f padding_tb">总佣金</div>
           <div class="">
             <img class="all_img" src="../../assets/qicon.png">
-            <span class="all_money">0</span>
+            <span class="all_money">{{info.total||0}}</span>
           </div>
         </div>
       </div>
@@ -94,14 +94,35 @@ export default {
   data() {
     return {
       showcode:false,
-      imgcode:''
+      imgcode:'',
+      info:''
     };
   },
   mounted() {
     nativeshare().then(res =>  {NativeShare = res.default} )
     m_share().then(res => {mShare = res})
+
+    this.getinfo()
   },
   methods: {
+    getinfo(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      });
+      this.axios.post(this.API + "api/Generalize/getCommission", postData)
+      .then(res => {
+          console.log(res.data, "code");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              Toast.clear();
+            this.info = resdata.data
+          } else {
+              Toast.clear();
+              Toast(resdata.message);
+          }
+      })
+    },
     getcode(){
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
@@ -129,18 +150,20 @@ export default {
     call(){
       let config = {
         title: '数码租赁',
-        link: window.location.origin + '#/login'
+        link: window.location.origin + '#/login?token='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
+        // link: window.location.origin + '#/login?&',
+        desc:'邀请好友'
       }
       let shareData = {  //nativeShare的参数模型
           title: config.title,
-          desc: '',
+          desc: config.desc,
           // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
           link: config.link,
           icon: '',
       }
       let mShareData = {  //m-share的参数模型
             title: config.title, // 标题，默认读取document.title
-            desc: '', // 描述, 默认读取head标签：<meta name="description" content="desc" />
+            desc: config.desc, // 描述, 默认读取head标签：<meta name="description" content="desc" />
             link: config.link, // 网址，默认使用window.location.href
             imgUrl: '', // 图片, 默认取网页中第一个img标签
       }

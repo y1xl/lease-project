@@ -40,6 +40,13 @@ Vue.filter('distance', function (value) {
     return (Math.round(value/100)/10).toFixed(1) + "km"
   } 
 })
+Vue.filter('nozero', function (value) {
+  if(value.endsWith('.00') ){
+    return value.split('.')[0]
+  }else {
+    return value
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

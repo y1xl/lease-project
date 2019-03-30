@@ -210,7 +210,7 @@
     <div class="model full" v-if="showinfo||showinfocar">
       <div class="main bgc">
         <div class="goods1 flexbox pd-15">
-          <img :src="detail.gd_img[0]" alt style="object-fit:contain">
+          <img :src="detail.main_img" alt style="object-fit:contain">
           <div class="flex-1">
             <div class="mar-b-10 position title">{{detail.goods_name}}
               <div class="closeicon" @click="showinfo=false,showinfocar=false">

@@ -119,6 +119,9 @@ export default {
       if (url.includes('/map')) {
         return false
       }
+      if (url.includes('/pay')) {
+        return false
+      }
       if (url.includes('/orderDetail')) {
         return false
       }

@@ -36,6 +36,22 @@ export default {
       newPhone: "",
     };
   },
+  beforeCreate(){
+    // let url
+    // if (location.href.includes('token')) { // 用是否有shareId 来判断是不是分享出去的链接
+    //     let index = location.href.indexOf('token')+5+1
+    //     let shareId = location.href.slice(index)
+    //     console.log(shareId,'shareId')
+    //     url = `${location.origin}#/login?token=${shareId}`  
+    //     window.location.href = url
+    // } else {
+    //     url = `${location.origin}` 
+    //     window.location.href = url     
+    // }
+  },
+  created(){
+    console.log(this.$route.query.token,'token')
+  },
   methods: {
     //下一步
     toNext() {
@@ -138,7 +154,8 @@ export default {
     //       Toast.clear();
     //       Toast('网络出错')
     //   });
-    // }
+    // },
+
   }
 };
 </script>

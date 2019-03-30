@@ -7,14 +7,12 @@
     </div>
     <div class="pd-lr-15 bgc mar-b-10">
       <div class="goods flexbox">
-        <img :src="goodsimg" alt>
+        <img :src="info.main_img" alt>
         <div class="flex-1">
           <div class="mar-b-10">{{info.goods_name}}</div>
           <div>
             <span v-for="(item,index) in guiges" :key="index">{{item.attr_name}}</span>
           </div>
-          <!-- <div v-if="selected==1" class="fc-grey fsz12">该新品官方价格 ¥6000.00</div> -->
-          <!-- <div v-if="selected==2" class="fc-grey fsz12">本机原价 ¥6000.00</div> -->
         </div>
       </div>
       <div class="price">目前销售价格
@@ -80,13 +78,6 @@
               <van-icon name="arrow"/>
             </span>
           </div>
-          <!-- <div class="flex-jc-between pd-15 bgc border-b flex-align-items" @click="showtime=true">
-            <span>时间点</span>
-            <span class="flex-align-items fc-grey fsz12">
-              {{timetext}}
-              <van-icon name="arrow"/>
-            </span>
-          </div> -->
           <div class="flex-jc-between flex-align-items pd-15 bgc" @click="go('/people/shopping')">
             <div>
               <div>自取人</div>
@@ -165,9 +156,6 @@
       <div class="btn text-c" @click="submit">支付</div>
     </div>
 
-    <!-- <van-popup v-model="showtime" position="bottom" :close-on-click-overlay="false">
-      <van-datetime-picker type="time" show-toolbar @cancel="showtime=false" @confirm="onConfirm"/>
-    </van-popup> -->
     <van-popup v-model="showtimequantum" position="bottom" :close-on-click-overlay="false">
       <van-picker
         :columns="timequantumarr"
@@ -187,7 +175,7 @@
 
           <div class="coupon_con flex-jc-around flex-align-items" >
             <div>
-              <span class="num">{{item.coupons_money}}</span>
+              <span class="num">{{item.coupons_money|nozero}}</span>
               <span class="yuan">元</span>
             </div>
             <div v-if="item.activity_name==''">
@@ -230,8 +218,6 @@ export default {
       radio:'3',
       selected: 1,
       typenum: 0,
-      // showtime: false,
-      // timetext: "", 
       people: "",
       datechoose: "",
       getlocation:'',
@@ -412,21 +398,19 @@ export default {
     onshowcoupon(){
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
-        user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        state:1
+        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        goods_id: this.info.goods_id,
+        money:this.info.yf_price
       });
       this.axios
-        .post(this.API + "api/Lease/user_coupons", postData)
+        .post(this.API + "api/Order/GetUserCoupons", postData)
         .then(res => {
           console.log(res.data, "couponslist");
           let resdata = res.data;
           if (resdata.code == 200) {
             this.showcoupon = true
             Toast.clear()
-            // for(let v of resdata.data){
-            //   v.end_time = v.end_time.split(" ")[0]
-            // }
-            // this.couponlist = resdata.data
+            this.couponlist = resdata.data
           } else {
             Toast.clear()
             Toast(resdata.message);
@@ -434,7 +418,7 @@ export default {
         });
     },
     choosecoupon(item,index){
-      console.log(item,index);
+      // console.log(item,index);
       if(index+1==this.couponindex){
         this.couponindex = ''
         this.couponstext = ''
@@ -454,11 +438,7 @@ export default {
         this.showcoupon = false
       }
     },
-    // onConfirm(value) {
-    //   console.log(`当前值：${value}`);
-    //   this.timetext = value;
-    //   this.showtime = false;
-    // },
+
     submit(){
       if(this.selected==1){
         if(this.typenum == 0){

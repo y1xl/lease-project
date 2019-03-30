@@ -27,7 +27,6 @@
                     <span v-if="item.trust_status=='托管中'&&item.host_state=='在库'">在库</span>
                     <span v-if="item.trust_status=='托管中'&&item.host_state=='租赁中'">出租中</span>
                     <span v-if="item.trust_status=='已退回'">已退回</span>
-                    <!-- <span>出租中</span> -->
                   </div>
                   <div>
                     <div class="btn border fc-grey" v-if="item.trust_status=='托管中'" @click.stop="cancelTg(item.trust_id,item.serial_number)">取消托管</div>
@@ -58,7 +57,6 @@
                     <span v-if="item.state=='托管采购中'||item.state=='托管入库中'">待入库</span>
                     <span v-if="item.state=='托管中'&&item.equipment.host_state=='在库'">在库</span>
                     <span v-if="item.state=='托管中'&&item.equipment.host_state=='租赁中'">出租中</span>
-                    <!-- <span>出租中</span> -->
                   </div>
                   <div>
                     <div class="btn border fc-grey" v-if="item.state=='用户待确认'"  @click.stop="oncCancel(item.no_hardware_id)">取消</div>

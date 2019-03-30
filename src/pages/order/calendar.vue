@@ -86,26 +86,28 @@ export default {
     
     add0(m){return m<10?'0'+m:m },
     clickDay(date) {
-      if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
-        let datetext = date.split('/')
-        if(this.add0(datetext[1])!=this.arr[0].split('/')[1]){
-          return
-        }
-        if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${datetext[2]}`)) {
-          // Toast('请选择其他起租时间！')
-          Dialog.confirm({
-            title: "",
-            message: "请选择其他起租时间，或选择预租下单",
-            confirmButtonText: '预租下单',
-          })
-          .then(() => {
-            // on confirm
-            this.goprebuy(date)
-          })
-          .catch(() => {
-            //
-          });
-          return
+      if(this.arr.length!=0){
+        if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+          let datetext = date.split('/')
+          if(this.add0(datetext[1])!=this.arr[0].split('/')[1]){
+            return
+          }
+          if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${datetext[2]}`)) {
+            // Toast('请选择其他起租时间！')
+            Dialog.confirm({
+              title: "",
+              message: "请选择其他起租时间，或选择预租下单",
+              confirmButtonText: '预租下单',
+            })
+            .then(() => {
+              // on confirm
+              this.goprebuy(date)
+            })
+            .catch(() => {
+              //
+            });
+            return
+          }
         }
       }
       

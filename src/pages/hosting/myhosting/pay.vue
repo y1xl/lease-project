@@ -58,7 +58,7 @@ export default {
                 this.showWXpay = wxbuypaySession.state
             }
         }
-        this.getinfo()
+        // this.getinfo()
     },
     methods:{
         goback(){

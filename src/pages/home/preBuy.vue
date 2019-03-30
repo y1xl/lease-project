@@ -46,7 +46,7 @@
 
     <div class="pd-15 bgc">
       <div class="goods flexbox">
-        <img :src="goodsimg" :alt="detail.goods_name" style="object-fit:contain">
+        <img :src="detail.main_img" :alt="detail.goods_name" style="object-fit:contain">
         <div class="flex-1">
           <div class="mar-b-10">{{detail.goods_name}}</div>
           <div>
@@ -75,7 +75,7 @@
         :value="expectdate"
       >
         <template slot="title">
-          <div>预约期望档期</div>
+          <div>期望收到的日期</div>
           <div class="fc-grey fs12">收到货的次日起算租金</div>
         </template>
       </van-cell>
@@ -172,7 +172,7 @@
 
           <div class="coupon_con flex-jc-around flex-align-items" >
             <div>
-              <span class="num">{{item.coupons_money}}</span>
+              <span class="num">{{item.coupons_money|nozero}}</span>
               <span class="yuan">元</span>
             </div>
             <div v-if="item.activity_name==''">
@@ -519,8 +519,12 @@ export default {
       let newdate = new Date()
       if(this.expectdate == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
         let end = value.split('-')[1].split(':')[0]
+        //+1小时
+        newdate = new Date().getTime() + 1000*60*60
+        newdate = new Date(newdate)
         let newhours = newdate.getHours()
-        if(newhours > end){
+
+        if(newhours >= end){
           Toast("不在配送时间段")
           this.timequantumtext = ''
           return
@@ -604,7 +608,8 @@ export default {
         ads_id: this.getaddress.ads_id,
         goods_id: this.$route.query.id,
         sku: this.guiges||'',
-        time: this.expectdate||''
+        time: this.expectdate||'',
+        order_type:2
       })
       this.axios
         .post(this.API + "api/Order/ExpressPrice", postData)
@@ -646,9 +651,6 @@ export default {
           if (resdata.code == 200) {
             this.showcoupon = true
             Toast.clear()
-            // for(let v of resdata.data){
-            //   v.end_time = v.end_time.split(" ")[0]
-            // }
             this.couponlist = resdata.data
           } else {
             Toast.clear()
@@ -802,9 +804,12 @@ export default {
           if(this.expectdate == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
             // console.log(newdate.getHours());
             let end = this.timequantumtext.split('-')[1].split(':')[0]
+            //+1小时
+            newdate = new Date().getTime() + 1000*60*60
+            newdate = new Date(newdate)
             let newhours = newdate.getHours()
             // console.log(start,end)
-            if(newhours > end){
+            if(newhours >= end){
               Toast("不在配送时间段")
               return
             }

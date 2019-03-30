@@ -31,10 +31,10 @@
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
         <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
         <!-- <div class="flex-center border">朋友代还</div> -->
-        <div class="flex-center border" v-if="(item.order_status==9&&item.user_validation==0)||(item.order_status==9&&!item.user_validation)">
+        <div class="flex-center border" v-if="(item.order_status==9&&item.user_validation==0)">
           <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
         </div>
-        <div class="flex-center border-blue fc-blue" v-if="(item.order_status==9&&item.user_validation==0)||(item.order_status==9&&!item.user_validation)" @click="onConfirmsales(item.order_id)">确认</div>
+        <div class="flex-center border-blue fc-blue" v-if="(item.order_status==9&&item.user_validation==0)" @click="onConfirmsales(item.order_id)">确认</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0&&item.service_money&&item.service_money>0" @click="gocompensation(item.order_id)">
           维修费
         </div>

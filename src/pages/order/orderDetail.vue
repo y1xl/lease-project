@@ -6,13 +6,12 @@
         <span v-if="data.order_status==4">订单关闭</span>
         <span v-if="data.order_status==8">检测中</span>
         <span v-if="(data.order_status==9&&data.user_validation==0)||(data.order_status==9&&!data.user_validation)">售后中</span>
-        <span v-if="data.order_status==10">退押金中</span>
         <span v-if="data.order_status==1">待付款</span>
         <span v-if="data.order_status==5">待收货</span>
         <span v-if="data.order_status==12&&data.backstage!='未审批'">待发货</span>
         <span v-if="data.order_status==12&&data.backstage=='未审批'">取消中</span>
-        <span v-if="data.order_status==7">退租中</span>
-        <span v-if="data.order_status==9&&user_validation==1">售后待确认</span>
+        <span v-if="data.order_status==9&&maintenance_pay==1">退租中</span>
+        <span v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0&&data.service_money&&data.service_money>0">售后待确认</span>
         <span v-if="data.order_status==11">已完成</span>
         <span v-if="data.order_status==2">预租中</span>
       </div>
@@ -74,12 +73,8 @@
               <span>归还日期</span>
               <span class="flex-1">{{data.returnDate}}</span>
             </div>
-            <div class="flexbox" v-if="(data.order_type=='正式订单'&&data.delivery_way=='快递')||(data.order_type=='正式订单'&&data.delivery_way=='平台配送')">
+            <div class="flexbox" v-if="data.delivery_way=='快递'||data.delivery_way=='平台配送'">
               <span>期望收到的日期</span>
-              <span class="flex-1">{{data.qwsh_time}}</span>
-            </div>
-            <div class="flexbox" v-if="(data.order_type=='预约订单'&&data.delivery_way=='快递')||(data.order_type=='预约订单'&&data.delivery_way=='平台配送')">
-              <span>预约期望档期</span>
               <span class="flex-1">{{data.qwsh_time}}</span>
             </div>
             <div class="flexbox">
@@ -324,10 +319,10 @@
       <div class="flex-center border" v-if="data.order_status==6" @click="gorelet(data.order_id)">续租</div>
       <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
       <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
-      <div class="flex-center border" v-if="(data.order_status==9&&data.user_validation==0)||(data.order_status==9&&!data.user_validation)">
+      <div class="flex-center border" v-if="(data.order_status==9&&data.user_validation==0)">
         <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
       </div>
-      <div class="flex-center border-blue fc-blue" v-if="(data.order_status==9&&data.user_validation==0)||(data.order_status==9&&!data.user_validation)" @click="onConfirmsales(data.order_id)">确认</div>
+      <div class="flex-center border-blue fc-blue" v-if="(data.order_status==9&&data.user_validation==0)" @click="onConfirmsales(data.order_id)">确认</div>
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0&&data.service_money&&data.service_money>0" @click="gocompensation(data.order_id)">
         维修费
       </div>

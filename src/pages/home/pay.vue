@@ -3,9 +3,10 @@
         <div class="header bgc mar-b-10 box-sizing">
             <div class="text-c">您的可用额度(元)</div>
             <div class="text-c num">{{info.users_money||'0'}}</div>
-            <div class="text-c marb30"><router-link class="lines" to="/certification">提升额度</router-link></div>
-            <div class="text-c">总租金{{info.order_rental||'-'}}元</div>
-            <div class="text-c mar-b-10">总押金{{info.order_total_rent||'-'}}元</div>
+            <div class="text-c marb20"><router-link class="lines" to="/certification">提升额度</router-link></div>
+            <!-- <div class="text-c fsz12">保险费{{info.order_safe||'-'}}元</div>
+            <div class="text-c fsz12">总租金{{info.order_rental||'-'}}元</div> -->
+            <div class="text-c mar-b-10 fsz12">保险费{{info.order_safe||'-'}}元，总租金{{info.order_rental||'-'}}元，总押金{{info.order_total_rent||'-'}}元</div>
             <div class="text-c">您需支付<span class="fc-red"> ¥{{info.total_price||'-'}}</span></div>
         </div>
 
@@ -27,7 +28,7 @@
             </van-radio-group>
         </div>
 
-        <div class="pd-t-50"><div class="btn text-c" @click="submit">支付</div></div>
+        <div class="pd15"><div class="btn text-c" @click="submit">支付</div></div>
 
         <van-popup v-model="showWXpay" :close-on-click-overlay='false'>
             <div class="wxbox">
@@ -205,33 +206,37 @@ export default {
 </script>
 
 <style scoped>
+.fsz12{
+    font-size: 12px
+}
 .payimg{
     width: 20px;
     height: 20px;
     padding-right: 10px;
     vertical-align: middle;
 }
-.marb30{
-    margin-bottom: 30px;
+.marb20{
+    margin-bottom: 20px;
 }
 .header {
-    height: 300px;
-    padding-top: 30px;
+    padding-top: 10px;
+    padding-bottom:10px;
 }
 .header .num {
     font-size: 40px;
     color: #2ebbf1;
-    margin: 20px 0;
+    margin: 15px 0;
 }
 .header .lines {
     color: #FC8502;
-    width: 100px;
-    height: 35px;
+    width: 90px;
+    height: 30px;
     display: inline-block;
     text-align: center;
-    line-height: 35px;
+    line-height: 30px;
     box-shadow: 0px 1px 7px 1px #DAD7D7;
     border-radius: 5px;
+    font-size: 12px
 }
 
 .btn{
@@ -241,10 +246,8 @@ export default {
     color: #fff;
     background-image: linear-gradient(90deg, #2DBBF1 0%, #4EA9F9 100%);
 }
-.pd-t-50{
-    padding: 0 15px;
-    padding-top: 50px;
-    padding-bottom:15px;
+.pd15{
+    padding:15px;
 }
 
 .wxbox {

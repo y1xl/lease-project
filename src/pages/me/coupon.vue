@@ -17,7 +17,7 @@
 
             <div class="coupon_con flex-jc-around flex-align-items">
               <div>
-                <span class="num">{{item.coupons_money}}</span>
+                <span class="num">{{item.coupons_money|nozero}}</span>
                 <span class="yuan">元</span>
               </div>
               <div v-if="item.activity_name==''">
@@ -50,7 +50,7 @@
 
             <div class="coupon_con flex-jc-around flex-align-items">
               <div>
-                <span class="num">{{item.coupons_money}}</span>
+                <span class="num">{{item.coupons_money|nozero}}</span>
                 <span class="yuan">元</span>
               </div>
               <div v-if="item.is_activity==0">
