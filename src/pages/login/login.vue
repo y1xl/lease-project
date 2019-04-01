@@ -44,9 +44,6 @@ export default {
     //     console.log(shareId,'shareId')
     //     url = `${location.origin}#/login?token=${shareId}`  
     //     window.location.href = url
-    // } else {
-    //     url = `${location.origin}` 
-    //     window.location.href = url     
     // }
   },
   created(){
@@ -55,8 +52,7 @@ export default {
   methods: {
     //下一步
     toNext() {
-      console.log(this.newPhone);
-
+      // console.log(this.newPhone);
       if (this.newPhone == "") {
         return;
       }

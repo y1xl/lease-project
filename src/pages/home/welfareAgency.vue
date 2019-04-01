@@ -56,8 +56,11 @@
       </div>
 
       <div class="qd_img text-c">
-        <img src="../../assets/qd.png">
+        <router-link to="/redpacket">
+          <img src="../../assets/qd.png">
+        </router-link>
       </div>
+
       <div class="every_work">每日任务</div>
       <div class="flex-jc-center">
         <div class="word flex-jc-between flex-align-items">
@@ -263,7 +266,7 @@ export default {
   height: 2px;
   background: #54b1fa;
 }
-.qd_img > img {
+.qd_img  img {
   width: 240px;
   height: 60px;
 }

@@ -149,6 +149,9 @@ export default {
       if (url.includes('/zagreement')) {
         return false
       }
+      if (url.includes('/redpacket')) {
+        return false
+      }
       
       return true
 

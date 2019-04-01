@@ -8,6 +8,7 @@ import BuyOrder from '@/pages/order/buyOrder'
 import Order from '@/pages/order/order'
 import Shop from '@/pages/shop/shopList'
 //产品
+import Redpacket from '@/pages/home/redpacket'
 import Goods from '@/pages/home/index_more'
 import Extension from '@/pages/home/extension'
 import WelfareAgency from '@/pages/home/welfareAgency'
@@ -142,6 +143,7 @@ export default new Router({
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
+    { path: '/redpacket', component: Redpacket, meta: { title: '抢红包' } },
     { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },
     { path: '/wordMouth/:id', component: WordMouth, meta: { title: '口碑' } },
     { path: '/buy', component: Buy, meta: { title: '下单', keepAlive: true, isBack: false  } },

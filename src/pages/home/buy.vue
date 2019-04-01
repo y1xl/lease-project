@@ -642,7 +642,7 @@ export default {
       let postData = this.$qs.stringify({
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         goods_id: this.$route.query.id,
-        money:this.rent
+        money:this.rented
       });
       this.axios
         .post(this.API + "api/Order/GetUserCoupons", postData)
@@ -675,15 +675,11 @@ export default {
         this.rent = accAdd(this.rent,item.coupons_money)
         this.calculateRules()
       }else{
-        if(this.rent<(item.coupons_condition-0)){
-          Toast(`未满${item.coupons_condition}元条件`)
-          return;
-        }
         this.rent = accAdd(this.rent,this.couponstext)
         this.couponindex = index+1
         this.couponstext = item.coupons_money
         this.coupons_condition = item.coupons_condition
-        this.couponid = item.user_cp_id
+        this.couponid = item.coupons_id
         this.rent = accSub(this.rent,item.coupons_money)
         this.calculateRules()
         this.showcoupon = false

@@ -426,14 +426,10 @@ export default {
         this.couponid = ''
         this.calculateRules()
       }else{
-        if(this.rent<(item.coupons_condition-0)){
-          Toast(`未满${item.coupons_condition}元条件`)
-          return;
-        }
         this.couponindex = index+1
         this.couponstext = item.coupons_money
         this.coupons_condition = item.coupons_condition
-        this.couponid = item.user_cp_id
+        this.couponid = item.coupons_id
         this.calculateRules()
         this.showcoupon = false
       }

@@ -348,7 +348,7 @@ export default {
         console.log(res.data, "activity")
         let resdata = res.data
         if (resdata.code == 200) {
-          this.discountlist = resdata.data
+          this.discountlist = Object.values(resdata.data)
         } else {
           // Toast(resdata.message)
         } 
@@ -553,7 +553,7 @@ export default {
             }
       }
       let nativeShare = new NativeShare()
-      nativeShare.setShareData(shareData)
+        nativeShare.setShareData(shareData)
       try {
         nativeShare.call(command.nativeshare)
       } catch(e) {
@@ -564,12 +564,6 @@ export default {
   }
 };
 </script>
-
-<style>
-/* video {
-  object-fit:fill;
-} */
-</style>
 
 <style scoped>
 .height {
