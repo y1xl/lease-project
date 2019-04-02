@@ -199,6 +199,9 @@ export default {
 .fsz {
   font-size: 14px;
 }
+.fsz-12 {
+  font-size: 12px;
+}
 .mar-bottom {
   margin-bottom: 50px;
 }

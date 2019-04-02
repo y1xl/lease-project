@@ -26,6 +26,11 @@
             </div>
         </div>
         
+        <!-- 审核中 -->
+        <div class="state text-c" v-if="detail.state=='未审核'">
+          <div>您的物品正在审核中</div>
+          <div>请耐心等候！</div>
+        </div>
         <div class="state text-c" v-if="detail.state=='审批未通过'">
             <div>很抱歉！</div>
             <div>您的资料未通过审核</div>

@@ -116,7 +116,7 @@ export default {
                 newdate = new Date().getTime() + 1000*60*60
                 newdate = new Date(newdate)
                 let newhours = newdate.getHours()
-                if(newhours > end){
+                if(newhours >= end){
                 Toast("不在配送时间段")
                 this.timequantumtext = ''
                 return
@@ -182,7 +182,7 @@ export default {
                 newdate = new Date().getTime() + 1000*60*60
                 newdate = new Date(newdate)
                 let newhours = newdate.getHours()
-                if(newhours > end){
+                if(newhours >= end){
                 Toast("不在配送时间段")
                 this.timequantumtext = ''
                 return

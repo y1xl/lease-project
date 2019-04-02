@@ -55,10 +55,8 @@
         <div class="oneday text-c fc-blue" v-else>7</div>
       </div>
 
-      <div class="qd_img text-c">
-        <router-link to="/redpacket">
+      <div class="qd_img text-c" @click="goredpacket">
           <img src="../../assets/qd.png">
-        </router-link>
       </div>
 
       <div class="every_work">每日任务</div>
@@ -197,6 +195,9 @@ export default {
       .catch(error => {
           Toast('网络出错')
       });
+    },
+    goredpacket(){
+      this.$router.push({ path: "/redpacket" });
     }
   }
 };

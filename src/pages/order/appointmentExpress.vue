@@ -75,8 +75,11 @@ export default {
             let newdate = new Date()
             if(this.datetext == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
                 let end = value.split('-')[1].split(':')[0]
+                //+1小时
+                newdate = new Date().getTime() + 1000*60*60
+                newdate = new Date(newdate)
                 let newhours = newdate.getHours()
-                if(newhours > end){
+                if(newhours >= end){
                 Toast("不在配送时间段")
                 this.timequantumtext = ''
                 return
@@ -148,7 +151,7 @@ export default {
                 newdate = new Date().getTime() + 1000*60*60
                 newdate = new Date(newdate)
                 let newhours = newdate.getHours()
-                if(newhours > end){
+                if(newhours >= end){
                 Toast("不在配送时间段")
                 this.timequantumtext = ''
                 return

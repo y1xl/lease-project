@@ -86,7 +86,7 @@ export default {
     },
     //产品详情
     toDetail(id) {
-      this.$router.push({ path: "/ProductDetail/" + id });
+      this.$router.push({ path: "/productDetail/" + id });
     },
     getsearch() {
       if(this.value==''){
