@@ -17,7 +17,6 @@
               <div class="fc-grey fsz12 mar-b-10">{{item.attr_names}}</div>
               <div class="flex-jc-between fsz12">
                 <span class="fc-blue">￥{{item.hire_price.price}}/{{item.hire_price.unt}}</span>
-                <!-- <span class="fc-grey">x{{item.num}}</span> -->
               </div>
             </div>
           </div>

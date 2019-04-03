@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import VConsole from 'vconsole/dist/vconsole.min.js'
+// import VConsole from 'vconsole/dist/vconsole.min.js'
 
 export default {
   data() {
@@ -158,7 +158,7 @@ export default {
     }
   },
   mounted(){
-    let vConsole = new VConsole()
+    // let vConsole = new VConsole()
   },
   methods: {}
 };

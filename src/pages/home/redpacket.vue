@@ -32,34 +32,54 @@
             <div class="ad" @click="isad=false">
                 <img src="@/assets/redpacket/icon-close.png" alt="关闭" class="closeimg">
             </div>
-            <img @click="go" src="https://newbeeadmin.zx-xcx.com/uploads/images/20190308/ceb8b7479d1c4ffddaac0ecd4538285d.png" alt="广告" style="object-fit:contain">
+            <img :src="ad.adimg" alt="广告" style="object-fit:contain" @click="go">
         </div>
     </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
     data(){
         return {
-             bgimg: {
+            bgimg: {
                 background:
                 "url(" + require("@/assets/redpacket/bg.png") + ") no-repeat top",
                 backgroundSize: "100% 100%"
             },
             text: '134****4484，恭喜获得xxx。134****4484，恭喜获得xxx。',
             isad: true,
+            ad: {adimg:'',adpath:''},
             show: false
         }
+    },
+    created(){
+        this.getad()
     },
     mounted(){
 
     },
     methods:{
         go(){
-            // this.$router.push({ path: "/productDetail" });
+            if(this.ad.adpath!=''){
+                window.location.href = this.ad.adpath
+            }
         },
         getred(){
             this.show = true
+        },
+        getad(){
+            this.axios.post(this.API + "api/Redpacket/getRedpacket").then(res => {
+                console.log(res.data, "ad");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                   this.isad = resdata.data.screen_advertis==1?true:false
+                   this.ad.adimg = resdata.data.ad_image
+                   this.ad.adpath = resdata.data.ad_path
+                } else {
+                    Toast(resdata.message);
+                }
+            });
         }
     }
 }

@@ -112,7 +112,7 @@ export default {
       });
       this.axios.post(this.API + "api/Generalize/getCommission", postData)
       .then(res => {
-          console.log(res.data, "code");
+          console.log(res.data, "info");
           let resdata = res.data;
           if (resdata.code == 200) {
               Toast.clear();

@@ -141,10 +141,10 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear();
-            let bdate = resdata.data.users_birthday.split('/')
-            this.users_name = resdata.data.users_name;
+            let bdate = resdata.data.users_birthday?resdata.data.users_birthday.split('/'):''
+            this.users_name = resdata.data.users_name||'';
             this.users_id = resdata.data.users_id;
-            this.datetext = `${bdate[0]}年${bdate[1]}月${bdate[2]}日`;
+            this.datetext = bdate==''?'':`${bdate[0]}年${bdate[1]}月${bdate[2]}日`;
             this.detailval = resdata.data.users_address || "";
             let sex_id = resdata.data.users_sex;
             if (sex_id == 1) {

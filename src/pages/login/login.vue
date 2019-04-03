@@ -30,6 +30,7 @@
 
 <script>
 import { Toast,Dialog } from "vant";
+
 export default {
   data() {
     return {
@@ -37,14 +38,14 @@ export default {
     };
   },
   beforeCreate(){
-    // let url
-    // if (location.href.includes('token')) { // 用是否有shareId 来判断是不是分享出去的链接
-    //     let index = location.href.indexOf('token')+5+1
-    //     let shareId = location.href.slice(index)
-    //     console.log(shareId,'shareId')
-    //     url = `${location.origin}#/login?token=${shareId}`  
-    //     window.location.href = url
-    // }
+    let url
+    if (location.href.includes('token')&&location.href.includes('from')) { // 用是否有shareId 来判断是不是分享出去的链接
+        let index = location.href.indexOf('token')+5+1
+        let shareId = location.href.slice(index)
+        // console.log(shareId,'shareId')
+        url = `${location.origin}#/login?token=${shareId}`  
+        window.location.href = url
+    }
   },
   created(){
     console.log(this.$route.query.token,'token')

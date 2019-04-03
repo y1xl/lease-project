@@ -27,23 +27,6 @@
                     <router-link v-bind="{to: `/comments/${item.buyorder_id}/${item.goods_id}?type=buyorder`}">评价</router-link>
                 </div>
             </buyOrderCard>
-
-            <!-- <OrderCard status="待发货"></OrderCard> 
-            <OrderCard status="待付款">
-                <div class="flex-center border" @click="onshowmodel">取消订单</div>
-                <div class="flex-center border-blue fc-blue">支付</div>
-            </OrderCard>
-            <OrderCard status="待评价">
-                <div class="flex-center border-blue fc-blue">
-                <router-link v-bind="{to: '/comments'}">去评价</router-link>
-                </div>
-            </OrderCard> 
-            <OrderCard status="待收货">
-                <div class="flex-center border">朋友代取</div>
-                <div class="flex-center border" @click="getcode">取货码</div>
-                <div class="flex-center border-blue fc-blue" >确认收货</div>
-            </OrderCard>
-            <OrderCard status="已完成"></OrderCard>  -->
         </div>
 
         <div class="model full flex-column-center position" v-show="showcode">

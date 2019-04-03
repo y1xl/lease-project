@@ -116,7 +116,7 @@ export default {
     this.getuser()
   },
   methods: {
-    //15816893020
+    //15816893020 客户
     getuser() {
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
@@ -129,6 +129,12 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear();
+            if(!resdata.data){
+              Toast('请先登录');
+              window.localStorage.removeItem("userinfo")
+              this.$router.replace({ path: "/login" });
+              return
+            }
             this.users_name = resdata.data.users_name;
           } else {
             Toast.clear();

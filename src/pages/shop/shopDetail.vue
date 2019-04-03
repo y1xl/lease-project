@@ -9,7 +9,6 @@
       <div class="mar-b-10 pd-lr-15 pd-t">联系人：{{detail.store_boss}}</div>
       <div class="mar-b-10 pd-lr-15">联系方式：<a :href="`tel:${detail.store_phone}`">{{detail.store_phone}}</a></div>
       <div class="dt">
-        <!-- <img class="dw_img" src="../../assets/mddw.png"> -->
         地址：
         <span
           class="txt"
@@ -88,10 +87,6 @@ export default {
   overflow: hidden;
 }
 
-.txt {
-  /* font-size: 12px; */
-  /* color: #dcdddf; */
-}
 .dt{
   padding: 0px 15px;
   padding-bottom: 15px;
