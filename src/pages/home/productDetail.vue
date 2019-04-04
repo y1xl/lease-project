@@ -52,14 +52,14 @@
             </div>
           </div>
 
-          <div class="flex-jc-between price_box flex-align-items">
+          <div class="flex-jc-between price_box flex-align-items fsize10">
             <div>
-              <span class="product_title">低至</span>
+              <span>低至</span>
               <span class="fc-red">¥</span>
               <span class="price">{{detail.hire_price?detail.hire_price.price:'-'}}</span>
-              <span class="fsize13">/{{detail.hire_price?detail.hire_price.unt:'-'}}</span>
+              <span>/{{detail.hire_price?detail.hire_price.unt:'-'}}</span>
             </div>
-            <div class="fsize13">押金: ¥{{detail.gd_deposit}}</div>
+            <div>押金: ¥{{detail.gd_deposit}}</div>
           </div>
         </div>
       </div>
@@ -169,8 +169,8 @@
             电话客服
           </div>
         </div>
-        <div class="btn bcolor padding_lr margin_left">给朋友送礼</div>
-        <div class="btn bcol padding_lr margin_left" @click="showinfo=true">立即租赁</div>
+        <div class="btn bcolor padding_lr margin_left fsize10">给朋友送礼</div>
+        <div class="btn bcol padding_lr margin_left fsize10" @click="showinfo=true">立即租赁</div>
       </div>
     </div>
     <!-- 分享弹窗 -->
@@ -218,8 +218,7 @@
               </div>
             </div>
             <div class="mar-b-10">
-              <span class="fc-red">¥{{detail.hire_price.price||'-'}}</span>
-              <span class="fsz10">/{{detail.hire_price.unt||'-'}}</span>
+              <span class="fc-red">¥{{detail.hire_price.price||'-'}}</span><span class="fsz10">/{{detail.hire_price.unt||'-'}}</span>
             </div>
             <div class="fsz10 fc-grey">请选择规格属性</div>
           </div>
@@ -572,6 +571,12 @@ export default {
 .fsize13 {
   font-size: 13px;
 }
+.fsize12 {
+  font-size: 12px;
+}
+.fsize10 {
+  font-size: 10px;
+}
 .grey_12 {
   font-size: 12px;
   color: #979797;
@@ -602,8 +607,9 @@ export default {
   font-size: 24px;
 }
 .product_title {
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: bold;
+  padding-right: 5px;
 }
 .camera {
   line-height: 20px;
@@ -621,7 +627,7 @@ export default {
 }
 .price {
   color: #f21e1e;
-  font-size: 18px;
+  font-size: 16px;
 }
 .suggest {
   width: 100%;
@@ -758,10 +764,10 @@ export default {
   bottom: 48px;
 }
 .btn {
+  min-width: 60px;
   height: 32px;
   line-height: 32px;
   color: #fff;
-  font-size: 14px;
   text-align: center;
   border-radius: 20px;
 }
@@ -778,7 +784,7 @@ export default {
 }
 .f10_col {
   font-size: 10px;
-  color: #030303;
+  color: #666;
 }
 .padding_lr {
   padding: 0 15px;
@@ -863,6 +869,7 @@ export default {
 }
 .goods1 .title {
   padding-right: 10px;
+  font-weight: bold;
 }
 .gbtn {
   height: 42px;

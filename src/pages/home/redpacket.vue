@@ -1,19 +1,19 @@
 <template>
     <div class="bgc full pd-lr-15 page" :style="bgimg">
-        <div class="notice">
+        <div class="notice" v-if="text!=''&&text">
             <van-notice-bar :text="text" color="#fff"/>
         </div>
 
         <div class="box">
-            <div class="fc-blue text-c title marb10">活动标题</div>
+            <div class="fc-blue text-c title marb10">{{info.activity_title}}</div>
             <div class="fc-grey text-c fsz-12 marb10">2019-03-11~2019-03-12</div>
-            <div class="text-c marb10">当前参加人数<span class="fc-red">12</span></div>
+            <div class="text-c marb10">当前参加人数<span class="fc-red"> {{people||0}}</span></div>
             <div class="btn flex-column-center bgc-blue" @click="getred">
                 <span>抢红包</span>
                 <!-- <div>邀请好友助力</div>
                 <div class="fszs">(可获得一次抢红包机会)</div> -->
             </div>
-            <div class="fc-grey fsz-12">活动说明：这是一个说明这是一个说明这是一个说明这是一个说明这是一个说明</div>
+            <div class="fc-grey fsz-12">活动说明：{{info.activity_description}}</div>
         </div>
 
         <van-popup v-model="show" :close-on-click-overlay="false">
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 export default {
     data(){
         return {
@@ -47,10 +47,12 @@ export default {
                 "url(" + require("@/assets/redpacket/bg.png") + ") no-repeat top",
                 backgroundSize: "100% 100%"
             },
-            text: '134****4484，恭喜获得xxx。134****4484，恭喜获得xxx。',
+            text: '',
             isad: true,
             ad: {adimg:'',adpath:''},
-            show: false
+            show: false,
+            info:'',
+            people: 0
         }
     },
     created(){
@@ -66,16 +68,72 @@ export default {
             }
         },
         getred(){
-            this.show = true
+            Toast.loading({ mask: true,message: '加载中...'})
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                activity_title: this.info.activity_title
+            });
+            this.axios.post(this.API + "api/Redpacket/redwars",postData)
+            .then(res => {
+                console.log(res.data, "getred");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    this.show = true
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message);
+                }
+            })
+            .catch(error => {
+                Toast.clear()
+                Toast('网络出错')
+            });
         },
         getad(){
+            Toast.loading({ mask: true,message: '加载中...'})
             this.axios.post(this.API + "api/Redpacket/getRedpacket").then(res => {
                 console.log(res.data, "ad");
                 let resdata = res.data;
                 if (resdata.code == 200) {
+                    Toast.clear()
                    this.isad = resdata.data.screen_advertis==1?true:false
                    this.ad.adimg = resdata.data.ad_image
                    this.ad.adpath = resdata.data.ad_path
+                   this.info = resdata.data
+                   this.getpeople(resdata.data.activity_title)
+                   this.getnotice(resdata.data.activity_title)
+                } else {
+                    Toast.clear()
+                    Toast(resdata.message);
+                }
+            });
+        },
+        getpeople(title){
+            let postData = this.$qs.stringify({
+                activity_title: title
+            });
+            this.axios.post(this.API + "api/Redpacket/countUsers",postData)
+            .then(res => {
+                console.log(res.data, "people");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    this.people = resdata.data
+                } else {
+                    Toast(resdata.message);
+                }
+            });
+        },
+        getnotice(title){
+            let postData = this.$qs.stringify({
+                activity_title: title
+            });
+            this.axios.post(this.API + "api/Redpacket/winningInformation",postData)
+            .then(res => {
+                console.log(res.data, "notice");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    this.text = resdata.data.join('。')
                 } else {
                     Toast(resdata.message);
                 }

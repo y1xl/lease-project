@@ -104,12 +104,12 @@
                 <div class="btn text-c" @click="nosubmit">提交</div>
             </div>
 
-            <div class="describe bgc">
+            <div class="describe bgc fsz-12">
                 <div class="fc-grey">为了用户能达到更高的回报率，我们提供渠道底价销售的政策；</div> 
                 <div class="fc-grey">支持信用卡、花呗、消费分期等支付方式，没钱照样可以享受托管收益。</div> 
             </div>
             
-            <div class="box bgc">
+            <div class="box bgc" v-if="hosts.length!=0">
                 <div class="mar-b-10">热租型号</div>
                 <div class="list">
                     <div class="goods" v-for="(item,index) in hosts" :key="index">
@@ -536,7 +536,7 @@ export default {
 }
 
 .describe{
-    padding: 30px 15px;
+    padding: 15px;
 }
 
 .box {

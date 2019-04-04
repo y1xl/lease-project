@@ -9,18 +9,18 @@
       <van-list v-model="loading" :finished="finished" @load="onLoad" class="flex-wrap bgc">
         <div v-for="(item,index) in goodslist" :key="index" @click="toDetail(item.goods_id)">
           <div class="item">
-            <div class="flex-jc-center img_b1">
+            <div class="flex-jc-center img_b1 mar-b-10">
               <img class="img" :src="item.gd_img[0]" style="object-fit:contain">
             </div>
-            <div class="text-line pro_title mar-b-10 text-c">{{item.goods_name}}</div>
-            <div class="price-box text-c f12">
+            <div class="text-line pro_title mar-b-10 fs">{{item.goods_name}}</div>
+            <div class="fss mar-b-10">
               低至
               <span class="price">￥{{item.hire_price.price}}</span><span>/{{item.hire_price.unt}}</span>
             </div>
           </div>
         </div>
       </van-list>
-      <div class="text-c fc-grey pd-15 bgc" v-show="finished">没有更多了</div>
+      <div class="text-c fc-grey pd-15 bgc fsz-12" v-show="finished">没有更多了</div>
     </div>
   </div>
 </template>
@@ -108,15 +108,19 @@ export default {
   },
 };
 </script>
-<style>
-#pro-list .van-list__loading {
-  margin: auto;
-}
-</style>
 
 <style scoped>
+#pro-list >>> .van-list__loading {
+  margin: auto;
+}
 .f12 {
   font-size: 12px;
+}
+.fs {
+  font-size: 8px;
+}
+.fss{
+  font-size: 6px;
 }
 .img_b {
   width: 92%;
@@ -131,7 +135,7 @@ export default {
 
 .item {
   width: 140px;
-  height: 204px;
+  /* height: 160px; */
   /* background: #f7f7f7; */
   border-radius: 5px;
   margin: 13px 0 0 13px;
@@ -146,9 +150,11 @@ export default {
   height: 100%;
 }
 .pro_title {
-  padding-top:20px;
+  /* padding-top:20px; */
+  font-weight: bold;
 }
 .price {
   color: #f21e1e;
+  font-size: 14px
 }
 </style>

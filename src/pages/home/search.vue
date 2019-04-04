@@ -18,20 +18,18 @@
         <div class="img_box">
           <img class="sy_img" :src="item.main_img" style="object-fit:contain">
         </div>
-        <div class="f14 pro_name">{{item.goods_name}}</div>
-        <div class="com_like">
-          <van-rate v-model="item.rate" disabled disabled-color="#FFB10E"/>
-          <span class="f12">{{item.eva_score}}</span>
-          <div>
-            <img class="chat" src="../../assets/chat.png">
-            <span class="f12">{{item.eva_num}}</span>
-          </div>
+        <div class="f15 pro_name" style="fontWeight: bold">{{item.goods_name}}</div>
+        <div class="com_like flex-align-items">
+          <van-rate v-model="item.rate" disabled disabled-color="#FFB10E" :size="size"/>
+          <span class="fs pl5">{{item.eva_score}}</span>
+
+          <img class="chat" src="../../assets/chat.png">
+          <span class="fs pl5">{{item.eva_num}}</span>
         </div>
-        <div class="zj">
-          <span class="f14">租金：</span>
+        <div class="zj fs">
+          <span>租金：</span>
           低至
-          <span class="price">¥{{item.hire_price.price}}</span>
-          <span class="f12">/{{item.hire_price.unt}}</span>
+          <span class="price">¥{{item.hire_price.price}}</span><span>/{{item.hire_price.unt}}</span>
         </div>
       </div>
     </div>
@@ -52,7 +50,8 @@ export default {
       value: "",
       flprolist: [],
       historylist:[],
-      showhistory:false
+      showhistory:false,
+      size: 14
     };
   },
   created() {
@@ -161,13 +160,25 @@ export default {
   position: absolute;
   left: 0;
 }
-
+.f15 {
+  font-size: 15px;
+}
+.fs {
+  font-size: 8px;
+}
+.pl5{
+  padding-left:5px
+}
 /*分类 所有产品*/
 .fl_pro_list {
   width: 100%;
   padding: 0 10px;
   box-sizing: border-box;
   padding-top: 10px;
+}
+.price {
+  font-size: 14px;
+  color: #f21e1e;
 }
 
 .img_box {
@@ -182,19 +193,16 @@ export default {
 }
 
 .pro_name {
-  margin-top: 5px;
   line-height: 30px;
 }
 .com_like {
   display: flex;
   line-height: 22px;
 }
-.zj {
-  line-height: 30px;
-}
+
 .chat {
-  width: 16px;
-  height: 14px;
+  width: 15px;
+  height: 13px;
   padding-left: 15px;
   vertical-align: middle;
 }

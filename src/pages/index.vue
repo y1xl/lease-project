@@ -48,8 +48,8 @@
       <van-tabs v-model="active" @click="onClicknav">
         <van-tab title="热门">
           <div v-for="(item,key) in indexlist" :key="key">
-            <div class="flex-jc-between flex-align-items hb">
-              <div class="title">{{item.scene_name}}</div>
+            <div class="flex-jc-between flex-align-items ">
+              <div class="indextitle f12">{{item.scene_name}}</div>
               <div class="m_txt flex-align-items" @click="more(item.scene_id)">更多
                 <van-icon name="arrow"/>
               </div>
@@ -66,8 +66,8 @@
                     <div class="img_box2 flex-center">
                       <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
                     </div>
-                    <div class="text-line pro_name pdlr5">{{goods.goods_name}}</div>
-                    <div class="f12 pdlr5">     
+                    <div class="text-line pro_name pdlr5 fs" style="fontWeight: bold">{{goods.goods_name}}</div>
+                    <div class="pdlr5 fss" >     
                       低至
                       <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                     </div>
@@ -90,8 +90,8 @@
                 <div class="img_box2 flex-center">
                   <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
                 </div>
-                <div class="text-line pro_name pdlr5">{{goods.goods_name}}</div>
-                <div class="f12 pdlr5">     
+                <div class="text-line pro_name pdlr5 fs">{{goods.goods_name}}</div>
+                <div class="f12 pdlr5 fss">     
                   低至
                   <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                 </div>
@@ -110,20 +110,18 @@
               <div class="img_box">
                 <img class="sy_img" :src="item.main_img" style="object-fit:contain" alt="商品">
               </div>
-              <div class="f14 pro_name">{{item.goods_name}}</div>
-              <div class="com_like">
-                <van-rate v-model="item.eva_score" disabled disabled-color="#FFB10E"/>
-                <span class="f12">{{item.eva_score}}</span>
-                <div>
-                  <img class="chat" src="../assets/chat.png">
-                  <span class="f12">{{item.eva_num}}</span>
-                </div>
+              <div class="f15 pro_name" style="fontWeight: bold">{{item.goods_name}}</div>
+              <div class="com_like flex-align-items">
+                <van-rate v-model="item.eva_score" disabled disabled-color="#FFB10E" :size="size"/>
+                <span class="fs pl5">{{item.eva_score}}</span>
+
+                <img class="chat" src="../assets/chat.png">
+                <span class="fs pl5">{{item.eva_num}}</span>
               </div>
-              <div class="zj">
-                <span class="f14">租金：</span>
+              <div class="zj fs">
+                <span>租金:</span>
                 低至
-                <span class="price">¥{{item.hire_price.price}}</span>
-                <span class="f12">/{{item.hire_price.unt}}</span>
+                <span class="price">¥{{item.hire_price.price}}</span><span>/{{item.hire_price.unt}}</span>
               </div>
             </div>
           </div>
@@ -182,7 +180,8 @@ export default {
           }
         }
       }],
-      searchval:''
+      searchval:'',
+      size: 14
     };
   },
   beforeCreate(){
@@ -341,8 +340,23 @@ export default {
 .f12 {
   font-size: 12px;
 }
+.f15 {
+  font-size: 15px;
+}
+.f10 {
+  font-size: 10px;
+}
+.fs {
+  font-size: 8px;
+}
+.fss{
+  font-size: 6px;
+}
 .pl10{
   padding-left:10px
+}
+.pl5{
+  padding-left:5px
 }
 .pdlr5{
   padding-left:5px;
@@ -392,27 +406,30 @@ export default {
 
 .tg {
   text-align: center;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 30px;
-  padding: 20px 0;
 }
 
 .tg img {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .title {
-  font-size: 17px;
-  font-weight: 600;
-  padding: 10px;
+  padding: 10px 14px;
+}
+.indextitle {
+  padding: 0 14px;
+  padding-top: 5px;
+  letter-spacing:2px;
 }
 
 .m_txt {
-  font-size: 12px;
+  font-size: 8px;
   color: #d0d0d0;
-  margin-right: 13px;
+  padding: 0 14px;
+  padding-top: 5px;
 }
 
 .cp_box {
@@ -467,6 +484,10 @@ export default {
   font-size: 14px;
   color: #f21e1e;
 }
+.indexbox .price {
+  font-size: 12px;
+  color: #f21e1e;
+}
 .camer_hm_box {
   width: 100%;
   height: 175px;
@@ -479,15 +500,15 @@ export default {
   height: 175px;
 }
 .img_box2 {
-  /* width: 95px; */
   width: 100%;
-  height: 105px;
-  /* background: #f7f7f7; */
+  height: 95px;
+  padding: 10px;
+  box-sizing: border-box
 }
 
 .indexbox {
   width:100%;
-  height: 175px;
+  height: 150px;
   white-space: nowrap;
   overflow-x:scroll;
   overflow-y:hidden;
@@ -502,8 +523,8 @@ export default {
   display: none;
 }
 .indexitem {
-  width: 105px;
-  height: 170px;
+  width: 95px;
+  height: 145px;
   display: inline-block;
   box-shadow: 0px 0px 4px 1px #DAD7D7;
   box-sizing: border-box;
@@ -531,19 +552,18 @@ export default {
 }
 
 .pro_name {
-  /* margin-top: 5px; */
   line-height: 30px;
 }
 .com_like {
   display: flex;
-  line-height: 22px;
+  height: 22px;
 }
 .zj {
-  line-height: 30px;
+  /* line-height: 20px; */
 }
 .chat {
-  width: 16px;
-  height: 14px;
+  width: 15px;
+  height: 13px;
   padding-left: 15px;
   vertical-align: middle;
 }
