@@ -93,21 +93,21 @@
           <div>
             <img class="img_xdlc" src="../../assets/chenggong.png" alt>
           </div>
-          <div class="fsize13">下单</div>
+          <div class="fsize12">下单</div>
         </div>
         <div class="grey_line1"></div>
         <div class="text-c">
           <div>
             <img class="img_xdlc" src="../../assets/chenggong_c.png" alt>
           </div>
-          <div class="fsize13">送货</div>
+          <div class="fsize12">送货</div>
         </div>
         <div class="grey_line2"></div>
         <div class="text-c">
           <div>
             <img class="img_xdlc" src="../../assets/chenggong_copy.png" alt>
           </div>
-          <div class="fsize13">归还</div>
+          <div class="fsize12">归还</div>
         </div>
       </div>
     </div>

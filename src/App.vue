@@ -152,6 +152,9 @@ export default {
       if (url.includes('/redpacket')) {
         return false
       }
+      if (url.includes('/rpfriend')) {
+        return false
+      }
       
       return true
 

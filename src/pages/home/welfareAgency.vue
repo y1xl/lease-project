@@ -148,6 +148,9 @@ export default {
       signininfo:''
     }
   },
+  created(){
+    Dialog.close()
+  },
   mounted(){
     this.getsignin()
   },

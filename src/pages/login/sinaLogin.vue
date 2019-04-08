@@ -103,7 +103,13 @@ export default {
                 if (resdata.code == 200) {
                     Toast.clear();
                     window.localStorage.setItem("userinfo", JSON.stringify(resdata.data));
-                    this.$router.replace({ path: "/" });
+                    
+                    if(JSON.parse(window.sessionStorage.getItem("rpfriend"))){
+                        window.sessionStorage.removeItem("rpfriend");
+                        this.$router.replace({ path: "/rpfriend" });
+                    }else{
+                        this.$router.replace({ path: "/" });
+                    }
                 } else {
                     Toast.clear();
                     Toast(resdata.message);

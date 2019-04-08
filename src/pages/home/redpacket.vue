@@ -1,18 +1,25 @@
 <template>
     <div class="bgc full pd-lr-15 page" :style="bgimg">
-        <div class="notice" v-if="text!=''&&text">
-            <van-notice-bar :text="text" color="#fff"/>
+        <div class="notice" v-if="text!=''&&text&&info.prize_speech==1">
+            <van-notice-bar color="#fff">
+                <pre>{{text}}</pre>
+            </van-notice-bar>
         </div>
 
         <div class="box">
             <div class="fc-blue text-c title marb10">{{info.activity_title}}</div>
-            <div class="fc-grey text-c fsz-12 marb10">2019-03-11~2019-03-12</div>
+            <div class="fc-grey text-c fsz-12 marb10">{{info.activity_start_time}}~{{info.activity_end_time}}</div>
             <div class="text-c marb10">当前参加人数<span class="fc-red"> {{people||0}}</span></div>
             <div class="btn flex-column-center bgc-blue" @click="getred">
-                <span>抢红包</span>
-                <!-- <div>邀请好友助力</div>
-                <div class="fszs">(可获得一次抢红包机会)</div> -->
+                <template v-if="numinfo">
+                    <div v-if="numinfo.number==0&&info.forced_attention!=0" @click="call">邀请好友助力</div>
+                    <div class="fszs" v-if="numinfo.number==0&&info.forced_attention!=0">(可获得一次抢红包机会)</div>
+                    <span v-else>抢红包</span>
+                </template>
+                <span v-else>抢红包</span>
             </div>
+            
+            <div class="text-c fsz-12 marb10" v-if="numinfo">可抢红包次数{{numinfo?numinfo.number:0}}</div>
             <div class="fc-grey fsz-12">活动说明：{{info.activity_description}}</div>
         </div>
 
@@ -20,7 +27,7 @@
             <div class="bgc model position">
                 <img src="@/assets/redpacket/icon-close.png" alt="关闭" class="iconclose" @click="show=false">
                 <div class="imgbox marb10 text-c"><img src="@/assets/redpacket/scu.png" class="img" style="object-fit:contain"></div>
-                <div class="text-c marb10">恭喜获得xxx</div>
+                <div class="text-c marb10">恭喜获得{{winning.type==3?'':winning.number}}{{winning.type==1?'元':winning.type==2?'积分':winning.type==3?'优惠券':''}}</div>
                 <div class="fc-grey text-c fsz-12 marb10">可在个人中心查看</div>
                 <div class="flex-jc-center">
                     <router-link to="/me" replace><div class="confirm flex-center">确认</div></router-link>
@@ -39,6 +46,10 @@
 
 <script>
 import { Toast,Dialog } from "vant";
+const nativeshare = () => import ('nativeshare') 
+const m_share = () => import ('m-share')
+var NativeShare, mShare
+
 export default {
     data(){
         return {
@@ -48,18 +59,23 @@ export default {
                 backgroundSize: "100% 100%"
             },
             text: '',
-            isad: true,
+            isad: false,
             ad: {adimg:'',adpath:''},
             show: false,
             info:'',
-            people: 0
+            people: 0,
+            winning:'',
+            numinfo:''
         }
     },
     created(){
         this.getad()
     },
     mounted(){
+        nativeshare().then(res =>  {NativeShare = res.default} )
+        m_share().then(res => {mShare = res})
 
+        this.getnum()
     },
     methods:{
         go(){
@@ -79,14 +95,46 @@ export default {
                 let resdata = res.data;
                 if (resdata.code == 200) {
                     Toast.clear()
-                    this.show = true
+                    this.winning = resdata.data
+                    if(resdata.data.type == 3){
+                        this.receive(resdata.data.number)
+                        this.getnum()
+                    }else {
+                        this.getnum()
+                        this.show = true
+                    }
                 } else {
                     Toast.clear()
+                    this.getnum()
                     Toast(resdata.message);
                 }
             })
             .catch(error => {
                 Toast.clear()
+                Toast('网络出错')
+            });
+        },
+        receive(id){
+            Toast.loading({ mask: true, message: "加载中..." });
+            let postData = this.$qs.stringify({
+                user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+                coupons_id: id,
+                activity_id: 0
+            });
+            this.axios
+            .post(this.API + "api/Lease/Receive_coupon", postData)
+            .then(res => {
+                console.log(res.data, "getcoupons");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    Toast.clear()
+                    this.show = true
+                } else {
+                    Toast.clear();
+                    Toast(resdata.message);
+                }
+            })
+            .catch(error => {
                 Toast('网络出错')
             });
         },
@@ -105,7 +153,13 @@ export default {
                    this.getnotice(resdata.data.activity_title)
                 } else {
                     Toast.clear()
-                    Toast(resdata.message);
+                    this.isad = false
+                    // Toast(resdata.msg);
+                    Dialog.alert({
+                        message: resdata.msg
+                    }).then((e) => {
+                       this.$router.go(-1);
+                    });
                 }
             });
         },
@@ -124,6 +178,21 @@ export default {
                 }
             });
         },
+        getnum(){
+            let postData = this.$qs.stringify({
+                users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+            });
+            this.axios.post(this.API + "api/Redpacket/getUserNumber",postData)
+            .then(res => {
+                console.log(res.data, "num");
+                let resdata = res.data;
+                if (resdata.code == 200) {
+                    this.numinfo  = resdata.data
+                } else {
+                    Toast(resdata.message);
+                }
+            });
+        },
         getnotice(title){
             let postData = this.$qs.stringify({
                 activity_title: title
@@ -133,11 +202,44 @@ export default {
                 console.log(res.data, "notice");
                 let resdata = res.data;
                 if (resdata.code == 200) {
-                    this.text = resdata.data.join('。')
+                    let arr = []
+                    for(let v of resdata.data){
+                        let type = v.prize_name==1?'元':v.prize_name==2?'积分':v.prize_name==3?'优惠券':''
+                        arr.push(`恭喜${v.users_phone}用户获得${type=='优惠券'?'':v.prize}${type}。          `)
+                    }
+                    this.text = arr.join(' ')
                 } else {
                     Toast(resdata.message);
                 }
             });
+        },
+
+        call(){
+            let config = {
+                title: '数码租赁',
+                link: window.location.origin + '#/rpfriend?friendid='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
+                desc:'好友助力'
+            }
+            let shareData = { 
+                title: config.title,
+                desc: config.desc,
+                // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+                link: config.link,
+                icon: '',
+            }
+            let mShareData = { 
+                    title: config.title, 
+                    desc: config.desc, 
+                    link: config.link, 
+                    imgUrl: '', 
+            }
+            let nativeShare = new NativeShare()
+            nativeShare.setShareData(shareData)
+            try {
+                nativeShare.call('wechatFriend')
+            } catch(e) {
+                mShare.to('wx', mShareData)
+            }
         }
     }
 }
@@ -182,8 +284,9 @@ export default {
     color: #fff;
     border-radius: 30px;
     margin: 15px;
+    margin-bottom: 5px;
     box-shadow: 0px 1px 10px 0px rgba(173,198,238,0.68);
-    letter-spacing:8px;
+    /* letter-spacing:8px; */
 }
 .banner {
     position: fixed;
