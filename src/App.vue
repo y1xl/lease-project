@@ -69,7 +69,7 @@ export default {
       if (this.$route.path === "/shop") { 
         return "shop";
       }
-      if (this.$route.path === "/order") {
+      if (this.$route.path === "/order"||this.$route.path === "/order/buyOrder") {
         return "order";
       }
       if (this.$route.path === "/me") {
