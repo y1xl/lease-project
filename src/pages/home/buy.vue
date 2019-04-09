@@ -44,7 +44,7 @@
       </template>
     </div>
 
-    <div class="pd-15 bgc">
+    <!-- <div class="pd-15 bgc">
       <div class="goods flexbox">
         <img :src="detail.main_img" :alt="detail.goods_name" style="object-fit:contain">
         <div class="flex-1">
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="mar-b-10">
       <van-cell title="租期" center>
@@ -95,7 +95,7 @@
       <van-cell title="运费" center :value="'￥'+freight" v-show="typenum==1"></van-cell>
       <van-cell title="配送运费" center :value="'￥'+freight" v-show="typenum==2"></van-cell>
       <van-cell title="优惠券" is-link center :value="couponstext" @click="onshowcoupon"></van-cell>
-      <van-cell :title="'保险费 ￥'+detail.safe_price" center>
+      <van-cell :title="'放心用 ￥'+detail.safe_price" center>
         <div class="flex-align-items" style="justify-content: flex-end">
           <van-switch @change="onswitch" v-model="isinsurance" size="20px" :disabled="Dinsurance"/>
         </div>
@@ -112,7 +112,7 @@
     <div class="mar-b-10">
       <van-cell title="押金" center :value="'￥'+detail.gd_deposit"></van-cell>
       <van-cell title="租金" center :value="'￥'+calculaterent"></van-cell>
-      <van-cell title="应付总金额" center>
+      <van-cell title="应付总额" center>
         <span class="fc-red">￥{{calculatesum}}</span>
       </van-cell>
     </div>
@@ -125,7 +125,7 @@
         </div>
       </div>
       <div>
-        <div class="btn text-c" @click="nextface">信用免押支付</div>
+        <div class="btn text-c" @click="nextface">信用免押认证</div>
       </div>
     </div>
 
@@ -233,7 +233,7 @@ export default {
       isdisabled: true, //租期
       weekval: "", //租期
       isinsurance: true, //保险
-      isconsent: false, //协议
+      isconsent: true, //协议
       discountmodel: false, //优惠活动
       couponlist: [], //优惠券
       remarkval: "",
@@ -917,7 +917,7 @@ export default {
         this.isdisabled = true
         this.weekval = "" //租期
         this.isinsurance = true //保险
-        this.isconsent = false //协议
+        this.isconsent = true //协议
         this.discountmodel = false //优惠活动
         this.couponlist = [] //优惠券
         this.remarkval = ""

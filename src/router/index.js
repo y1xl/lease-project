@@ -8,6 +8,7 @@ import BuyOrder from '@/pages/order/buyOrder'
 import Order from '@/pages/order/order'
 import Shop from '@/pages/shop/shopList'
 //产品
+import Questionnaire from '@/pages/home/questionnaire'
 import Redpacket from '@/pages/home/redpacket'
 import Rpfriend from '@/pages/home/rpfriend'
 import Goods from '@/pages/home/index_more'
@@ -144,6 +145,7 @@ export default new Router({
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
     { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
+    { path: '/questionnaire', component: Questionnaire, meta: { title: '问卷调查' } },
     { path: '/redpacket', component: Redpacket, meta: { title: '抢红包' } },
     { path: '/rpfriend', component: Rpfriend, meta: { title: '抢红包-好友助力' } },
     { path: '/productDetail/:id', component: ProductDetail, meta: { title: 'SKU信息' } },

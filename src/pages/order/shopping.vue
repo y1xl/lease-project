@@ -301,7 +301,7 @@ export default {
         }
       }
       if(this.selected==2){
-        this.sum = accSub(this.info.yf_price||'',this.info.ded_rent||'')
+        this.sum = this.info.yf_price
         // console.log(4)
       }
     },

@@ -30,7 +30,11 @@ export default {
     beforeCreate(){
         if (!window.localStorage.getItem("userinfo")) {
             window.sessionStorage.setItem("rpfriend",1);
-            this.$router.replace({ path: "/login" });
+            Dialog.alert({
+                message: '请先登录'
+            }).then((e) => {
+                this.$router.replace({ path: "/login?rpfriend=1" })
+            });
         }
     },
     created(){

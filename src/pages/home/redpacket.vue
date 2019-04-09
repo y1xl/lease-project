@@ -10,16 +10,21 @@
             <div class="fc-blue text-c title marb10">{{info.activity_title}}</div>
             <div class="fc-grey text-c fsz-12 marb10">{{info.activity_start_time}}~{{info.activity_end_time}}</div>
             <div class="text-c marb10">当前参加人数<span class="fc-red"> {{people||0}}</span></div>
-            <div class="btn flex-column-center bgc-blue" @click="getred">
-                <template v-if="numinfo">
-                    <div v-if="numinfo.number==0&&info.forced_attention!=0" @click="call">邀请好友助力</div>
-                    <div class="fszs" v-if="numinfo.number==0&&info.forced_attention!=0">(可获得一次抢红包机会)</div>
-                    <span v-else>抢红包</span>
-                </template>
-                <span v-else>抢红包</span>
-            </div>
             
-            <div class="text-c fsz-12 marb10" v-if="numinfo">可抢红包次数{{numinfo?numinfo.number:0}}</div>
+            <div class="btn flex-column-center bgc-grey" v-if="numinfo.friends_help==1&&numinfo.number==0">
+                抢红包
+            </div>
+            <template v-else>
+                <div class="btn flex-column-center bgc-blue" v-if="numinfo.number==0&&info.forced_attention!=0&&numinfo.friends_help!=1" @click="call">
+                    <div>邀请好友助力</div>
+                    <div class="fszs">(可获得一次抢红包机会)</div>
+                </div>
+                <div class="btn flex-column-center bgc-blue" v-else @click="getred">
+                    抢红包
+                </div>
+            </template>
+            
+            <div class="text-c fsz-12 marb10" v-if="numinfo.number||numinfo.number==0">可抢红包次数{{numinfo.number||0}}</div>
             <div class="fc-grey fsz-12">活动说明：{{info.activity_description}}</div>
         </div>
 
@@ -187,7 +192,15 @@ export default {
                 console.log(res.data, "num");
                 let resdata = res.data;
                 if (resdata.code == 200) {
-                    this.numinfo  = resdata.data
+                    if(resdata.data){
+                        this.numinfo  = resdata.data
+                    }else{
+                        this.numinfo = {
+                            friends_help:null,
+                            number:null,
+                            winning_number:null
+                        }
+                    }
                 } else {
                     Toast(resdata.message);
                 }
@@ -204,8 +217,8 @@ export default {
                 if (resdata.code == 200) {
                     let arr = []
                     for(let v of resdata.data){
-                        let type = v.prize_name==1?'元':v.prize_name==2?'积分':v.prize_name==3?'优惠券':''
-                        arr.push(`恭喜${v.users_phone}用户获得${type=='优惠券'?'':v.prize}${type}。          `)
+                        let type = v.prize==1?'元':v.prize==2?'积分':v.prize==3?'优惠券':''
+                        arr.push(`恭喜${v.users_phone}用户获得${type=='优惠券'?'':v.prize_name}${type}。          `)
                     }
                     this.text = arr.join(' ')
                 } else {

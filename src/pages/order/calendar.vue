@@ -2,7 +2,7 @@
   <div>
     <div class="pd-15 bgc">请选择日期</div>
     <div>
-      <Calendar ref="Calendar" @choseDay="clickDay" @changeMonth="changeDate" :agoDayHide="nowdate" :markDate=arr></Calendar>
+      <Calendar ref="Calendar" :sundayStart="true" @choseDay="clickDay" @changeMonth="changeDate" :agoDayHide="nowdate" :markDate=arr></Calendar>
     </div>
     <div class="fc-red tip pd-15" v-if="type1=='pre'">
       如当前没有您所需要的档期，请选择预租下单，我们将在24小时内

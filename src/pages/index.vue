@@ -30,16 +30,16 @@
 
     <div class="flex-jc-around bgc" v-show="active==0" >
       <div class="tg" @click="gohosting">
-        <img src="../assets/tuoguan.png"> 我要托管
+        <img src="../assets/tuoguan.png"> 托管理财
       </div>
       <div class="tg">
         <router-link to="/extension">
-          <img src="../assets/wytg.png"> 我要推广
+          <img src="../assets/wytg.png"> 推广收佣
         </router-link>
       </div>
       <div class="tg">
         <router-link to="/welfareAgency">
-          <img src="../assets/fls.png"> 福利社
+          <img src="../assets/fls.png"> 领取福利
         </router-link>
       </div>
     </div>

@@ -69,7 +69,7 @@
           <div>
             <!-- <div class="btn1 text-c">领奖励</div> -->
             <!-- <div class="btn2 text-c">已领取</div> -->
-            <div class="btn3 text-c">去完成</div>
+            <div class="btn3 text-c" @click="goshare">去完成</div>
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@
           <div>
             <!-- <div class="btn1 text-c">领奖励</div> -->
             <!-- <div class="btn2 text-c">已领取</div> -->
-            <div class="btn3 text-c">去完成</div>
+            <div class="btn3 text-c"><router-link to="/questionnaire">去完成</router-link></div>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@
           <div>
             <!-- <div class="btn1 text-c">领奖励</div> -->
             <!-- <div class="btn2 text-c">已领取</div> -->
-            <div class="btn3 text-c">去完成</div>
+            <div class="btn3 text-c" @click="wakeUp">去完成</div>
           </div>
         </div>
       </div>
@@ -135,6 +135,10 @@
 
 <script>
 import { Toast,Dialog } from "vant";
+const nativeshare = () => import ('nativeshare') 
+const m_share = () => import ('m-share')
+var NativeShare, mShare
+
 export default {
   data(){
     return{
@@ -152,6 +156,9 @@ export default {
     Dialog.close()
   },
   mounted(){
+    nativeshare().then(res =>  {NativeShare = res.default} )
+    m_share().then(res => {mShare = res})
+
     this.getsignin()
   },
   methods: {
@@ -201,6 +208,41 @@ export default {
     },
     goredpacket(){
       this.$router.push({ path: "/redpacket" });
+    },
+
+    goshare(){
+      Dialog.alert({
+          message: '进入产品详情点击分享按钮，分享给好友即可领取奖励喔。'
+      }).then((e) => {
+
+      });
+    },
+    wakeUp(){
+      let config = {
+        title: '数码租赁',
+        // link: window.location.origin + '#/login?token='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
+        desc:'唤醒好友'
+      }
+      let shareData = {  //nativeShare的参数模型
+          title: config.title,
+          desc: config.desc,
+          // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+          link: config.link,
+          icon: '',
+      }
+      let mShareData = {  //m-share的参数模型
+            title: config.title, 
+            desc: config.desc, 
+            link: config.link, 
+            imgUrl: '', 
+      }
+      let nativeShare = new NativeShare()
+      nativeShare.setShareData(shareData)
+      try {
+        nativeShare.call('wechatFriend')
+      } catch(e) {
+        mShare.to('wx', mShareData)
+      }
     }
   }
 };

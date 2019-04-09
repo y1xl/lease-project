@@ -155,6 +155,9 @@ export default {
       if (url.includes('/rpfriend')) {
         return false
       }
+      if (url.includes('/questionnaire')) {
+        return false
+      }
       
       return true
 

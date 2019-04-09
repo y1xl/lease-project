@@ -12,7 +12,7 @@
                     <van-checkbox :name="item.id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox>
                     <div class="pdl">
                         <div>{{item.name}}</div>
-                        <div v-if="item.number!=1"><van-stepper disable-input :value="item.num" :max="item.number" @change="onchange(index,$event)" /></div>
+                        <div class="stepper" v-if="item.number!=1"><van-stepper disable-input :value="item.num" :max="item.number" @change="onchange(index,$event)" /></div>
                     </div>
                 </div>
             </div>
@@ -125,6 +125,9 @@ export default {
     padding-left: 10px
 }
 
+.stepper >>> .van-stepper__input[disabled] {
+    color: #000;
+}
 .item {
     width: 50%;
     box-sizing: border-box;
