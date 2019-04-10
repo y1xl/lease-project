@@ -6,6 +6,8 @@ import './style/reset.css'
 import './style/common.css'
 import router from './router'
 
+import filter from './utils/filter'
+
 Vue.use(require('vue-wechat-title'))
 
 import axios from "axios"
@@ -15,6 +17,10 @@ Vue.use(VueAxios, axios)
 import Vant from 'vant'
 import 'vant/lib/index.css'
 Vue.use(Vant);
+
+import { Lazyload } from 'vant';
+// options 为可选参数，无则不传
+Vue.use(Lazyload,{lazyComponent:true});
 
 import VueAMap from 'vue-amap';
 Vue.use(VueAMap);
@@ -33,20 +39,6 @@ Vue.prototype.API = ' https://newbeeadmin.zx-xcx.com/'
 // Vue.prototype.API = 'https://admin.newbeerent.com/'
 
 
-Vue.filter('distance', function (value) {
-  if(value < 1000){
-    return value+"m"
-  }else if(value > 1000){
-    return (Math.round(value/100)/10).toFixed(1) + "km"
-  } 
-})
-Vue.filter('nozero', function (value) {
-  if(value.endsWith('.00') ){
-    return value.split('.')[0]
-  }else {
-    return value
-  }
-})
 
 /* eslint-disable no-new */
 new Vue({

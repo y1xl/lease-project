@@ -89,7 +89,7 @@ export default {
             }
         },
         getred(){
-            Toast.loading({ mask: true,message: '加载中...'})
+            Toast.loading({ mask: true,message: '加载中...',duration:0})
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 activity_title: this.info.activity_title

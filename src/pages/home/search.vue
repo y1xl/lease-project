@@ -16,7 +16,7 @@
         @click="toDetail(item.goods_id)"
       >
         <div class="img_box">
-          <img class="sy_img" :src="item.main_img" style="object-fit:contain">
+          <img class="sy_img" v-lazy="item.main_img" style="object-fit:contain">
         </div>
         <div class="f15 pro_name" style="fontWeight: bold">{{item.goods_name}}</div>
         <div class="com_like flex-align-items">

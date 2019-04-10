@@ -16,6 +16,7 @@
                 <img src="../../assets/order-null.png" alt="" class="mar-b-10">
                 <div class="text-c fc-grey">暂无订单</div>
             </div>
+            <lazy-component>
             <buyOrderCard v-for="(item,index) in list" :key="index" :data="item" :active="active">
                 <div class="flex-center border" @click="onshowmodel(item.buyorder_id)" v-if="item.buyorder_status==1">取消订单</div>
                 <div class="flex-center border-blue fc-blue" v-if="item.buyorder_status==1" @click="gopay(item.buyorder_id)">
@@ -27,6 +28,7 @@
                     <router-link v-bind="{to: `/comments/${item.buyorder_id}/${item.goods_id}?type=buyorder`}">评价</router-link>
                 </div>
             </buyOrderCard>
+            </lazy-component>
         </div>
 
         <div class="model full flex-column-center position" v-show="showcode">

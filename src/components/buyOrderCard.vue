@@ -11,7 +11,8 @@
                 <span class="fc-blue" v-if="data.buyorder_status==5">待评价</span>
             </div>
             <div class="flexbox">
-                <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" >
+                <!-- <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" > -->
+                <img v-lazy="data.gd_img" class="goodsimg bgc-grey" >
                 <div class="flex-1 right">
                     <div class="mar-b-10">{{data.goods_name}}</div>
                     <div class="spec mar-b-10"><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>

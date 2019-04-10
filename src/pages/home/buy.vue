@@ -843,7 +843,7 @@ export default {
     },
 
     face(postData){
-      Toast.loading({ mask: true, message: "加载中..." });
+      Toast.loading({ mask: true, message: "加载中...",duration:0 });
       this.axios.post(this.API + "api/Order/AddOrder", postData).then(res => {
         console.log(res.data, "order");
         let resdata = res.data;
@@ -854,6 +854,10 @@ export default {
           Toast.clear();
           Toast(resdata.message||'操作失败');
         }
+      })
+      .catch(error => {
+          Toast.clear()
+          Toast('网络出错')
       });
     },
 

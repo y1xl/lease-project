@@ -22,6 +22,7 @@
         <div class="text-c fc-grey">暂无订单</div>
       </div>
 
+      <lazy-component>
       <OrderCard v-for="(item,index) in list" :key="index" :data="item" :active="active">
         <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
         <div class="flex-center border" @click="onshowDelivery(item.order_id)" v-if="item.order_status==12&&item.users_surrender_id==0">取消订单</div>
@@ -46,6 +47,7 @@
         <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping(item.order_id)">购买</div> 
       </OrderCard> 
+      </lazy-component>
 
       <!-- <OrderCard status="待评价" v-show="active==5">
          <div class="flex-center border-blue fc-blue">

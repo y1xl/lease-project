@@ -6,11 +6,17 @@
       </div>
     </div>
     <div id="pro-list">
-      <van-list v-model="loading" :finished="finished" @load="onLoad" class="flex-wrap bgc">
+      <van-list 
+      v-model="loading" 
+      :finished="finished" 
+      @load="onLoad" 
+      class="flex-wrap bgc">
+        
         <div v-for="(item,index) in goodslist" :key="index" @click="toDetail(item.goods_id)">
           <div class="item">
             <div class="flex-jc-center img_b1 mar-b-10">
-              <img class="img" :src="item.gd_img[0]" style="object-fit:contain">
+              <!-- <img class="img" :src="item.gd_img[0]" style="object-fit:contain"> -->
+              <img class="img" v-lazy="item.gd_img[0]" style="object-fit:contain">
             </div>
             <div class="text-line pro_title mar-b-10 fs">{{item.goods_name}}</div>
             <div class="fss mar-b-10">
@@ -19,6 +25,7 @@
             </div>
           </div>
         </div>
+
       </van-list>
       <div class="text-c fc-grey pd-15 bgc fsz-12" v-show="finished">没有更多了</div>
     </div>
@@ -39,6 +46,7 @@ export default {
       goodslist: [],
       loading: false,
       finished: false,
+      // error: false,
       page: 0,
       adpic_img: ""
     };
@@ -80,7 +88,6 @@ export default {
             // 加载状态结束
             this.loading = false;
             if (resdata.data.length < 10) {
-              // this.loading = false;
               this.finished = true;
             }
           } else {
@@ -91,6 +98,7 @@ export default {
         })
         .catch(error => {
             Toast('网络出错')
+            // this.error = true;
         });
     }
   },
@@ -100,6 +108,7 @@ export default {
         this.goodslist=[]
         this.loading= false
         this.finished= false
+        // this.error = false
         this.page= 0
         this.onLoad()
      }

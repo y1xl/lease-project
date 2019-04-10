@@ -111,7 +111,7 @@ export default {
         submit(){
             if(this.radio==1){
                 // Toast('微信功能未开通')
-                Toast.loading({ mask: true,message: '加载中...'})
+                Toast.loading({ mask: true,message: '加载中...',duration:0})
                 let postData = this.$qs.stringify({
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     order_id : this.$route.params.orderid,
@@ -141,7 +141,7 @@ export default {
             }
             if(this.radio==2){
                 // Toast('支付宝功能未开通')
-                Toast.loading({ mask: true,message: '加载中...'})
+                Toast.loading({ mask: true,message: '加载中...',duration:0})
                 let postData = this.$qs.stringify({
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     order_id : this.$route.params.orderid,
@@ -171,7 +171,7 @@ export default {
                 });
             }
             if(this.radio==3){
-                Toast.loading({ mask: true,message: '加载中...'})
+                Toast.loading({ mask: true,message: '加载中...',duration:0})
                 let postData = this.$qs.stringify({
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     order_id : this.$route.params.orderid,

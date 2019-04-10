@@ -842,7 +842,7 @@ export default {
     },
 
     face(postData){
-      Toast.loading({ mask: true, message: "加载中..." });
+      Toast.loading({ mask: true, message: "加载中...",duration:0 });
       this.axios.post(this.API + "api/Order/AddOrder", postData).then(res => {
         console.log(res.data, "order");
         let resdata = res.data;

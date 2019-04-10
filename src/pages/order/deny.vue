@@ -47,7 +47,7 @@ export default {
                 return
             }
 
-            Toast.loading({ mask: true,message: '加载中...'})
+            Toast.loading({ mask: true,message: '加载中...',duration:0})
             let config = {
                 headers:{'Content-Type':'multipart/form-data'}
             }

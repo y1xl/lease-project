@@ -111,7 +111,7 @@ export default {
       });
 
       if (this.$route.params.id) {
-        Toast.loading({ mask: true, message: "加载中..." });
+        Toast.loading({ mask: true, message: "加载中...",duration:0 });
         this.axios
           .post(this.API + "api/Lease/Ads_Update", postData)
           .then(res => {
@@ -126,7 +126,7 @@ export default {
             }
           });
       } else {
-        Toast.loading({ mask: true, message: "加载中..." });
+        Toast.loading({ mask: true, message: "加载中...",duration:0 });
         this.axios.post(this.API + "api/Lease/Add_ads", postData).then(res => {
           console.log(res.data, "add");
           let resdata = res.data;

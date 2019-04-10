@@ -64,7 +64,8 @@
                     :key="index"
                   >
                     <div class="img_box2 flex-center">
-                      <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
+                      <!-- <img class="img" :src="goods.main_img" style="object-fit:contain"> -->
+                      <img class="img" v-lazy="goods.main_img" style="object-fit:contain">
                     </div>
                     <div class="fs newline goods_name pdlr5" style="fontWeight: bold;">{{goods.goods_name}}</div>
                     <div class="pdlr5 fss" >     
@@ -88,7 +89,8 @@
                 :key="index"
               >
                 <div class="img_box2 flex-center">
-                  <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
+                  <!-- <img class="img" :src="goods.main_img" style="object-fit:contain"> -->
+                  <img class="img" v-lazy="goods.main_img" style="object-fit:contain">
                 </div>
                 <div class="fs newline goods_name pdlr5" style="fontWeight: bold;">{{goods.goods_name}}</div>              
                 <div class="f12 pdlr5 fss">     
@@ -101,29 +103,32 @@
 
           <div class="bgc">
             <div class="title">所有产品</div>
-            <div
-              class="fl_pro_list mar-b-10"
-              v-for="(item, index) in goodslist"
-              :key="index"
-              @click="toDetail(item.goods_id)"
-            >
-              <div class="img_box">
-                <img class="sy_img" :src="item.main_img" style="object-fit:contain" alt="商品">
-              </div>
-              <div class="f15 pro_name" style="fontWeight: bold">{{item.goods_name}}</div>
-              <div class="com_like flex-align-items">
-                <van-rate v-model="item.eva_score" disabled disabled-color="#FFB10E" :size="size"/>
-                <span class="fs pl5">{{item.eva_score}}</span>
+            <lazy-component>
+              <div
+                class="fl_pro_list mar-b-10"
+                v-for="(item, index) in goodslist"
+                :key="index"
+                @click="toDetail(item.goods_id)"
+              >
+                <div class="img_box">
+                  <!-- <img class="sy_img" :src="item.main_img" style="object-fit:contain"> -->
+                  <img class="sy_img" v-lazy="item.main_img" style="object-fit:contain">
+                </div>
+                <div class="f15 pro_name" style="fontWeight: bold">{{item.goods_name}}</div>
+                <div class="com_like flex-align-items">
+                  <van-rate v-model="item.eva_score" disabled disabled-color="#FFB10E" :size="size"/>
+                  <span class="fs pl5">{{item.eva_score}}</span>
 
-                <img class="chat" src="../assets/chat.png">
-                <span class="fs pl5">{{item.eva_num}}</span>
+                  <img class="chat" src="../assets/chat.png">
+                  <span class="fs pl5">{{item.eva_num}}</span>
+                </div>
+                <div class="zj fs">
+                  <span>租金:</span>
+                  低至
+                  <span style="color: #f21e1e;">¥<span class="price">{{item.hire_price.price}}</span></span><span>/{{item.hire_price.unt}}</span>
+                </div>
               </div>
-              <div class="zj fs">
-                <span>租金:</span>
-                低至
-                <span style="color: #f21e1e;">¥<span class="price">{{item.hire_price.price}}</span></span><span>/{{item.hire_price.unt}}</span>
-              </div>
-            </div>
+            </lazy-component>
           </div>
 
           <div

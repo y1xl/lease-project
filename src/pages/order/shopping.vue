@@ -609,7 +609,7 @@ export default {
       }
 
       if(this.selected==2){
-        Toast.loading({ mask: true, message: "加载中..." });
+        Toast.loading({ mask: true, message: "加载中...",duration:0 });
         let postData = this.$qs.stringify({
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           type: this.selected,
