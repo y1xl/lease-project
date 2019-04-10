@@ -29,7 +29,7 @@
         <div class="zj fs">
           <span>租金：</span>
           低至
-          <span class="price">¥{{item.hire_price.price}}</span><span>/{{item.hire_price.unt}}</span>
+          <span style="color: #f21e1e;">¥<span class="price">{{item.hire_price.price}}</span></span><span>/{{item.hire_price.unt}}</span>
         </div>
       </div>
     </div>

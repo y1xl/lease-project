@@ -208,7 +208,7 @@ export default new Router({
     { path: '/gohosting', component: Gohosting, meta: { title: '我要托管' } },
     { path: '/steps2', component: Steps2, meta: { title: '我要托管' } },
     { path: '/fittingsConfirm', component: Fittings, meta: { title: '配件确认' } },
-    { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片' } },
+    { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片', keepAlive: true, isBack: false } },
     { path: '/gsuccessful', component: Gsuccessful, meta: { title: '提交成功' } },
 
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管', keepAlive: true, isBack: false } },

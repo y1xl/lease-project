@@ -155,7 +155,7 @@
 
         <div>
           <div class="title flex-jc-between position">
-            <span>应付总金额</span>
+            <span>应付总额</span>
             <span class="fc-red">¥{{data.total_price||'0.00'}}</span>
             <div class="l dot"></div>
             <div class="r dot"></div>
@@ -538,6 +538,7 @@ export default {
     },
     goshopping(id){
       window.sessionStorage.removeItem('shoppingSession');
+      window.sessionStorage.removeItem('wxshoppingSession');
       this.$router.push({ path: "/shopping/"+id });
     },
     gorefund(id){

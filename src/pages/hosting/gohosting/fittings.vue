@@ -8,6 +8,8 @@
 
         <van-checkbox-group v-model="result">
             <div class="bgc pd-15 flex-wrap">
+                <div class="fc-grey" v-if="list.length==0">暂无配件</div>
+
                 <div v-for="(item, index) in list" :key="index" class="flex-align-items item" >
                     <van-checkbox :name="item.id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox>
                     <div class="pdl">

@@ -288,6 +288,7 @@ export default {
     },
     goshopping(id){
       window.sessionStorage.removeItem('shoppingSession');
+      window.sessionStorage.removeItem('wxshoppingSession');
       this.$router.push({ path: "/shopping/"+id });
     },
     gorefund(id){

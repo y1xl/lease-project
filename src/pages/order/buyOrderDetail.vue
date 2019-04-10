@@ -129,7 +129,7 @@
 
         <div>
           <div class="title flex-jc-between position">
-            <span>应付总金额</span>
+            <span>应付总额</span>
             <span class="fc-red">¥{{data.total_price||'0.00'}}</span>
             <div class="l dot"></div>
             <div class="r dot"></div>

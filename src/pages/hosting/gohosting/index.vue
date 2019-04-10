@@ -11,7 +11,7 @@
 
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showtype=true">
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">品类</div>
+                    <!-- <div class="mar-b-10 fc-grey">品类</div> -->
                     <div class="fc-grey" v-if="typetext==''">请选择托管品类</div>
                     <div v-else>{{typetext.cate_name}}</div>
                 </div>
@@ -19,7 +19,7 @@
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="onshowbrand">
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">品牌</div>
+                    <!-- <div class="mar-b-10 fc-grey">品牌</div> -->
                     <div class="fc-grey" v-if="brandtext==''">请选择品牌</div>
                     <div v-else>{{brandtext.brand_name}}</div>
                 </div>
@@ -27,30 +27,30 @@
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15"  @click="onshowmodel">
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">型号</div>
+                    <!-- <div class="mar-b-10 fc-grey">型号</div> -->
                     <div class="fc-grey" v-if="modeltext==''">请选择型号</div>
                     <div v-else>{{modeltext.model_name}}</div>
                 </div>
                 <van-icon name="arrow" />
             </div>
+            <div class="flex-jc-between flex-align-items bgc pd-15" @click="shownomodel=true">
+                <div class="flex-1">
+                    <div class="fc-grey">如清单列表没有您的设备，请手动输入</div>
+                </div>
+                <van-icon name="arrow" />
+            </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" >
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">颜色</div>
+                    <!-- <div class="mar-b-10 fc-grey">颜色</div> -->
                     <input style="width:100%" type="text" placeholder="请输入颜色，例:黑色" v-model.trim="colortext">
                 </div>
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15 mar-b-10" >
-                <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">数量</div>
-                    <div class="fc-grey">1</div>
+                <div class="flex-1 fc-grey">
+                    <!-- <div class="mar-b-10 fc-grey">数量</div>
+                    <div class="fc-grey">1</div> -->
+                    <span>数量</span><span class="pdl">1</span>
                 </div>
-            </div>
-
-            <div class="flex-jc-between flex-align-items bgc pd-15" @click="shownomodel=true">
-                <div class="flex-1">
-                    <div class="fc-grey">如我的设备这里没有，可手动输入</div>
-                </div>
-                <van-icon name="arrow" />
             </div>
 
             <div class="pd-15">
@@ -71,7 +71,7 @@
         <div v-show="active==1">
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showtype1=true">
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">品类</div>
+                    <!-- <div class="mar-b-10 fc-grey">品类</div> -->
                     <div class="fc-grey" v-if="typetext1==''">请选择托管品类</div>
                     <div v-else>{{typetext1.cate_name}}</div>
                 </div>
@@ -79,13 +79,13 @@
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" >
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">托管设备金额</div>
+                    <!-- <div class="mar-b-10 fc-grey">托管设备金额</div> -->
                     <input style="width:100%" type="text" placeholder="请输入托管金额" v-model.trim="figureval">
                 </div>
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showequipment=true">
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">设备类型</div>
+                    <!-- <div class="mar-b-10 fc-grey">设备类型</div> -->
                     <div class="fc-grey" v-if="equipmenttext==''">请选择设备类型</div>
                     <div v-else>{{equipmenttext}}</div>
                 </div>
@@ -93,7 +93,7 @@
             </div>
             <div class="flex-jc-between flex-align-items bgc pd-15" @click="showpay=true">
                 <div class="flex-1">
-                    <div class="mar-b-10 fc-grey">支付方式</div>
+                    <!-- <div class="mar-b-10 fc-grey">支付方式</div> -->
                     <div class="fc-grey" v-if="paytext==''">请选择支付方式</div>
                     <div v-else>{{paytext}}</div>
                 </div>
@@ -149,25 +149,25 @@
                 
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
                     <div class="flex-1">
-                        <div class="mar-b-10 fc-grey">品类</div>
+                        <!-- <div class="mar-b-10 fc-grey">品类</div> -->
                         <input style="width:100%" type="text" placeholder="请输入托管品类" v-model.trim="notypetext">
                     </div>
                 </div>
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
                     <div class="flex-1">
-                        <div class="mar-b-10 fc-grey">品牌</div>
+                        <!-- <div class="mar-b-10 fc-grey">品牌</div> -->
                         <input style="width:100%" type="text" placeholder="请输入品牌" v-model.trim="nobrandtext">
                     </div>
                 </div>
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
                     <div class="flex-1">
-                        <div class="mar-b-10 fc-grey">型号</div>
+                        <!-- <div class="mar-b-10 fc-grey">型号</div> -->
                         <input style="width:100%" type="text" placeholder="请输入型号"  v-model.trim="nomodeltext">
                     </div>
                 </div>
                 <div class="flex-jc-between flex-align-items bgc pd-15" >
                     <div class="flex-1">
-                        <div class="mar-b-10 fc-grey">颜色</div>
+                        <!-- <div class="mar-b-10 fc-grey">颜色</div> -->
                         <input style="width:100%" type="text" placeholder="请输入颜色，例:黑色" v-model.trim="colortext">
                     </div>
                 </div>
@@ -526,6 +526,9 @@ export default {
 }
 .fsz12 {
     font-size: 12px
+}
+.pdl{
+    padding-left: 30px
 }
 .btn {
   height: 42px;

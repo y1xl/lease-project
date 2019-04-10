@@ -2,7 +2,8 @@
     <div>
         <div class="pd-15 fc-grey bgc">请上传产品相关照片</div>
         
-        <div class="box bgc flex-jc-between" >
+        <div class="bgc">
+        <div class="box flex-jc-between" >
             <div>
                 <div class="uploadimg bgc flex-center" v-if="!fileimg1">
                     <van-uploader :after-read="onRead1" accept="image/png, image/jpeg" multiple>
@@ -34,7 +35,7 @@
         </div>
         <div class="fc-grey pd-lr-15 bgc fsz12 mar-b-10">(配件分开摆放整齐，清晰可见)</div>
 
-        <div class="box bgc flex-jc-between">
+        <div class="box flex-jc-between">
             <div>
                 <div class="uploadimg bgc flex-center" v-if="!fileimg3">
                     <van-uploader :after-read="onRead3" accept="image/png, image/jpeg" multiple>
@@ -64,16 +65,17 @@
                 <div class="text-c btext">上传产品损坏处的照片</div>
             </div>
         </div>
-        <div class="fc-grey pd-lr-15 bgc fsz12">(收到设备时会根据照片核实成色)</div>
+        <div class="fc-grey pd-lr-15 bgc fsz12 pdb">(收到设备时会根据照片核实成色)</div>
+        </div>
 
-        <div class="bgc pd-15">
+        <!-- <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">序列号</div>
             <input style="width:100%" type="text" placeholder="请填写产品序列号" v-model.trim="serialnumval">
         </div>
         <div class="bgc pd-15">
             <div class="mar-b-10 fc-grey">联系方式</div>
             <input style="width:100%" type="number" placeholder="请填写联系方式" v-model.trim="telval">
-        </div>
+        </div> -->
 
         <div class="pd-15"><div class="btn text-c" @click="onshowmodel">提交</div></div>
 
@@ -93,6 +95,7 @@
                 <div class="flex-jc-between pd"><span class="fc-grey">购买价格</span><span>￥{{gohostingSession.priceval}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">外观成色</span><span>{{gohostingSession.colourtext}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">功能状况</span><span>{{gohostingSession.statetext}}</span></div>
+                <div class="flex-jc-between pd"><span class="fc-grey">序列号</span><span>{{gohostingSession.serialnumval}}</span></div>
                 <div class="flex-jc-between pd"><span class="fc-grey">联系方式</span><span>{{gohostingSession.telval}}</span></div>
                 <div class="imglist flex-jc-between pd">
                     <img :src="fileimg1.content" alt="">
@@ -118,37 +121,39 @@
 <script>
 import { Toast } from "vant";
 export default {
+    beforeRouteEnter(to, from, next) {
+        if(from.meta.title === '协议'||from.meta.title === '配件确认') {
+            to.meta.isBack = true;
+        }
+        next();
+    },
     data(){
         return{
             fileimg1:null,
             fileimg2:null,
             fileimg3:null,
             fileimg4:null,
-            serialnumval:'',
-            telval:'',
+            // serialnumval:'',
+            // telval:'',
             isconsent: true,
             showmodel: false,
             gohostingSession: {}
         }
     },
-    watch:{
-        serialnumval(){
-            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.serialnumval = this.serialnumval
-            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
-        },
-        telval(){
-            let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.telval = this.telval
-            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
-        }
-    },
+    // watch:{
+    //     serialnumval(){
+    //         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+    //         gohostingSession.serialnumval = this.serialnumval
+    //         window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+    //     },
+    //     telval(){
+    //         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+    //         gohostingSession.telval = this.telval
+    //         window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+    //     }
+    // },
     created(){
-        let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-        if(gohostingSession){
-            this.serialnumval = gohostingSession.serialnumval
-            this.telval = gohostingSession.telval
-        }
+        this.isFirstEnter = true;
     },
     methods:{
         onRead1(file) {
@@ -189,21 +194,8 @@ export default {
                 Toast("请上传产品相关照片");
                 return;
             }
-            if(this.serialnumval == ""){
-                Toast("请填写产品序列号");
-                return;
-            }
-            if(this.telval == ""){
-                Toast("请填写联系方式");
-                return;
-            }
-            if (!(/^1\d{10}$/.test(this.telval))) {
-                Toast("手机号格式不正确");
-                return;
-            }
             
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             console.log(gohostingSession,'gohostingSession') 
 
             this.gohostingSession = gohostingSession
@@ -237,7 +229,7 @@ export default {
                 let config = {
                     headers:{'Content-Type':'multipart/form-data'}
                 }
-                Toast.loading({ mask: true,message: '加载中...'})
+                Toast.loading({ mask: true,message: '加载中...',duration:0})
                 
                 let formData = new FormData()
                 formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
@@ -281,7 +273,20 @@ export default {
             }
             
         }
-    }
+    },
+    activated() {
+        if(!this.$route.meta.isBack || this.isFirstEnter){
+            this.fileimg1 = null,
+            this.fileimg2 = null,
+            this.fileimg3 = null,
+            this.fileimg4 = null,
+            this.isconsent =  true,
+            this.showmodel =  false,
+            this.gohostingSession =  {}
+        }
+        this.$route.meta.isBack=false
+        this.isFirstEnter=false;
+    },
 }
 </script>
 
@@ -294,6 +299,9 @@ export default {
 }
 .pd{
     padding: 10px;
+}
+.pdb{
+    padding-bottom: 10px
 }
 .btn {
   height: 42px;

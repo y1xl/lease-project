@@ -4,8 +4,6 @@
             <div class="text-c">您的可用额度(元)</div>
             <div class="text-c num">{{info.users_money||'0'}}</div>
             <div class="text-c marb20"><router-link class="lines" to="/certification">提升额度</router-link></div>
-            <!-- <div class="text-c fsz12">保险费{{info.order_safe||'-'}}元</div>
-            <div class="text-c fsz12">总租金{{info.order_rental||'-'}}元</div> -->
             <div class="text-c mar-b-10 fsz12">保险费{{info.order_safe||'-'}}元，总租金{{info.order_rental||'-'}}元，总押金{{info.order_total_rent||'-'}}元</div>
             <div class="text-c">您需支付<span class="fc-red"> ¥{{info.total_price||'-'}}</span></div>
         </div>
@@ -13,10 +11,10 @@
         <div class="bgc">
             <div class="border-b pd-15">请选择支付方式</div>
             <van-radio-group v-model="radio">
-                <!-- <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
+                <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
                     <div><img src="../../assets/weixin.png" alt="微信" class="payimg">微信</div>
                     <van-radio name="1" checked-color="#2DBBF1"></van-radio>
-                </div> -->
+                </div>
                 <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
                     <div><img src="../../assets/ali.png" alt="支付宝" class="payimg">支付宝</div>
                     <van-radio name="2" checked-color="#2DBBF1"></van-radio>

@@ -49,7 +49,7 @@
         <van-tab title="热门">
           <div v-for="(item,key) in indexlist" :key="key">
             <div class="flex-jc-between flex-align-items ">
-              <div class="indextitle f12">{{item.scene_name}}</div>
+              <div class="indextitle">{{item.scene_name}}</div>
               <div class="m_txt flex-align-items" @click="more(item.scene_id)">更多
                 <van-icon name="arrow"/>
               </div>
@@ -66,7 +66,7 @@
                     <div class="img_box2 flex-center">
                       <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
                     </div>
-                    <div class="text-line pro_name pdlr5 fs" style="fontWeight: bold">{{goods.goods_name}}</div>
+                    <div class="fs newline goods_name pdlr5" style="fontWeight: bold;">{{goods.goods_name}}</div>
                     <div class="pdlr5 fss" >     
                       低至
                       <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
@@ -90,7 +90,7 @@
                 <div class="img_box2 flex-center">
                   <img class="img" :src="goods.main_img" style="object-fit:contain" alt="商品">
                 </div>
-                <div class="text-line pro_name pdlr5 fs">{{goods.goods_name}}</div>
+                <div class="fs newline goods_name pdlr5" style="fontWeight: bold;">{{goods.goods_name}}</div>              
                 <div class="f12 pdlr5 fss">     
                   低至
                   <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
@@ -121,7 +121,7 @@
               <div class="zj fs">
                 <span>租金:</span>
                 低至
-                <span class="price">¥{{item.hire_price.price}}</span><span>/{{item.hire_price.unt}}</span>
+                <span style="color: #f21e1e;">¥<span class="price">{{item.hire_price.price}}</span></span><span>/{{item.hire_price.unt}}</span>
               </div>
             </div>
           </div>
@@ -317,23 +317,24 @@ export default {
 };
 </script>
 
-<style>
-#nav .van-tabs__line {
+<style scoped>
+#nav >>> .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
-#banner .van-swipe {
+#nav >>> .van-tab {
+  /* flex: 0 0 20%; */
+  flex-basis: 20% !important;
+}
+#banner >>> .van-swipe {
   border-radius: 5px;
 }
-#sear .van-search{
+#sear >>> .van-search{
   padding: 0;
 }
-#sear .van-cell {
+#sear >>> .van-cell {
   background: #f6f5f5;
 }
-</style>
-
-<style scoped>
 .myamap{
   opacity: 0;
 }
@@ -421,15 +422,16 @@ export default {
 }
 .indextitle {
   padding: 0 14px;
-  padding-top: 5px;
+  padding-top: 9px;
   letter-spacing:2px;
+  font-size: 13px;
 }
 
 .m_txt {
   font-size: 8px;
   color: #d0d0d0;
   padding: 0 14px;
-  padding-top: 5px;
+  padding-top: 9px;
 }
 
 .cp_box {
@@ -512,8 +514,8 @@ export default {
   white-space: nowrap;
   overflow-x:scroll;
   overflow-y:hidden;
-  display: inline;
-  float:left;
+  /* display: inline; */
+  /* float:left; */
   padding-top:5px;
 }
 .indexbox > div {
@@ -528,8 +530,13 @@ export default {
   display: inline-block;
   box-shadow: 0px 0px 4px 1px #DAD7D7;
   box-sizing: border-box;
+  vertical-align:top;
 }
-
+.indexitem .goods_name {
+  /* width: 90px; */
+  white-space: normal;
+  margin-bottom: 5px;
+}
 
 /*分类 所有产品*/
 .fl_pro_list {

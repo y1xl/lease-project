@@ -69,10 +69,10 @@
     </div>
 
     <div class="bgc" style="margin-top:10px;">
-      <van-cell is-link @click="discountmodel = true" :border="false" >
+      <van-cell is-link @click="discountlist.length==0?'':discountmodel = true" :border="false" >
         <template slot="title">
           <span class="lab">活动</span>
-          <span class="custom-text">{{discountlist.length==0?'':discountlist[0].activity_name}}</span>
+          <span class="custom-text">{{discountlist.length==0?'无':discountlist[0].activity_name}}</span>
         </template>
       </van-cell>
       <div class="flex-jc-around duo_mian border-t">

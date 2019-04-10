@@ -2,19 +2,19 @@
   <div>
     <div class="flex-jc-between flex-align-items bgc pd-15" @click="showdate=true">
       <div class="flex-1">
-        <div class="mar-b-10 fc-grey">购买时间</div>
+        <!-- <div class="mar-b-10 fc-grey">购买时间</div> -->
         <div class="fc-grey" v-if="datetext==''">请选择购买时间</div>
         <div v-else>{{`${datetext[0]}-${datetext[1]}-${datetext[2]}`}}</div>
       </div>
       <van-icon name="arrow"/>
     </div>
     <div class="bgc pd-15">
-      <div class="mar-b-10 fc-grey">购买价格</div>
+      <!-- <div class="mar-b-10 fc-grey">购买价格</div> -->
       <input style="width:100%" type="number" placeholder="请输入购买价格" v-model.trim.number="priceval">
     </div>
     <div class="flex-jc-between flex-align-items bgc pd-15" @click="showcolour=true">
       <div class="flex-1">
-        <div class="mar-b-10 fc-grey">外观成色</div>
+        <!-- <div class="mar-b-10 fc-grey">外观成色</div> -->
         <div class="fc-grey" v-if="colourtext==''">请选择外观成色</div>
         <div v-else>{{colourtext}}</div>
       </div>
@@ -29,7 +29,7 @@
     />
     <div class="flex-jc-between flex-align-items bgc pd-15" @click="showstate=true">
       <div class="flex-1">
-        <div class="mar-b-10 fc-grey">功能状况</div>
+        <!-- <div class="mar-b-10 fc-grey">功能状况</div> -->
         <div class="fc-grey" v-if="statetext==''">请选择功能状况</div>
         <div v-else>{{statetext}}</div>
       </div>
@@ -37,6 +37,14 @@
     </div>
     <div class="bgc pd-15" v-show="statetext=='不正常（说明原因）'">
       <input style="width:100%" type="text" placeholder="请输入说明原因" v-model.trim="causetext">
+    </div>
+    <div class="bgc pd-15">
+        <!-- <div class="mar-b-10 fc-grey">序列号</div> -->
+        <input style="width:100%" type="text" placeholder="请填写产品序列号" v-model.trim="serialnumval">
+    </div>
+    <div class="bgc pd-15">
+        <!-- <div class="mar-b-10 fc-grey">联系方式</div> -->
+        <input style="width:100%" type="number" placeholder="请填写联系方式" v-model.trim="telval">
     </div>
 
     <div class="pd-15">
@@ -95,7 +103,9 @@ export default {
       //不正常（说明原因
       causetext:'',
 
-      priceval: ""
+      priceval: "",
+      serialnumval:'',
+      telval:''
     };
   },
   created() {
@@ -109,6 +119,8 @@ export default {
       this.statetext = gohostingSession.statetext;
       this.priceval = gohostingSession.priceval;
       this.causetext = gohostingSession.causetext;
+      this.serialnumval = gohostingSession.serialnumval;
+      this.telval = gohostingSession.telval;
     }
   },
   methods: {
@@ -152,6 +164,18 @@ export default {
         Toast("请输入说明原因");
         return;
       }
+      if(this.serialnumval == ""){
+          Toast("请填写产品序列号");
+          return;
+      }
+      if(this.telval == ""){
+          Toast("请填写联系方式");
+          return;
+      }
+      if (!(/^1\d{10}$/.test(this.telval))) {
+          Toast("手机号格式不正确");
+          return;
+      }
 
       let gohostingSession = JSON.parse(
         window.sessionStorage.getItem("gohostingSession")
@@ -162,6 +186,8 @@ export default {
       gohostingSession.statetext = this.statetext;
       gohostingSession.priceval = this.priceval;
       gohostingSession.causetext = this.causetext;
+      gohostingSession.serialnumval = this.serialnumval;
+      gohostingSession.telval = this.telval;
       window.sessionStorage.setItem(
         "gohostingSession",
         JSON.stringify(gohostingSession)

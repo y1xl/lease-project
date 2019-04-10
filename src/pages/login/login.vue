@@ -194,7 +194,7 @@ input {
   top: 20px;
 }
 .disan_box {
-  margin: 100px 0 20px 0;
+  margin: 50px 0 20px 0;
 }
 
 .btn {

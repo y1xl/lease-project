@@ -21,13 +21,6 @@
     </div>
 
     <template v-if="selected==1">
-      <!-- <div class="flex-jc-between pd-15 bgc border-b flex-align-items">
-        <span>规格参数</span>
-        <span class="flex-align-items fc-grey fsz12">
-          {{guiges}}
-          <van-icon name="arrow"/>
-        </span>
-      </div> -->
 
       <div class="bgc">
         <div class="pd-15">取货方式</div>
@@ -130,12 +123,12 @@
     <div class="bgc">
       <div class="border-b pd-15">请选择支付方式</div>
       <van-radio-group v-model="radio">
-        <!-- <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
+        <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
           <div>
             <img src="../../assets/weixin.png" alt="微信" class="payimg">微信
           </div>
           <van-radio name="1" checked-color="#2DBBF1"></van-radio>
-        </div> -->
+        </div>
         <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
           <div>
             <img src="../../assets/ali.png" alt="支付宝" class="payimg">支付宝
@@ -198,6 +191,14 @@
       </div>
     </van-actionsheet>
 
+    <van-popup v-model="showWXpay" :close-on-click-overlay='false'>
+        <div class="wxbox">
+            <p class="text-c border-b">请确认微信支付是否完成</p>
+            <p class="text-c fc-red border-b" @click="goback">已完成支付</p>
+            <p class="text-c fc-grey" @click="showWXpay = false">支付遇到问题，重新支付</p>
+        </div>
+    </van-popup>
+
   </div>
 </template>
 
@@ -236,6 +237,7 @@ export default {
       couponindex: '', //优惠券
       couponid:'', //优惠券
       couponlist: [], //优惠券
+      showWXpay:false,
     };
   },
   watch:{
@@ -273,6 +275,12 @@ export default {
   },
 
   created() {
+    let wxshoppingSession = JSON.parse(window.sessionStorage.getItem("wxshoppingSession"))
+    if(wxshoppingSession){
+        if(wxshoppingSession.orderid==this.$route.params.id){
+            this.showWXpay = wxshoppingSession.state
+        }
+    }
     this.isFirstEnter = true;
   },
   mounted() {    
@@ -280,6 +288,9 @@ export default {
     this.getdefaultaddress();
   },
   methods: {
+    goback(){
+        this.$router.go(-1);
+    },
     calculateRules(){
       if(this.selected==1){
         // console.log(1)
@@ -530,6 +541,30 @@ export default {
           });
         }
 
+        if(this.radio==1){
+          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          .then(res => {
+              console.log(res.data, "wxpay");
+              let resdata = res.data;
+              if (resdata.code == 200) {
+                  Toast.clear();
+                  let wxbuypaySession = {
+                      orderid:this.$route.params.id,
+                      state: true
+                  }
+                  window.sessionStorage.setItem("wxshoppingSession", JSON.stringify(wxshoppingSession))
+                  window.location.href = resdata.data
+              } else {
+                  Toast.clear();
+                  Toast(resdata.message);
+              }
+          })
+          .catch(error => {
+              Toast.clear()
+              Toast('网络出错')
+          });
+        }
+
         if(this.radio==2){
           this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
@@ -595,11 +630,35 @@ export default {
           coupons_id:''
         });
 
+        if(this.radio==1){
+          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          .then(res => {
+              console.log(res.data, "wxpay");
+              let resdata = res.data;
+              if (resdata.code == 200) {
+                  Toast.clear();
+                  let wxbuypaySession = {
+                      orderid:this.$route.params.id,
+                      state: true
+                  }
+                  window.sessionStorage.setItem("wxshoppingSession", JSON.stringify(wxshoppingSession))
+                  window.location.href = resdata.data
+              } else {
+                  Toast.clear();
+                  Toast(resdata.message);
+              }
+          })
+          .catch(error => {
+              Toast.clear()
+              Toast('网络出错')
+          });
+        }
+
         if(this.radio==2){
           this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
               console.log(res.data, "alipay");
-              window.sessionStorage.removeItem("wxpaySession");
+              window.sessionStorage.removeItem("wxshoppingSession");
               Toast.clear()
               
               const form = res.data;
@@ -665,9 +724,16 @@ export default {
       this.couponid='' //优惠券
       this.couponlist= [] //优惠券
       this.sum = 0
+      this.showWXpay = false
       this.getinfo()
       this.getdefaultaddress()
      }else{
+      let wxshoppingSession = JSON.parse(window.sessionStorage.getItem("wxshoppingSession"))
+      if(wxshoppingSession){
+          if(wxshoppingSession.orderid==this.$route.params.id){
+              this.showWXpay = wxshoppingSession.state
+          }
+      }
       let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
       if(shoppingSession){
         this.datechoose = shoppingSession.getdate
@@ -791,5 +857,12 @@ export default {
 .limit {
   font-size: 10px;
   color: #aeaeae;
+}
+
+.wxbox {
+    width: 200px;
+}
+.wxbox > p {
+    padding: 10px 0;
 }
 </style>

@@ -21,8 +21,8 @@
             </van-checkbox-group>
         </div>
         <div class="problems">
-            <div class="name">1、	你最想体验的数码产品是什么？</div>
-            <div class="textarea"><textarea class="border" rows="4" v-model.trim="problems3"></textarea></div>
+            <div class="name">10、	你最想体验的数码产品是什么？</div>
+            <div class="textarea"><textarea class="border" rows="4" v-model.trim="problems10"></textarea></div>
         </div>
 
         <div class="pd-15">
@@ -32,13 +32,24 @@
 </template>
 
 <script>
+import { Toast,Dialog } from "vant";
 export default {
     data(){
         return {
             problems1:'',
-            problems2:[],
-            problems3:''
+            problems2:'',
+            problems3:'',
+            problems4:'',
+            problems5:'',
+            problems6:'',
+            problems7:'',
+            problems8:'',
+            problems9:'',
+            problems10:''
         }
+    },
+    created(){
+        this.problems2 = []
     }
 }
 </script>

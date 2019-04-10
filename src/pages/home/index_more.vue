@@ -15,7 +15,7 @@
             <div class="text-line pro_title mar-b-10 fs">{{item.goods_name}}</div>
             <div class="fss mar-b-10">
               低至
-              <span class="price">￥{{item.hire_price.price}}</span><span>/{{item.hire_price.unt}}</span>
+              <span style="color: #f21e1e;">￥<span class="price">{{item.hire_price.price}}</span></span><span>/{{item.hire_price.unt}}</span>
             </div>
           </div>
         </div>
