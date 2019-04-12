@@ -749,9 +749,6 @@ export default {
 .express .item {
   padding: 10px;
 }
-.express .item > span:nth-of-type(1){
-    width: 50px;
-}
 
 .model {
   position: fixed;

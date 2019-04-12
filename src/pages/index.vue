@@ -328,7 +328,6 @@ export default {
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
 #nav >>> .van-tab {
-  /* flex: 0 0 20%; */
   flex-basis: 20% !important;
 }
 #banner >>> .van-swipe {

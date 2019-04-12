@@ -59,7 +59,7 @@
           <img src="../../assets/qd.png">
       </div>
 
-      <div class="every_work">每日任务</div>
+      <div class="every_work">任务</div>
       <div class="flex-jc-center">
         <div class="word flex-jc-between flex-align-items">
           <div class="flex-align-items">
@@ -67,9 +67,8 @@
             晒图分享
           </div>
           <div>
-            <!-- <div class="btn1 text-c">领奖励</div> -->
-            <!-- <div class="btn2 text-c">已领取</div> -->
-            <div class="btn3 text-c" @click="goshare">去完成</div>
+            <div class="btn2 text-c" v-if="tasknum.product_sharing_number==0">已完成</div>
+            <div class="btn3 text-c" @click="goshare" v-else>去完成</div>
           </div>
         </div>
       </div>
@@ -81,8 +80,6 @@
             优质评论
           </div>
           <div>
-            <!-- <div class="btn1 text-c">领奖励</div> -->
-            <!-- <div class="btn2 text-c">已领取</div> -->
             <div class="btn3 text-c"><router-link to="/order">去完成</router-link></div>
           </div>
         </div>
@@ -95,9 +92,8 @@
             问卷调查
           </div>
           <div>
-            <!-- <div class="btn1 text-c">领奖励</div> -->
-            <!-- <div class="btn2 text-c">已领取</div> -->
-            <div class="btn3 text-c"><router-link to="/questionnaire">去完成</router-link></div>
+            <div class="btn2 text-c" v-if="tasknum.questionnaire_number==0">已完成</div>
+            <div class="btn3 text-c" v-else><router-link to="/questionnaire">去完成</router-link></div>
           </div>
         </div>
       </div>
@@ -109,8 +105,6 @@
             唤醒好友
           </div>
           <div>
-            <!-- <div class="btn1 text-c">领奖励</div> -->
-            <!-- <div class="btn2 text-c">已领取</div> -->
             <div class="btn3 text-c" @click="wakeUp">去完成</div>
           </div>
         </div>
@@ -123,12 +117,21 @@
             租赁商品
           </div>
           <div>
-            <!-- <div class="btn1 text-c">领奖励</div> -->
-            <!-- <div class="btn2 text-c">已领取</div> -->
             <div class="btn3 text-c"><router-link to="/">去完成</router-link></div>
           </div>
         </div>
       </div>
+
+      <van-dialog
+        v-model="show"
+        title=""
+        @confirm="onRead"
+      >
+        <div class="dialog fsz-12">
+          <div class="text-c" v-for="(item,index) in score" :key="index">获得{{item.score}}积分</div>
+          <div class="text-c" v-for="(item,index) in money" :key="index+1">获得{{item.money}}现金</div>
+        </div>
+      </van-dialog>
     </div>
   </div>
 </template>
@@ -149,7 +152,11 @@ export default {
       },
       day: 0,
       issignin: false,
-      signininfo:''
+      signininfo:'',
+      show: false,
+      score:[],
+      money:[],
+      tasknum:''
     }
   },
   created(){
@@ -159,9 +166,47 @@ export default {
     nativeshare().then(res =>  {NativeShare = res.default} )
     m_share().then(res => {mShare = res})
 
+    this.getmessage()
     this.getsignin()
+    this.gettasknum()
   },
   methods: {
+    getmessage(){
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      });
+      this.axios.post(this.API + "api/Generalize/getTaskNoRead", postData)
+      .then(res => {
+          console.log(res.data, "getmessage");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              this.score = resdata.data
+              this.money = resdata.message
+              if(resdata.data.length!=0||resdata.message.length!=0){
+                this.show = true
+              }
+          } else {
+              // Toast(resdata.message);
+          }
+      })
+    },
+    onRead(){
+      let postData = this.$qs.stringify({
+          score: JSON.stringify(this.score),
+          money: JSON.stringify(this.money),
+      });
+      this.axios.post(this.API + "api/Generalize/setTaskRead", postData)
+      .then(res => {
+          console.log(res.data, "onRead");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+              
+          } else {
+              // Toast(resdata.message);
+          }
+      })
+    },
+
     signin(){
       Toast.loading({ mask: true, message: "加载中..." });
       let time = Date.now()/1000+''
@@ -206,6 +251,23 @@ export default {
           Toast('网络出错')
       });
     },
+
+    gettasknum(){
+      let postData = this.$qs.stringify({
+          users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+      });
+      this.axios.post(this.API + "api/Generalize/UserTaskNumber", postData)
+      .then(res => {
+          console.log(res.data, "gettasknum");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            this.tasknum = resdata.data
+          } else {
+              // Toast(resdata.message);
+          }
+      })
+    },
+
     goredpacket(){
       this.$router.push({ path: "/redpacket" });
     },
@@ -220,7 +282,7 @@ export default {
     wakeUp(){
       let config = {
         title: '数码租赁',
-        // link: window.location.origin + '#/login?token='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
+        link: window.location.origin + '#/login?wakeup='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
         desc:'唤醒好友'
       }
       let shareData = {  //nativeShare的参数模型
@@ -375,5 +437,13 @@ export default {
   border: #4ea9f9 solid 1px;
   border-radius: 13px;
   color: #4ea9f9;
+}
+
+.dialog {
+  padding: 10px 0;
+  padding-bottom: 0;
+}
+.dialog > div {
+  margin-bottom: 10px;
 }
 </style>

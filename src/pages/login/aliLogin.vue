@@ -103,7 +103,7 @@ export default {
                 type: 1,
                 phone: this.phoneval,
                 yzm: this.codeval,
-                user_auth_id: this.id 
+                user_auth_id: this.id ,
             });
             this.axios.post(this.API + "api/Order/ThreeLogin", postData).then(res => {
                 console.log(res.data, "alilogin");
@@ -112,12 +112,7 @@ export default {
                     Toast.clear();
                     window.localStorage.setItem("userinfo", JSON.stringify(resdata.data));
                     
-                    if(JSON.parse(window.sessionStorage.getItem("rpfriend"))){
-                        window.sessionStorage.removeItem("rpfriend");
-                        this.$router.replace({ path: "/rpfriend" });
-                    }else{
-                        this.$router.replace({ path: "/" });
-                    }
+                    this.$router.replace({ path: "/" });
                 } else {
                     Toast.clear();
                     Toast(resdata.message);

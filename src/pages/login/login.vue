@@ -11,7 +11,7 @@
         <button class="btn text-c" @click="toNext" :class="newPhone==''?'btn-grey':'act'">获取验证码</button>
         <div class="text-c pw_login " @click="password">使用密码登陆</div>
 
-        <div class="other">
+        <div class="other" v-if="isother">
           <div class="flex-center disan_box">
             <div class="line"></div>
             <div class="disan pd-lr-15">第三方账号登陆</div>
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       newPhone: "",
+      isother:true
     };
   },
   beforeCreate(){
@@ -46,12 +47,28 @@ export default {
         window.location.href = url
     }
 
+    if (location.href.includes('wakeup')&&location.href.includes('from')) { // 用是否有shareId 来判断是不是分享出去的链接
+        let index = location.href.indexOf('wakeup')+6+1
+        let shareId = location.href.slice(index)
+        // console.log(shareId,'shareId')
+        let url = `${location.origin}#/login?wakeup=${shareId}`  
+        window.location.href = url
+    }
+
     if(this.$route.query.rpfriend){
       window.sessionStorage.setItem("rpfriend",1);
+      this.isother = false
     }
   },
   created(){
     // console.log(this.$route.query.token,'token')
+    if(this.$route.query.wakeup){
+      window.sessionStorage.setItem("wakeup",this.$route.query.wakeup);
+      this.isother = false
+    }
+    if(this.$route.query.token){
+      this.isother = false
+    }
   },
   methods: {
     //下一步

@@ -32,7 +32,8 @@ export default {
       Toast.loading({ mask: true, message: "加载中..." })
       let postData = this.$qs.stringify({
             users_phone:this.$route.params.phone,
-            users_pwd: this.value
+            users_pwd: this.value,
+            wakeup: window.sessionStorage.getItem("wakeup")||''
         })
       this.axios.post(this.API + "api/Lease/New_pwd",postData)
       .then(res => {
@@ -46,6 +47,7 @@ export default {
             window.sessionStorage.removeItem("rpfriend");
             this.$router.replace({ path: "/rpfriend" });
           }else{
+            window.sessionStorage.removeItem("wakeup");
             this.$router.replace({ path: "/" });
           }
         } else {

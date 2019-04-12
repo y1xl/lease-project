@@ -71,48 +71,48 @@ export default {
       }
     },
     //全选
-    // onall() {
-    //   let list = this.list;
+    onall() {
+      let list = this.list;
 
-    //   if (this.isall) {
-    //     let resarr = [];
-    //     for (let v of list) {
-    //       resarr.push(v.id);
-    //     }
-    //     this.result = resarr;
-    //   } else {
-    //     this.result = [];
-    //   }
-    // },
+      if (this.isall) {
+        let resarr = [];
+        for (let v of list) {
+          resarr.push(v.id);
+        }
+        this.result = resarr;
+      } else {
+        this.result = [];
+      }
+    },
     //多选
-    // selectedProduct(res) {
-    //   console.log(res);
-    //   let list = this.list;
-    //   //判断全选状态
-    //   if (res.length == list.length) {
-    //     this.isall = true;
-    //   } else {
-    //     this.isall = false;
-    //   }
+    selectedProduct(res) {
+      console.log(res);
+      let list = this.list;
+      //判断全选状态
+      if (res.length == list.length) {
+        this.isall = true;
+      } else {
+        this.isall = false;
+      }
 
-    //   this.calcTotalPrice();
-    // },
+      this.calcTotalPrice();
+    },
     //计算
-    // calcTotalPrice() {
-    //   let list = this.list;
-    //   let result = this.result;
-    //   let sum = 0;
+    calcTotalPrice() {
+      let list = this.list;
+      let result = this.result;
+      let sum = 0;
 
-    //   for (let v of list) {
-    //     for (let v2 of result) {
-    //       if (v.id == v2) {
-    //         // let ps = accMul(v.price, v.num);
-    //         sum = accAdd(v.price, sum);
-    //       }
-    //     }
-    //   }
-    //   this.sum = sum;
-    // }
+      for (let v of list) {
+        for (let v2 of result) {
+          if (v.id == v2) {
+            // let ps = accMul(v.price, v.num);
+            sum = accAdd(v.price, sum);
+          }
+        }
+      }
+      this.sum = sum;
+    }
   }
 };
 </script>

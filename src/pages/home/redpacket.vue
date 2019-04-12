@@ -9,13 +9,13 @@
         <div class="box">
             <div class="fc-blue text-c title marb10">{{info.activity_title}}</div>
             <div class="fc-grey text-c fsz-12 marb10">{{info.activity_start_time}}~{{info.activity_end_time}}</div>
-            <div class="text-c marb10">当前参加人数<span class="fc-red"> {{people||0}}</span></div>
+            <div class="text-c marb10" v-if="info.number_participants==1">当前参加人数<span class="fc-red"> {{people||0}}</span></div>
             
-            <div class="btn flex-column-center bgc-grey" v-if="numinfo.friends_help==1&&numinfo.number==0">
+            <div class="btn flex-column-center bgc-grey" v-if="numinfo.number==0&&numinfo.friends_help==0">
                 抢红包
             </div>
             <template v-else>
-                <div class="btn flex-column-center bgc-blue" v-if="numinfo.number==0&&info.forced_attention!=0&&numinfo.friends_help!=1" @click="call">
+                <div class="btn flex-column-center bgc-blue" v-if="numinfo.number==0&&numinfo.friends_help>=1" @click="call">
                     <div>邀请好友助力</div>
                     <div class="fszs">(可获得一次抢红包机会)</div>
                 </div>
@@ -179,7 +179,7 @@ export default {
                 if (resdata.code == 200) {
                     this.people = resdata.data
                 } else {
-                    Toast(resdata.message);
+                    // Toast(resdata.message);
                 }
             });
         },
@@ -202,7 +202,7 @@ export default {
                         }
                     }
                 } else {
-                    Toast(resdata.message);
+                    // Toast(resdata.message);
                 }
             });
         },
@@ -222,7 +222,7 @@ export default {
                     }
                     this.text = arr.join(' ')
                 } else {
-                    Toast(resdata.message);
+                    // Toast(resdata.message);
                 }
             });
         },

@@ -5,9 +5,11 @@
         <div class="bgc">
         <div class="box flex-jc-between" >
             <div>
-                <div class="uploadimg bgc flex-center" v-if="!fileimg1">
+                <div class="uploadimg flex-center position" v-if="!fileimg1">
                     <van-uploader :after-read="onRead1" accept="image/png, image/jpeg" multiple>
-                        <img src="../../../assets/tg_camera.png" alt="">
+                        <!-- <img src="../../../assets/tg_camera.png" alt=""> -->
+                        <img src="@/assets/sample/sample1.png" alt="示例图">
+                        <span class="fsz-12 sampletext">示例</span>
                     </van-uploader>
                 </div>
                 <div class="fileimg" v-else>
@@ -19,9 +21,11 @@
                 <div class="text-c btext">上传包含产品配件的全家福</div>
             </div>
             <div>
-                <div class="uploadimg bgc flex-center" v-if="!fileimg2">
+                <div class="uploadimg flex-center position" v-if="!fileimg2">
                     <van-uploader :after-read="onRead2" accept="image/png, image/jpeg" multiple>
-                        <img src="../../../assets/tg_camera.png" alt="">
+                        <!-- <img src="../../../assets/tg_camera.png" alt=""> -->
+                        <img src="@/assets/sample/sample2.jpeg" alt="示例图">
+                        <span class="fsz-12 sampletext">示例</span>
                     </van-uploader>
                 </div>
                 <div class="fileimg" v-else>
@@ -37,9 +41,11 @@
 
         <div class="box flex-jc-between">
             <div>
-                <div class="uploadimg bgc flex-center" v-if="!fileimg3">
+                <div class="uploadimg flex-center position" v-if="!fileimg3">
                     <van-uploader :after-read="onRead3" accept="image/png, image/jpeg" multiple>
-                        <img src="../../../assets/tg_camera.png" alt="">
+                        <!-- <img src="../../../assets/tg_camera.png" alt=""> -->
+                        <img src="@/assets/sample/sample3.png" alt="示例图">
+                        <span class="fsz-12 sampletext">示例</span>
                     </van-uploader>
                 </div>
                 <div class="fileimg" v-else>
@@ -51,9 +57,11 @@
                 <div class="text-c btext">上传产品照片</div>
             </div>
             <div>
-                <div class="uploadimg bgc flex-center" v-if="!fileimg4">
+                <div class="uploadimg flex-center position" v-if="!fileimg4">
                     <van-uploader :after-read="onRead4" accept="image/png, image/jpeg" multiple>
-                        <img src="../../../assets/tg_camera.png" alt="">
+                        <!-- <img src="../../../assets/tg_camera.png" alt=""> -->
+                        <img src="@/assets/sample/sample4.jpeg" alt="示例图">
+                        <span class="fsz-12 sampletext">示例</span>
                     </van-uploader>
                 </div>
                 <div class="fileimg" v-else>
@@ -318,8 +326,15 @@ export default {
     box-shadow: 0px 0px 2px 0px #4ea9f9;
 }
 .uploadimg img {
-    width: 43px;
-    height: 34px;
+    /* width: 43px;
+    height: 34px; */
+    width: 120px;
+    height: 80px;
+}
+.uploadimg .sampletext {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 .fileimg img {
     width: 140px;

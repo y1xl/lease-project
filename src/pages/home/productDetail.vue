@@ -2,9 +2,6 @@
   <div>
     <div class="bgc" style="padding-bottom:10px;">
       <div class="flex-jc-center banner_box position">
-        <!-- <div class="caricon fc-red" @click="showinfocar=true">
-          <van-icon name="shopping-cart"/>
-        </div> -->
         <div class="banner bgc" id="goodsbanner">
           <van-swipe :autoplay="autoplay" @change="onChange">
             <van-swipe-item v-if="detail.goods_video">
@@ -241,6 +238,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { Toast,ImagePreview } from "vant";
 import 'video.js/dist/video-js.css'
@@ -366,6 +364,7 @@ export default {
           Toast.clear()
           this.detail = resdata.data
           this.playerOptions.sources = [{src:resdata.data.goods_video}]
+          this.playerOptions.poster = resdata.data.gd_img[0]
         } else {
           Toast.clear()
           Toast(resdata.message)
@@ -521,6 +520,22 @@ export default {
       }
     },
 
+    getshare(){
+      let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        })
+        this.axios.post(this.API + "api/Generalize/Waste_figure",postData)
+        .then(res => {
+          console.log(res.data, "getshare")
+          let resdata = res.data
+          if (resdata.code == 200) {
+
+          } else {
+            //Toast(resdata.message)
+          }
+        });
+    },
+
     call(command) {
       let config = {
         title: document.title,
@@ -555,9 +570,15 @@ export default {
         nativeShare.setShareData(shareData)
       try {
         nativeShare.call(command.nativeshare)
+        if(command.nativeshare=='wechatFriend'){
+          this.getshare()
+        }
       } catch(e) {
         //在iphone的qq浏览器中比较奇葩，第一次调用nativeShare.call()会报错，第二次之后不报，这里是让每次调用nativeShare.call()之后都报错，然后统一去调m-share.to()方法
         mShare.to(command.m_share, mShareData)
+        if(command.m_share=='wx'){
+          this.getshare()
+        }
       }
     }
   }

@@ -46,34 +46,7 @@
                 </van-uploader>
             </div>
         </div>
-        <!-- </template> -->
 
-        <!-- <template v-if="info!=''">
-        <div class="pd-15 border-b bgc flex-align-items fsz12" >
-            <div class="flex-1">
-                <div class="mar-b-10 c6">姓名</div>
-                <div class="mar-b-10">{{info.realname}}</div>
-                <div class="mar-b-10 c6">身份证</div>
-                <div>{{info.idcard_number}}</div>
-            </div>
-            <div>
-                <img src="../../assets/idimg1.png" alt="" class="idimg">
-            </div>
-        </div>
-        <div class="pd-15 bgc flex-align-items fsz12">
-            <div class="flex-1">
-                <div class="mar-b-10 c6">签发机关</div>
-                <div class="mar-b-10">{{info.issued_by}}</div>
-                <div class="mar-b-10 c6">有效期限</div>
-                <div>{{info.valid_date}}</div>
-            </div>
-            <div>
-                <img src="../../assets/idimg2.png" alt="" class="idimg">
-            </div>
-        </div>
-        </template> -->
-
-        <!-- <div class="pd-15"><div class="btn text-c" @click="submit" v-if="info==''">提交</div></div> -->
         <div class="pd-15"><div class="btn text-c" @click="submit">提交</div></div>
     </div>
 </template>
@@ -89,12 +62,9 @@ export default {
             file1:null,
             file2:null,
             maxsize: 2097152,
-            // info:''
         }
     },
-    created(){
-        // this.getinfo()
-    },
+
     methods:{
         onRead1(file) {
             console.log(file)
@@ -121,26 +91,6 @@ export default {
             })  
         },
 
-        // getinfo(){
-        //     Toast.loading({ mask: true,message: '加载中...'})
-        //     let postData = this.$qs.stringify({
-        //         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        //     })
-
-        //     this.axios.post(this.API + "api/Order/GetIDCard",postData)
-        //     .then(res => {
-        //         console.log(res.data, "info")
-        //         let resdata = res.data
-        //         if (resdata.code == 200) {
-        //             Toast.clear()
-        //             this.info = resdata.data
-        //         } else {
-        //             Toast.clear()
-        //             Toast(resdata.message)
-        //         }
-        //     })
-        // },
-
         submit(){
             Toast.loading({ mask: true,message: '加载中...'})
             let formData = new FormData()
@@ -163,7 +113,6 @@ export default {
                     }).then((e) => {
                         this.$router.push({ path: "/realnameSuc" });
                     });
-                    // this.getinfo()
                 } else {
                     Toast.clear()
                     Toast(resdata.message)

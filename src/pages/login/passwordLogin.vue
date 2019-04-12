@@ -42,6 +42,7 @@ export default {
       let postData = this.$qs.stringify({
         users_phone: this.phoneval,
         users_pwd: this.pwval,
+        wakeup: window.sessionStorage.getItem("wakeup")||''
       });
       this.axios.post(this.API + "api/Lease/Lease_Sign", postData).then(res => {
         console.log(res.data, "pwlogin");
@@ -53,6 +54,7 @@ export default {
             window.sessionStorage.removeItem("rpfriend");
             this.$router.replace({ path: "/rpfriend" });
           }else{
+            window.sessionStorage.removeItem("wakeup");
             this.$router.replace({ path: "/" });
           }
         } else {
