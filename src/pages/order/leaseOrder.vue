@@ -9,7 +9,7 @@
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item.name" v-for="(item,index) in navarr" :key="index">
           <div slot="title" class="position tag">
-            <div class="dot" v-if="item.count!=0"><van-tag plain round color="#4EA9F9">{{item.count}}</van-tag></div>
+            <div class="dot" v-if="item.count!=0"><van-tag plain round color="#4EA9F9">{{item.count|tagOmit}}</van-tag></div>
             {{item.name}}
           </div>
         </van-tab>

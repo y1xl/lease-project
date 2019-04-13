@@ -247,7 +247,7 @@ import { videoPlayer } from 'vue-video-player'
 
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
-var NativeShare, mShare
+var NativeShare, mShare, instance
 
 export default {
   components: {
@@ -331,7 +331,7 @@ export default {
     },
     //预览
     onImagePreview(index,arr){
-        ImagePreview({
+        instance = ImagePreview({
             images: arr,
             startPosition: index, 
         });
@@ -574,14 +574,19 @@ export default {
           this.getshare()
         }
       } catch(e) {
-        //在iphone的qq浏览器中比较奇葩，第一次调用nativeShare.call()会报错，第二次之后不报，这里是让每次调用nativeShare.call()之后都报错，然后统一去调m-share.to()方法
+        //qq浏览器中比较奇葩，第一次调用nativeShare.call()会报错，第二次之后不报，这里是让每次调用nativeShare.call()之后都报错，然后统一去调m-share.to()方法
         mShare.to(command.m_share, mShareData)
         if(command.m_share=='wx'){
           this.getshare()
         }
       }
     }
-  }
+  },
+  beforeDestroy(){
+    if(instance){
+      instance.close()
+    }
+  },
 };
 </script>
 

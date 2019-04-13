@@ -70,6 +70,7 @@ export default {
         users_phone:this.$route.params.phone,
         yzm: this.value,
         token: this.$route.query.token||'',
+        code: this.$route.query.code||'',
         wakeup: window.sessionStorage.getItem("wakeup")||''
       })
       this.axios.post(this.API + "api/Lease/Yzm_Login",postData)

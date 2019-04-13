@@ -34,9 +34,9 @@
         </div>
       </div>
 
-      <div class="pdlr10 mar-b-10">
+      <div class="pdlr10 mar-b-10" @click="call">
         <div class="tg_yq_box text-c">
-          <div class="flex-jc-between tg_yq" @click="call">
+          <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
               <div class="wode flex-center">
                 <img src="../../assets/wode.png">
@@ -174,7 +174,7 @@ export default {
       } catch(e) {
         mShare.to('wx', mShareData)
       }
-    }
+    },
   }
 };
 </script>

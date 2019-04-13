@@ -9,6 +9,7 @@
           <div
             class="coupon_box position"
             v-for="(item,i) in couponlist"
+            :key="i"
             v-show="ind ==0||ind==1||ind==2"
           >
             <div>
@@ -17,7 +18,7 @@
 
             <div class="coupon_con flex-jc-around flex-align-items">
               <div>
-                <span class="num">{{item.coupons_money|nozero}}</span>
+                <span class="num">{{item.coupons_money|noZero}}</span>
                 <span class="yuan">元</span>
               </div>
               <div v-if="item.activity_name==''">
@@ -41,6 +42,7 @@
           <div
             class="coupon_box position"
             v-for="(item,i) in getcouponlist"
+            :key="i+1"
             v-show="ind ==3"
             @click="receive(item)"
           >
@@ -50,7 +52,7 @@
 
             <div class="coupon_con flex-jc-around flex-align-items">
               <div>
-                <span class="num">{{item.coupons_money|nozero}}</span>
+                <span class="num">{{item.coupons_money|noZero}}</span>
                 <span class="yuan">元</span>
               </div>
               <div v-if="item.is_activity==0">

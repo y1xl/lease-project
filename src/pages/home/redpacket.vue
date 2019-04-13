@@ -11,11 +11,11 @@
             <div class="fc-grey text-c fsz-12 marb10">{{info.activity_start_time}}~{{info.activity_end_time}}</div>
             <div class="text-c marb10" v-if="info.number_participants==1">当前参加人数<span class="fc-red"> {{people||0}}</span></div>
             
-            <div class="btn flex-column-center bgc-grey" v-if="numinfo.number==0&&numinfo.friends_help==0">
+            <div class="btn flex-column-center bgc-grey" v-if="numinfo.number==0&&numinfo.friends_help==1">
                 抢红包
             </div>
             <template v-else>
-                <div class="btn flex-column-center bgc-blue" v-if="numinfo.number==0&&numinfo.friends_help>=1" @click="call">
+                <div class="btn flex-column-center bgc-blue" v-if="numinfo.number==0&&numinfo.friends_help==0&&info.friend_help==1" @click="call">
                     <div>邀请好友助力</div>
                     <div class="fszs">(可获得一次抢红包机会)</div>
                 </div>

@@ -17,8 +17,9 @@
 </template>
 
 <script>
-import { ImagePreview } from 'vant';
-import { Toast,Dialog } from 'vant';
+import { Toast,Dialog,ImagePreview } from 'vant';
+var instance
+
 export default {
   data() {
     return {
@@ -52,7 +53,7 @@ export default {
         for(let v of this.imgarr){
             arr.push(v.content)
         }
-        ImagePreview({
+        instance = ImagePreview({
             images: arr,
             startPosition: index, 
         });
@@ -100,7 +101,12 @@ export default {
           }
       });
     }
-  }
+  },
+  beforeDestroy(){
+    if(instance){
+      instance.close()
+    }
+  },
 };
 </script>
 

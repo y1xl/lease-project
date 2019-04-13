@@ -113,6 +113,7 @@
 	white-space: nowrap;
 }
 .newline {
+	/* 有兼容性慎用 */
     /* 英文情况换行 */
     word-wrap:break-word;
     word-break:break-all;

@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import { ImagePreview } from 'vant';
-import { Toast,Dialog } from 'vant';
+import { Toast,Dialog,ImagePreview } from 'vant';
+var instance
 export default {
     data(){
         return{
@@ -39,7 +39,7 @@ export default {
         },
         //预览
         onImagePreview(index){
-            ImagePreview([this.img]);
+            instance = ImagePreview([this.img]);
         },
         submit(){
             if(this.contentval==''||this.img==''){
@@ -74,7 +74,12 @@ export default {
                 }
             });
         }
+    },
+    beforeDestroy(){
+    if(instance){
+      instance.close()
     }
+  },
 }
 </script>
 

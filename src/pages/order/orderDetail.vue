@@ -345,10 +345,9 @@
 </template>
 
 <script>
-import { ImagePreview } from 'vant';
-import { Toast } from 'vant';
+import { Toast,ImagePreview } from 'vant';
 let payCountdown = ''
-
+var instance
 export default {
   data(){
     return {
@@ -416,7 +415,7 @@ export default {
       this.seconds = 60-seconds
     },
     onImagePreview(imgurl){
-      ImagePreview([
+      instance = ImagePreview([
         imgurl,
       ]);
     },
@@ -639,6 +638,9 @@ export default {
 
   beforeDestroy(){
     clearInterval(payCountdown)
+    if(instance){
+      instance.close()
+    }
   },
 };
 </script>

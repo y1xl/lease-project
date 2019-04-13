@@ -69,6 +69,9 @@ export default {
     if(this.$route.query.token){
       this.isother = false
     }
+    if(this.$route.query.code){
+      this.isother = false
+    }
   },
   methods: {
     //下一步
@@ -82,8 +85,15 @@ export default {
         Toast("手机号格式不正确");
         return;
       }
+      if(this.$route.query.token){
+        this.$router.push({ path: `/inputCode/${this.newPhone}?token=${this.$route.query.token||''}` });
+      }
+      if(this.$route.query.code){
+        this.$router.push({ path: `/inputCode/${this.newPhone}?code=${this.$route.query.code||''}` });
+      }else{
+        this.$router.push({ path: `/inputCode/${this.newPhone}` });
+      }
       
-      this.$router.push({ path: `/inputCode/${this.newPhone}?token=${this.$route.query.token||''}` });
     },
     //密码登录
     password() {

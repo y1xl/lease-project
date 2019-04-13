@@ -64,7 +64,7 @@
         <div class="word flex-jc-between flex-align-items">
           <div class="flex-align-items">
             <img src="../../assets/tupian.png" class="tupian">
-            晒图分享
+            产品分享
           </div>
           <div>
             <div class="btn2 text-c" v-if="tasknum.product_sharing_number==0">已完成</div>
@@ -140,7 +140,7 @@
 import { Toast,Dialog } from "vant";
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
-var NativeShare, mShare
+var NativeShare, mShare, nativeSharing
 
 export default {
   data(){
@@ -305,7 +305,7 @@ export default {
       } catch(e) {
         mShare.to('wx', mShareData)
       }
-    }
+    },
   }
 };
 </script>

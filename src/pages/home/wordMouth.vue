@@ -44,6 +44,7 @@
 
 <script>
 import { Toast,ImagePreview } from "vant";
+var instance
 export default {
   data() {
     return {
@@ -57,7 +58,7 @@ export default {
   methods:{
     //预览
     onImagePreview(index,arr){
-        ImagePreview({
+        instance = ImagePreview({
             images: arr,
             startPosition: index, 
         });
@@ -84,7 +85,12 @@ export default {
         Toast('网络出错')
       });
     },
-  }
+  },
+  beforeDestroy(){
+    if(instance){
+      instance.close()
+    }
+  },
 };
 </script>
 
