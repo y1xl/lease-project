@@ -141,7 +141,6 @@
     </div>
 
     <el-amap vid="amaplocation" :plugin="plugin" :center="center" class="myamap"></el-amap>
-    <!-- <div class="em"></div> -->
   </div>
 </template>
 

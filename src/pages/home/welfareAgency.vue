@@ -121,28 +121,34 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <van-dialog
+    <van-dialog
         v-model="show"
         title=""
         @confirm="onRead"
       >
-        <div class="dialog fsz-12">
-          <div class="text-c" v-for="(item,index) in score" :key="index">获得{{item.score}}积分</div>
-          <div class="text-c" v-for="(item,index) in money" :key="index+1">获得{{item.money}}现金</div>
-        </div>
-      </van-dialog>
-    </div>
+      <div class="dialog fsz-12">
+        <div class="text-c" v-for="(item,index) in score" :key="index">获得{{item.score}}积分</div>
+        <div class="text-c" v-for="(item,index) in money" :key="index+1">获得{{item.money}}现金</div>
+      </div>
+    </van-dialog>
+
+    <Clipboard v-model="iscopy" :text="link"/>
   </div>
 </template>
 
 <script>
+import Clipboard from "@/components/Clipboard";
 import { Toast,Dialog } from "vant";
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
-var NativeShare, mShare, nativeSharing
+var NativeShare, mShare
 
 export default {
+  components: {
+    Clipboard
+  },
   data(){
     return{
       bgimg: {
@@ -156,7 +162,9 @@ export default {
       show: false,
       score:[],
       money:[],
-      tasknum:''
+      tasknum:'',
+      iscopy:false,
+      link:''
     }
   },
   created(){
@@ -171,6 +179,7 @@ export default {
     this.gettasknum()
   },
   methods: {
+    //任务奖励消息
     getmessage(){
       let postData = this.$qs.stringify({
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -206,7 +215,7 @@ export default {
           }
       })
     },
-
+    //签到
     signin(){
       Toast.loading({ mask: true, message: "加载中..." });
       let time = Date.now()/1000+''
@@ -247,9 +256,6 @@ export default {
               Toast(resdata.message);
           }
       })
-      .catch(error => {
-          Toast('网络出错')
-      });
     },
 
     gettasknum(){
@@ -303,7 +309,15 @@ export default {
       try {
         nativeShare.call('wechatFriend')
       } catch(e) {
-        mShare.to('wx', mShareData)
+        // mShare.to('wx', mShareData)
+        let Browser = navigator.userAgent;
+        if(Browser.indexOf('QQBrowser') > -1){
+          
+        }else{
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+        }
       }
     },
   }

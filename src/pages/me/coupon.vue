@@ -74,15 +74,6 @@
             </div>
           </div>
 
-          <!-- <div id="dialog">
-            <van-dialog v-model="show" show-cancel-button :before-close="beforeClose">
-              <div class="mask_box text-c">
-                <img src="../../assets/2.png">
-                <div class="lq_txt">领取优惠券</div>
-                <input placeholder="请输入兑换码" v-model="couponsCode">
-              </div>
-            </van-dialog>
-          </div> -->
         </van-tab>
       </van-tabs>
     </div>
@@ -97,9 +88,7 @@ export default {
       navtitle: ["未使用", "已使用", "已失效", "领取"],
       couponlist: [],
       getcouponlist:[],
-      // show: false,
       ind: 0,
-      // couponsCode:''
     };
   },
   beforeCreate(){
@@ -113,13 +102,6 @@ export default {
   methods: {
     ontab(index, title) {
       console.log(index, title);
-      // if (this.ind == 3) {
-      //   this.show = true;
-      //   this.couponsCode=''
-      //   return
-      // } else {
-      //   this.show = false;
-      // }
       if(this.ind==3){
         this.getcoupon()
       }else{
@@ -227,39 +209,6 @@ export default {
       }
       
     },
-
-    // beforeClose(action, done) {
-    //   if (action === "confirm") {
-    //     if(this.couponsCode==''){
-    //       done(false)
-    //       return
-    //     }
-        
-    //     let postData = this.$qs.stringify({
-    //       user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-    //       coupons_code: this.couponsCode
-    //     });
-    //     this.axios
-    //       .post(this.API + "api/Lease/Receive_coupons", postData)
-    //       .then(res => {
-    //         console.log(res.data, "couponslist");
-    //         let resdata = res.data;
-    //         if (resdata.code == 200) {
-    //           done()
-    //           Toast(resdata.message)
-    //         } else {
-    //           done(false)
-    //           Toast(resdata.message)
-    //         }
-    //       })
-    //       .catch(error => {
-    //         done(false)
-    //         Toast('网络出错')
-    //       });
-    //   } else {
-    //     done()
-    //   }
-    // },
   }
 };
 </script>

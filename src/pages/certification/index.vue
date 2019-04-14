@@ -42,21 +42,28 @@
         <van-icon name="arrow"/>
       </div>
     </router-link>
+    <Clipboard v-model="iscopy" :text="link"/>
   </div>
 </template>
 
 <script>
+import Clipboard from "@/components/Clipboard";
 import { Toast } from 'vant';
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
 var NativeShare, mShare
 
 export default {
+  components: {
+    Clipboard
+  },
   data() {
     return {
       users_money: "",
       realname:'',
-      school:''
+      school:'',
+      iscopy:false,
+      link:''
     };
   },
   mounted() {
@@ -133,7 +140,15 @@ export default {
       try {
         nativeShare.call('wechatFriend')
       } catch(e) {
-        mShare.to('wx', mShareData)
+        // mShare.to('wx', mShareData)
+        let Browser = navigator.userAgent;
+        if(Browser.indexOf('QQBrowser') > -1){
+          
+        }else{
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+        }
       }
     }
   }

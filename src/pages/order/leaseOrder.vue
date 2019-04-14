@@ -31,7 +31,6 @@
         </div>
         <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
         <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
-        <!-- <div class="flex-center border">朋友代还</div> -->
         <div class="flex-center border" v-if="(item.order_status==9&&item.user_validation==0)">
           <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
         </div>
@@ -49,69 +48,6 @@
       </OrderCard> 
       </lazy-component>
 
-      <!-- <OrderCard status="待评价" v-show="active==5">
-         <div class="flex-center border-blue fc-blue">
-          <router-link v-bind="{to: '/comments'}">去评价</router-link>
-        </div>
-      </OrderCard> 
-      <OrderCard status="已超期" v-show="active==4">
-         <div class="flex-center border-blue fc-blue">
-           <router-link v-bind="{to: '/shopping'}">购买</router-link>
-        </div>
-        <div class="flex-center border">
-          <router-link v-bind="{to: '/refund'}">退租</router-link>
-        </div>
-        <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div>
-      </OrderCard> 
-      <OrderCard status="已结束" v-show="active==6">
-        <div class="flex-center border">删除订单</div>
-      </OrderCard> 
-      <OrderCard status="订单关闭" v-show="active==7">
-        <div class="flex-center border">删除订单</div>
-      </OrderCard> 
-      <OrderCard status="订单超时" v-show="active==7">
-        <div class="flex-center border">删除订单</div>
-        <div class="flex-center border-blue fc-blue" >重新下单</div>
-      </OrderCard> 
-      <OrderCard status="检测中" v-show="active==3"></OrderCard> 
-      <OrderCard status="售后中" v-show="active==3"></OrderCard> 
-      <OrderCard status="待确认" v-show="active==3">
-        <div class="flex-center border">
-          <router-link v-bind="{to: '/deny'}">否认</router-link>
-        </div>
-        <div class="flex-center border-blue fc-blue">确认</div>
-      </OrderCard> 
-      <OrderCard status="退押金中" v-show="active==3"></OrderCard> 
-      <OrderCard status="待付款" v-show="active==0">
-        <div class="flex-center border" @click="onshowmodel">取消订单</div>
-        <div class="flex-center border-blue fc-blue">支付</div>
-      </OrderCard>
-      <OrderCard status="已确认" v-show="active==2">
-        <div class="flex-center border-blue fc-blue" >确认收货</div>
-      </OrderCard>
-      <OrderCard status="已预定" v-show="active==2">
-        <div class="flex-center border" @click="onshowmodel">取消订单</div>
-        <div class="flex-center border-blue fc-blue">支付</div>
-      </OrderCard>
-      <OrderCard status="待收货" v-show="active==2">
-        <div class="flex-center border">朋友代取</div>
-        <div class="flex-center border" @click="getcode">取货码</div>
-        <div class="flex-center border-blue fc-blue" >确认收货</div>
-      </OrderCard>
-      <OrderCard status="预租待确认" v-show="active==1"></OrderCard> 
-      <OrderCard status="租赁中" v-show="active==3">
-        <div class="flex-center border-blue fc-blue">
-           <router-link v-bind="{to: '/shopping'}">购买</router-link>
-        </div>
-        <div class="flex-center border">
-          <router-link v-bind="{to: '/refund'}">退租</router-link>
-        </div>
-        <div class="flex-center border"><router-link v-bind="{to: '/relet'}">续租</router-link></div>
-      </OrderCard>
-      <OrderCard status="退租中" v-show="active==3">
-        <div class="flex-center border" >朋友代还</div>
-        <div class="flex-center border" @click="getcode">自还码</div>
-      </OrderCard> -->
     </div>
 
     <div class="model full flex-column-center position" v-show="showcode">

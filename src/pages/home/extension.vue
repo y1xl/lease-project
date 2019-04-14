@@ -81,21 +81,29 @@
     <van-popup v-model="showcode">
       <div style="font-size:0"><img :src="imgcode" alt="" class="codeimg"></div>
     </van-popup>
+
+    <Clipboard v-model="iscopy" :text="link"/>
   </div>
 </template>
 
 <script>
+import Clipboard from "@/components/Clipboard";
 import { Toast } from 'vant';
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
 var NativeShare, mShare
 
 export default {
+  components: {
+    Clipboard
+  },
   data() {
     return {
       showcode:false,
       imgcode:'',
-      info:''
+      info:'',
+      iscopy:false,
+      link:''
     };
   },
   mounted() {
@@ -172,9 +180,18 @@ export default {
       try {
         nativeShare.call('wechatFriend')
       } catch(e) {
-        mShare.to('wx', mShareData)
+        // mShare.to('wx', mShareData)
+        let Browser = navigator.userAgent;
+        if(Browser.indexOf('QQBrowser') > -1){
+          
+        }else{
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+        }
       }
     },
+
   }
 };
 </script>
@@ -275,4 +292,14 @@ export default {
   width: 200px;
   height: 200px;
 }
+
+
+/* .item {
+  flex: 0 0 25%;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+.item .icon {
+  font-size: 20px;
+} */
 </style>

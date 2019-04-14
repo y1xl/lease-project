@@ -66,12 +66,13 @@
     </div>
 
     <div class="bgc" style="margin-top:10px;">
-      <van-cell is-link @click="discountlist.length==0?'':discountmodel = true" :border="false" >
+      <van-cell center is-link @click="discountlist.length==0?'':(discountmodel = true)" :border="false" >
         <template slot="title">
           <span class="lab">活动</span>
           <span class="custom-text">{{discountlist.length==0?'无':discountlist[0].activity_name}}</span>
         </template>
       </van-cell>
+      
       <div class="flex-jc-around duo_mian border-t">
         <div class="grey_12 flex-align-items">
           <img class="img_zq" src="../../assets/ziti.png" alt>多门店自取
@@ -183,6 +184,10 @@
             </div>
             <div class="grey_12">{{button.text}}</div>
           </div>
+          <div class="text-c" @click="copyurl" :data-clipboard-text="text" id="copy">
+            <div class="flex-center copyicon img_fx"><van-icon name="description" /></div>
+            <p class="grey_12">复制链接</p>
+          </div>
         </div>
         <div class="close" @click="showmodel = false">取消</div>
       </div>
@@ -244,6 +249,7 @@ import { Toast,ImagePreview } from "vant";
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
 import { videoPlayer } from 'vue-video-player'
+import Clipboard from 'clipboard';
 
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
@@ -284,7 +290,8 @@ export default {
         {text: '微信好友', nativeshare:'wechatFriend', m_share: 'wx' , src: require('@/assets/f_weixin.png')},
         {text: '朋友圈', nativeshare:'wechatTimeline', m_share: 'wxline', src: require('@/assets/f_friend.png')},
         {text: '新浪微博', nativeshare:'weibo', m_share: 'sina', src: require('@/assets/f_weibo.png')},
-      ]
+      ],
+      text: window.location.href
     };
   },
 
@@ -549,13 +556,6 @@ export default {
           // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
           link: config.link,
           icon: config.img,
-          // 不要过于依赖以下两个回调，很多浏览器是不支持的
-          success: function() {
-
-          },
-          fail: function() {
-
-          }
       }
       let mShareData = {  //m-share的参数模型
             title: config.title, // 标题，默认读取document.title
@@ -570,16 +570,36 @@ export default {
         nativeShare.setShareData(shareData)
       try {
         nativeShare.call(command.nativeshare)
+        this.discountmodel = false
         if(command.nativeshare=='wechatFriend'){
           this.getshare()
         }
       } catch(e) {
         //qq浏览器中比较奇葩，第一次调用nativeShare.call()会报错，第二次之后不报，这里是让每次调用nativeShare.call()之后都报错，然后统一去调m-share.to()方法
-        mShare.to(command.m_share, mShareData)
-        if(command.m_share=='wx'){
-          this.getshare()
+        // mShare.to(command.m_share, mShareData)
+        let Browser = navigator.userAgent;
+        if(Browser.indexOf('QQBrowser') > -1){
+          
+        }else{
+          Toast('请重试或换个浏览器试试')
         }
       }
+    },
+    copyurl(){
+        let Browser = navigator.userAgent;
+        let clipboard = new Clipboard('#copy');
+        clipboard.on('success', e=> {
+          Toast('已复制')
+          e.clearSelection();
+        });
+
+        clipboard.on('error', e=> {
+          if(Browser.indexOf('UCBrowser') > -1){
+
+          }else{
+            // Toast('复制失败')
+          }
+        });
     }
   },
   beforeDestroy(){
@@ -847,6 +867,10 @@ export default {
 .img_fx {
   width: 50px;
   height: 50px;
+}
+.copyicon {
+  font-size: 20px;
+  margin-bottom: 1px;
 }
 
 .close,
