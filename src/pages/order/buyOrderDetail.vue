@@ -311,7 +311,7 @@ export default {
         //物流
     queryLogistics(){
       let postData = this.$qs.stringify({
-          order_id: this.data.order_id,
+          buyorder_id: this.data.order_id,
         });
         this.axios.post(this.API + "api/Buy_Order/queryLogistics", postData)
         .then(res => {

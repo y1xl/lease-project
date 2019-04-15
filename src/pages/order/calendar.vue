@@ -222,6 +222,16 @@ export default {
           JSON.stringify(prebuySession)
         );
       }
+      if (this.$route.params.type == "friendBuyShare") {
+        let friendBuyShare = JSON.parse(
+          window.sessionStorage.getItem("friendBuyShare")
+        );
+        friendBuyShare.date = date;
+        window.sessionStorage.setItem(
+          "friendBuyShare",
+          JSON.stringify(friendBuyShare)
+        );
+      }
       this.$router.go(-1);
     },
 

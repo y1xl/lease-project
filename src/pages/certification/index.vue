@@ -120,18 +120,20 @@ export default {
     call(){
       let config = {
         title: '数码租赁',
-        link: window.location.origin + '#/login'
+        // link: window.location.origin + '#/login',
+        link: window.location.origin + '#/login?token='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
+        desc:'邀请好友'
       }
       let shareData = {  //nativeShare的参数模型
           title: config.title,
-          desc: '',
+          desc: config.desc,
           // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
           link: config.link,
           icon: '',
       }
       let mShareData = {  //m-share的参数模型
             title: config.title, // 标题，默认读取document.title
-            desc: '', // 描述, 默认读取head标签：<meta name="description" content="desc" />
+            desc: config.desc, // 描述, 默认读取head标签：<meta name="description" content="desc" />
             link: config.link, // 网址，默认使用window.location.href
             imgUrl: '', // 图片, 默认取网页中第一个img标签
       }

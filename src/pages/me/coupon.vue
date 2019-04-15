@@ -67,7 +67,7 @@
                 <div class="limit">
                   <div>活动{{item.activity_name}}</div>
                   <div>满{{item.coupons_condition}}可用</div>
-                  <div>有效期至{{item.start_activity}}</div>
+                  <div>有效期至{{item.end_activity}}</div>
                   <div>点击领取</div>
                 </div>
               </div>

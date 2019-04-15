@@ -172,7 +172,7 @@
 
           <div class="coupon_con flex-jc-around flex-align-items" >
             <div>
-              <span class="num">{{item.coupons_money|nozero}}</span>
+              <span class="num">{{item.coupons_money|noZero}}</span>
               <span class="yuan">元</span>
             </div>
             <div v-if="item.activity_name==''">
@@ -186,7 +186,7 @@
               <div class="coupon_fl">{{item.coupon_name}}</div>
               <div class="limit">
                 <div>活动{{item.activity_name}}</div>
-                <div>有效期至{{item.start_activity}}</div>
+                <div>有效期至{{item.end_activity}}</div>
                 <div>满{{item.coupons_condition}}可用</div>
               </div>
             </div>

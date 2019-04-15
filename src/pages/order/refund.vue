@@ -41,12 +41,20 @@
         <van-popup v-model="showtimequantum" position="bottom" :close-on-click-overlay="false">
             <van-picker :columns="timequantumarr" show-toolbar @cancel="showtimequantum = false" @confirm="onConfirmTimequantum"/>
         </van-popup>
+        <Clipboard v-model="iscopy" :text="link"/>
     </div>
 </template>
 
 <script>
 import { Toast,Dialog } from 'vant';
+import Clipboard from "@/components/Clipboard";
+const nativeshare = () => import ('nativeshare') 
+var NativeShare
+
 export default {
+    components: {
+        Clipboard
+    },
     data(){
         return{
             orderid: this.$route.params.id,
@@ -59,7 +67,10 @@ export default {
             codeimg:'',
             timequantumtext:'', //时间段
             showtimequantum: false, //时间段
-            timequantumarr:[] //时间段
+            timequantumarr:[], //时间段
+
+            iscopy:false,
+            link:''
         }
     },
     created() {
@@ -74,6 +85,8 @@ export default {
         }
     },
     mounted(){
+        nativeshare().then(res =>  {NativeShare = res.default} )
+
         this.gettimequantumarr()
     },
     methods:{
@@ -164,8 +177,9 @@ export default {
                 }
                 });
             }
+
             if(this.typenum==1){
-                Toast('此功能未开通')
+                this.call()
             }
         },
         //平台
@@ -212,7 +226,37 @@ export default {
                 Toast(resdata.message);
             }
             });
-        }
+        },
+
+        call(){
+            let config = {
+                title: '数码租赁',
+                link: window.location.origin + `#/friendRepay?orderid=${this.$route.params.id}&userid=${JSON.parse(window.localStorage.getItem("userinfo")).users_id||''}`,
+                desc:'朋友代还'
+            }
+            let shareData = {  //nativeShare的参数模型
+                title: config.title,
+                desc: config.desc,
+                // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+                link: config.link,
+                icon: '',
+            }
+
+            let nativeShare = new NativeShare()
+            nativeShare.setShareData(shareData)
+            try {
+                nativeShare.call('wechatFriend')
+            } catch(e) {
+                let Browser = navigator.userAgent;
+                if(Browser.indexOf('QQBrowser') > -1){
+                
+                }else{
+                    this.link = config.link,
+                    this.iscopy=true
+                    Toast('请重试或点击复制链接分享给好友')
+                }
+            }
+        },
     }
 }
 </script>

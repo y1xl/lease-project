@@ -21,6 +21,8 @@ import Pay from '@/pages/home/pay'
 import Agreement from '@/pages/home/agreement'
 import Search from '@/pages/home/search'
 import PreBuy from '@/pages/home/preBuy'
+import FriendBuy from '@/pages/home/friendBuy'
+import FriendBuyShare from '@/pages/home/friendBuyShare'
 //订单
 import Comments from '@/pages/order/comments'
 import OrderDetail from '@/pages/order/orderDetail'
@@ -36,6 +38,7 @@ import Compensation from '@/pages/order/compensation'
 import SendBack from '@/pages/order/sendBack'
 import Buypay from '@/pages/order/buypay'
 import BuyOrderDetail from '@/pages/order/buyOrderDetail'
+import FriendRepay from '@/pages/order/friendRepay'
 
 //个人中心
 import Rules from '@/pages/me/rules'
@@ -141,6 +144,7 @@ export default new Router({
     { path: '/sendBack/:id', component: SendBack, meta: { title: '自行寄回' } },
     { path: '/buypay/:id', component: Buypay, meta: { title: '支付' } },
     { path: '/buyOrderDetail/:id', component: BuyOrderDetail, meta: { title: '订单详情' } },
+    { path: '/friendRepay', component: FriendRepay, meta: { title: '朋友代还' } },
     //产品&&首页
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
     { path: '/extension', component: Extension, meta: { title: '我要推广' } },
@@ -155,6 +159,8 @@ export default new Router({
     { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索', keepAlive: true, isBack: false } },
     { path: '/preBuy', component: PreBuy, meta: { title: '预下单', keepAlive: true, isBack: false } }, 
+    { path: '/friendBuy', component: FriendBuy, meta: { title: '朋友送礼', keepAlive: true, isBack: false } }, 
+    { path: '/friendBuyShare', component: FriendBuyShare, meta: { title: '朋友送礼-朋友填写' } }, 
 
     //个人中心
     { path: '/rules/:title', component: Rules, meta: { title: '规则' } },

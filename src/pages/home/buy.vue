@@ -100,7 +100,6 @@
           <van-switch @change="onswitch" v-model="isinsurance" size="20px" :disabled="Dinsurance"/>
         </div>
       </van-cell>
-      <!-- <van-cell title="享受优惠" is-link center @click="discountmodel=true"></van-cell> -->
       <van-cell center v-show="typenum==2">
         <div slot="title" class="flex-align-items">
           <span>特殊需求备注</span>
@@ -147,22 +146,6 @@
         @confirm="onConfirmWeek"
       />
     </van-popup>
-    <!-- 优惠活动弹窗 -->
-    <van-popup v-model="discountmodel" position="bottom" :close-on-click-overlay="false">
-      <div class="position">
-        <div class="flex-jc-center">
-          <div class="s_title border-b fsz text-c">优惠活动</div>
-        </div>
-        <!-- <div class="flexbox">
-          <div class="lineheight pd-lr-15 border-b">
-            <span class="dis_clasify">[新用户]</span>
-            <span class="grey_12">新人下单立减50元</span>
-          </div>
-        </div> -->
-
-        <div class="close text-c" @click="discountmodel = false">取消</div>
-      </div>
-    </van-popup>
 
     <van-actionsheet v-model="showcoupon" title="优惠券">
       <div class="coupon_box">
@@ -174,7 +157,7 @@
 
           <div class="coupon_con flex-jc-around flex-align-items" >
             <div>
-              <span class="num">{{item.coupons_money|nozero}}</span>
+              <span class="num">{{item.coupons_money|noZero}}</span>
               <span class="yuan">元</span>
             </div>
             <div v-if="item.activity_name==''">
@@ -188,7 +171,7 @@
               <div class="coupon_fl">{{item.coupon_name}}</div>
               <div class="limit">
                 <div>活动{{item.activity_name}}</div>
-                <div>有效期至{{item.start_activity}}</div>
+                <div>有效期至{{item.end_activity}}</div>
                 <div>满{{item.coupons_condition}}可用</div>
               </div>
             </div>
@@ -234,7 +217,6 @@ export default {
       weekval: "", //租期
       isinsurance: true, //保险
       isconsent: true, //协议
-      discountmodel: false, //优惠活动
       couponlist: [], //优惠券
       remarkval: "",
       timequantumtext: "", //时间段
@@ -922,7 +904,6 @@ export default {
         this.weekval = "" //租期
         this.isinsurance = true //保险
         this.isconsent = true //协议
-        this.discountmodel = false //优惠活动
         this.couponlist = [] //优惠券
         this.remarkval = ""
         this.timequantumtext = "" //时间段

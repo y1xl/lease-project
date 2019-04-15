@@ -131,9 +131,6 @@ export default {
       if (url.includes('/cart')) {
         return false
       }
-      if (url.includes('/Setup')) {
-        return false
-      }
       if (url.includes('/locationList')) {
         return false
       }
@@ -156,6 +153,12 @@ export default {
         return false
       }
       if (url.includes('/questionnaire')) {
+        return false
+      }
+      if (url.includes('/friendRepay')) {
+        return false
+      }
+      if (url.includes('/friendBuy')) {
         return false
       }
       

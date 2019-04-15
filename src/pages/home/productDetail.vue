@@ -167,7 +167,7 @@
             电话客服
           </div>
         </div>
-        <div class="btn bcolor padding_lr margin_left fsize10">给朋友送礼</div>
+        <div class="btn bcolor padding_lr margin_left fsize10" @click="showinfofriend=true">给朋友送礼</div>
         <div class="btn bcol padding_lr margin_left fsize10" @click="showinfo=true">立即租赁</div>
       </div>
     </div>
@@ -175,7 +175,7 @@
     <van-popup v-model="showmodel" position="bottom" :close-on-click-overlay="false">
       <div class="text-c position">
         <div class="flex-jc-center">
-          <div class="s_title border-b fsz">分享</div>
+          <div class="s_title border-b fsz">分享至</div>
         </div>
         <div class="flex-jc-around border-b" style="padding:15px 0">
           <div class="text-c" v-for="(button, index) in shareButtons" :key="index" @click="call(button)">
@@ -185,7 +185,7 @@
             <div class="grey_12">{{button.text}}</div>
           </div>
           <div class="text-c" @click="copyurl" :data-clipboard-text="text" id="copy">
-            <div class="flex-center copyicon img_fx"><van-icon name="description" /></div>
+            <div class="flex-center copyicon img_fx" style="marginBottom: 3px;"><van-icon name="description" /></div>
             <p class="grey_12">复制链接</p>
           </div>
         </div>
@@ -199,23 +199,23 @@
           <div class="s_title border-b fsz text-c">优惠活动</div>
         </div>
         <div class="flexbox" v-for="(item,index) in discountlist" :key="index">
-          <div class="pd-15 border-b ">
+          <div class="pd-15">
             <div>{{item.activity_name}}</div>
             <div class="grey_12">{{item.activity_time}}</div>
           </div>
         </div>
 
-        <div class="close text-c" @click="discountmodel = false">取消</div>
+        <div class="close text-c border-t" @click="discountmodel = false">取消</div>
       </div>
     </van-popup>
     <!-- 选择规格 -->
-    <div class="model full" v-if="showinfo||showinfocar">
+    <div class="model full" v-if="showinfo||showinfocar||showinfofriend">
       <div class="main bgc">
         <div class="goods1 flexbox pd-15">
           <img :src="detail.main_img" alt style="object-fit:contain">
           <div class="flex-1">
             <div class="mar-b-10 position title">{{detail.goods_name}}
-              <div class="closeicon" @click="showinfo=false,showinfocar=false">
+              <div class="closeicon" @click="showinfo=false,showinfocar=false,showinfofriend=false">
                 <van-icon name="close"/>
               </div>
             </div>
@@ -233,6 +233,9 @@
             </div>
           </div>
         </div>
+        <div class="pd-15" v-show="showinfofriend">
+          <div class="gbtn text-c" @click="gofriend">朋友送礼</div>
+        </div>
         <div class="pd-15" v-show="showinfo">
           <div class="gbtn text-c" @click="gobuy">开始下单</div>
         </div>
@@ -241,15 +244,18 @@
         </div>
       </div>
     </div>
+
+    <vueClipboard v-model="iscopy" :text="link"/>
   </div>
 </template>
 
 <script>
-import { Toast,ImagePreview } from "vant";
+import { Toast,ImagePreview,Dialog } from "vant";
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
 import { videoPlayer } from 'vue-video-player'
 import Clipboard from 'clipboard';
+import vueClipboard from "@/components/Clipboard";
 
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
@@ -258,6 +264,7 @@ var NativeShare, mShare, instance
 export default {
   components: {
     videoPlayer,
+    vueClipboard
   },
   data() {
     return {
@@ -285,13 +292,17 @@ export default {
       playsinline: true,
       tel:'',
       size:12,
+      showinfofriend: false,
 
       shareButtons:[
         {text: '微信好友', nativeshare:'wechatFriend', m_share: 'wx' , src: require('@/assets/f_weixin.png')},
         {text: '朋友圈', nativeshare:'wechatTimeline', m_share: 'wxline', src: require('@/assets/f_friend.png')},
         {text: '新浪微博', nativeshare:'weibo', m_share: 'sina', src: require('@/assets/f_weibo.png')},
       ],
-      text: window.location.href
+      text: window.location.href,
+
+      iscopy:false,
+      link:''
     };
   },
 
@@ -310,6 +321,9 @@ export default {
     }
   },
   methods: {
+    gologin(){
+      this.$router.replace({ path: "/login" });
+    },
     gettel() {
       this.axios.post(this.API + "api/Order/GetServiceTel").then(res => {
         console.log(res.data, "tel");
@@ -423,9 +437,68 @@ export default {
       this.$router.push({ path: "/wordMouth/"+id });
     },
 
+    gofriend(){
+      if (!window.localStorage.getItem("userinfo")) {
+        Dialog.alert({
+            message: '请先登录'
+        }).then((e) => {
+            this.gologin()
+        });
+        return
+      }
+
+      let arr = []
+      for(let v of this.speclist){
+        for (let v1 of v.spec){
+          if (v1.checked){
+            arr.push(v1)
+          }
+        }
+      }
+  
+      let config = {
+        title: '数码租赁',
+        link: window.location.origin + `#/friendBuyShare?goodsid=${this.$route.params.id}`,
+        desc:'朋友给你送礼啦'
+      }
+
+      if(this.speclist.length==0){
+        window.sessionStorage.removeItem("buyfriendSession");
+      }else
+      if(arr.length == this.speclist.length){
+        window.sessionStorage.removeItem("buyfriendSession");
+        config = {
+          title: '数码租赁',
+          link: window.location.origin + `#/friendBuyShare?goodsid=${this.$route.params.id}&guige=${encodeURI(JSON.stringify(arr))}`,
+          desc:'朋友给你送礼啦'
+        }
+      }else{
+        Toast('请先选择规格')
+        return
+      }
+
+      let nativeShare = new NativeShare()
+      nativeShare.setShareData(config)
+      try {
+        nativeShare.call('wechatFriend')
+      } catch(e) {
+        let Browser = navigator.userAgent;
+        if(Browser.indexOf('QQBrowser') > -1){
+          
+        }else{
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+        }
+      }
+    },
     gobuy() {
       if (!window.localStorage.getItem("userinfo")) {
-        this.$router.replace({ path: "/login" });
+        Dialog.alert({
+            message: '请先登录'
+        }).then((e) => {
+            this.gologin()
+        });
         return
       }
 
@@ -463,7 +536,11 @@ export default {
     },
     addcart(){
       if (!window.localStorage.getItem("userinfo")) {
-        this.$router.replace({ path: "/login" });
+        Dialog.alert({
+            message: '请先登录'
+        }).then((e) => {
+            this.gologin()
+        });
         return
       }
 
@@ -869,8 +946,7 @@ export default {
   height: 50px;
 }
 .copyicon {
-  font-size: 20px;
-  margin-bottom: 1px;
+  font-size: 24px;
 }
 
 .close,
