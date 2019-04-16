@@ -115,7 +115,6 @@
         <div class="flex-jc-between border-b word_num" @click="toMouthw(detail.goods_id)">
           <div>
             <span>口碑</span>
-            <!-- <span>(0)</span> -->
           </div>
           <div class="flex-align-items">
             <img class="img_r" src="../../assets/right.png" alt>
@@ -130,7 +129,6 @@
           </div>
           <div>
             <span class="grey_12">{{item.create_time}}</span>
-            <!-- <span class="grey_12">租期:1年</span> -->
           </div>
           <div class="com_det">
             {{item.eva_content}}
@@ -991,7 +989,6 @@ export default {
   width: 80px;
   height: 80px;
   margin-right: 10px;
-  /* background-color: #f6f6f6; */
 }
 .goods1 .title {
   padding-right: 10px;

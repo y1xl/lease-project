@@ -27,7 +27,6 @@
           </div>
           <div>
             <span class="grey_12">{{item.create_time}}</span>
-            <!-- <span class="grey_12">租期:1年</span> -->
           </div>
           <div class="com_det">
             {{item.eva_content}}

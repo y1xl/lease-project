@@ -213,18 +213,11 @@ export default {
 };
 </script>
 
-<style>
-#nav .van-tabs__line {
+<style scoped>
+#nav >>> .van-tabs__line {
   background-color: #fff;
   background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
 }
-
-#dialog .van-dialog {
-  width: 68%;
-}
-</style>
-
-<style scoped>
 .coupon_con {
   position: absolute;
   top: 0px;

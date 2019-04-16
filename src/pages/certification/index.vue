@@ -50,8 +50,7 @@
 import Clipboard from "@/components/Clipboard";
 import { Toast } from 'vant';
 const nativeshare = () => import ('nativeshare') 
-const m_share = () => import ('m-share')
-var NativeShare, mShare
+var NativeShare
 
 export default {
   components: {
@@ -68,7 +67,6 @@ export default {
   },
   mounted() {
     nativeshare().then(res =>  {NativeShare = res.default} )
-    m_share().then(res => {mShare = res})
     this.userprice();
   },
   methods: {
@@ -87,8 +85,8 @@ export default {
             if (resdata.code == 200) {
               Toast.clear()
               this.users_money = resdata.data.users_money;
-              this.realname = resdata.data.is_idcard
-              this.school = resdata.data.is_chsi
+              this.realname = resdata.data.is_idcard //0未认证1已认证
+              this.school = resdata.data.is_chsi //0未认证 1认证成功 2认证失败
             } else {
               Toast.clear()
               Toast(resdata.message);
@@ -120,7 +118,6 @@ export default {
     call(){
       let config = {
         title: '数码租赁',
-        // link: window.location.origin + '#/login',
         link: window.location.origin + '#/login?token='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
         desc:'邀请好友'
       }
@@ -131,18 +128,12 @@ export default {
           link: config.link,
           icon: '',
       }
-      let mShareData = {  //m-share的参数模型
-            title: config.title, // 标题，默认读取document.title
-            desc: config.desc, // 描述, 默认读取head标签：<meta name="description" content="desc" />
-            link: config.link, // 网址，默认使用window.location.href
-            imgUrl: '', // 图片, 默认取网页中第一个img标签
-      }
+
       let nativeShare = new NativeShare()
       nativeShare.setShareData(shareData)
       try {
         nativeShare.call('wechatFriend')
       } catch(e) {
-        // mShare.to('wx', mShareData)
         let Browser = navigator.userAgent;
         if(Browser.indexOf('QQBrowser') > -1){
           

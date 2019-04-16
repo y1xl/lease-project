@@ -55,8 +55,7 @@
 import Clipboard from "@/components/Clipboard";
 import { Toast,Dialog } from "vant";
 const nativeshare = () => import ('nativeshare') 
-const m_share = () => import ('m-share')
-var NativeShare, mShare
+var NativeShare
 
 export default {
     components: {
@@ -87,7 +86,6 @@ export default {
     },
     mounted(){
         nativeshare().then(res =>  {NativeShare = res.default} )
-        m_share().then(res => {mShare = res})
 
         this.getnum()
     },
@@ -128,6 +126,7 @@ export default {
                 Toast('网络出错')
             });
         },
+        //if优惠卷,领取
         receive(id){
             Toast.loading({ mask: true, message: "加载中..." });
             let postData = this.$qs.stringify({
@@ -192,6 +191,7 @@ export default {
                 }
             });
         },
+        //剩余次数
         getnum(){
             let postData = this.$qs.stringify({
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -249,18 +249,11 @@ export default {
                 link: config.link,
                 icon: '',
             }
-            let mShareData = { 
-                    title: config.title, 
-                    desc: config.desc, 
-                    link: config.link, 
-                    imgUrl: '', 
-            }
             let nativeShare = new NativeShare()
             nativeShare.setShareData(shareData)
             try {
                 nativeShare.call('wechatFriend')
             } catch(e) {
-                // mShare.to('wx', mShareData)
                 let Browser = navigator.userAgent;
                 if(Browser.indexOf('QQBrowser') > -1){
                 
@@ -296,7 +289,6 @@ export default {
 .box {
     background-color: rgba(255,255,255,.9);
     box-shadow:0px 0px 87px 0px rgba(173,198,238,0.68);
-    /* height: 300px; */
     border-radius: 10px;
     position: relative;
     top: 160px;

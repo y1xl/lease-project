@@ -117,7 +117,6 @@ export default {
 }
 
 .shoplist {
-  /* margin-bottom: 60px; */
   padding-top: 2px;
   background: #fbfbfb;
 }

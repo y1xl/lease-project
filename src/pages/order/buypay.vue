@@ -43,6 +43,7 @@
 
 <script>
 import { Toast, Dialog } from "vant";
+import { isWeiXin } from "@/utils/util.js";
 export default {
     data(){
         return{
@@ -115,6 +116,14 @@ export default {
             }
             if (this.radio == 2) {
                 // Toast("支付宝功能未开通");
+                if(isWeiXin()){
+                    Dialog.alert({
+                        message: '请在浏览器中打开网页完成支付'
+                    }).then((e) => {
+
+                    });
+                    return
+                }
                 Toast.loading({ mask: true, message: "加载中..." });
                 let postData = this.$qs.stringify({
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,

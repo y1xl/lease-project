@@ -46,37 +46,6 @@
             </div>
         </div>
 
-        <!-- <div id="hnav">
-            <van-tabs v-model="active">
-                <van-tab title=" 出租记录">
-                <div class="tab_box">
-                    <div class="flex-jc-between flex-align-items pd-15" v-for="index in 5" :key="index">
-                    <div>
-                        <div>共计10天</div>
-                        <div class="time">2018-12-19～2018-12-29</div>
-                    </div>
-                    <div>
-                        <span class="jia">+</span>
-                        <span class="money">670</span>
-                    </div>
-                    </div>
-                </div>
-                </van-tab>
-                <van-tab title="收益记录">
-                <div class="tab_box text-c">
-                    <div class="time pd-15">可分成</div>
-                    <div class="fc_money">{{earnings.users_rent||0}}</div>
-                    <div class="flex-jc-between pd-15">
-                    <div>
-                        <div class="time">当月总租金</div>
-                    </div>
-                    <div class="time">{{earnings.total_rent||0}}</div>
-                    </div>
-                </div>
-                </van-tab>
-            </van-tabs>
-        </div> -->
-
         <div class="pd-lr-15">出租记录</div>
         <div class="tab_box">
             <div class="fc-grey pd-15" v-if="earnings.length==0">暂无记录</div>
@@ -161,19 +130,6 @@ export default {
     }
 }
 </script>
-
-<style>
-#hnav .van-tab {
-    background-color: #f6f6f6;
-}
-#hnav .van-tabs__line {
-  background-color: #fff;
-  background-image: linear-gradient(90deg, #6c76ed 0%, #74d2ff 100%);
-}
-#hnav .van-tabs__wrap {
-  z-index: 0;
-}
-</style>
 
 <style scoped>
 .fsz12{

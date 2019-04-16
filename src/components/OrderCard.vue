@@ -18,12 +18,11 @@
                 <span class="fc-blue" v-if="data.order_status==11">已完成</span>
             </div>
             <div class="flexbox">
-                <!-- <img :src="data.gd_img" alt="" class="goodsimg bgc-grey" > -->
                 <img v-lazy="data.gd_img" class="goodsimg bgc-grey" >
                 <div class="flex-1 right">
-                    <div class="mar-b-10">{{data.goods_name}}</div>
+                    <div class="mar-b-10"><van-tag plain type="primary" v-if="data.giver_id">送礼</van-tag>{{data.goods_name}}</div>
                     <div class="spec mar-b-10"><span v-for="(item,index) in data.spec" :key="index">{{item[0]}}</span></div>
-                    <div class="mar-b-10 fsz12 rental">
+                    <div class="mar-b-10 fsz12 rental" v-if="isgetfriend">
                         <span>租金:￥{{data.rental}}</span>
                         <span>押金:￥{{data.order_rent}}</span>
                     </div>
@@ -59,6 +58,17 @@ export default {
             }else{
                 return {to:`/orderDetail/${this.data.order_id}?active=${this.active}`}
             }    
+        },
+        isgetfriend(){
+            if(this.data.giver_id){
+                if(this.data.giver_id==JSON.parse(window.localStorage.getItem("userinfo")).users_id){
+                    return true
+                }else{
+                    return false
+                }
+            }else{  
+                return true
+            }
         }
     },
     methods:{

@@ -204,7 +204,7 @@
 
 <script>
 import { Toast,Dialog } from "vant";
-import { accAdd,accSub } from "@/utils/util.js";
+import { accAdd,accSub,isWeiXin } from "@/utils/util.js";
 export default {
   beforeRouteEnter(to, from, next) {
     let urlarr = ['选择地点','时间','自取联系人','收货地址']
@@ -566,6 +566,14 @@ export default {
         }
 
         if(this.radio==2){
+          if(isWeiXin()){
+              Dialog.alert({
+                  message: '请在浏览器中打开网页完成支付'
+              }).then((e) => {
+
+              });
+              return
+          }
           this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
               console.log(res.data, "alipay");
@@ -655,6 +663,14 @@ export default {
         }
 
         if(this.radio==2){
+          if(isWeiXin()){
+              Dialog.alert({
+                  message: '请在浏览器中打开网页完成支付'
+              }).then((e) => {
+
+              });
+              return
+          }
           this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
               console.log(res.data, "alipay");

@@ -83,6 +83,7 @@ export default {
         }
       });
     },
+    // 删除 end
 
     getlist() {
       Toast.loading({ mask: true, message: "加载中..." });
@@ -179,6 +180,16 @@ export default {
         window.sessionStorage.setItem(
           "prebuySession",
           JSON.stringify(prebuySession)
+        );
+      }
+      if (this.$route.params.type == "friendbuy") {
+        let friendbuySession = JSON.parse(
+          window.sessionStorage.getItem("friendbuySession")
+        );
+        friendbuySession.getaddress = this.list[val];
+        window.sessionStorage.setItem(
+          "friendbuySession",
+          JSON.stringify(friendbuySession)
         );
       }
       this.$router.go(-1);

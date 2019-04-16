@@ -115,7 +115,7 @@ export default {
       // }
 
       let nowPageNum = ++this.page;
-      if(this.$route.params.type == "buy"||this.$route.params.type == "prebuy"){
+      if(this.$route.params.type == "buy"||this.$route.params.type == "prebuy"||this.$route.params.type == "friendbuy"){
         let postData = this.$qs.stringify({
           lat: JSON.parse(window.localStorage.getItem("center")).lat,
           lng: JSON.parse(window.localStorage.getItem("center")).lng,
@@ -213,6 +213,13 @@ export default {
         );
         prebuySession.getlocation = this.list[this.radio];
         window.sessionStorage.setItem("prebuySession", JSON.stringify(prebuySession));
+      }
+      if (this.$route.params.type == "friendbuy") {
+        let friendbuySession = JSON.parse(
+          window.sessionStorage.getItem("friendbuySession")
+        );
+        friendbuySession.getlocation = this.list[this.radio];
+        window.sessionStorage.setItem("friendbuySession", JSON.stringify(friendbuySession));
       }
 
       this.$router.go(-1);

@@ -223,6 +223,7 @@ export default {
     //取消托管
     cancelTg(id,serial_number) {
       window.sessionStorage.removeItem("hostCancelSession");
+      window.sessionStorage.removeItem("wxpayhcSession");
       this.$router.push({ path: "/hostCancel/"+id + '/' + serial_number });
     },
     //确认

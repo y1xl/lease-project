@@ -10,7 +10,6 @@
           <div class="name">{{users_name}}</div>
         </div>
       </div>
-      <!-- <img class="hg" src="../../assets/hg.png"> -->
     </div>
     <div class="mebox bgc">
       <van-cell is-link center to="/certification">

@@ -1,10 +1,5 @@
 <template>
   <div>
-    <!-- <div class="nav bgc border-b flex-jc-center">
-      <div :class="{ selected: selected==0 }" @click="nav(0)">租赁单</div>
-      <div :class="{ selected: selected==1 }" @click="nav(1)">租转售</div>
-    </div> -->
-
     <div id="ordernav">
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item.name" v-for="(item,index) in navarr" :key="index">
@@ -24,27 +19,57 @@
 
       <lazy-component>
       <OrderCard v-for="(item,index) in list" :key="index" :data="item" :active="active">
-        <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
-        <div class="flex-center border" @click="onshowDelivery(item.order_id)" v-if="item.order_status==12&&item.users_surrender_id==0">取消订单</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==1" @click="gopay(item.order_id)">
-          支付
-        </div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
-        <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
-        <div class="flex-center border" v-if="(item.order_status==9&&item.user_validation==0)">
-          <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
-        </div>
-        <div class="flex-center border-blue fc-blue" v-if="(item.order_status==9&&item.user_validation==0)" @click="onConfirmsales(item.order_id)">确认</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0&&item.service_money&&item.service_money>0" @click="gocompensation(item.order_id)">
-          维修费
-        </div>
-        <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
-        <div class="flex-center border" v-if="item.order_status==6" @click="gorelet(item.order_id)">续租</div>
-        <div class="flex-center border-blue fc-blue" v-if="active==5">
-          <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}?type=leaseorder`}">评价</router-link>
-        </div>
-        <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
-        <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping(item.order_id)">购买</div> 
+        <template v-if="item.giver_id">
+          <template v-if="item.giver_id==usersid">
+            <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
+            <div class="flex-center border-blue fc-blue" v-if="item.order_status==1" @click="gopay(item.order_id)">
+              支付
+            </div>
+          </template>
+          <template v-else>
+            <div class="flex-center border" @click="onshowDelivery(item.order_id)" v-if="item.order_status==12&&item.users_surrender_id==0">取消订单</div>
+            <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
+            <div class="flex-center border" v-if="(item.order_status==9&&item.user_validation==0)">
+              <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
+            </div>
+            <div class="flex-center border-blue fc-blue" v-if="(item.order_status==9&&item.user_validation==0)" @click="onConfirmsales(item.order_id)">确认</div>
+            <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0&&item.service_money&&item.service_money>0" @click="gocompensation(item.order_id)">
+              维修费
+            </div>
+            <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
+            <div class="flex-center border" v-if="item.order_status==6" @click="gorelet(item.order_id)">续租</div>
+            <div class="flex-center border-blue fc-blue" v-if="active==5">
+              <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}?type=leaseorder`}">评价</router-link>
+            </div>
+            <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
+            <!-- <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping(item.order_id)">购买</div>  -->
+          </template>
+          <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
+        </template>
+
+        <template v-else>
+          <div class="flex-center border" @click="onshowmodel(item.order_id)" v-if="item.order_status==1">取消订单</div>
+          <div class="flex-center border" @click="onshowDelivery(item.order_id)" v-if="item.order_status==12&&item.users_surrender_id==0">取消订单</div>
+          <div class="flex-center border-blue fc-blue" v-if="item.order_status==1" @click="gopay(item.order_id)">
+            支付
+          </div>
+          <div class="flex-center border-blue fc-blue" v-if="item.order_status==5" @click="onConfirmGoods(item.order_id)">确认收货</div>
+          <div class="flex-center border" v-if="item.order_status==4" @click="del(item.order_id)">删除订单</div>
+          <div class="flex-center border" v-if="(item.order_status==9&&item.user_validation==0)">
+            <router-link v-bind="{to: '/deny/'+item.order_id}">否认</router-link>
+          </div>
+          <div class="flex-center border-blue fc-blue" v-if="(item.order_status==9&&item.user_validation==0)" @click="onConfirmsales(item.order_id)">确认</div>
+          <div class="flex-center border-blue fc-blue" v-if="item.order_status==9&&item.user_validation==1&&item.maintenance_pay==0&&item.service_money&&item.service_money>0" @click="gocompensation(item.order_id)">
+            维修费
+          </div>
+          <div class="flex-center border" @click="getcode(item.order_id,1)" v-if="item.order_status==5">取货码</div>
+          <div class="flex-center border" v-if="item.order_status==6" @click="gorelet(item.order_id)">续租</div>
+          <div class="flex-center border-blue fc-blue" v-if="active==5">
+            <router-link v-bind="{to: `/comments/${item.order_id}/${item.goods_id}?type=leaseorder`}">评价</router-link>
+          </div>
+          <div class="flex-center border" v-if="item.order_status==6" @click="gorefund(item.order_id)">退租</div>
+          <div class="flex-center border-blue fc-blue" v-if="item.order_status==6" @click="goshopping(item.order_id)">购买</div> 
+        </template>
       </OrderCard> 
       </lazy-component>
 
@@ -128,6 +153,7 @@ export default {
   },
   data() {
     return {
+      usersid: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
       // selected: 0,
       active: 0,
       navarr: [
@@ -140,23 +166,6 @@ export default {
         {name:'已评价',count:0},
         {name:'已取消',count:0},
       ],
-      // navarr0: [
-      //   {name:'待付款',count:0},
-      //   {name:'预租中',count:0},
-      //   {name:'已预定',count:0},
-      //   {name:'租赁中',count:0},
-      //   {name:'已超期',count:0},
-      //   {name:'待评价',count:0},
-      //   {name:'已评价',count:0},
-      //   {name:'已取消',count:0},
-      // ],
-      // navarr1: [
-      //   {name:'待付款',count:0},
-      //   {name:'待发货',count:0},
-      //   {name:'待收货',count:0},
-      //   {name:'待评价',count:0},
-      //   {name:'已完成',count:0},
-      // ],
       radio: 0,
       canceltext: [{ id: 1, text: "我不想租了" },{ id: 2, text: "商品规格填错了" },{ id: 3, text: "收货地址写错了" },{ id: 4, text: "支付有问题" },{ id: 5, text: "重新下单" }, { id: 6, text: "其他" }],
       showmodel: false,
@@ -190,19 +199,6 @@ export default {
       window.sessionStorage.removeItem("wxpayCompensationSession");
       this.$router.push({ path: `/compensation/${id}` });
     },
-    // nav(n) {
-    //   this.selected = n;
-    //   if (n == 0) {
-    //     this.navarr = this.navarr0;
-    //     this.active = 0
-    //     this.getlist()
-    //   }
-    //   if (n == 1) {
-    //     this.navarr = this.navarr1;
-    //     this.active = 0
-    //     this.list = [] //测试
-    //   }
-    // },
     ontag(index, title) {
       console.log(index, title);
       this.active = index;
@@ -409,6 +405,7 @@ export default {
   activated() {
     Dialog.close()
      if(!this.$route.meta.isBack || this.isFirstEnter){
+       this.usersid=JSON.parse(window.localStorage.getItem("userinfo")).users_id,
        this.active=0,
        this.list=[]
        this.radio=0
@@ -425,12 +422,6 @@ export default {
   },
 };
 </script>
-
-<style>
-/* #ordernav .van-tab span {
-  font-size: 8px;
-} */
-</style>
 
 <style scoped>
 #ordernav >>> .van-tabs__line {

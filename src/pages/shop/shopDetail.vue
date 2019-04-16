@@ -80,7 +80,6 @@ export default {
   padding-bottom: 0;
 }
 .shopimg_b {
-  /* margin-top: 15px; */
   width: 100%;
   height: 170px;
   border-radius: 5px;
@@ -109,7 +108,6 @@ export default {
 
 .shop_intro {
   font-size: 12px;
-  /* color: #808080; */
   padding-bottom: 20px;
 }
 

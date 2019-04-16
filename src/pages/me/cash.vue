@@ -109,7 +109,10 @@ export default {
             Toast.clear()
             Toast(resdata.message);
           }
-        });
+        })
+        .catch(error => {
+                Toast('网络出错')
+            });
     }
   }
 };

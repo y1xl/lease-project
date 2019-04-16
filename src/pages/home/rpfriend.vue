@@ -114,7 +114,6 @@ export default {
 .box {
     background-color: rgba(255,255,255,.9);
     box-shadow:0px 0px 87px 0px rgba(173,198,238,0.68);
-    /* height: 300px; */
     border-radius: 10px;
     position: relative;
     top: 160px;

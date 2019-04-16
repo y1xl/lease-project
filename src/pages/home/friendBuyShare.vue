@@ -26,20 +26,31 @@
         </div>
 
         <div class="pd-15">
-            <div class="btn text-c" >确认</div>
+            <div class="btn text-c" @click="submit">确认</div>
         </div>
         <p class="fsz-12 text-c fc-grey">说明:确认完并发送给送礼人，由送礼人完成支付</p>
+
+        <Clipboard v-model="iscopy" :text="link"/>
     </div>
 </template>
 
 <script>
 import { Toast,Dialog } from "vant";
+import Clipboard from "@/components/Clipboard";
+const nativeshare = () => import ('nativeshare') 
+var NativeShare
+
 export default {
+    components: {
+        Clipboard
+    },
     data(){
         return {
             typenum: 0,
             date:'',
-            remarkval:''
+            remarkval:'',
+            iscopy:false,
+            link:''
         }
     },
     beforeCreate(){
@@ -47,7 +58,7 @@ export default {
             Dialog.alert({
                 message: '请先登录'
             }).then((e) => {
-                this.$router.push({ path: "/login?friendBuyShare=1" });
+                this.$router.push({ path: `/login?friendBuyShareid=1&goodsid=${this.$route.query.goodsid}&guige=${this.$route.query.guige}` });
             });
             return
         }
@@ -60,6 +71,9 @@ export default {
             this.remarkval = friendBuyShare.remarkval
         }
     },
+    mounted() {
+        nativeshare().then(res =>  {NativeShare = res.default} )
+    },
     methods:{
         go(url){
             let friendBuyShare = {
@@ -69,6 +83,53 @@ export default {
             }
             window.sessionStorage.setItem("friendBuyShare", JSON.stringify(friendBuyShare));
             this.$router.push({ path: url });
+        },
+        submit(){
+            if(this.date == ""){
+                Toast("请选择起租时间")
+                return
+            }
+            this.call()
+        },
+        call(){
+            let obj = {
+                typenum: this.typenum,
+                date: this.date,
+                remarkval:this.remarkval,
+            }
+            let url
+            if(this.$route.query.guige){
+                url = window.location.origin + `#/friendBuy?id=${this.$route.query.goodsid}&friendid=${JSON.parse(window.localStorage.getItem("userinfo")).users_id}&guige=${this.$route.query.guige}&data=${encodeURI(JSON.stringify(obj))}`
+            }else{
+                url = window.location.origin + `#/friendBuy?id=${this.$route.query.goodsid}&friendid=${JSON.parse(window.localStorage.getItem("userinfo")).users_id}&data=${encodeURI(JSON.stringify(obj))}`
+            }
+            let config = {
+                title: '数码租赁',
+                link: url,
+                desc:'朋友填写完啦，快去完成订单吧'
+            }
+            let shareData = {  //nativeShare的参数模型
+                title: config.title,
+                desc: config.desc,
+                // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+                link: config.link,
+                icon: '',
+            }
+
+            let nativeShare = new NativeShare()
+            nativeShare.setShareData(shareData)
+            try {
+                nativeShare.call('wechatFriend')
+            } catch(e) {
+                let Browser = navigator.userAgent;
+                if(Browser.indexOf('QQBrowser') > -1){
+                
+                }else{
+                    this.link = config.link,
+                    this.iscopy=true
+                    Toast('请重试或点击复制链接分享给好友')
+                }
+            }
         },
     }
 }

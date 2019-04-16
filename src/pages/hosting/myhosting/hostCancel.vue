@@ -33,10 +33,10 @@
     <div class="bgc mar-b-10">
         <div class="border-b pd-15">请选择支付方式</div>
         <van-radio-group v-model="radio">
-            <!-- <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
+            <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
                 <div><img src="../../../assets/weixin.png" alt="微信" class="payimg">微信</div>
                 <van-radio name="1" checked-color="#2DBBF1"></van-radio>
-            </div> -->
+            </div>
             <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
                 <div><img src="../../../assets/ali.png" alt="支付宝" class="payimg">支付宝</div>
                 <van-radio name="2" checked-color="#2DBBF1"></van-radio>
@@ -52,11 +52,20 @@
       <div class="btn text-c" @click="submit">立即支付</div>
     </div>
 
+    <van-popup v-model="showWXpay" :close-on-click-overlay='false'>
+        <div class="wxbox">
+            <p class="text-c border-b">请确认微信支付是否完成</p>
+            <p class="text-c fc-red border-b" @click="goback">已完成支付</p>
+            <p class="text-c fc-grey" @click="showWXpay = false">支付遇到问题，重新支付</p>
+        </div>
+    </van-popup>
+
   </div>
 </template>
 
 <script>
 import { Toast,Dialog } from "vant";
+import { isWeiXin } from "@/utils/util.js";
 export default {
   data(){
     return{
@@ -64,7 +73,8 @@ export default {
       datetext:'',
       getaddress:'',
       info:'',
-      freight: 0
+      freight: 0,
+      showWXpay:false
     }
   },
   watch:{
@@ -76,18 +86,27 @@ export default {
   },
 
   created() {
-        let hostCancelSession = JSON.parse(window.sessionStorage.getItem("hostCancelSession"));
-        if(hostCancelSession){
-            this.datetext = hostCancelSession.date
-            this.getaddress = hostCancelSession.getaddress
-        }else{
-          this.getdefaultaddress()
+    let wxpayhcSession = JSON.parse(window.sessionStorage.getItem("wxpayhcSession"))
+    if(wxpayhcSession){
+        if(wxpayhcSession.orderid==this.$route.params.orderid){
+            this.showWXpay = wxpayhcSession.state
         }
-        //取缓存 end
-        this.getinfo()
+    }
+    let hostCancelSession = JSON.parse(window.sessionStorage.getItem("hostCancelSession"));
+    if(hostCancelSession){
+        this.datetext = hostCancelSession.date
+        this.getaddress = hostCancelSession.getaddress
+    }else{
+      this.getdefaultaddress()
+    }
+    //取缓存 end
+    this.getinfo()
   },
 
   methods:{
+    goback(){
+      this.$router.go(-1);
+    },
     go(url){
         let hostCancelSession = {
             date: this.datetext,
@@ -169,11 +188,38 @@ export default {
             store_id: this.store_id
         })
 
+      if(this.radio==1){
+        this.axios.post(this.API + "api/Trusteeship/cancelTrust", postData)
+        .then(res => {
+          console.log(res.data, "wxpay");
+          let resdata = res.data;
+          if (resdata.code == 200) {
+            Toast.clear();
+            let wxpayhcSession = {
+                orderid:this.$route.params.orderid,
+                state: true
+            }
+            window.sessionStorage.setItem("wxpayhcSession", JSON.stringify(wxpayhcSession))
+            window.location.href = resdata.data
+          } else {
+            Toast.clear();
+            Toast(resdata.message);
+          }
+        });
+      }
       if(this.radio==2){
+        if(isWeiXin()){
+            Dialog.alert({
+                message: '请在浏览器中打开网页完成支付'
+            }).then((e) => {
+
+            });
+            return
+        }
         this.axios.post(this.API + "api/Trusteeship/cancelTrust", postData)
         .then(res => {
             console.log(res.data, "alipay");
-            window.sessionStorage.removeItem("wxpaySession");
+            window.sessionStorage.removeItem("wxpayhcSession");
             Toast.clear()
             
             const form = res.data;
@@ -244,6 +290,14 @@ export default {
     height: 20px;
     padding-right: 10px;
     vertical-align: middle;
+}
+
+
+.wxbox {
+    width: 200px;
+}
+.wxbox > p {
+    padding: 10px 0;
 }
 </style>
 

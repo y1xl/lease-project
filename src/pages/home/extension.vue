@@ -293,13 +293,4 @@ export default {
   height: 200px;
 }
 
-
-/* .item {
-  flex: 0 0 25%;
-  box-sizing: border-box;
-  padding: 10px 0;
-}
-.item .icon {
-  font-size: 20px;
-} */
 </style>

@@ -47,7 +47,7 @@ export default {
         window.location.href = url
     }
 
-    if (location.href.includes('wakeup')&&location.href.includes('from')) { // 用是否有shareId 来判断是不是分享出去的链接
+    if (location.href.includes('wakeup')&&location.href.includes('from')) { 
         let index = location.href.indexOf('wakeup')+6+1
         let shareId = location.href.slice(index)
         // console.log(shareId,'shareId')
@@ -57,6 +57,24 @@ export default {
 
     if(this.$route.query.rpfriend){
       window.sessionStorage.setItem("rpfriend",1);
+      this.isother = false
+    }
+    if(this.$route.query.friendBuyShareid){
+      let friendBuyShareid = {
+        goodsid: this.$route.query.goodsid,
+        guige: this.$route.query.guige?this.$route.query.guige:''
+      }
+      window.sessionStorage.setItem("friendBuyShareid",friendBuyShareid);
+      this.isother = false
+    }
+    if(this.$route.query.friendBuyOrder){
+      let friendBuyOrder = {
+        id: this.$route.query.id,
+        friendid: this.$route.query.friendid,
+        guige: this.$route.query.guige?this.$route.query.guige:'',
+        data: this.$route.query.data
+      }
+      window.sessionStorage.setItem("friendBuyOrder",friendBuyOrder);
       this.isother = false
     }
   },

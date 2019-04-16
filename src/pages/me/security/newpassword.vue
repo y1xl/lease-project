@@ -39,6 +39,7 @@ export default {
                 let resdata = res.data;
                 if (resdata.code == 200) {
                   Toast.clear()
+                  Toast('修改成功')
                   this.$router.go(-1);
                 } else {
                   Toast.clear()

@@ -2,7 +2,6 @@
   <div class="pd-15">
     <van-radio-group v-model="radio">
       <div class="card bgc mar-b-10 flex-align-items" v-for="(item,index) in list" :key="index">
-        <!-- <van-radio :name="item.id" checked-color="#2DBBF1"></van-radio> -->
         <div class="flex-1 left" @click="radio = item.id">
           <div>关系:{{item.urgent_sign}}</div>
           <div>联系人电话:{{item.urgent_phone}}</div>
@@ -23,8 +22,7 @@
 </template>
 
 <script>
-import { Dialog } from "vant";
-import { Toast } from "vant";
+import { Dialog,Toast } from "vant";
 export default {
   data() {
     return {

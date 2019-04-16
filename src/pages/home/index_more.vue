@@ -144,8 +144,6 @@ export default {
 
 .item {
   width: 140px;
-  /* height: 160px; */
-  /* background: #f7f7f7; */
   border-radius: 5px;
   margin: 13px 0 0 13px;
 }
@@ -159,7 +157,6 @@ export default {
   height: 100%;
 }
 .pro_title {
-  /* padding-top:20px; */
   font-weight: bold;
 }
 .price {

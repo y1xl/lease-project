@@ -203,9 +203,7 @@ export default {
             modeltext: '',
             modelarr: [],
             //颜色
-            // showcolor: false,
             colortext: '',
-            // colorarr: ['颜色1', '颜色2'],
             gohostingSession: '',
             shownomodel: false,
 

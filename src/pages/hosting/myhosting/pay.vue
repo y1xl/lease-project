@@ -3,13 +3,13 @@
         <div class="bgc">
             <div class="border-b pd-15">请选择支付方式</div>
             <van-radio-group v-model="radio">
-                <!-- <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
+                <div class="flex-jc-between border-b pd-15" @click="radio = '1'">
                     <div class>
-                        <img src="@/assets/weixin.png" alt="微信" class="payimg">
+                    <img src="@/assets/weixin.png" alt="微信" class="payimg">
                         微信
                     </div>
                     <van-radio name="1" checked-color="#2DBBF1"></van-radio>
-                </div> -->
+                </div>
                 <div class="flex-jc-between border-b pd-15" @click="radio = '2'">
                 <div class>
                     <img src="@/assets/ali.png" alt="支付宝" class="payimg">支付宝
@@ -43,6 +43,7 @@
 
 <script>
 import { Toast, Dialog } from "vant";
+import { isWeiXin } from "@/utils/util.js";
 export default {
     data(){
         return{
@@ -58,7 +59,7 @@ export default {
                 this.showWXpay = wxbuypaySession.state
             }
         }
-        // this.getinfo()
+        this.getinfo()
     },
     methods:{
         goback(){
@@ -78,9 +79,6 @@ export default {
                 Toast(resdata.message);
                 }
             })
-            .catch(error => {
-                Toast('网络出错')
-            });
         },
         submit(){
             if (this.radio == 1) {
@@ -115,6 +113,14 @@ export default {
             }
             if (this.radio == 2) {
                 // Toast("支付宝功能未开通");
+                if(isWeiXin()){
+                    Dialog.alert({
+                        message: '请在浏览器中打开网页完成支付'
+                    }).then((e) => {
+
+                    });
+                    return
+                }
                 Toast.loading({ mask: true, message: "加载中..." });
                 let postData = this.$qs.stringify({
                     money: this.$route.query.money,

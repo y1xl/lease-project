@@ -53,9 +53,6 @@ export default {
                     if(this.$route.params.type=='phone'){
                         this.$router.replace({ path: "/newphone" });
                     }
-                    if(this.$route.params.type=='password'){
-                        // this.$router.replace({ path: "/newpassword" });
-                    }
                 } else {
                 Toast(resdata.message);
                 }

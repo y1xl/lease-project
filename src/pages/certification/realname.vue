@@ -22,7 +22,6 @@
             </div>
         </div>
 
-        <!-- <template v-if="info==''"> -->
         <div class="bgc box-sizing">
             <div class="pt"></div>
             <div class="pd-lr-15">上传身份证 人像面</div>

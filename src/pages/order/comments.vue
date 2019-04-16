@@ -111,13 +111,6 @@ export default {
 </script>
 
 <style scoped>
-/* .goods{
-  padding: 10px;
-}
-.goods img{
-  width: 90px;
-  height: 90px;
-} */
 .ratebox {
   padding: 10px 0;
 }

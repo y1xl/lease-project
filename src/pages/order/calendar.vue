@@ -30,7 +30,7 @@ export default {
   },
   created() {
     console.log(this.$route.query)
-    if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+    if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'||this.$route.params.type=='friendbuy'||this.$route.params.type=='expectdateTofriendbuy'){
       this.getdata()
     }
   },
@@ -59,7 +59,7 @@ export default {
       })
     },
     changeDate(date) {
-      if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+      if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'||this.$route.params.type=='friendbuy'||this.$route.params.type=='expectdateTofriendbuy'){
         Toast.loading({ mask: true, message: "加载中..." });
         let newdate = new Date()
         let postData = this.$qs.stringify({
@@ -87,25 +87,28 @@ export default {
     add0(m){return m<10?'0'+m:m },
     clickDay(date) {
       if(this.arr.length!=0){
-        if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+        if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'||this.$route.params.type=='friendbuy'||this.$route.params.type=='expectdateTofriendbuy'){
           let datetext = date.split('/')
           if(this.add0(datetext[1])!=this.arr[0].split('/')[1]){
             return
           }
           if(this.arr.includes(`${datetext[0]}/${this.add0(datetext[1])}/${datetext[2]}`)) {
-            // Toast('请选择其他起租时间！')
-            Dialog.confirm({
-              title: "",
-              message: "请选择其他起租时间，或选择预租下单",
-              confirmButtonText: '预租下单',
-            })
-            .then(() => {
-              // on confirm
-              this.goprebuy(date)
-            })
-            .catch(() => {
-              //
-            });
+            if(this.$route.params.type=='friendbuy'||this.$route.params.type=='expectdateTofriendbuy'){
+              Toast('请选择其他起租时间！')
+            }
+
+            if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'){
+              Dialog.confirm({
+                title: "",
+                message: "请选择其他起租时间，或选择预租下单",
+                confirmButtonText: '预租下单',
+              })
+              .then(() => {
+                // on confirm
+                this.goprebuy(date)
+              })
+            }
+
             return
           }
         }
@@ -220,6 +223,26 @@ export default {
         window.sessionStorage.setItem(
           "prebuySession",
           JSON.stringify(prebuySession)
+        );
+      }
+      if (this.$route.params.type == "friendbuy") {
+        let friendbuySession = JSON.parse(
+          window.sessionStorage.getItem("friendbuySession")
+        );
+        friendbuySession.getdate = date;
+        window.sessionStorage.setItem(
+          "friendbuySession",
+          JSON.stringify(friendbuySession)
+        );
+      }
+      if (this.$route.params.type == "expectdateTofriendbuy") {
+        let friendbuySession = JSON.parse(
+          window.sessionStorage.getItem("friendbuySession")
+        );
+        friendbuySession.expectdate = date;
+        window.sessionStorage.setItem(
+          "friendbuySession",
+          JSON.stringify(friendbuySession)
         );
       }
       if (this.$route.params.type == "friendBuyShare") {

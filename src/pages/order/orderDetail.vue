@@ -161,6 +161,7 @@
             <div class="r dot"></div>
           </div>
           <div class="info">
+            <template v-if="isgetfriend">
             <div class="flexbox">
               <span>押金</span>
               <span class="flex-1">¥{{data.order_rent||'0.00'}}</span>
@@ -169,6 +170,7 @@
               <span>租金</span>
               <span class="flex-1">¥{{data.rental||'0.00'}}</span>
             </div>
+            </template>
             <div class="flexbox">
               <span>保险费</span>
               <span class="flex-1">¥{{data.order_safe||'0.00'}}</span>
@@ -311,11 +313,13 @@
     <div class="height"></div>
 
     <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10&&data.order_status!=2" :style="maintenance_pay==1||active==6?'opacity: 0;':''">
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)">
+      <template v-if="isgetfriend">
+      <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)" >
         支付
       </div>
+      </template>
+      <template v-else>
       <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
-      <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
       <div class="flex-center border" v-if="data.order_status==6" @click="gorelet(data.order_id)">续租</div>
       <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
       <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
@@ -330,6 +334,8 @@
           <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}?type=leaseorder`}">评价</router-link>
       </div>
       <div class="flex-center border" @click="getcode(data.order_id,1)" v-if="data.order_status==5">取货码</div>
+      </template>
+      <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
     </div>
 
     <div class="model full flex-column-center position" v-show="showcode">
@@ -382,13 +388,25 @@ export default {
       seconds: '-'
     }
   },
+  computed:{
+    isgetfriend(){
+        if(this.data.giver_id){
+            if(this.data.giver_id==JSON.parse(window.localStorage.getItem("userinfo")).users_id){
+                return true
+            }else{
+                return false
+            }
+        }else{  
+            return true
+        }
+    }
+  },
   created(){
     this.getdata()
   },
   mounted(){
     this.getSalesData()
   },
-
   methods:{
     // 倒计时
     countdown(val){

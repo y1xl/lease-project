@@ -43,15 +43,11 @@ export default {
   }
 };
 </script>
-<style>
-#pse .van-collapse-item__content {
-  background-color: #f6f6f6;
-}
-</style>
-
-
 
 <style scoped>
+#pse >>> .van-collapse-item__content {
+  background-color: #f6f6f6;
+}
 .box {
   border-radius: 5px;
   margin: 10px 15px;
