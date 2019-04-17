@@ -54,14 +54,6 @@ export default {
           if(window.sessionStorage.getItem("rpfriend")){
             window.sessionStorage.removeItem("rpfriend");
             this.$router.replace({ path: "/rpfriend" });
-          }else if(window.sessionStorage.getItem("friendBuyShareid")){
-            let { goodsid,guige } = JSON.parse(window.localStorage.getItem("friendBuyShareid"))
-            window.sessionStorage.removeItem("friendBuyShareid");
-            this.$router.replace({ path: `/friendBuyShare?goodsid=${goodsid}&guige=${guige}` });
-          }else if(window.sessionStorage.getItem("friendBuyOrder")){
-            let { id,friendid,guige,data } = JSON.parse(window.localStorage.getItem("friendBuyOrder"))
-            window.sessionStorage.removeItem("friendBuyOrder");
-            this.$router.replace({ path: `/friendBuy?id=${id}&friendid=${friendid}&guige=${guige}&data=${data}` });
           }
           else{
             window.sessionStorage.removeItem("wakeup");

@@ -54,6 +54,7 @@
 <script>
 import Clipboard from "@/components/Clipboard";
 import { Toast,Dialog } from "vant";
+import { isWeiXin } from "@/utils/util.js";
 const nativeshare = () => import ('nativeshare') 
 var NativeShare
 
@@ -241,6 +242,12 @@ export default {
                 title: '数码租赁',
                 link: window.location.origin + '#/rpfriend?friendid='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
                 desc:'好友助力'
+            }
+            if(isWeiXin()){
+                this.link = config.link,
+                this.iscopy=true
+                Toast('请重试或点击复制链接分享给好友')
+                return
             }
             let shareData = { 
                 title: config.title,

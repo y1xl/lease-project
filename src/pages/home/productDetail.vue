@@ -232,7 +232,7 @@
           </div>
         </div>
         <div class="pd-15" v-show="showinfofriend">
-          <div class="gbtn text-c" @click="gofriend">朋友送礼</div>
+          <div class="gbtn text-c" @click="gofriend">给朋友送礼</div>
         </div>
         <div class="pd-15" v-show="showinfo">
           <div class="gbtn text-c" @click="gobuy">开始下单</div>
@@ -254,10 +254,10 @@ import 'vue-video-player/src/custom-theme.css'
 import { videoPlayer } from 'vue-video-player'
 import Clipboard from 'clipboard';
 import vueClipboard from "@/components/Clipboard";
+import { isWeiXin } from "@/utils/util.js";
 
 const nativeshare = () => import ('nativeshare') 
-const m_share = () => import ('m-share')
-var NativeShare, mShare, instance
+var NativeShare, instance
 
 export default {
   components: {
@@ -306,7 +306,6 @@ export default {
 
   mounted(){
     nativeshare().then(res =>  {NativeShare = res.default} )
-    m_share().then(res => {mShare = res})
 
     this.getdetail()
     this.gettel()
@@ -475,6 +474,13 @@ export default {
         return
       }
 
+      if(isWeiXin()){
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+          return
+      }
+
       let nativeShare = new NativeShare()
       nativeShare.setShareData(config)
       try {
@@ -632,15 +638,7 @@ export default {
           link: config.link,
           icon: config.img,
       }
-      let mShareData = {  //m-share的参数模型
-            title: config.title, // 标题，默认读取document.title
-            desc: config.desc, // 描述, 默认读取head标签：<meta name="description" content="desc" />
-            link: config.link, // 网址，默认使用window.location.href
-            imgUrl: config.img, // 图片, 默认取网页中第一个img标签
-            fnDoShare(type) {
 
-            }
-      }
       let nativeShare = new NativeShare()
         nativeShare.setShareData(shareData)
       try {
@@ -650,8 +648,6 @@ export default {
           this.getshare()
         }
       } catch(e) {
-        //qq浏览器中比较奇葩，第一次调用nativeShare.call()会报错，第二次之后不报，这里是让每次调用nativeShare.call()之后都报错，然后统一去调m-share.to()方法
-        // mShare.to(command.m_share, mShareData)
         let Browser = navigator.userAgent;
         if(Browser.indexOf('QQBrowser') > -1){
           

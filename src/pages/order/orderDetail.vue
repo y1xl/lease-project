@@ -313,29 +313,53 @@
     <div class="height"></div>
 
     <div class="tools bgc border-t" v-if="data.order_status!=12&&data.order_status!=8&&data.order_status!=7&&data.order_status!=10&&data.order_status!=2" :style="maintenance_pay==1||active==6?'opacity: 0;':''">
-      <template v-if="isgetfriend">
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)" >
-        支付
-      </div>
+      <template v-if="data.giver_id">
+        <template v-if="isgetfriend">
+        <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)" >
+          支付
+        </div>
+        </template>
+        <template v-else>
+        <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
+        <div class="flex-center border" v-if="data.order_status==6" @click="gorelet(data.order_id)">续租</div>
+        <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
+        <!-- <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div> -->
+        <div class="flex-center border" v-if="(data.order_status==9&&data.user_validation==0)">
+          <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
+        </div>
+        <div class="flex-center border-blue fc-blue" v-if="(data.order_status==9&&data.user_validation==0)" @click="onConfirmsales(data.order_id)" >确认</div>
+        <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0&&data.service_money&&data.service_money>0" @click="gocompensation(data.order_id)">
+          维修费
+        </div>
+        <div class="flex-center border-blue fc-blue" v-if="active==5">
+            <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}?type=leaseorder`}">评价</router-link>
+        </div>
+        <div class="flex-center border" @click="getcode(data.order_id,1)" v-if="data.order_status==5">取货码</div>
+        </template>
+        <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
       </template>
+
       <template v-else>
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
-      <div class="flex-center border" v-if="data.order_status==6" @click="gorelet(data.order_id)">续租</div>
-      <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
-      <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
-      <div class="flex-center border" v-if="(data.order_status==9&&data.user_validation==0)">
-        <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
-      </div>
-      <div class="flex-center border-blue fc-blue" v-if="(data.order_status==9&&data.user_validation==0)" @click="onConfirmsales(data.order_id)">确认</div>
-      <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0&&data.service_money&&data.service_money>0" @click="gocompensation(data.order_id)">
-        维修费
-      </div>
-      <div class="flex-center border-blue fc-blue" v-if="active==5">
-          <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}?type=leaseorder`}">评价</router-link>
-      </div>
-      <div class="flex-center border" @click="getcode(data.order_id,1)" v-if="data.order_status==5">取货码</div>
+        <div class="flex-center border-blue fc-blue" v-if="data.order_status==1" @click="gopay(data.order_id)" >
+          支付
+        </div>
+        <div class="flex-center border-blue fc-blue" v-if="data.order_status==5" @click="onConfirmGoods(data.order_id)">确认收货</div>
+        <div class="flex-center border" v-if="data.order_status==6" @click="gorelet(data.order_id)">续租</div>
+        <div class="flex-center border" @click="gorefund(data.order_id)" v-if="data.order_status==6">退租</div>
+        <div class="flex-center border-blue fc-blue" @click="goshopping(data.order_id)" v-if="data.order_status==6">购买</div>
+        <div class="flex-center border" v-if="(data.order_status==9&&data.user_validation==0)">
+          <router-link v-bind="{to: '/deny/'+data.order_id}">否认</router-link>
+        </div>
+        <div class="flex-center border-blue fc-blue" v-if="(data.order_status==9&&data.user_validation==0)" @click="onConfirmsales(data.order_id)" >确认</div>
+        <div class="flex-center border-blue fc-blue" v-if="data.order_status==9&&user_validation==1&&maintenance_pay==0&&data.service_money&&data.service_money>0" @click="gocompensation(data.order_id)">
+          维修费
+        </div>
+        <div class="flex-center border-blue fc-blue" v-if="active==5">
+            <router-link v-bind="{to: `/comments/${data.order_id}/${data.goods_id}?type=leaseorder`}">评价</router-link>
+        </div>
+        <div class="flex-center border" @click="getcode(data.order_id,1)" v-if="data.order_status==5">取货码</div>
+        <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
       </template>
-      <div class="flex-center border" v-if="data.order_status==4" @click="del(data.order_id)">删除订单</div>
     </div>
 
     <div class="model full flex-column-center position" v-show="showcode">

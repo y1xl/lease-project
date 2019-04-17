@@ -28,21 +28,26 @@
         <div class="pd-15">
             <div class="btn text-c" @click="submit">确认</div>
         </div>
-        <p class="fsz-12 text-c fc-grey">说明:确认完并发送给送礼人，由送礼人完成支付</p>
+        <p class="fsz-12 text-c fc-grey">说明:确认完并发送回送礼人，由送礼人完成支付</p>
 
         <Clipboard v-model="iscopy" :text="link"/>
+
+        <DialogLogin v-model="showlogin"></DialogLogin>
     </div>
 </template>
 
 <script>
 import { Toast,Dialog } from "vant";
 import Clipboard from "@/components/Clipboard";
+import DialogLogin from "@/components/DialogLogin";
+import { isWeiXin } from "@/utils/util.js";
 const nativeshare = () => import ('nativeshare') 
 var NativeShare
 
 export default {
     components: {
-        Clipboard
+        Clipboard,
+        DialogLogin
     },
     data(){
         return {
@@ -50,20 +55,15 @@ export default {
             date:'',
             remarkval:'',
             iscopy:false,
-            link:''
-        }
-    },
-    beforeCreate(){
-        if (!window.localStorage.getItem("userinfo")) {
-            Dialog.alert({
-                message: '请先登录'
-            }).then((e) => {
-                this.$router.push({ path: `/login?friendBuyShareid=1&goodsid=${this.$route.query.goodsid}&guige=${this.$route.query.guige}` });
-            });
-            return
+            link:'',
+            showlogin: false,
         }
     },
     created() {
+        if (!window.localStorage.getItem("userinfo")) {
+            this.showlogin = true
+            return
+        }
         let friendBuyShare = JSON.parse(window.sessionStorage.getItem("friendBuyShare"));
         if(friendBuyShare){
             this.typenum = friendBuyShare.typenum
@@ -107,6 +107,12 @@ export default {
                 title: '数码租赁',
                 link: url,
                 desc:'朋友填写完啦，快去完成订单吧'
+            }
+            if(isWeiXin()){
+                this.link = config.link,
+                this.iscopy=true
+                Toast('请重试或点击复制链接分享给好友')
+                return
             }
             let shareData = {  //nativeShare的参数模型
                 title: config.title,

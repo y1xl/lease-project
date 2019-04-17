@@ -167,12 +167,15 @@
         </div>
       </div>
     </van-actionsheet>
+
+    <DialogLogin v-model="showlogin"></DialogLogin>
   </div>
 </template>
 
 <script>
 import { Toast,Dialog } from "vant";
 import { accAdd, accSub } from "@/utils/util.js";
+import DialogLogin from "@/components/DialogLogin";
 
 export default {
   beforeRouteEnter(to, from, next) {
@@ -181,6 +184,9 @@ export default {
         to.meta.isBack = true;
     }
     next();
+  },
+  components: {
+      DialogLogin
   },
   data() {
     return {
@@ -216,7 +222,8 @@ export default {
       rent: 0, //租金
       rented:0, //用作计算
       freight: 0, //运费
-      sum: 0
+      sum: 0,
+      showlogin: false,
     };
   },
   watch: {
@@ -376,19 +383,12 @@ export default {
       }
     },
   },
-  beforeCreate(){
-        if (!window.localStorage.getItem("userinfo")) {
-            Dialog.alert({
-                message: '请先登录'
-            }).then((e) => {
-                this.$router.push({ path: `/login?friendBuyOrder=1&id=${this.$route.query.id}&friendid=${this.$route.query.friendid}&guige=${this.$route.query.guige}&data=${this.$route.query.data}` });
-            });
-            return
-        }
-    },
   created(){
     this.isFirstEnter = true;
-    
+    if (!window.localStorage.getItem("userinfo")) {
+        this.showlogin = true
+        return
+    }
     if (this.$route.query.data) {
         let data = JSON.parse(decodeURI(this.$route.query.data))
         this.typenum = data.typenum
@@ -932,18 +932,15 @@ export default {
         this.rented=0 //用作计算
         this.freight = 0 //运费
         this.sum = 0
+        this.showlogin = false
         this.getotherprice()
         this.getdefaultaddress()
 
         if (!window.localStorage.getItem("userinfo")) {
-            Dialog.alert({
-                message: '请先登录'
-            }).then((e) => {
-                this.$router.push({ path: `/login?friendBuyOrder=1&id=${this.$route.query.id}&friendid=${this.$route.query.friendid}&guige=${this.$route.query.guige}&data=${this.$route.query.data}` });
-            });
+            this.showlogin = true
             return
         }
-         if (this.$route.query.data) {
+        if (this.$route.query.data) {
             let data = JSON.parse(decodeURI(this.$route.query.data))
             this.typenum = data.typenum
             this.remarkval = data.remarkval
@@ -952,11 +949,7 @@ export default {
         }
      }else{
        if (!window.localStorage.getItem("userinfo")) {
-            Dialog.alert({
-                message: '请先登录'
-            }).then((e) => {
-                this.$router.push({ path: `/login?friendBuyOrder=1&id=${this.$route.query.id}&friendid=${this.$route.query.friendid}&guige=${this.$route.query.guige}&data=${this.$route.query.data}` });
-            });
+            this.showlogin = true
             return
         }
        let friendbuySession = JSON.parse(window.sessionStorage.getItem("friendbuySession"));

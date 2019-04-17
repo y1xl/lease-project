@@ -141,9 +141,9 @@
 <script>
 import Clipboard from "@/components/Clipboard";
 import { Toast,Dialog } from "vant";
+import { isWeiXin } from "@/utils/util.js";
 const nativeshare = () => import ('nativeshare') 
-const m_share = () => import ('m-share')
-var NativeShare, mShare
+var NativeShare
 
 export default {
   components: {
@@ -172,7 +172,6 @@ export default {
   },
   mounted(){
     nativeshare().then(res =>  {NativeShare = res.default} )
-    m_share().then(res => {mShare = res})
 
     this.getmessage()
     this.getsignin()
@@ -291,6 +290,12 @@ export default {
         link: window.location.origin + '#/login?wakeup='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
         desc:'唤醒好友'
       }
+      if(isWeiXin()){
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+          return
+      }
       let shareData = {  //nativeShare的参数模型
           title: config.title,
           desc: config.desc,
@@ -298,18 +303,11 @@ export default {
           link: config.link,
           icon: '',
       }
-      let mShareData = {  //m-share的参数模型
-            title: config.title, 
-            desc: config.desc, 
-            link: config.link, 
-            imgUrl: '', 
-      }
       let nativeShare = new NativeShare()
       nativeShare.setShareData(shareData)
       try {
         nativeShare.call('wechatFriend')
       } catch(e) {
-        // mShare.to('wx', mShareData)
         let Browser = navigator.userAgent;
         if(Browser.indexOf('QQBrowser') > -1){
           

@@ -89,6 +89,7 @@
 <script>
 import Clipboard from "@/components/Clipboard";
 import { Toast } from 'vant';
+import { isWeiXin } from "@/utils/util.js";
 const nativeshare = () => import ('nativeshare') 
 const m_share = () => import ('m-share')
 var NativeShare, mShare
@@ -162,6 +163,13 @@ export default {
         // link: window.location.origin + '#/login?&',
         desc:'邀请好友'
       }
+      if(isWeiXin()){
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+          return
+      }
+      
       let shareData = {  //nativeShare的参数模型
           title: config.title,
           desc: config.desc,
@@ -180,6 +188,7 @@ export default {
       try {
         nativeShare.call('wechatFriend')
       } catch(e) {
+        //qq浏览器中比较奇葩，第一次调用nativeShare.call()会报错，第二次之后不报，这里是让每次调用nativeShare.call()之后都报错，然后统一去调m-share.to()方法
         // mShare.to('wx', mShareData)
         let Browser = navigator.userAgent;
         if(Browser.indexOf('QQBrowser') > -1){

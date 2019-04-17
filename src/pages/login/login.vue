@@ -59,27 +59,8 @@ export default {
       window.sessionStorage.setItem("rpfriend",1);
       this.isother = false
     }
-    if(this.$route.query.friendBuyShareid){
-      let friendBuyShareid = {
-        goodsid: this.$route.query.goodsid,
-        guige: this.$route.query.guige?this.$route.query.guige:''
-      }
-      window.sessionStorage.setItem("friendBuyShareid",friendBuyShareid);
-      this.isother = false
-    }
-    if(this.$route.query.friendBuyOrder){
-      let friendBuyOrder = {
-        id: this.$route.query.id,
-        friendid: this.$route.query.friendid,
-        guige: this.$route.query.guige?this.$route.query.guige:'',
-        data: this.$route.query.data
-      }
-      window.sessionStorage.setItem("friendBuyOrder",friendBuyOrder);
-      this.isother = false
-    }
   },
   created(){
-    // console.log(this.$route.query.token,'token')
     if(this.$route.query.wakeup){
       window.sessionStorage.setItem("wakeup",this.$route.query.wakeup);
       this.isother = false

@@ -49,6 +49,7 @@
 <script>
 import Clipboard from "@/components/Clipboard";
 import { Toast } from 'vant';
+import { isWeiXin } from "@/utils/util.js";
 const nativeshare = () => import ('nativeshare') 
 var NativeShare
 
@@ -120,6 +121,12 @@ export default {
         title: '数码租赁',
         link: window.location.origin + '#/login?token='+(JSON.parse(window.localStorage.getItem("userinfo")).users_id||''),
         desc:'邀请好友'
+      }
+      if(isWeiXin()){
+          this.link = config.link,
+          this.iscopy=true
+          Toast('请重试或点击复制链接分享给好友')
+          return
       }
       let shareData = {  //nativeShare的参数模型
           title: config.title,
