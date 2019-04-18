@@ -4,7 +4,7 @@
         title="登陆"
         :before-close="beforeClose"
     >
-        <div>
+        <div class="form">
             <van-field v-model="phoneval" type="number" placeholder="请输入手机号" />
             <van-field v-model="yzcode" center placeholder="请输入验证码">
                 <van-button slot="button" size="small" type="default" :disabled="disabled" @click="send">{{content}}</van-button>
@@ -104,5 +104,7 @@ export default {
 </script>
 
 <style scoped>
-
+.form >>> .van-button--default {
+    color: #4EA9F9
+}
 </style>

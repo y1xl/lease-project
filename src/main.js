@@ -39,7 +39,6 @@ Vue.prototype.$qs = qs
 
 // Vue.prototype.API = 'https://newbee.zx-app.cn/'
 Vue.prototype.API = ' https://newbeeadmin.zx-xcx.com/'
-// Vue.prototype.API = 'https://admin.newbeerent.com/'
 
 
 

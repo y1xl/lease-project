@@ -1,6 +1,7 @@
 <template>
   <div class="amap-page-container" >
     <el-amap
+      ref="map"
       vid="amap"
       :center="center"
       :zoom="zoom"
@@ -25,7 +26,6 @@ export default {
     let self = this;
     return {
       zoom: 16,
-      // center:[121.406051,31.179695],
       center:[this.$route.params.center.split(",")[0],this.$route.params.center.split(",")[1]],
       shopinfo: this.$route.params.shop.split(","),
     };
@@ -35,7 +35,11 @@ export default {
   },
   methods: {
 
-  }
+  },
+  beforeDestroy(){
+    //销毁地图
+    // this.$refs.map.$$getInstance().destroy()    
+  },
 };
 </script>
 

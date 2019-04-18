@@ -75,6 +75,7 @@ import WxLogin from '@/pages/login/wxLogin'
 
 //门店
 import ShopDetail from '@/pages/shop/shopDetail'
+import Map from '@/pages/map'
 
 //免押认证
 import Certification from '@/pages/certification/index'
@@ -107,8 +108,6 @@ import NotPay from '@/pages/hosting/myhosting/pay'
 //收货地址
 import Addresslist from '@/pages/address/addresslist'
 import Addaddress from '@/pages/address/addaddress'
-
-import Map from '@/pages/map'
 
 import NotFound from '@/pages/notFound'
 
@@ -159,7 +158,7 @@ export default new Router({
     { path: '/zagreement/:title', component: Agreement, meta: { title: '协议' } },
     { path: '/search', component: Search, meta: { title: '搜索', keepAlive: true, isBack: false } },
     { path: '/preBuy', component: PreBuy, meta: { title: '预下单', keepAlive: true, isBack: false } }, 
-    { path: '/friendBuy', component: FriendBuy, meta: { title: '朋友送礼', keepAlive: true, isBack: false } }, 
+    { path: '/friendBuy', component: FriendBuy, meta: { title: '朋友送礼-下单', keepAlive: true, isBack: false } }, 
     { path: '/friendBuyShare', component: FriendBuyShare, meta: { title: '朋友送礼-朋友填写' } }, 
 
     //个人中心
