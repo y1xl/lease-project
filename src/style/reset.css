@@ -23,7 +23,8 @@ html,body,.app{
 }
 body {
     background-color: #f6f6f6;
-    font-family: "Helvetica Neue", Helvetica, Arial,"PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    /* font-family: "Helvetica Neue", Helvetica, Arial,"PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; */
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
 }
 :focus {
 	outline: 1;
