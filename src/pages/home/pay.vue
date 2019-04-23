@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="header bgc mar-b-10 box-sizing">
+        <header class="header bgc mar-b-10 box-sizing">
             <div class="text-c">您的可用额度(元)</div>
             <div class="text-c num">{{info.users_money||'0'}}</div>
             <div class="text-c marb20"><router-link class="lines" to="/certification">提升额度</router-link></div>
             <div class="text-c mar-b-10 fsz12">保险费{{info.order_safe||'-'}}元，总租金{{info.order_rental||'-'}}元，总押金{{info.order_total_rent||'-'}}元</div>
             <div class="text-c">您需支付<span class="fc-red"> ¥{{info.total_price||'-'}}</span></div>
-        </div>
+        </header>
 
         <div class="bgc">
             <div class="border-b pd-15">请选择支付方式</div>
@@ -26,7 +26,7 @@
             </van-radio-group>
         </div>
 
-        <div class="pd15"><div class="btn text-c" @click="submit">支付</div></div>
+        <div class="pd15"><button class="btn text-c" @click="submit">支付</button></div>
 
         <van-popup v-model="showWXpay" :close-on-click-overlay='false'>
             <div class="wxbox">
@@ -248,6 +248,7 @@ export default {
 }
 
 .btn{
+    width: 100%;
     height: 42px;
     line-height: 42px;
     border-radius: 20px;

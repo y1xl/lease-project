@@ -1,8 +1,7 @@
 <template>
   <div class="pd-15">
-    <van-radio-group v-model="radio">
       <div class="card bgc mar-b-10 flex-align-items" v-for="(item,index) in list" :key="index">
-        <div class="flex-1 left" @click="radio = item.id">
+        <div class="flex-1 left">
           <div>关系:{{item.urgent_sign}}</div>
           <div>联系人电话:{{item.urgent_phone}}</div>
           <div>联系人姓名:{{item.urgent_name}}</div>
@@ -12,7 +11,6 @@
           <img src="../../assets/icon-del.png" alt="删除" @click="del(item.urgent_id)">
         </div>
       </div>
-    </van-radio-group>
 
     <router-link class="add bgc flex-center" to="/addPeople">
       <van-icon name="add-o"/>
@@ -26,8 +24,7 @@ import { Dialog,Toast } from "vant";
 export default {
   data() {
     return {
-      radio: 1,
-      list: [],
+      list: [{}],
       urgent_id: ""
     };
   },
@@ -54,9 +51,9 @@ export default {
             if (resdata.code == 200) {
               Toast.clear();
               this.list = resdata.data;
-              this.list.forEach((item, i) => {
-                let urgent_id = this.list[i].urgent_id;
-              });
+              // this.list.forEach((item, i) => {
+              //   let urgent_id = this.list[i].urgent_id;
+              // });
             } else {
               Toast.clear();
               Toast(resdata.message);
@@ -84,7 +81,8 @@ export default {
             let resdata = res.data;
             if (resdata.code == 200) {
               Toast.clear();
-              this.list.splice(this.urgent_id, 1);
+              this.geturgent();
+              // this.list.splice(this.urgent_id, 1);
             } else {
               Toast.clear();
               Toast(resdata.message);

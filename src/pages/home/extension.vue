@@ -1,7 +1,7 @@
 <template>
   <div class="divbox">
     <div class="bgc">
-      <div class="pd10 box-sizing mar-b-10">
+      <header class="pd10 box-sizing mar-b-10">
         <div class="trust_box text-c">
           <div class="flex-jc-around">
             <div class="text-c">
@@ -32,9 +32,9 @@
             <span class="all_money">{{info.total||0}}</span>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div class="pdlr10 mar-b-10" @click="call">
+      <section class="pdlr10 mar-b-10" @click="call">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
@@ -51,9 +51,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="pdlr10" @click="getcode">
+      <section class="pdlr10" @click="getcode">
         <div class="tg_yq_box text-c">
           <div class="flex-jc-between tg_yq">
             <div class="flex-align-items">
@@ -70,13 +70,13 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
       
-    <div class="pd10 fs12 fc-grey">
+    <aside class="pd10 fs12 fc-grey">
         <p>佣金计算说明：</p>
         <p>总佣金=推广佣金+订单佣金+未结算佣金</p>
-    </div>
+    </aside>
 
     <van-popup v-model="showcode">
       <div style="font-size:0"><img :src="imgcode" alt="" class="codeimg"></div>

@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="bgc box-sizing">
+        <section class="bgc box-sizing">
             <div class="pt"></div>
             <div class="pd-lr-15">上传身份证 人像面</div>
             <div class="flex-center box">
@@ -33,8 +33,8 @@
                     </div>
                 </van-uploader>
             </div>
-        </div>
-        <div class="bgc box-sizing">
+        </section>
+        <section class="bgc box-sizing">
             <div class="pd-lr-15">上传身份证 国徽面</div>
             <div class="flex-center box">
                 <van-uploader :after-read="onRead2" multiple  >
@@ -44,7 +44,7 @@
                     </div>
                 </van-uploader>
             </div>
-        </div>
+        </section>
 
         <div class="pd-15"><div class="btn text-c" @click="submit">提交</div></div>
     </div>

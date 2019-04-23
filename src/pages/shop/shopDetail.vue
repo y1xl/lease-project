@@ -18,7 +18,7 @@
 
     <div class="bgc miaosu_b">
       <div class="pd-lr-15">
-        <div class="shop_name">{{store_name}}</div>
+        <h1 class="shop_name">{{store_name}}</h1>
         <div class="shop_intro" v-html="detail.content"></div>
       </div>
     </div>

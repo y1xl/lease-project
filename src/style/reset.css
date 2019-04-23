@@ -23,7 +23,6 @@ html,body,.app{
 }
 body {
     background-color: #f6f6f6;
-    /* font-family: "Helvetica Neue", Helvetica, Arial,"PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; */
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
 }
 :focus {
@@ -49,10 +48,13 @@ a {
     color: inherit;
 }
 input, select,button,textarea, button {
-    vertical-align:middle;
     border: none;
     outline: 0;
     font-size: inherit;
+}
+button{
+    /* 方便布局 */
+    display: block;
 }
 img{
     content: normal !important;

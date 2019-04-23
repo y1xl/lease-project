@@ -20,7 +20,7 @@
     </div>
 
     <div class="pd-t-100">
-      <div class="btn text-c" @click="submit">提交</div>
+      <button class="btn text-c" @click="submit">提交</button>
     </div>
 
     <van-popup v-model="isshow" position="bottom" :close-on-click-overlay="false">
@@ -157,6 +157,7 @@ export default {
   padding-top: 100px;
 }
 .btn {
+  width: 100%;
   height: 42px;
   line-height: 42px;
   border-radius: 20px;

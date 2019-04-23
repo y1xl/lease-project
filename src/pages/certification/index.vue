@@ -1,11 +1,11 @@
 <template>
   <div class="page bgc">
-    <div class="pd-15">
+    <header class="pd-15">
       <div class="header">
         <div class="text-c">我的额度</div>
         <div class="text-c">{{users_money}}</div>
       </div>
-    </div>
+    </header>
 
     <div class="pd-15 rz-style">认证免押金方式</div>
     <router-link class="flex-jc-between pd-15 border-b" :to="realname==0?'/realname':'/realnameSuc'">

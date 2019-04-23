@@ -27,7 +27,7 @@
         <div class="product bgc">
           <div class="flex-jc-between">
             <div class="flex-1">
-              <div class="product_title">{{detail.goods_name}}</div>
+              <h1 class="product_title">{{detail.goods_name}}</h1>
             </div>
             <div class="flexbox">
               <!-- <div class="text-c" @click="oncollection">
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="suggest flex-jc-center">
-        <div class="suggest_tip">如果您计划远期使用，为了确保档期，建议您先预付定金预定设备</div>
+        <aside class="suggest_tip">如果您计划远期使用，为了确保档期，建议您先预付定金预定设备</aside>
       </div>
     </div>
 

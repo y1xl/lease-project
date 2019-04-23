@@ -124,7 +124,7 @@
         </div>
       </div>
       <div>
-        <div class="btn text-c" @click="nextface">信用免押认证</div>
+        <button class="btn text-c" @click="nextface">信用免押认证</button>
       </div>
     </div>
 
@@ -185,7 +185,6 @@
 <script>
 import { Toast,Dialog } from "vant";
 import { accAdd, accSub } from "@/utils/util.js";
-// import { log } from "util";
 
 export default {
   beforeRouteEnter(to, from, next) {
@@ -997,6 +996,7 @@ export default {
 }
 
 .btn {
+  width: 100%;
   height: 42px;
   line-height: 42px;
   border-radius: 20px;

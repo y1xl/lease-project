@@ -47,7 +47,7 @@
     <div id="nav" class="bgc">
       <van-tabs v-model="active" @click="onClicknav">
         <van-tab title="热门">
-          <div v-for="(item,key) in indexlist" :key="key">
+          <section v-for="(item,key) in indexlist" :key="key">
             <div class="flex-jc-between flex-align-items ">
               <div class="indextitle">{{item.scene_name}}</div>
               <div class="m_txt flex-align-items" @click="more(item.scene_id)">更多
@@ -75,7 +75,7 @@
                   </div>
                 </div>
               </div>
-          </div>
+          </section>
         </van-tab>
 
         <van-tab :title="item.cate_name" v-for="(item,index) in navlist" :key="index">
@@ -104,7 +104,7 @@
           <div class="bgc">
             <div class="title">所有产品</div>
             <lazy-component>
-              <div
+              <section
                 class="fl_pro_list mar-b-10"
                 v-for="(item, index) in goodslist"
                 :key="index"
@@ -127,7 +127,7 @@
                   低至
                   <span style="color: #f21e1e;">¥<span class="price">{{item.hire_price.price}}</span></span><span>/{{item.hire_price.unt}}</span>
                 </div>
-              </div>
+              </section>
             </lazy-component>
           </div>
 

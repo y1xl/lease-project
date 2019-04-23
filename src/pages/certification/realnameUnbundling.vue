@@ -8,7 +8,7 @@
         </div>
 
         <div class="pd-15">
-            <div class="btn text-c" @click="submit">确定</div>
+            <button class="btn text-c" @click="submit">确定</button>
         </div>
     </div>
 </template>
@@ -107,6 +107,7 @@ export default {
 
 <style scoped>
 .btn{
+    width: 100%;
     height: 42px;
     line-height: 42px;
     border-radius: 20px;

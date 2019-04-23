@@ -26,7 +26,7 @@
     </div>
 
     <div class="pd-t-50">
-      <div class="btn text-c" @click="submit">保存</div>
+      <button class="btn text-c" @click="submit">保存</button>
     </div>
 
     <van-popup v-model="showarea" position="bottom" :close-on-click-overlay="false">
@@ -150,6 +150,7 @@ export default {
   padding-top: 50px;
 }
 .btn {
+  width: 100%;
   height: 42px;
   line-height: 42px;
   border-radius: 20px;
