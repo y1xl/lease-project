@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex-jc-between manber_b" @click="myInformat" :style="bgimg">
+    <header class="flex-jc-between manber_b" @click="myInformat" :style="bgimg">
       <div class="flex-align-items flex_box">
         <div class="head_img">
           <img src="../../assets/headimg.png" alt="头像" v-if="head_img==''">
@@ -10,7 +10,7 @@
           <div class="name">{{users_name}}</div>
         </div>
       </div>
-    </div>
+    </header>
     <div class="mebox bgc">
       <van-cell is-link center to="/certification">
         <template slot="icon">

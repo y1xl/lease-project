@@ -12,7 +12,7 @@
 
     <div class="nav-pd-b" v-if="navshow"></div>
 
-    <div class="nav bgc flexbox" v-if="navshow">
+    <nav class="nav bgc flexbox" v-if="navshow">
       <div>
         <router-link to="/">
           <div class="img" v-if="selected=='index'">
@@ -49,7 +49,7 @@
           <p :class="{ 'fc-blue': selected=='me' }">我的</p>
         </router-link>
       </div>
-    </div>
+    </nav>
   </div>
 </template>
 
