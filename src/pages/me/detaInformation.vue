@@ -233,7 +233,7 @@ export default {
 }
 .dz_detail input {
   width: 75%;
-  /* text-align: right; */
+  text-align: right;
   padding-right: 10px;
   color: grey;
 }

@@ -127,8 +127,10 @@ export default {
     padding-left: 10px
 }
 
-.stepper >>> .van-stepper__input[disabled] {
+.stepper >>> .van-stepper__input[disabled]{
     color: #000;
+    -webkit-text-fill-color:#000;
+    -webkit-opacity:1; opacity: 1;
 }
 .item {
     width: 50%;

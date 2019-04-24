@@ -123,6 +123,9 @@ export default {
       this.telval = gohostingSession.telval;
     }
   },
+  mounted () {
+    this.telval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
+  },
   methods: {
     onConfirmDate(val) {
       console.log(val.getFullYear(), val.getMonth() + 1, val.getDate());

@@ -58,17 +58,18 @@
               <div style="overflow:hidden">
                 <div class=" bgc indexbox">
                   <div
-                    class="indexitem"
+                    class="indexitem position"
                     @click="toDetail(goods.goods_id)"
                     v-for="(goods,index) in item.goods"
                     :key="index"
                   >
                     <div class="img_box2 flex-center">
-                      <!-- <img class="img" :src="goods.main_img" style="object-fit:contain"> -->
                       <img class="img" v-lazy="goods.main_img" style="object-fit:contain">
                     </div>
-                    <div class="fs newline goods_name pdlr5" style="fontWeight: bold;">{{goods.goods_name}}</div>
-                    <div class="pdlr5 fss" >     
+                    <div class="fs wrap box-sizing pdlr5">
+                        <div class="text" style="fontWeight: bold;">{{goods.goods_name}}</div>
+                    </div>
+                    <div class="pdlr5 fss footer" >     
                       低至
                       <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
                     </div>
@@ -92,7 +93,10 @@
                   <!-- <img class="img" :src="goods.main_img" style="object-fit:contain"> -->
                   <img class="img" v-lazy="goods.main_img" style="object-fit:contain">
                 </div>
-                <div class="fs newline goods_name pdlr5" style="fontWeight: bold;">{{goods.goods_name}}</div>              
+                <!-- <div class="fs newline goods_name pdlr5" style="fontWeight: bold;">{{goods.goods_name}}</div>               -->
+                <div class="fs wrap box-sizing pdlr5">
+                    <div class="text" style="fontWeight: bold;">{{goods.goods_name}}</div>
+                </div>
                 <div class="f12 pdlr5 fss">     
                   低至
                   <span style="color: #F21E1E;">¥</span><span class="price">{{goods.hire_price.price}}</span>/{{goods.hire_price.unt}}
@@ -200,6 +204,9 @@ export default {
     // this.getNearShop('22.54605355', '114.02597366') //测试 
   },
   mounted(){
+    if (!window.localStorage.getItem("userinfo")) {
+      return
+    }
     this.getindexlist();
     this.getbanner();
   },
@@ -514,9 +521,9 @@ export default {
 .indexbox {
   width:100%;
   height: 150px;
-  white-space: nowrap;
+  /* white-space: nowrap;
   overflow-x:scroll;
-  overflow-y:hidden;
+  overflow-y:hidden; */
   /* display: inline; */
   /* float:left; */
   padding-top:5px;
@@ -536,9 +543,53 @@ export default {
   vertical-align:top;
 }
 .indexitem .goods_name {
-  /* width: 90px; */
   white-space: normal;
   margin-bottom: 5px;
+}
+.indexitem .footer {
+  width:100%;
+  position: absolute;
+  bottom:5px;
+  left:0
+}
+
+
+.wrap {
+    height: 30px;
+    line-height: 15px;
+    text-align: justify;
+    overflow: hidden;
+}
+.wrap:before {
+    float: left;
+    width: 1em;
+    height: 100%;
+    content: '';
+}
+.wrap:after {
+    float: right;
+
+    width: 2.5em;
+    height: 15px;
+    margin-left: -2.5em;
+    padding-right: 1em;
+    content: '...';
+    text-align: right;
+    position: relative;
+    top: -15px;
+    left: 100%;
+    /*设置渐变效果是为了省略号和内容衔接得自然点，没那么突兀，要注意要跟文字所在的背景的颜色搭配（把white替换成背景色）*/
+    background: #fff;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), to(white), color-stop(50%, white));
+    background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+}
+.wrap .text {
+    float: right;
+    margin-left: -1em;
+    width: 100%;
 }
 
 /*分类 所有产品*/
@@ -578,8 +629,4 @@ export default {
   vertical-align: middle;
 }
 
-.em {
-  width: 100%;
-  height: 60px;
-}
 </style>

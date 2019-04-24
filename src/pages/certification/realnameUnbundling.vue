@@ -108,6 +108,7 @@ export default {
 <style scoped>
 .btn{
     width: 100%;
+    display:block;
     height: 42px;
     line-height: 42px;
     border-radius: 20px;

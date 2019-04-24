@@ -22,7 +22,10 @@
                 <div class="goods_title newline">{{item.model}}</div>
                 <div class="flex-jc-between flex-align-items">
                   <div class="state">
-                    <span v-if="item.trust_status=='待审核'||item.trust_status=='审核通过'||item.trust_status=='审核未通过'">审核中</span>
+                    <!-- <span v-if="item.trust_status=='待审核'||item.trust_status=='审核通过'||item.trust_status=='审核未通过'">审核中</span> -->
+                    <span v-if="item.trust_status=='待审核'">审核中</span>
+                    <span v-if="item.trust_status=='审核通过'">已通过</span>
+                    <span v-if="item.trust_status=='审核未通过'">未通过</span>
                     <span v-if="item.trust_status=='快递中'||item.trust_status=='主机入库中'">待入库</span>
                     <span v-if="item.trust_status=='托管中'&&item.host_state=='在库'">在库</span>
                     <span v-if="item.trust_status=='托管中'&&item.host_state=='租赁中'">出租中</span>
@@ -51,7 +54,10 @@
                 <div class="fsz12 mar-b-10" v-if="item.trust_price&&item.trust_price!=''">总价:{{item.trust_price||'0.00'}}</div>
                 <div class="flex-jc-between flex-align-items">
                   <div class="state">
-                    <span v-if="item.state=='未审核'||item.state=='审批通过'||item.state=='审批未通过'||item.state=='后台报价中'">审核中</span>
+                    <!-- <span v-if="item.state=='未审核'||item.state=='审批通过'||item.state=='审批未通过'||item.state=='后台报价中'">审核中</span> -->
+                    <span v-if="item.state=='未审核'||item.state=='后台报价中'">审核中</span>
+                    <span v-if="item.state=='审批通过'">已通过</span>
+                    <span v-if="item.state=='审批未通过'">未通过</span>
                     <span v-if="item.state=='用户待确认'">待确认</span>
                     <span v-if="item.state=='待支付'">待支付</span>
                     <span v-if="item.state=='托管采购中'||item.state=='托管入库中'">待入库</span>

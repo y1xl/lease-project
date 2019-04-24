@@ -253,7 +253,7 @@ export default {
                 formData.append('functional_reason',causetext)  //不正常（说明原因）
                 formData.append('parts_list',fittingstring)  //拥有配件列表
                 formData.append('parts_picture',this.fileimg1.file,this.fileimg1.file.name)  //产品配件的全家福
-                formData.append('model_picture',this.fileimg2.file,this.fileimg2.file.name)  //看清型号的全家福 --字段有问题
+                formData.append('model_picture',this.fileimg2.file,this.fileimg2.file.name)  //看清型号的全家福 
                 formData.append('phone_picture',this.fileimg3.file,this.fileimg3.file.name)  //产品照片
                 formData.append('damage_picture',this.fileimg4?this.fileimg4.file:'')  //产品损坏处照片
                 formData.append('serial_number',serialnumval)  //产品序列号

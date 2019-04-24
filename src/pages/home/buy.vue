@@ -996,6 +996,7 @@ export default {
 }
 
 .btn {
+  display:block;
   width: 100%;
   height: 42px;
   line-height: 42px;

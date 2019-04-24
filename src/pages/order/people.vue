@@ -55,6 +55,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
             }
             if(buySession.getpeople.type == 0){
               this.nameval = buySession.getpeople.name||''
@@ -67,6 +68,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
           }
         }
     }
@@ -79,6 +81,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
             }
             if(prebuySession.getpeople.type == 0){
               this.nameval = prebuySession.getpeople.name||''
@@ -91,6 +94,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
           }
         }
     }
@@ -103,6 +107,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
             }
             if(friendbuySession.getpeople.type == 0){
               this.nameval = friendbuySession.getpeople.name||''
@@ -115,6 +120,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
           }
         }
     }
@@ -127,6 +133,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
             }
             if(shoppingSession.getpeople.type == 0){
               this.nameval = shoppingSession.getpeople.name||''
@@ -139,6 +146,7 @@ export default {
               this.nameval = JSON.parse(
                 window.localStorage.getItem("userinfo")
               ).users_name;
+              this.phoneval = JSON.parse(window.localStorage.getItem("userinfo")).users_phone||''
           }
         }
     }

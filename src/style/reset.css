@@ -47,14 +47,10 @@ a {
     text-decoration: none;
     color: inherit;
 }
-input, select,button,textarea, button {
+input, select,button,textarea {
     border: none;
     outline: 0;
     font-size: inherit;
-}
-button{
-    /* 方便布局 */
-    display: block;
 }
 img{
     content: normal !important;

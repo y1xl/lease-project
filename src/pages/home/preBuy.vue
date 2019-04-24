@@ -1017,6 +1017,7 @@ export default {
   border-radius: 20px;
   color: #fff;
   background-image: linear-gradient(90deg, #2dbbf1 0%, #4ea9f9 100%);
+  display:block;
 }
 
 .s_title {
