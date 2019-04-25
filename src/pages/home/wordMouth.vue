@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="text-c fc-grey pd-15" v-show="list.length==0">没有更多了</div>
+    <div class="text-c fc-grey pd-15 fsz-12" v-show="list.length==0">没有更多了</div>
   </div>
 </template>
 

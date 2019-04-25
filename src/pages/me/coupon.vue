@@ -3,8 +3,8 @@
     <div id="nav">
       <van-tabs @click="ontab" v-model="ind">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
-          <div v-show="couponlist.length==0&&ind!=3" class="fc-grey text-c pd-15">没有更多了</div>
-          <div v-show="getcouponlist.length==0&&ind==3" class="fc-grey text-c pd-15">没有更多了</div>
+          <div v-show="couponlist.length==0&&ind!=3" class="fc-grey text-c pd-15 fsz-12">没有更多了</div>
+          <div v-show="getcouponlist.length==0&&ind==3" class="fc-grey text-c pd-15 fsz-12">没有更多了</div>
 
           <div
             class="coupon_box position"

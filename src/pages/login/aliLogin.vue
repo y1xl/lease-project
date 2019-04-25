@@ -5,7 +5,7 @@
         </div>
         <div class="pd-15 mar-b-10 flex-jc-between">
             <input type="text" placeholder="请输入验证码" v-model.trim="codeval">
-            <button class="send bgc-blue" @click="sendcode">发送</button>
+            <button class="send bgc-blue" @click="sendcode">{{content}}</button>
         </div>
 
         <div class="flex-jc-center">
@@ -22,6 +22,9 @@ export default {
             phoneval: '',
             codeval: '',
             id: '',
+            content: "获取验证码",
+            totalTime: 59, //倒计时
+            canClick: true
         }
     },
     created(){ 
@@ -66,6 +69,8 @@ export default {
         },
 
         sendcode(){
+            if (!this.canClick) return;
+            
             if (!(/^1\d{10}$/.test(this.phoneval))) {
                 Toast("手机号格式不正确");
                 return;
@@ -79,6 +84,18 @@ export default {
                 let resdata = res.data;
                 if (resdata.code == 200) {
                     Toast('发送成功')
+                    this.canClick = false;
+                    this.content = this.totalTime + "s";
+                    let clock = window.setInterval(() => {
+                        this.totalTime--;
+                        this.content = this.totalTime + "s";
+                        if (this.totalTime < 0) {
+                        window.clearInterval(clock);
+                        this.content = "重新发送";
+                        this.totalTime = 59;
+                        this.canClick = true;
+                        }
+                    }, 1000);
                 } else {
                 Toast(resdata.message);
                 }

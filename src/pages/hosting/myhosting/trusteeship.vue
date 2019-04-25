@@ -8,7 +8,7 @@
     <div id="nav" v-if="selected==0">
       <van-tabs @click="ontab" v-model="ind">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
-          <div v-show="list.length==0" class="fc-grey text-c pd-15">没有更多了</div>
+          <div v-show="list.length==0" class="fc-grey text-c pd-15 fsz-12">没有更多了</div>
           
           <div class="position" v-for="(item,index) in list" :key="index">
             <div class="box flex-jc-around bgc" @click="toDetail(item.trust_id,item.trust_status)">
@@ -45,7 +45,7 @@
     <div id="nav" v-if="selected==1">
       <van-tabs @click="onnottab" v-model="notid">
         <van-tab :title="item" v-for="(item,index) in notnavtitle" :key="index">
-          <div v-show="nolist.length==0" class="fc-grey text-c pd-15">没有更多了</div>
+          <div v-show="nolist.length==0" class="fc-grey text-c pd-15 fsz-12">没有更多了</div>
           
           <div class="position" v-for="(item,index) in nolist" :key="index">
             <div class="box bgc" @click="tonotDetail(item)">

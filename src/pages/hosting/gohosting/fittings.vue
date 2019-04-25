@@ -11,7 +11,7 @@
                 <div class="fc-grey" v-if="list.length==0">暂无配件</div>
 
                 <div v-for="(item, index) in list" :key="index" class="flex-align-items item" >
-                    <van-checkbox :name="item.id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox>
+                    <div><van-checkbox :name="item.id" checked-color="#2DBBF1" ref="checkboxes"></van-checkbox></div>
                     <div class="pdl">
                         <div>{{item.name}}</div>
                         <div class="stepper" v-if="item.number!=1"><van-stepper disable-input :value="item.num" :max="item.number" @change="onchange(index,$event)" /></div>
@@ -37,6 +37,7 @@ export default {
     },
     created(){
         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+        console.log(gohostingSession)
         if(gohostingSession){      
             let arr = []
             for(let v of gohostingSession.fittings){
@@ -94,17 +95,20 @@ export default {
         next(){
             // console.log(this.result);
             let fittingstring = []
+            let fittings = []
             for(let v1 of this.result){
                 for(let v2 of this.list){
                     if(v1==v2.id){
                         // console.log(v2);
+                        fittings.push(v2)
                         fittingstring.push(`${v2.name} x${v2.number}`)
                     }
                 }
             }
             // console.log(fittingstring)
             let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-            gohostingSession.fittingstring = fittingstring.join(',')
+            gohostingSession.fittings = fittings //缓存
+            gohostingSession.fittingstring = fittingstring.join(',') //字符串
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/uploadimg' })
         }
@@ -124,7 +128,7 @@ export default {
   background-image: linear-gradient(90deg, #2dbbf1 0%, #4ea9f9 100%);
 }
 .pdl{
-    padding-left: 10px
+    margin-left: 10px
 }
 
 .stepper >>> .van-stepper__input[disabled]{

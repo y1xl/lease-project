@@ -3,15 +3,17 @@
     <div class="bgc text-c all_bal">
       <div class="all_money">￥{{money||0}}</div>
       <div class="kt">可提现金额</div>
+
       <div class="text-c btnbox">
         <div class="btn" @click="toCash">提现</div>
       </div>
+      <div class="balance kt">余额￥{{balance||0}}</div>
     </div>
 
     <div id="navBalance">
       <van-tabs @click="ontag" v-model="active">
         <van-tab :title="item" v-for="(item,index) in navtitle" :key="index">
-        <div v-show="list.length==0" class="fc-grey text-c pd-15" style="background-color: #f6f6f6;">没有更多了</div>
+        <div v-show="list.length==0" class="fc-grey text-c pd-15 fsz-12" style="background-color: #f6f6f6;">没有更多了</div>
           <div v-for="(item,index) in list" :key="index">
             <div class="flex-center bgc">
               <div class="flex-jc-between flex-align-items pd-15 bala_deta border-b">
@@ -36,7 +38,8 @@ export default {
       active: 0,
       navtitle: ["押金", "托管收益", "推广金", "红包", "邀请码"],
       list:[],
-      money: null
+      money: 0,
+      balance:0
     };
   },
   beforeCreate(){
@@ -46,8 +49,27 @@ export default {
   },
   mounted(){
     this.getlist()
+    this.getinfo()
   },
   methods: {
+    getinfo() {
+        let postData = this.$qs.stringify({
+            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
+        });
+        this.axios.post(this.API + "api/Buy_Order/GetPayData", postData)
+        .then(res => {
+            console.log(res.data, "info");
+            let resdata = res.data;
+            if (resdata.code == 200) {
+                this.balance = resdata.data.users_balance;
+            } else {
+            Toast(resdata.message);
+            }
+        })
+        .catch(error => {
+            Toast('网络出错')
+        });
+    },
     ontag(index, title) {
       console.log(index, title);
       this.active = index;
@@ -91,11 +113,11 @@ export default {
 #navBalance >>> .van-tab {
   background-color: #f6f6f6;
 }
+.balance{
+  padding-bottom: 15px;
+}
 .all_bal {
   width: 100%;
-  height: 150px;
-  /* margin-top: 15px; */
-  box-shadow: 0px 0px 16px 0px rgba(220, 221, 223, 0.19);
 }
 .all_money {
   font-size: 35px;

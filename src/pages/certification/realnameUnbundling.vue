@@ -22,7 +22,7 @@ export default {
             phoneval: '',
             codeval:'',
             content: "获取验证码",
-            totalTime: 60, //倒计时
+            totalTime: 59, //倒计时
             canClick: true
         }
     },
@@ -53,7 +53,7 @@ export default {
                         if (this.totalTime < 0) {
                             window.clearInterval(clock);
                             this.content = "重新发送";
-                            this.totalTime = 60;
+                            this.totalTime = 59;
                             this.canClick = true;
                         }
                     }, 1000);

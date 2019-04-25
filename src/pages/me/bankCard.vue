@@ -4,7 +4,6 @@
       <div class="card_box bgc">
         <div class="card flex-jc-around flex-align-items">
           <div class="flex-align-items">
-            <!-- <img class="card_img" src="../../assets/bankcart.png"> -->
             <span>{{item.open_bank}}</span>
           </div>
           <div class="f12_grey">{{item.bank_type==1?'储蓄卡':'信用卡'}}</div>

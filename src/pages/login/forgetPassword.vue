@@ -11,7 +11,7 @@
           <input v-model.trim="codeval" placeholder="请输入验证码" input-align="center">
         </div>
 
-        <div class="text-c resent" @click="sendcode">发送验证码</div>
+        <div class="text-c resent" @click="sendcode">{{content}}</div>
 
         <button
           class="btn text-c"
@@ -30,11 +30,16 @@ export default {
   data() {
     return {
       phoneval: "",
-      codeval: ""
+      codeval: "",
+      content: "获取验证码",
+      totalTime: 59, //倒计时
+      canClick: true
     };
   },
   methods: {
     sendcode() {
+      if (!this.canClick) return;
+
       if (this.phoneval == "") {
         return;
       }
@@ -52,6 +57,18 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast('发送成功')
+            this.canClick = false;
+              this.content = this.totalTime + "s";
+              let clock = window.setInterval(() => {
+                this.totalTime--;
+                this.content = this.totalTime + "s";
+                if (this.totalTime < 0) {
+                  window.clearInterval(clock);
+                  this.content = "重新发送";
+                  this.totalTime = 59;
+                  this.canClick = true;
+                }
+              }, 1000);
           } else {
             Toast(resdata.message);
           }

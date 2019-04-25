@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div>
     <div class="flex-jc-between top_sear bgc">
       <div class="dw flex-align-items f12">
@@ -137,7 +137,7 @@
 
           <div
             v-show="goodslist.length==0"
-            class="fc-grey text-c pd-15"
+            class="fc-grey text-c pd-15 fsz-12"
             style="background-color: #f6f6f6;"
           >没有更多了</div>
         </van-tab>

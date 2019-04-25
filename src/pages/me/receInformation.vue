@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="addresslist.length==0" class="fc-grey text-c pd-15">没有更多了</div>
+    <div v-show="addresslist.length==0" class="fc-grey text-c pd-15 fsz-12">没有更多了</div>
     
     <div
       class="hang bgc"

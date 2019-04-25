@@ -146,8 +146,8 @@ export default new Router({
     { path: '/friendRepay', component: FriendRepay, meta: { title: '朋友代还' } },
     //产品&&首页
     { path: '/goods/:id', component: Goods, meta: { title: '产品列表', keepAlive: true, isBack: false  } },
-    { path: '/extension', component: Extension, meta: { title: '我要推广' } },
-    { path: '/welfareAgency', component: WelfareAgency, meta: { title: '福利社' } },
+    { path: '/extension', component: Extension, meta: { title: '推广收佣' } },
+    { path: '/welfareAgency', component: WelfareAgency, meta: { title: '领取福利' } },
     { path: '/questionnaire', component: Questionnaire, meta: { title: '问卷调查' } },
     { path: '/redpacket', component: Redpacket, meta: { title: '抢红包' } },
     { path: '/rpfriend', component: Rpfriend, meta: { title: '抢红包-好友助力' } },
@@ -210,8 +210,8 @@ export default new Router({
     { path: '/face/:orderid', component: Face, meta: { title: '人脸识别' } },
 
     //托管
-    { path: '/gohosting', component: Gohosting, meta: { title: '我要托管' } },
-    { path: '/steps2', component: Steps2, meta: { title: '我要托管' } },
+    { path: '/gohosting', component: Gohosting, meta: { title: '托管理财' } },
+    { path: '/steps2', component: Steps2, meta: { title: '托管理财' } },
     { path: '/fittingsConfirm', component: Fittings, meta: { title: '配件确认' } },
     { path: '/uploadimg', component: Uploadimg, meta: { title: '上传照片', keepAlive: true, isBack: false } },
     { path: '/gsuccessful', component: Gsuccessful, meta: { title: '提交成功' } },

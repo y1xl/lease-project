@@ -394,7 +394,8 @@ export default {
             }
 
             let gohostingSession = {
-                notequipment: false, 
+                isfirst:true, //是否首次进入
+                notequipment: false, //是否有设备
                 typetext: this.typetext,
                 brandtext:this.brandtext,
                 modeltext:this.modeltext,
@@ -420,6 +421,7 @@ export default {
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/steps2' })
         },
+        //没设备
         notnext(){
             if(this.notypetext==''){
                 Toast("请选择品类");
@@ -439,6 +441,7 @@ export default {
             }
 
             let gohostingSession = {
+                isfirst:true,
                 notequipment: true, 
                 typetext: {cate_name:this.notypetext},
                 brandtext:{brand_name:this.nobrandtext},
@@ -465,7 +468,7 @@ export default {
             window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
             this.$router.push({ path: '/steps2' })
         },
-
+        //无硬件
         nosubmit(){
             if(this.figureval==''){
                 Toast("请输入托管金额");

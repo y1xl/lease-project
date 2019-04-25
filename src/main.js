@@ -22,7 +22,6 @@ import { Dialog } from 'vant';
 Vue.use(Dialog);
 
 import { Lazyload } from 'vant';
-// options 为可选参数，无则不传
 Vue.use(Lazyload,{lazyComponent:true});
 
 import VueAMap from 'vue-amap';

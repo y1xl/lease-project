@@ -130,6 +130,11 @@
 import { Toast } from "vant";
 export default {
     beforeRouteEnter(to, from, next) {
+        let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
+        if(gohostingSession.isfirst){
+            gohostingSession.isfirst = false
+            window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
+        }else
         if(from.meta.title === '协议'||from.meta.title === '配件确认') {
             to.meta.isBack = true;
         }

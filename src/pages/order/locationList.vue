@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="list.length==0&&!loading" class="fc-grey text-c pd-15">没有更多了</div>
+    <div v-show="list.length==0&&!loading" class="fc-grey text-c pd-15 fsz-12">没有更多了</div>
     <div class="bgc tag" v-show="list.length!=0">
       <van-tag type="success">推荐</van-tag>
     </div>
