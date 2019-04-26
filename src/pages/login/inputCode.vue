@@ -5,7 +5,8 @@
         <div class="tip_title text-c">请输入验证码</div>
         <div class="text-c tel">{{phone}}</div>
 
-          <van-password-input :value="value" @focus="showKeyboard = true" :length="lengths"/>
+          <van-password-input :value="value" @focus="showKeyboard = true" :length="lengths" :mask="false"/>
+
           <button class="btn text-c" @click="login" :class="value==''?'btn-grey':'bgc-blue'">登陆</button>
 
         <div class="text-c resent" @click="sendcode">{{content}}</div>

@@ -56,7 +56,10 @@ export default {
   },
   methods: {
     onSearch() {
-      console.log(this.value);
+      // console.log(this.value);
+      if(this.value==''){
+        return
+      }
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = this.$qs.stringify({
         keyword: this.value
