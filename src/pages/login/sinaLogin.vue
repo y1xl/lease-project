@@ -37,7 +37,6 @@ export default {
             let postData = this.$qs.stringify({
                 // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 code: this.$route.query.code
-                // code: '2057d00f914966c809df0bfbff3a8d71'
             });
             this.axios.post(this.API + "api/Order/weibo",postData).then(res => {
                 console.log(res.data, "getali");

@@ -435,25 +435,6 @@ export default {
   margin-top:110px;
 }
 
-/* .height{
-  height: 50px;
-}
-.nav {
-  height: 42px;
-  line-height: 42px;
-}
-.nav > div {
-  color: #666;
-  font-size: 16px;
-}
-.nav > div:nth-of-type(1) {
-  margin-right: 50px;
-}
-.nav .selected {
-  color: #000;
-  font-weight: bold;
-} */
-
 .tag .dot{
   position: absolute;
   top:1px;

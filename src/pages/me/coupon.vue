@@ -250,22 +250,6 @@ export default {
   margin-top: 100px;
 }
 
-/* 领取优惠券弹窗 */
-/* .mask_box img {
-  width: 50px;
-  height: 60px;
-  margin: 12px 0 5px 0;
-}
-.mask_box input {
-  width: 180px;
-  height: 28px;
-  line-height: 20px;
-  color: #aeaeae;
-  font-size: 12px;
-  background: #f6f6f7;
-  text-align: center;
-  margin: 12px 0 15px 0;
-} */
 </style>
 
 

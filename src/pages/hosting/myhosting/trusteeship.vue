@@ -14,7 +14,7 @@
             <div class="box flex-jc-around bgc" @click="toDetail(item.trust_id,item.trust_status)">
               <div>
                 <img
-                  :src="item.phone_picture"
+                  v-lazy="item.phone_picture"
                   class="goods_img"
                 >
               </div>

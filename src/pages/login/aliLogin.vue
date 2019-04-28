@@ -36,9 +36,6 @@ export default {
             console.log('请求aliLogin')
             Toast.loading({ mask: true, message: "加载中..." });
             let postData = this.$qs.stringify({
-                // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id||'',
-                // state: '2bbf04412fa896e5346ea8a7d941f7f5',
-                // auth_code: '3a356bacbb624d31abb791d47e63SX00'
                 state: this.$route.query.state,
                 auth_code: this.$route.query.auth_code
             });
