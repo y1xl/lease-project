@@ -36,8 +36,8 @@ VueAMap.initAMapApiLoader({
 import qs from 'qs'
 Vue.prototype.$qs = qs
 
-// Vue.prototype.API = 'https://newbee.zx-app.cn/'
-Vue.prototype.API = ' https://newbeeadmin.zx-xcx.com/'
+// Vue.prototype.API = ' https://newbeeadmin.zx-xcx.com/'
+Vue.prototype.API = ' https://admin.newbee-smart.com/'
 // Vue.prototype.API = ' https://www.newbee-smart.com/'
 
 
@@ -49,3 +49,23 @@ new Vue({
     components: { App },
     template: '<App />'
 })
+
+// Code is far away from bug with the animal protecting
+// 神兽保佑,代码无bug
+//   ┏┓　　　┏┓
+// ┏┛┻━━━┛┻┓
+// ┃　　　　　　　┃ 　
+// ┃　　　━　　　┃
+// ┃　┳┛　┗┳　┃
+// ┃　　　　　　　┃
+// ┃　　　┻　　　┃
+// ┃　　　　　　　┃
+// ┗━┓　　　┏━┛
+// 　　┃　　　┃
+// 　　┃　　　┃
+// 　　┃　　　┗━━━┓
+// 　　┃　　　　　　　┣┓
+// 　　┃　　　　　　　┏┛
+// 　　┗┓┓┏━┳┓┏┛
+// 　　　┃┫┫　┃┫┫
+// 　　　┗┻┛　┗┻┛ 
