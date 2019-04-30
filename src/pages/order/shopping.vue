@@ -348,7 +348,7 @@ export default {
           }
         } else {
           this.getaddress = ''
-          Toast(resdata.message);
+          // Toast(resdata.message);
         }
       });
     },
@@ -704,7 +704,7 @@ export default {
               });
             } else {
               Toast.clear();
-              Toast(resdata.message);
+              Toast(resdata.message||'操作失败');
             }
           })
           .catch(error => {

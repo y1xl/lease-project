@@ -375,7 +375,7 @@ export default {
                     this.getlist()
                 } else {
                     Toast.clear()
-                    Toast(resdata.message);
+                    Toast(resdata.message||'操作失败');
                 }
             });
         },

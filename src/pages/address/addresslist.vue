@@ -79,7 +79,7 @@ export default {
         if (resdata.code == 200) {
           this.getlist();
         } else {
-          Toast(resdata.message);
+          Toast(resdata.message||'操作失败');
         }
       });
     },

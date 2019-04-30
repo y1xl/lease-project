@@ -8,8 +8,6 @@
         </p>
       </div>
       <div class="sear flex-align-items f12" id="sear">
-        <!-- <van-icon name="search"/> -->
-        <!-- <span class="pl10">搜索你想要的商品</span> -->
         <van-search placeholder="搜索你想要的商品" v-model.trim="searchval"  @search="gosearch"></van-search>
       </div>
     </div>

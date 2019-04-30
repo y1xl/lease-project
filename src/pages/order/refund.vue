@@ -117,7 +117,7 @@ export default {
                         }
                     }
                 } else {
-                    Toast(resdata.message)
+                    // Toast(resdata.message)
                 }
             });
         },
@@ -174,7 +174,7 @@ export default {
                     this.showcode = true
                 } else {
                     Toast.clear()
-                    Toast(resdata.message);
+                    Toast(resdata.message||'操作失败');
                 }
                 });
             }
@@ -224,7 +224,7 @@ export default {
                 });
             } else {
                 Toast.clear()
-                Toast(resdata.message);
+                Toast(resdata.message||'操作失败');
             }
             });
         },

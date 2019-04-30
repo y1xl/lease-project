@@ -193,8 +193,6 @@ export default {
               if(resdata.data.length!=0||resdata.message.length!=0){
                 this.show = true
               }
-          } else {
-              // Toast(resdata.message);
           }
       })
     },
@@ -209,8 +207,6 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
               
-          } else {
-              // Toast(resdata.message);
           }
       })
     },
@@ -231,7 +227,7 @@ export default {
               this.getsignin()
           } else {
               Toast.clear();
-              Toast(resdata.message);
+              Toast(resdata.message||'操作失败');
           }
       })
       .catch(error => {

@@ -40,7 +40,7 @@ export default {
                 this.codeimg = resdata.data
             } else {
                 Toast.clear()
-                Toast(resdata.message);
+                Toast(resdata.message||'获取失败');
             }
             })
             .catch(error => {

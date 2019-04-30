@@ -76,15 +76,6 @@
         <div class="fc-grey pd-lr-15 bgc fsz12 pdb">(收到设备时会根据照片核实成色)</div>
         </div>
 
-        <!-- <div class="bgc pd-15">
-            <div class="mar-b-10 fc-grey">序列号</div>
-            <input style="width:100%" type="text" placeholder="请填写产品序列号" v-model.trim="serialnumval">
-        </div>
-        <div class="bgc pd-15">
-            <div class="mar-b-10 fc-grey">联系方式</div>
-            <input style="width:100%" type="number" placeholder="请填写联系方式" v-model.trim="telval">
-        </div> -->
-
         <div class="pd-15"><div class="btn text-c" @click="onshowmodel">提交</div></div>
 
         <div class="model" v-if="showmodel">
@@ -146,25 +137,11 @@ export default {
             fileimg2:null,
             fileimg3:null,
             fileimg4:null,
-            // serialnumval:'',
-            // telval:'',
             isconsent: true,
             showmodel: false,
             gohostingSession: {}
         }
     },
-    // watch:{
-    //     serialnumval(){
-    //         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-    //         gohostingSession.serialnumval = this.serialnumval
-    //         window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
-    //     },
-    //     telval(){
-    //         let gohostingSession = JSON.parse(window.sessionStorage.getItem("gohostingSession"));
-    //         gohostingSession.telval = this.telval
-    //         window.sessionStorage.setItem("gohostingSession", JSON.stringify(gohostingSession));
-    //     }
-    // },
     created(){
         this.isFirstEnter = true;
     },
@@ -274,7 +251,7 @@ export default {
                         this.$router.replace({ path: '/gsuccessful' })
                     } else {
                         Toast.clear()
-                        Toast(resdata.message)
+                        Toast(resdata.message||'操作失败')
                     }
                 })
                 .catch(error => {

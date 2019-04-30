@@ -106,7 +106,7 @@ export default {
                         window.location.href = resdata.data
                     } else {
                         Toast.clear();
-                        Toast(resdata.message);
+                        Toast(resdata.message||'操作失败');
                     }
                 })
                 .catch(error => {
@@ -169,7 +169,7 @@ export default {
                         });
                     } else {
                         Toast.clear();
-                        Toast(resdata.message);
+                        Toast(resdata.message||'操作失败');
                     }
                 })
                 .catch(error => {

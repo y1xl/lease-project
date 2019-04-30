@@ -94,7 +94,7 @@ export default {
             this.getheadimg()
           } else {
             Toast.clear();
-            Toast(resdata.message);
+            Toast(resdata.message||'操作失败');
           }
         })
         .catch(error => {

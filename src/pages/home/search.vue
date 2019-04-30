@@ -62,7 +62,6 @@ export default {
     }
   },
   mounted(){
-    // this.onfocus()
     if(this.$route.query.val){
       this.value = this.$route.query.val
     }
@@ -72,10 +71,6 @@ export default {
     onSearch() {
       console.log(this.value);
       this.getsearch();
-    },
-    onfocus(){
-      let inputElem = document.querySelector('.van-field__control')
-      inputElem.focus();
     },
 
     historySearch(val){
@@ -135,7 +130,6 @@ export default {
         if(goodshistory){
           this.historylist = JSON.parse(goodshistory)
         }
-        // this.onfocus()
         if(this.$route.query.val){
           this.value = this.$route.query.val
         }

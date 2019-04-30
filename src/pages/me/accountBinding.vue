@@ -55,7 +55,7 @@ export default {
                     this.userinfo = resdata.data
                 } else {
                     Toast.clear();
-                    Toast(resdata.message);
+                    Toast(resdata.message||'操作失败');
                 }
                 });
         },
@@ -82,7 +82,7 @@ export default {
                     });
                 } else {
                 Toast.clear();
-                Toast(resdata.message);
+                Toast(resdata.message||'操作失败');
                 }
             })
             .catch(error => {
@@ -107,7 +107,7 @@ export default {
                     });
                 } else {
                 Toast.clear();
-                Toast(resdata.message);
+                Toast(resdata.message||'操作失败');
                 }
             })
             .catch(error => {
@@ -132,7 +132,7 @@ export default {
                     });
                 } else {
                 Toast.clear();
-                Toast(resdata.message);
+                Toast(resdata.message||'操作失败');
                 }
             })
             .catch(error => {

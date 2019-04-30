@@ -121,7 +121,7 @@ export default {
               Toast("修改成功");
               this.$router.go(-1);
             } else {
-              Toast(resdata.message);
+              Toast(resdata.message||'操作失败');
             }
           });
       } else {
@@ -132,7 +132,7 @@ export default {
             Toast("添加成功");
             this.$router.go(-1);
           } else {
-            Toast(resdata.message);
+            Toast(resdata.message||'操作失败');
           }
         });
       }
