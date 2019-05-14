@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     onconfirm(val) {
-      console.log(val);
+      // console.log(val);
       this.areaval = val;
       this.showarea = false;
     },

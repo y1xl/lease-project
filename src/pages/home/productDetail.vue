@@ -197,10 +197,12 @@
           <div class="s_title border-b fsz text-c">优惠活动</div>
         </div>
         <div class="flexbox" v-for="(item,index) in discountlist" :key="index">
+          <router-link to="/coupon">
           <div class="pd-15">
             <div>{{item.activity_name}}</div>
             <div class="grey_12">{{item.activity_time}}</div>
           </div>
+          </router-link>
         </div>
 
         <div class="close text-c border-t" @click="discountmodel = false">取消</div>
@@ -426,9 +428,9 @@ export default {
       this.speclist = [...speclist]
     },
     // 收藏
-    oncollection() {
-      this.iscollection = !this.iscollection;
-    },
+    // oncollection() {
+    //   this.iscollection = !this.iscollection;
+    // },
     //口碑
     toMouthw(id) {
       this.$router.push({ path: "/wordMouth/"+id });

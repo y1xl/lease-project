@@ -4,7 +4,7 @@
 
     <van-radio-group v-model="radio" @change="selectedProduct">
       <div v-for="(item,index) in list" :key="index" class="list_box" @click="radio=index">
-        <van-swipe-cell :right-width="65" :on-close="onClose" >
+        <van-swipe-cell :right-width="65" @click="isdel(index,item.cart_id,$event)" >
           <div class="card bgc flex-align-items">
             <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
             <img
@@ -20,7 +20,7 @@
               </div>
             </div>
           </div>
-          <div slot="right" class="del bgc-red" @click="getdel(item.cart_id)">删除</div>
+          <div slot="right" class="del bgc-red" >删除</div>
         </van-swipe-cell>
       </div>
     </van-radio-group>
@@ -47,7 +47,6 @@ export default {
       list: [],
       sum: 0,
       radio: -1,
-      delid:''
     };
   },
   beforeCreate(){
@@ -60,40 +59,31 @@ export default {
   },
   methods: {
     // 删除
-    onClose(clickPosition, instance) {
-      switch (clickPosition) {
-        case "left":
-        case "cell":
-        case "outside":
-          instance.close();
-          break;
-        case "right":
-          Dialog.confirm({
-            message: "确定删除吗？"
-          }).then((e) => {
-            if(e == 'confirm'){
-              this.del()
-            }
-          });
-          break;
+    isdel(i,id,e){
+      // console.log(i,id,e)
+      if(e!='right'){
+        return
       }
+      Dialog.confirm({
+        message: "确定删除吗？"
+      }).then(e => {
+        if (e == "confirm") {
+          this.del(i,id);
+        }
+      });
     },
-    getdel(id){
-      console.log(id)
-      this.delid = id
-    },
-    del(){
-      Toast.loading({ mask: true,message: '加载中...'})
+    del(i,id){
+      Toast.loading({ mask: true,message: '加载中...',duration:0 })
       let postData = this.$qs.stringify({
-            cart_id: this.delid,
-        })
+          cart_id: id
+      })
       this.axios.post(this.API + "api/Lease/cart_delete",postData)
       .then(res => {
         console.log(res.data, "del")
         let resdata = res.data
         if (resdata.code == 200) {
           Toast.clear()
-          this.getlist()
+          this.list.splice(i, 1)
         } else {
           Toast.clear()
           Toast(resdata.message||'操作失败')
@@ -102,7 +92,7 @@ export default {
     },
 
     selectedProduct(res) {
-      console.log(res);
+      // console.log(res);
       this.sum = this.list[res].hire_price.price
     },
 

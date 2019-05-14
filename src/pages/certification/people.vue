@@ -8,7 +8,7 @@
         </div>
         <div class="tools">
           <img src="../../assets/icon-editor.png" alt="编辑" @click="edit(item.urgent_id)">
-          <img src="../../assets/icon-del.png" alt="删除" @click="del(item.urgent_id)">
+          <img src="../../assets/icon-del.png" alt="删除" @click="del(index,item.urgent_id)">
         </div>
       </div>
 
@@ -24,8 +24,7 @@ import { Dialog,Toast } from "vant";
 export default {
   data() {
     return {
-      list: [{}],
-      urgent_id: ""
+      list: [],
     };
   },
   created() {
@@ -51,9 +50,6 @@ export default {
             if (resdata.code == 200) {
               Toast.clear();
               this.list = resdata.data;
-              // this.list.forEach((item, i) => {
-              //   let urgent_id = this.list[i].urgent_id;
-              // });
             } else {
               Toast.clear();
               Toast(resdata.message);
@@ -61,7 +57,7 @@ export default {
           });
       }
     },
-    del(urgent_id) {
+    del(i,urgent_id) {
 
       Dialog.confirm({
         title: "",
@@ -69,8 +65,7 @@ export default {
       })
       .then(() => {
         // on confirm
-        console.log(this.urgent_id, "111");
-        Toast.loading({ mask: true, message: "加载中..." });
+        Toast.loading({ mask: true, message: "加载中...",duration:0  });
         let postData = this.$qs.stringify({
           urgent_id: urgent_id
         });
@@ -81,8 +76,7 @@ export default {
             let resdata = res.data;
             if (resdata.code == 200) {
               Toast.clear();
-              this.geturgent();
-              // this.list.splice(this.urgent_id, 1);
+              this.list.splice(i, 1)
             } else {
               Toast.clear();
               Toast(resdata.message);

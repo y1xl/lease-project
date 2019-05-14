@@ -8,7 +8,7 @@
       :key="index"
       @click="edit(item.ads_id)"
     >
-      <van-swipe-cell :right-width="65" :on-close="onClose">
+      <van-swipe-cell :right-width="65" @click="isdel(index,item.ads_id,$event)">
         <van-cell is-link center>
           <template slot="title">
             <div>
@@ -23,10 +23,10 @@
             <img src="../../assets/bj.png" @click="edit(item.ads_id)" alt="编辑" class="left_img">
           </template>
         </van-cell>
-        <div slot="right" class="del bgc-red" @click="getdel(item.ads_id)">删除</div>
+        <div slot="right" class="del bgc-red">删除</div>
       </van-swipe-cell>
     </div>
-    <router-link to="/AddInformation">
+    <router-link to="/addInformation">
       <div class="btn text-c">添加</div>
     </router-link>
   </div>
@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       addresslist: [],
-      delid: ""
     };
   },
   created() {
@@ -56,10 +55,7 @@ export default {
         let resdata = res.data;
         if (resdata.code == 200) {
           Toast.clear();
-          var list = resdata.data;
-
-          this.addresslist = list;
-          console.log(this.addresslist);
+          this.addresslist = resdata.data
         } else {
           Toast.clear();
           Toast(resdata.message);
@@ -67,49 +63,39 @@ export default {
       });
     },
     edit(id) {
-      this.$router.push({ path: "/AddInformation/" + id });
+      this.$router.push({ path: "/addInformation/" + id });
     },
 
-    getdel(id) {
-      console.log(id);
-      this.delid = id;
+    isdel(i,id,e){
+      // console.log(i,id,e)
+      if(e!='right'){
+        return
+      }
+      Dialog.confirm({
+        message: "确定删除吗？"
+      }).then(e => {
+        if (e == "confirm") {
+          this.del(i,id);
+        }
+      });
     },
-    del() {
-      Toast.loading({ mask: true, message: "加载中..." });
+    del(i,id) {
+      Toast.loading({ mask: true, message: "加载中...",duration:0 });
       let postData = this.$qs.stringify({
-        ads_id: this.delid
+        ads_id: id
       });
       this.axios.post(this.API + "api/Lease/ads_detele", postData).then(res => {
         console.log(res.data, "del");
         let resdata = res.data;
         if (resdata.code == 200) {
           Toast.clear();
-          this.getselect();
+          this.addresslist.splice(i, 1)
         } else {
           Toast.clear();
           Toast(resdata.message||'操作失败');
         }
       });
     },
-    // 删除
-    onClose(clickPosition, instance) {
-      switch (clickPosition) {
-        case "left":
-        case "cell":
-        case "outside":
-          instance.close();
-          break;
-        case "right":
-          Dialog.confirm({
-            message: "确定删除吗？"
-          }).then(e => {
-            if (e == "confirm") {
-              this.del();
-            }
-          });
-          break;
-      }
-    }
   }
 };
 </script>

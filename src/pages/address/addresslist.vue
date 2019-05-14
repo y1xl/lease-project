@@ -4,7 +4,8 @@
       <div v-show="list.length==0" class="fc-grey text-c pd-15 fsz-12">没有更多了</div>
       
       <div v-for="(item,index) in list" :key="index" class="card">
-        <van-swipe-cell :right-width="65" :on-close="onClose">
+
+        <van-swipe-cell :right-width="65" @click="isdel(index,item.ads_id,$event)">
           <div class="bgc flex-align-items item">
             <van-radio :name="index" checked-color="#2DBBF1"></van-radio>
             <div class="flex-1 left" @click="radio=index">
@@ -18,8 +19,9 @@
               <img src="../../assets/icon-editor.png" alt="编辑" class="editorimg">
             </router-link>
           </div>
-          <div slot="right" class="del bgc-red" @click="getdel(item.ads_id)">删除</div>
+          <div slot="right" class="del bgc-red">删除</div>
         </van-swipe-cell>
+
       </div>
     </van-radio-group>
 
@@ -39,7 +41,6 @@ export default {
     return {
       list: [],
       radio: -1,
-      delid: ""
     };
   },
   mounted() {
@@ -47,43 +48,36 @@ export default {
   },
   methods: {
     // 删除
-    onClose(clickPosition, instance) {
-      switch (clickPosition) {
-        case "left":
-        case "cell":
-        case "outside":
-          instance.close();
-          break;
-        case "right":
-          Dialog.confirm({
-            message: "确定删除吗？"
-          }).then(e => {
-            if (e == "confirm") {
-              this.del();
-            }
-          });
-          break;
+    isdel(i,id,e){
+      // console.log(i,id,e)
+      if(e!='right'){
+        return
       }
+      Dialog.confirm({
+        message: "确定删除吗？"
+      }).then(e => {
+        if (e == "confirm") {
+          this.del(i,id);
+        }
+      });
     },
-    getdel(id) {
-      console.log(id);
-      this.delid = id;
-    },
-    del() {
+    del(i,id) {
+      Toast.loading({ mask: true, message: "加载中...",duration:0 });
       let postData = this.$qs.stringify({
-        ads_id: this.delid
+        ads_id: id
       });
       this.axios.post(this.API + "api/Lease/ads_detele", postData).then(res => {
         console.log(res.data, "del");
         let resdata = res.data;
         if (resdata.code == 200) {
-          this.getlist();
+          Toast.clear();
+          this.list.splice(i, 1)
         } else {
+          Toast.clear();
           Toast(resdata.message||'操作失败');
         }
       });
     },
-    // 删除 end
 
     getlist() {
       Toast.loading({ mask: true, message: "加载中..." });

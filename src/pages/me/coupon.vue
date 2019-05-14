@@ -42,7 +42,7 @@
           <div
             class="coupon_box position"
             v-for="(item,i) in getcouponlist"
-            :key="i+1"
+            :key="'k'+i"
             v-show="ind ==3"
             @click="receive(item)"
           >

@@ -199,7 +199,6 @@ export default {
   created() {
     // this.getLocation();
     this.getnav();
-    // this.getNearShop('22.54605355', '114.02597366') //测试 
   },
   mounted(){
     if (!window.localStorage.getItem("userinfo")) {

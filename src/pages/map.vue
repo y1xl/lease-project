@@ -30,9 +30,6 @@ export default {
       shopinfo: this.$route.params.shop.split(","),
     };
   },
-  created(){
-    
-  },
   methods: {
 
   },
