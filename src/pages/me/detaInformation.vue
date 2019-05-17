@@ -131,11 +131,11 @@ export default {
     },
     getuser() {
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/users_detail", postData)
+        .post("api/Lease/users_detail", postData)
         .then(res => {
           console.log(res.data, "users_detail");
           let resdata = res.data;
@@ -176,7 +176,7 @@ export default {
       }
 
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         users_name: this.users_name,
         users_sex: sex_id,
@@ -185,9 +185,9 @@ export default {
         users_city: this.areaval[1]?this.areaval[1].name:'',
         users_district: this.areaval[2]?this.areaval[2].name:'',
         users_address: this.detailval 
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/users_update", postData)
+        .post("api/Lease/users_update", postData)
         .then(res => {
           console.log(res.data, "users_update");
           let resdata = res.data;

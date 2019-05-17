@@ -91,17 +91,28 @@ export default {
         },
 
         submit(){
-            Toast.loading({ mask: true,message: '加载中...'})
+            if(!this.img1){
+                Toast('上传身份证人像面') 
+                return
+            }
+            if(!this.img2){
+                Toast('上传身份证国徽面') 
+                return
+            }
+
+            Toast.loading({ mask: true,message: '加载中...',duration:0 })
             let formData = new FormData()
             formData.append('file',this.file1)
             formData.append('file1',this.file2)
             formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
 
             let config = {
-                headers:{'Content-Type':'multipart/form-data'}
+                headers:{
+                    post:{'Content-Type':'multipart/form-data'}
+                }
             }
 
-            this.axios.post(this.API + "api/Order/CheckIDCard",formData,config)
+            this.axios.post("api/Order/CheckIDCard",formData,config)
             .then(res => {
                 console.log(res.data, "res")
                 let resdata = res.data

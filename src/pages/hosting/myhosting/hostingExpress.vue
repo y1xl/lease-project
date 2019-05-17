@@ -79,11 +79,11 @@ export default {
     methods:{
         getdetail(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 trust_id: this.$route.params.id
-            });
-            this.axios.post(this.API + "api/Trusteeship/trustDetails", postData)
+            };
+            this.axios.post("api/Trusteeship/trustDetails", postData)
             .then(res => {
                 console.log(res.data, "detail");
                 let resdata = res.data;
@@ -107,11 +107,11 @@ export default {
 
         queryLogistics(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 express_number: this.detail.express_number,
                 express_no:this.detail.express_no
-            });
-            this.axios.post(this.API + "api/Trusteeship/queryTrustLogistics", postData)
+            };
+            this.axios.post("api/Trusteeship/queryTrustLogistics", postData)
             .then(res => {
                 console.log(res.data, "queryLogistics");
                 let resdata = res.data;

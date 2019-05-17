@@ -56,7 +56,7 @@ export default {
       let taskId = this.$route.query.taskId
 
       Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
             userId: userId,
             taskType:taskType,
             message:message,
@@ -64,8 +64,8 @@ export default {
             account:account,
             taskId:taskId,
             mxcode: this.$route.query.mxcode
-        });
-        this.axios.post(this.API + "api/Order/CheckCHSI", postData)
+        };
+        this.axios.post("api/Order/CheckCHSI", postData)
         .then(res => {
             console.log(res.data, "post");
             let resdata = res.data;
@@ -85,10 +85,10 @@ export default {
     },
     getgo() {
       Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        });
-        this.axios.post(this.API + "api/Order/GetCHISUrl", postData)
+        };
+        this.axios.post("api/Order/GetCHISUrl", postData)
         .then(res => {
             console.log(res.data, "goschool");
             let resdata = res.data;

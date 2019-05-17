@@ -116,10 +116,10 @@ export default {
   methods: {
     getinfo(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      });
-      this.axios.post(this.API + "api/Generalize/getCommission", postData)
+      };
+      this.axios.post("api/Generalize/getCommission", postData)
       .then(res => {
           console.log(res.data, "info");
           let resdata = res.data;
@@ -134,10 +134,10 @@ export default {
     },
     getcode(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      });
-      this.axios.post(this.API + "api/Generalize/getQrCode", postData)
+      };
+      this.axios.post("api/Generalize/getQrCode", postData)
       .then(res => {
           console.log(res.data, "code");
           let resdata = res.data;

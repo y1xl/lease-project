@@ -93,11 +93,11 @@ export default {
       window.localStorage.setItem("goodshistory", JSON.stringify(this.historylist));
 
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData ={
         goods_name: this.value
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/search_goods", postData)
+        .post("api/Lease/search_goods", postData)
         .then(res => {
           console.log(res.data, "getdetail");
           let resdata = res.data;
@@ -121,7 +121,10 @@ export default {
     }
   },
   activated() {
-     if(!this.$route.meta.isBack || this.isFirstEnter){
+      if(this.isFirstEnter){
+        
+      }else
+     if(!this.$route.meta.isBack){
          // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
          // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
         this.flprolist = []

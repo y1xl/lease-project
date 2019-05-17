@@ -98,11 +98,11 @@ export default {
         },
         getred(){
             Toast.loading({ mask: true,message: '加载中...',duration:0})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 activity_title: this.info.activity_title
-            });
-            this.axios.post(this.API + "api/Redpacket/redwars",postData)
+            };
+            this.axios.post("api/Redpacket/redwars",postData)
             .then(res => {
                 console.log(res.data, "getred");
                 let resdata = res.data;
@@ -130,13 +130,13 @@ export default {
         //if优惠卷,领取
         receive(id){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 coupons_id: id,
                 activity_id: 0
-            });
+            };
             this.axios
-            .post(this.API + "api/Lease/Receive_coupon", postData)
+            .post("api/Lease/Receive_coupon", postData)
             .then(res => {
                 console.log(res.data, "getcoupons");
                 let resdata = res.data;
@@ -154,7 +154,7 @@ export default {
         },
         getad(){
             Toast.loading({ mask: true,message: '加载中...'})
-            this.axios.post(this.API + "api/Redpacket/getRedpacket").then(res => {
+            this.axios.post("api/Redpacket/getRedpacket").then(res => {
                 console.log(res.data, "ad");
                 let resdata = res.data;
                 if (resdata.code == 200) {
@@ -178,10 +178,10 @@ export default {
             });
         },
         getpeople(title){
-            let postData = this.$qs.stringify({
+            let postData = {
                 activity_title: title
-            });
-            this.axios.post(this.API + "api/Redpacket/countUsers",postData)
+            };
+            this.axios.post("api/Redpacket/countUsers",postData)
             .then(res => {
                 console.log(res.data, "people");
                 let resdata = res.data;
@@ -194,10 +194,10 @@ export default {
         },
         //剩余次数
         getnum(){
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            });
-            this.axios.post(this.API + "api/Redpacket/getUserNumber",postData)
+            };
+            this.axios.post("api/Redpacket/getUserNumber",postData)
             .then(res => {
                 console.log(res.data, "num");
                 let resdata = res.data;
@@ -217,10 +217,10 @@ export default {
             });
         },
         getnotice(title){
-            let postData = this.$qs.stringify({
+            let postData = {
                 activity_title: title
-            });
-            this.axios.post(this.API + "api/Redpacket/winningInformation",postData)
+            };
+            this.axios.post("api/Redpacket/winningInformation",postData)
             .then(res => {
                 console.log(res.data, "notice");
                 let resdata = res.data;

@@ -25,10 +25,10 @@ export default {
   methods:{
     getdata() {
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
           help_id: this.$route.query.id
-      })
-      this.axios.post(this.API + "api/Lease/help_detail",postData).then(res => {
+      }
+      this.axios.post("api/Lease/help_detail",postData).then(res => {
         console.log(res.data, "help_detail");
         let resdata = res.data;
         if (resdata.code == 200) {

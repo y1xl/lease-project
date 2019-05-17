@@ -46,11 +46,11 @@ export default {
   methods: {
     getselect() {
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-      });
+      };
 
-      this.axios.post(this.API + "api/Lease/ads_select", postData).then(res => {
+      this.axios.post("api/Lease/ads_select", postData).then(res => {
         console.log(res.data, "getselect");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -81,10 +81,10 @@ export default {
     },
     del(i,id) {
       Toast.loading({ mask: true, message: "加载中...",duration:0 });
-      let postData = this.$qs.stringify({
+      let postData = {
         ads_id: id
-      });
-      this.axios.post(this.API + "api/Lease/ads_detele", postData).then(res => {
+      };
+      this.axios.post("api/Lease/ads_detele", postData).then(res => {
         console.log(res.data, "del");
         let resdata = res.data;
         if (resdata.code == 200) {

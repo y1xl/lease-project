@@ -66,7 +66,9 @@ export default {
 
       Toast.loading({ mask: true,message: '加载中...',duration:0})
       let config = {
-          headers:{'Content-Type':'multipart/form-data'}
+          headers:{
+              post:{'Content-Type':'multipart/form-data'}
+          }
       }
 
       let formData = new FormData()
@@ -84,7 +86,7 @@ export default {
       formData.append('eva_service',this.rateval)
       formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
 
-      this.axios.post(this.API + "api/Lease/goods_evaluate",formData,config)
+      this.axios.post("api/Lease/goods_evaluate",formData,config)
       .then(res => {
           console.log(res.data, "submit")
           let resdata = res.data

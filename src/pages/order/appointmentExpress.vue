@@ -89,10 +89,10 @@ export default {
             this.showtimequantum = false
         },
         getdefaultaddress(){
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            })
-            this.axios.post(this.API + "api/Lease/ads_select",postData)
+            }
+            this.axios.post("api/Lease/ads_select",postData)
             .then(res => {
                 console.log(res.data, "address")
                 let resdata = res.data
@@ -108,10 +108,10 @@ export default {
             });
         },
         getdefaultshop(){
-            let postData = this.$qs.stringify({
+            let postData = {
                 order_id: this.$route.params.id
-            })
-            this.axios.post(this.API + "api/Lease_Order/getStore",postData)
+            }
+            this.axios.post("api/Lease_Order/getStore",postData)
             .then(res => {
                 console.log(res.data, "shop")
                 let resdata = res.data
@@ -123,7 +123,7 @@ export default {
             });
         },
         gettimequantumarr(){
-            this.axios.post(this.API + "api/Lease_Order/getSFTime")
+            this.axios.post("api/Lease_Order/getSFTime")
             .then(res => {
                 console.log(res.data, "timequantum")
                 let resdata = res.data
@@ -159,14 +159,14 @@ export default {
             }
             
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 order_id:this.$route.params.id,
                 ads_id: this.getaddress.ads_id,
                 store_id: this.shopaddress.store_id,
                 year : this.datetext,
                 time: this.timequantumtext
-            });
-            this.axios.post(this.API + "api/Lease_Order/onlineAppointment", postData)
+            };
+            this.axios.post("api/Lease_Order/onlineAppointment", postData)
             .then(res => {
             console.log(res.data, "code");
             let resdata = res.data;

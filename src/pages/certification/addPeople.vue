@@ -58,11 +58,11 @@ export default {
     getupdate() {
       if (this.$route.params.id) {
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
           urgent_id: this.$route.params.id
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/urgent_detail", postData)
+          .post("api/Lease/urgent_detail", postData)
           .then(res => {
             console.log(res.data, "user_price");
             let resdata = res.data;
@@ -102,14 +102,14 @@ export default {
         let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
         if (userinfo) {
           Toast.loading({ mask: true, message: "加载中..." });
-          let postData = this.$qs.stringify({
+          let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             urgent_phone: this.phoneval,
             urgent_name: this.nameval,
             urgent_sign: this.text
-          });
+          };
           this.axios
-            .post(this.API + "api/Lease/Add_urgent", postData)
+            .post("api/Lease/Add_urgent", postData)
             .then(res => {
               console.log(res.data, "add");
               let resdata = res.data;
@@ -125,14 +125,14 @@ export default {
         }
       } else {
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
           urgent_id: urgent_id,
           urgent_phone: this.phoneval,
           urgent_name: this.nameval,
           urgent_sign: this.text
-        });
+        }
         this.axios
-          .post(this.API + "api/Lease/urgent_update", postData)
+          .post("api/Lease/urgent_update", postData)
           .then(res => {
             console.log(res.data, "editor");
             let resdata = res.data;

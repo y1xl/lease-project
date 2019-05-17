@@ -39,11 +39,11 @@ export default {
     methods:{
         getinfo(){
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            })
+            }
 
-            this.axios.post(this.API + "api/Order/GetIDCard",postData)
+            this.axios.post("api/Order/GetIDCard",postData)
             .then(res => {
                 console.log(res.data, "info")
                 let resdata = res.data

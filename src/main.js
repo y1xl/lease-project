@@ -5,12 +5,12 @@ import App from './App'
 import './style/reset.css'
 import './style/common.css'
 import router from './router'
-
 import filter from './utils/filter'
 
 Vue.use(require('vue-wechat-title'))
 
 import axios from "axios"
+import axiosPlugin from './server'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
@@ -33,13 +33,8 @@ VueAMap.initAMapApiLoader({
   v: '1.4.4'
 });
 
-import qs from 'qs'
-Vue.prototype.$qs = qs
 
-// Vue.prototype.API = ' https://newbeeadmin.zx-xcx.com/'
-Vue.prototype.API = ' https://admin.newbee-smart.com/'
 // Vue.prototype.API = ' https://www.newbee-smart.com/'
-
 
 
 /* eslint-disable no-new */

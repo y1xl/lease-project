@@ -85,7 +85,7 @@
         </template>
       </van-cell>
     </div>
-    <!-- <div class="height"></div> -->
+
   </div>
 </template>
 
@@ -103,11 +103,6 @@ export default {
       head_img: ''
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
   created() {
     this.getheadimg()
   },
@@ -118,11 +113,11 @@ export default {
     //15816893020 客户
     getuser() {
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/users_detail", postData)
+        .post("api/Lease/users_detail", postData)
         .then(res => {
           console.log(res.data, "users_detail");
           let resdata = res.data;
@@ -143,11 +138,11 @@ export default {
     },
     getheadimg() {
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease_Order/getHeadPicture", postData)
+        .post("api/Lease_Order/getHeadPicture", postData)
         .then(res => {
           console.log(res.data, "headimg");
           let resdata = res.data;

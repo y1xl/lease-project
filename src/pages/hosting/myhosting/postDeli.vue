@@ -102,10 +102,10 @@ export default {
   },
   methods: {
     getdefaultaddress(){
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        })
-        this.axios.post(this.API + "api/Lease/ads_select",postData)
+        }
+        this.axios.post("api/Lease/ads_select",postData)
         .then(res => {
             console.log(res.data, "address")
             let resdata = res.data
@@ -121,7 +121,7 @@ export default {
         });
     },
     gettimequantumarr(){
-        this.axios.post(this.API + "api/Lease_Order/getSFTime")
+        this.axios.post("api/Lease_Order/getSFTime")
         .then(res => {
             console.log(res.data, "timequantum")
             let resdata = res.data
@@ -149,15 +149,15 @@ export default {
       }
 
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           trust_id: this.$route.params.id,
           year: this.datetext,
           time: this.timequantum,
           ads_id:this.getaddress.ads_id,
           store_id: this.getlocation.store_id
-      });
-      this.axios.post(this.API + "api/Trusteeship/onlineAppointment", postData)
+      };
+      this.axios.post("api/Trusteeship/onlineAppointment", postData)
       .then(res => {
           console.log(res.data, "detail");
           let resdata = res.data;
@@ -185,12 +185,12 @@ export default {
       }
 
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           trust_id: this.$route.params.id,
           express_no: this.postnum
-      });
-      this.axios.post(this.API + "api/Trusteeship/surrender", postData)
+      };
+      this.axios.post("api/Trusteeship/surrender", postData)
       .then(res => {
           console.log(res.data, "detail");
           let resdata = res.data;

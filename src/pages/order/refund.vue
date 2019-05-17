@@ -103,10 +103,10 @@ export default {
         },
 
         getdefaultaddress(){
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            })
-            this.axios.post(this.API + "api/Lease/ads_select",postData)
+            }
+            this.axios.post("api/Lease/ads_select",postData)
             .then(res => {
                 console.log(res.data, "address")
                 let resdata = res.data
@@ -122,7 +122,7 @@ export default {
             });
         },
         onConfirmTimequantum(value,index){
-            console.log(`当前值：${value}, 当前索引：${index}`);
+            // console.log(`当前值：${value}, 当前索引：${index}`);
             let newdate = new Date()
             if(this.datetext == `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`){
                 let end = value.split('-')[1].split(':')[0]
@@ -140,7 +140,7 @@ export default {
             this.showtimequantum = false
         },
         gettimequantumarr(){
-            this.axios.post(this.API + "api/Lease_Order/getSFTime")
+            this.axios.post("api/Lease_Order/getSFTime")
             .then(res => {
                 console.log(res.data, "timequantum")
                 let resdata = res.data
@@ -159,12 +159,12 @@ export default {
         oneself(){
             if(this.typenum==0){
                 Toast.loading({ mask: true,message: '加载中...'})
-                let postData = this.$qs.stringify({
+                let postData = {
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     order_id:this.$route.params.id,
                     way: 2
-                });
-                this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
+                };
+                this.axios.post("api/Lease_Order/pickupCode", postData)
                 .then(res => {
                 console.log(res.data, "code");
                 let resdata = res.data;
@@ -205,13 +205,13 @@ export default {
             }
 
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 order_id:this.$route.params.id,
                 year: this.datetext,
                 time:this.timequantumtext,
                 ads_id:this.getaddress.ads_id
-            });
-            this.axios.post(this.API + "api/Lease_Order/delivery", postData)
+            };
+            this.axios.post("api/Lease_Order/delivery", postData)
             .then(res => {
             console.log(res.data, "platform");
             let resdata = res.data;

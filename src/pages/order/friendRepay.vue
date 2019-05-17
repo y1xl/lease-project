@@ -26,12 +26,12 @@ export default {
     methods:{
         getcode(){
             Toast.loading({ mask: true,message: '加载中...',duration:0})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: this.$route.query.userid,
                 order_id: this.$route.query.orderid,
                 way: 2
-            });
-            this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
+            };
+            this.axios.post("api/Lease_Order/pickupCode", postData)
             .then(res => {
             console.log(res.data, "code");
             let resdata = res.data;

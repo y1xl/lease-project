@@ -41,11 +41,11 @@ export default {
     methods:{
         getinfo(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-            });
+            };
             this.axios
-                .post(this.API + "api/Order/GetThreeInfo", postData)
+                .post("api/Order/GetThreeInfo", postData)
                 .then(res => {
                 console.log(res.data, "users_detail");
                 let resdata = res.data;
@@ -61,12 +61,12 @@ export default {
         },
         goali(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id:'',
                 auth_code: '',
                 state: ''
-            });
-            this.axios.post(this.API + "api/Order/aliLogin",postData).then(res => {
+            };
+            this.axios.post("api/Order/aliLogin",postData).then(res => {
                 console.log(res.data, "getaliToken");
                 let resdata = res.data;
                 if (resdata.code == 200) {
@@ -92,7 +92,7 @@ export default {
         },
         gosina(){
             Toast.loading({ mask: true, message: "加载中..." });
-            this.axios.post(this.API + "api/Order/Getweibo").then(res => {
+            this.axios.post("api/Order/Getweibo").then(res => {
                 console.log(res.data, "gosina");
                 let resdata = res.data;
                 if (resdata.code == 200) {
@@ -117,7 +117,7 @@ export default {
         },
         gowx(){
             Toast.loading({ mask: true, message: "加载中..." });
-            this.axios.post(this.API + "api/Order/GetCodeUrl").then(res => {
+            this.axios.post("api/Order/GetCodeUrl").then(res => {
                 console.log(res.data, "gowx");
                 let resdata = res.data;
                 if (resdata.code == 200) {

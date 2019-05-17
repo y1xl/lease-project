@@ -67,11 +67,11 @@ export default {
         },
         getshop(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 lat: JSON.parse(window.localStorage.getItem("center")).lat,
                 lng: JSON.parse(window.localStorage.getItem("center")).lng,
-            });
-            this.axios.post(this.API + "api/Trusteeship/getStore", postData)
+            };
+            this.axios.post("api/Trusteeship/getStore", postData)
             .then(res => {
                 console.log(res.data, "list");
                 let resdata = res.data;

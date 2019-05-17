@@ -44,10 +44,10 @@ export default {
     sendcode(){
       if (!this.canClick) return;
 
-      let postData = this.$qs.stringify({
+      let postData = {
             users_phone:this.$route.params.phone
-        })
-      this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+        }
+      this.axios.post("api/Lease/Forget_PassWord",postData)
       .then(res => {
         console.log(res.data, "sendcode");
         let resdata = res.data;
@@ -84,14 +84,14 @@ export default {
       }
 
       Toast.loading({ mask: true, message: "加载中..." })
-      let postData = this.$qs.stringify({
+      let postData = {
         users_phone:this.$route.params.phone,
         yzm: this.value,
         token: this.$route.query.token||'',
         code: this.$route.query.code||'',
         wakeup: window.sessionStorage.getItem("wakeup")||''
-      })
-      this.axios.post(this.API + "api/Lease/Yzm_Login",postData)
+      }
+      this.axios.post("api/Lease/Yzm_Login",postData)
       .then(res => {
         console.log(res.data, "login");
         let resdata = res.data;

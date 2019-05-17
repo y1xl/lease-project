@@ -114,11 +114,6 @@ export default {
       }
     }
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
   created() {
     this.isFirstEnter = true;
   },
@@ -137,11 +132,11 @@ export default {
     },
     getlist(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           state: this.ind
-      });
-      this.axios.post(this.API + "api/Trusteeship/queryTrusteeship", postData)
+      };
+      this.axios.post("api/Trusteeship/queryTrusteeship", postData)
       .then(res => {
           console.log(res.data, "list");
           let resdata = res.data;
@@ -166,11 +161,11 @@ export default {
     },
     getnotlist(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           state: this.notid
-      });
-      this.axios.post(this.API + "api/Trusteeship/queryNohardware", postData)
+      };
+      this.axios.post("api/Trusteeship/queryNohardware", postData)
       .then(res => {
           console.log(res.data, "nolist");
           let resdata = res.data;
@@ -235,12 +230,12 @@ export default {
     //确认
     onConfirm(id){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           no_hardware_id: id,
           userValidation:1
-      });
-      this.axios.post(this.API + "api/Trusteeship/userValidation", postData)
+      };
+      this.axios.post("api/Trusteeship/userValidation", postData)
       .then(res => {
           console.log(res.data, "nolist");
           let resdata = res.data;
@@ -266,12 +261,12 @@ export default {
       .then(() => {
         // on confirm
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             no_hardware_id: id,
             userValidation:2
-        });
-        this.axios.post(this.API + "api/Trusteeship/userValidation", postData)
+        };
+        this.axios.post("api/Trusteeship/userValidation", postData)
         .then(res => {
             console.log(res.data, "nolist");
             let resdata = res.data;
@@ -299,7 +294,10 @@ export default {
   },
 
   activated() {
-     if(!this.$route.meta.isBack || this.isFirstEnter){
+    if(this.isFirstEnter){
+        
+      }else
+     if(!this.$route.meta.isBack){
        this.ind=0
        this.list=[]
        this.selected= 0

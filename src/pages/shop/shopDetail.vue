@@ -44,11 +44,11 @@ export default {
   methods: {
     getdetail() {
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         store_id: this.$route.query.store_id
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/store_detail", postData)
+        .post("api/Lease/store_detail", postData)
         .then(res => {
           Toast.clear();
           console.log(res.data, "getdetail");

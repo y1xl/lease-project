@@ -49,11 +49,6 @@ export default {
       radio: -1,
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
   created(){
     this.getlist()
   },
@@ -74,10 +69,10 @@ export default {
     },
     del(i,id){
       Toast.loading({ mask: true,message: '加载中...',duration:0 })
-      let postData = this.$qs.stringify({
+      let postData = {
           cart_id: id
-      })
-      this.axios.post(this.API + "api/Lease/cart_delete",postData)
+      }
+      this.axios.post("api/Lease/cart_delete",postData)
       .then(res => {
         console.log(res.data, "del")
         let resdata = res.data
@@ -98,10 +93,10 @@ export default {
 
     getlist(){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        })
-      this.axios.post(this.API + "api/Lease/cart_select",postData)
+        }
+      this.axios.post("api/Lease/cart_select",postData)
       .then(res => {
         console.log(res.data, "list")
         let resdata = res.data

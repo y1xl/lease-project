@@ -193,10 +193,6 @@ export default {
         },
 
         submit(){
-            if (!window.localStorage.getItem("userinfo")) {
-                this.$router.replace({ path: "/login" });
-                return
-            }
             if(this.isconsent){
                 let { 
                     typetext, //品类
@@ -217,7 +213,9 @@ export default {
                  } = this.gohostingSession
 
                 let config = {
-                    headers:{'Content-Type':'multipart/form-data'}
+                    headers:{
+                        post:{'Content-Type':'multipart/form-data'}
+                    }
                 }
                 Toast.loading({ mask: true,message: '加载中...',duration:0})
                 
@@ -242,7 +240,7 @@ export default {
                 formData.append('contact_way',telval)  //联系方式
                 formData.append('rate','30')  //费率 不要%号
                 
-                this.axios.post(this.API + "api/Trusteeship/saveTrust",formData,config)
+                this.axios.post("api/Trusteeship/saveTrust",formData,config)
                 .then(res => {
                     console.log(res.data, "res")
                     let resdata = res.data
@@ -265,7 +263,10 @@ export default {
         }
     },
     activated() {
-        if(!this.$route.meta.isBack || this.isFirstEnter){
+        if(this.isFirstEnter){
+        
+      }else
+        if(!this.$route.meta.isBack){
             this.fileimg1 = null,
             this.fileimg2 = null,
             this.fileimg3 = null,

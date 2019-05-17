@@ -273,11 +273,11 @@ export default {
 
     getdata(){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           buyorder_id:this.$route.params.id,
-      })
-      this.axios.post(this.API + "api/Buy_Order/orderDetails",postData)
+      }
+      this.axios.post("api/Buy_Order/orderDetails",postData)
       .then(res => {
           console.log(res.data, "data")
           let resdata = res.data
@@ -310,10 +310,10 @@ export default {
     },
         //物流
     queryLogistics(){
-      let postData = this.$qs.stringify({
+      let postData = {
           buyorder_id: this.$route.params.id,
-        });
-        this.axios.post(this.API + "api/Buy_Order/queryLogistics", postData)
+        }
+        this.axios.post("api/Buy_Order/queryLogistics", postData)
         .then(res => {
           console.log(res.data, "queryLogistics");
           let resdata = res.data;
@@ -341,10 +341,10 @@ export default {
           this.showcode = false
       }else{
         Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+        let postData ={
             buyorder_id:id
-        });
-        this.axios.post(this.API + "api/Buy_Order/createCode", postData)
+        };
+        this.axios.post("api/Buy_Order/createCode", postData)
         .then(res => {
           console.log(res.data, "code");
           let resdata = res.data;
@@ -362,11 +362,11 @@ export default {
     //确认收货
         onConfirmGoods(id){
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 buyorder_id:id,
-            });
-            this.axios.post(this.API + "api/Buy_Order/confirmReceipt", postData)
+            };
+            this.axios.post("api/Buy_Order/confirmReceipt", postData)
             .then(res => {
                 console.log(res.data, "onConfirmGoods");
                 let resdata = res.data;

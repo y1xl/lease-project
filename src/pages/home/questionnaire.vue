@@ -11,7 +11,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_one_type==2">
-            <div class="name">1、	{{data.topic_one}}</div>
+            <div class="name">1、	{{data.topic_one}}(可多选)</div>
             <van-checkbox-group v-model="problems1">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_one_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -28,7 +28,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_two_type==2">
-            <div class="name">2、	{{data.topic_two}}</div>
+            <div class="name">2、	{{data.topic_two}}(可多选)</div>
             <van-checkbox-group v-model="problems2">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_two_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -45,7 +45,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_three_type==2">
-            <div class="name">3、	{{data.topic_three}}</div>
+            <div class="name">3、	{{data.topic_three}}(可多选)</div>
             <van-checkbox-group v-model="problems3">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_three_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -62,7 +62,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_four_type==2">
-            <div class="name">4、	{{data.topic_four}}</div>
+            <div class="name">4、	{{data.topic_four}}(可多选)</div>
             <van-checkbox-group v-model="problems4">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_four_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -79,7 +79,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_five_type==2">
-            <div class="name">5、	{{data.topic_five}}</div>
+            <div class="name">5、	{{data.topic_five}}(可多选)</div>
             <van-checkbox-group v-model="problems5">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_five_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -96,7 +96,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_six_type==2">
-            <div class="name">6、	{{data.topic_six}}</div>
+            <div class="name">6、	{{data.topic_six}}(可多选)</div>
             <van-checkbox-group v-model="problems6">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_six_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -113,7 +113,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_seven_type==2">
-            <div class="name">7、	{{data.topic_seven}}</div>
+            <div class="name">7、	{{data.topic_seven}}(可多选)</div>
             <van-checkbox-group v-model="problems7">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_seven_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -130,7 +130,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_eight_type==2">
-            <div class="name">8、	{{data.topic_eight}}</div>
+            <div class="name">8、	{{data.topic_eight}}(可多选)</div>
             <van-checkbox-group v-model="problems8">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_eight_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -147,7 +147,7 @@
             </van-radio-group>
         </div>
         <div class="problems" v-if="data.topic_nine_type==2">
-            <div class="name">9、	{{data.topic_nine}}</div>
+            <div class="name">9、	{{data.topic_nine}}(可多选)</div>
             <van-checkbox-group v-model="problems9">
             <div>
                 <div class="checkbox" v-for="(item,index) in data.topic_nine_answer" :key="index"><van-checkbox :name="item" checked-color="#2DBBF1" ref="checkboxes">{{item}}</van-checkbox></div>
@@ -191,10 +191,10 @@ export default {
     methods: {
         getdata(){
             Toast.loading({ mask: true, message: "加载中...",duration:0 });
-            let postData = this.$qs.stringify({ 
+            let postData = { 
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            });
-            this.axios.post(this.API + "api/Generalize/getQuestionnaire", postData)
+            };
+            this.axios.post("api/Generalize/getQuestionnaire", postData)
             .then(res => {
                 console.log(res.data, "getdata");
                 let resdata = res.data;
@@ -274,12 +274,12 @@ export default {
             console.log(obj);
             
             Toast.loading({ mask: true, message: "加载中...",duration:0 });
-            let postData = this.$qs.stringify({ 
+            let postData = { 
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 title: this.data.title,
                 answer: JSON.stringify(obj)
-            });
-            this.axios.post(this.API + "api/Generalize/saveQuestionnaire", postData)
+            };
+            this.axios.post("api/Generalize/saveQuestionnaire", postData)
             .then(res => {
                 console.log(res.data, "submit");
                 let resdata = res.data;

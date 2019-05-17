@@ -31,10 +31,10 @@ export default {
         sendcode(){
             if (!this.canClick) return;
             
-            let postData = this.$qs.stringify({
+            let postData = {
                     users_phone:this.$route.params.phone
-                })
-            this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+                }
+            this.axios.post("api/Lease/Forget_PassWord",postData)
             .then(res => {
                 console.log(res.data, "sendcode");
                 let resdata = res.data;
@@ -58,11 +58,11 @@ export default {
             });
         },
         next(){
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_phone:this.$route.params.phone,
                 yzm: this.codeval
-            })
-            this.axios.post(this.API + "api/Lease/Reset_pwd",postData)
+            }
+            this.axios.post("api/Lease/Reset_pwd",postData)
             .then(res => {
                 console.log(res.data, "next");
                 let resdata = res.data;

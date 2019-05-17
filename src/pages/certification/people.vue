@@ -39,11 +39,11 @@ export default {
       Toast.loading({ mask: true, message: "加载中..." });
       let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
       if (userinfo) {
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: userinfo.users_id
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/urgent_select", postData)
+          .post("api/Lease/urgent_select", postData)
           .then(res => {
             console.log(res.data, "user_price");
             let resdata = res.data;
@@ -66,11 +66,11 @@ export default {
       .then(() => {
         // on confirm
         Toast.loading({ mask: true, message: "加载中...",duration:0  });
-        let postData = this.$qs.stringify({
+        let postData = {
           urgent_id: urgent_id
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/urgent_delete", postData)
+          .post("api/Lease/urgent_delete", postData)
           .then(res => {
             console.log(res.data, "delete");
             let resdata = res.data;

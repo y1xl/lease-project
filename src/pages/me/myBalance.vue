@@ -42,21 +42,16 @@ export default {
       balance:0
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
   mounted(){
     this.getlist()
     this.getinfo()
   },
   methods: {
     getinfo() {
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        });
-        this.axios.post(this.API + "api/Buy_Order/GetPayData", postData)
+        };
+        this.axios.post("api/Buy_Order/GetPayData", postData)
         .then(res => {
             console.log(res.data, "info");
             let resdata = res.data;
@@ -77,11 +72,11 @@ export default {
     },
     getlist(){
       Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           type: this.active-0+1
-        });
-        this.axios.post(this.API + "api/Order/GetBalance", postData)
+        };
+        this.axios.post("api/Order/GetBalance", postData)
         .then(res => {
           console.log(res.data, "list");
           let resdata = res.data;

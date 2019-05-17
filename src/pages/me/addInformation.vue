@@ -63,11 +63,11 @@ export default {
     getdata() {
       if (this.$route.params.id) {
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
           ads_id: this.$route.params.id
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/Ads_Details", postData)
+          .post("api/Lease/Ads_Details", postData)
           .then(res => {
             console.log(res.data, "add");
             let resdata = res.data;
@@ -99,7 +99,7 @@ export default {
         return;
       }
 
-      let postData = this.$qs.stringify({
+      let postData = {
         ads_id: this.$route.params.id || "",
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         ads_user: this.nameval,
@@ -109,11 +109,11 @@ export default {
         ads_city: this.areaval[1].name,
         ads_district: this.areaval[2].name,
         ads_address: this.detailval
-      });
+      };
 
       if (this.$route.params.id) {
         this.axios
-          .post(this.API + "api/Lease/Ads_Update", postData)
+          .post("api/Lease/Ads_Update", postData)
           .then(res => {
             console.log(res.data, "editor");
             let resdata = res.data;
@@ -125,7 +125,7 @@ export default {
             }
           });
       } else {
-        this.axios.post(this.API + "api/Lease/Add_ads", postData).then(res => {
+        this.axios.post("api/Lease/Add_ads", postData).then(res => {
           console.log(res.data, "add");
           let resdata = res.data;
           if (resdata.code == 200) {

@@ -116,14 +116,14 @@ export default {
 
       let nowPageNum = ++this.page;
       if(this.$route.params.type == "buy"||this.$route.params.type == "prebuy"||this.$route.params.type == "friendbuy"){
-        let postData = this.$qs.stringify({
+        let postData = {
           lat: JSON.parse(window.localStorage.getItem("center")).lat,
           lng: JSON.parse(window.localStorage.getItem("center")).lng,
           goods_id: this.$route.params.id,
           page: nowPageNum
-        });
+        };
         this.axios
-          .post(this.API + "api/Order/GetSelfShop", postData)
+          .post("api/Order/GetSelfShop", postData)
           .then(res => {
             console.log(res.data, "list");
             let resdata = res.data;
@@ -153,14 +153,14 @@ export default {
       }
 
       if(this.$route.params.type == "shopping"){
-        let postData = this.$qs.stringify({
+        let postData = {
           lat: JSON.parse(window.localStorage.getItem("center")).lat,
           lng: JSON.parse(window.localStorage.getItem("center")).lng,
           order_id: this.$route.params.id,
           page: nowPageNum
-        });
+        };
         this.axios
-          .post(this.API + "api/Buy_Order/BuySelfShop", postData)
+          .post("api/Buy_Order/BuySelfShop", postData)
           .then(res => {
             console.log(res.data, "list");
             let resdata = res.data;

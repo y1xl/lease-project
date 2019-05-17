@@ -49,7 +49,9 @@ export default {
 
             Toast.loading({ mask: true,message: '加载中...',duration:0})
             let config = {
-                headers:{'Content-Type':'multipart/form-data'}
+                headers:{
+                    post:{'Content-Type':'multipart/form-data'}
+                }
             }
 
             let formData = new FormData()
@@ -57,7 +59,7 @@ export default {
             formData.append('order_id',this.$route.params.id)
             formData.append('content',this.contentval)
 
-            this.axios.post(this.API + "api/Lease_Order/afterConfirmation",formData,config)
+            this.axios.post("api/Lease_Order/afterConfirmation",formData,config)
             .then(res => {
                 console.log(res.data, "data")
                 let resdata = res.data

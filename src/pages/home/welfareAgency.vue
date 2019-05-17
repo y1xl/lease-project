@@ -180,10 +180,10 @@ export default {
   methods: {
     //任务奖励消息
     getmessage(){
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      });
-      this.axios.post(this.API + "api/Generalize/getTaskNoRead", postData)
+      };
+      this.axios.post("api/Generalize/getTaskNoRead", postData)
       .then(res => {
           console.log(res.data, "getmessage");
           let resdata = res.data;
@@ -197,11 +197,11 @@ export default {
       })
     },
     onRead(){
-      let postData = this.$qs.stringify({
+      let postData = {
           score: JSON.stringify(this.score),
           money: JSON.stringify(this.money),
-      });
-      this.axios.post(this.API + "api/Generalize/setTaskRead", postData)
+      };
+      this.axios.post("api/Generalize/setTaskRead", postData)
       .then(res => {
           console.log(res.data, "onRead");
           let resdata = res.data;
@@ -214,11 +214,11 @@ export default {
     signin(){
       Toast.loading({ mask: true, message: "加载中..." });
       let time = Date.now()/1000+''
-      let postData = this.$qs.stringify({ 
+      let postData = { 
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           date_time: time.split('.')[0]
-      });
-      this.axios.post(this.API + "api/Order/UserSignin", postData)
+      };
+      this.axios.post("api/Order/UserSignin", postData)
       .then(res => {
           console.log(res.data, "signin");
           let resdata = res.data;
@@ -236,10 +236,10 @@ export default {
       });
     },
     getsignin(){
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      });
-      this.axios.post(this.API + "api/Order/GetSigninData", postData)
+      };
+      this.axios.post("api/Order/GetSigninData", postData)
       .then(res => {
           console.log(res.data, "GetSigninData");
           let resdata = res.data;
@@ -254,10 +254,10 @@ export default {
     },
 
     gettasknum(){
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      });
-      this.axios.post(this.API + "api/Generalize/UserTaskNumber", postData)
+      };
+      this.axios.post("api/Generalize/UserTaskNumber", postData)
       .then(res => {
           console.log(res.data, "gettasknum");
           let resdata = res.data;

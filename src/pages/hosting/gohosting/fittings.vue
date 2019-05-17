@@ -64,12 +64,12 @@ export default {
             }
 
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 cate_id: typetext.cate_id,
                 brand_id: brandtext.brand_id,
                 model_id: modeltext.model_id
-            });
-            this.axios.post(this.API + "api/Trusteeship/getPartlist",postData)
+            }
+            this.axios.post("api/Trusteeship/getPartlist",postData)
             .then(res => {
                 console.log(res.data, "list")
                 let resdata = res.data 

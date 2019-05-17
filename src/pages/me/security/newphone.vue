@@ -34,10 +34,10 @@ export default {
                 Toast("手机号格式不正确");
                 return;
             }
-            let postData = this.$qs.stringify({
+            let postData = {
                     users_phone:this.phoneval
-                })
-            this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+                }
+            this.axios.post("api/Lease/Forget_PassWord",postData)
             .then(res => {
                 console.log(res.data, "sendcode");
                 let resdata = res.data;
@@ -66,12 +66,12 @@ export default {
                 return;
             }
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_phone: this.phoneval,
                 yzm: this.codeval,
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-            })
-            this.axios.post(this.API + "api/Lease/update_phone",postData)
+            }
+            this.axios.post("api/Lease/update_phone",postData)
             .then(res => {
                 console.log(res.data, "submit");
                 let resdata = res.data;

@@ -5,7 +5,7 @@
             <div :class="{ selected: selected==1 }" @click="nav(1)">租转售</div>
         </div>
 
-        <keep-alive>
+        <keep-alive :max="15">
             <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title" ></router-view>
         </keep-alive>
 

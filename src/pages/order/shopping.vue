@@ -275,12 +275,6 @@ export default {
   },
 
   created() {
-    let wxshoppingSession = JSON.parse(window.sessionStorage.getItem("wxshoppingSession"))
-    if(wxshoppingSession){
-        if(wxshoppingSession.orderid==this.$route.params.id){
-            this.showWXpay = wxshoppingSession.state
-        }
-    }
     this.isFirstEnter = true;
   },
   mounted() {    
@@ -334,10 +328,10 @@ export default {
     },
 
     getdefaultaddress() {
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-      });
-      this.axios.post(this.API + "api/Lease/ads_select", postData).then(res => {
+      };
+      this.axios.post("api/Lease/ads_select", postData).then(res => {
         console.log(res.data, "address");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -354,13 +348,13 @@ export default {
     },
 
     getfreight(){
-      let postData = this.$qs.stringify({
+      let postData = {
         type: this.typenum,
         ads_id: this.getaddress.ads_id,
         order_id: this.$route.params.id,
-      })
+      }
       this.axios
-        .post(this.API + "api/Buy_Order/BuyExpressPrice", postData)
+        .post("api/Buy_Order/BuyExpressPrice", postData)
         .then(res => {
           console.log(res.data, "freight");
           let resdata = res.data;
@@ -379,12 +373,12 @@ export default {
 
     getinfo(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         type: this.selected,
         order_id: this.$route.params.id,
-      });
-      this.axios.post(this.API + "api/Buy_Order/BuyGoodsDetail", postData).then(res => {
+      };
+      this.axios.post("api/Buy_Order/BuyGoodsDetail", postData).then(res => {
         console.log(res.data, "info");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -408,13 +402,13 @@ export default {
     //优惠卷
     onshowcoupon(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         goods_id: this.info.goods_id,
         money:this.info.yf_price
-      });
+      };
       this.axios
-        .post(this.API + "api/Order/GetUserCoupons", postData)
+        .post("api/Order/GetUserCoupons", postData)
         .then(res => {
           console.log(res.data, "couponslist");
           let resdata = res.data;
@@ -462,7 +456,7 @@ export default {
             return
           }
 
-          var postData = this.$qs.stringify({
+          var postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             type: this.selected,
             order_id: this.$route.params.id,
@@ -480,7 +474,7 @@ export default {
             time:'',
             remark:'',
             coupons_id:''
-          });
+          };
         }
 
         if(this.typenum == 1){
@@ -489,7 +483,7 @@ export default {
             return
           }
 
-          var postData = this.$qs.stringify({
+          var postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             type: this.selected,
             order_id: this.$route.params.id,
@@ -507,7 +501,7 @@ export default {
             time:'',
             remark:'',
             coupons_id:''
-          });
+          };
         }
 
         if(this.typenum == 2){
@@ -520,7 +514,7 @@ export default {
             return
           }
 
-           var postData = this.$qs.stringify({
+           var postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             type: this.selected,
             order_id: this.$route.params.id,
@@ -538,11 +532,11 @@ export default {
             time:'',
             remark:'',
             coupons_id:''
-          });
+          };
         }
 
         if(this.radio==1){
-          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          this.axios.post("api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
               console.log(res.data, "wxpay");
               let resdata = res.data;
@@ -574,7 +568,7 @@ export default {
               });
               return
           }
-          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          this.axios.post("api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
               console.log(res.data, "alipay");
               window.sessionStorage.removeItem("wxpaySession");
@@ -594,7 +588,7 @@ export default {
           });
         }
         if(this.radio==3){
-          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData).then(res => {
+          this.axios.post("api/Buy_Order/BuyAddOrder", postData).then(res => {
             console.log(res.data, "submit");
             let resdata = res.data;
             if (resdata.code == 200) {
@@ -618,7 +612,7 @@ export default {
 
       if(this.selected==2){
         Toast.loading({ mask: true, message: "加载中...",duration:0 });
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           type: this.selected,
           order_id: this.$route.params.id,
@@ -636,10 +630,10 @@ export default {
           time:'',
           remark:'',
           coupons_id:''
-        });
+        };
 
         if(this.radio==1){
-          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          this.axios.post("api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
               console.log(res.data, "wxpay");
               let resdata = res.data;
@@ -671,7 +665,7 @@ export default {
               });
               return
           }
-          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData)
+          this.axios.post("api/Buy_Order/BuyAddOrder", postData)
           .then(res => {
               console.log(res.data, "alipay");
               window.sessionStorage.removeItem("wxshoppingSession");
@@ -692,7 +686,7 @@ export default {
         }
 
         if(this.radio==3){
-          this.axios.post(this.API + "api/Buy_Order/BuyAddOrder", postData).then(res => {
+          this.axios.post("api/Buy_Order/BuyAddOrder", postData).then(res => {
             console.log(res.data, "submit");
             let resdata = res.data;
             if (resdata.code == 200) {
@@ -717,7 +711,10 @@ export default {
   },
 
   activated() {
-     if(!this.$route.meta.isBack || this.isFirstEnter){
+    if(this.isFirstEnter){
+        
+      }else
+     if(!this.$route.meta.isBack){
       this.leaseid= this.$route.params.id
       this.radio ='3'
       this.selected = 1
@@ -743,21 +740,22 @@ export default {
       this.showWXpay = false
       this.getinfo()
       this.getdefaultaddress()
-     }else{
-      let wxshoppingSession = JSON.parse(window.sessionStorage.getItem("wxshoppingSession"))
-      if(wxshoppingSession){
-          if(wxshoppingSession.orderid==this.$route.params.id){
-              this.showWXpay = wxshoppingSession.state
-          }
-      }
-      let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
-      if(shoppingSession){
-        this.datechoose = shoppingSession.getdate
-        this.people = shoppingSession.getpeople
-        this.getlocation = shoppingSession.getlocation
-        this.getaddress = shoppingSession.getaddress
-      }
      }
+
+    let wxshoppingSession = JSON.parse(window.sessionStorage.getItem("wxshoppingSession"))
+    if(wxshoppingSession){
+        if(wxshoppingSession.orderid==this.$route.params.id){
+            this.showWXpay = wxshoppingSession.state
+        }
+    }
+    let shoppingSession = JSON.parse(window.sessionStorage.getItem("shoppingSession"));
+    if(shoppingSession){
+      this.datechoose = shoppingSession.getdate
+      this.people = shoppingSession.getpeople
+      this.getlocation = shoppingSession.getlocation
+      this.getaddress = shoppingSession.getaddress
+    }
+
      this.$route.meta.isBack=false
      this.isFirstEnter=false;
   }

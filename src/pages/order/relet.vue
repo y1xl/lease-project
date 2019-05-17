@@ -97,12 +97,12 @@ export default {
         Toast('不能为小于0');
         return;
       }
-      let postData = this.$qs.stringify({
+      let postData = {
         order_id: this.$route.params.id,
         day: this.weekval
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease_Order/orderRelet", postData)
+        .post("api/Lease_Order/orderRelet", postData)
         .then(res => {
           console.log(res.data, "weekval");
           let resdata = res.data;
@@ -128,11 +128,11 @@ export default {
       this.$router.go(-1);
     },
     getinfo() {
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             order_id : this.$route.params.id
-        });
-        this.axios.post(this.API + "api/Order/GetPayData", postData)
+        };
+        this.axios.post("api/Order/GetPayData", postData)
         .then(res => {
             console.log(res.data, "info");
             let resdata = res.data;
@@ -162,15 +162,15 @@ export default {
       if (this.radio == 1) {
         // Toast("微信功能未开通");
         Toast.loading({ mask: true, message: "加载中...",duration:0 });
-        let postData = this.$qs.stringify({
+        let postData = {
           // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id: this.$route.params.id,
           pay_way: this.radio,
           day: this.weekval,
           money: this.rent
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease_Order/orderRenew", postData)
+          .post("api/Lease_Order/orderRenew", postData)
           .then(res => {
             console.log(res.data, "wxpay");
             let resdata = res.data;
@@ -203,15 +203,15 @@ export default {
             return
         }
         Toast.loading({ mask: true, message: "加载中...",duration:0 });
-        let postData = this.$qs.stringify({
+        let postData = {
           // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id: this.$route.params.id,
           pay_way: this.radio,
           day: this.weekval,
           money: this.rent
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease_Order/orderRenew", postData)
+          .post("api/Lease_Order/orderRenew", postData)
           .then(res => {
             console.log(res.data, "alipay");
             window.sessionStorage.removeItem("wxpayReletSession");
@@ -232,15 +232,15 @@ export default {
       }
       if (this.radio == 3) {
         Toast.loading({ mask: true, message: "加载中...",duration:0 });
-        let postData = this.$qs.stringify({
+        let postData = {
           // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id: this.$route.params.id,
           pay_way: this.radio,
           day: this.weekval,
           money: this.rent
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease_Order/orderRenew", postData)
+          .post("api/Lease_Order/orderRenew", postData)
           .then(res => {
             console.log(res.data, "submit");
             let resdata = res.data;

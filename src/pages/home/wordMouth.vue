@@ -64,10 +64,10 @@ export default {
     },
     getdetail(){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
             goods_id:this.$route.params.id
-        })
-      this.axios.post(this.API + "api/Lease/GetComment",postData)
+        }
+      this.axios.post("api/Lease/GetComment",postData)
       .then(res => {
         console.log(res.data, "commit")
         let resdata = res.data

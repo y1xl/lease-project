@@ -259,7 +259,7 @@ export default {
     methods:{
         host(){
             Toast.loading({ mask: true, message: "加载中..." });
-            this.axios.post(this.API + "api/Trusteeship/queryRecommendProducts")
+            this.axios.post("api/Trusteeship/queryRecommendProducts")
             .then(res => {
                 console.log(res.data, "host")
                 let resdata = res.data
@@ -323,7 +323,7 @@ export default {
 
         gettype(){
             Toast.loading({ mask: true, message: "加载中..." });
-            this.axios.post(this.API + "api/Trusteeship/queryCate")
+            this.axios.post("api/Trusteeship/queryCate")
             .then(res => {
                 console.log(res.data, "gettype")
                 let resdata = res.data
@@ -339,10 +339,10 @@ export default {
         },
         getbrand(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 cate_id: this.typetext.cate_id
-            });
-            this.axios.post(this.API + "api/Trusteeship/queryBrand",postData)
+            };
+            this.axios.post("api/Trusteeship/queryBrand",postData)
             .then(res => {
                 console.log(res.data, "getbrand")
                 let resdata = res.data 
@@ -357,11 +357,11 @@ export default {
         },
         getmodel(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 cate_id: this.typetext.cate_id,
                 brand_id: this.brandtext.brand_id,
-            });
-            this.axios.post(this.API + "api/Trusteeship/queryModel",postData)
+            };
+            this.axios.post("api/Trusteeship/queryModel",postData)
             .then(res => {
                 console.log(res.data, "getmodel")
                 let resdata = res.data 
@@ -488,14 +488,14 @@ export default {
             }
 
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 trust_price: this.figureval,
                 cate: this.typetext1.cate_name,
                 style: this.equipmenttext=='全新品'?0:this.equipmenttext=='二手品'?1:'',
                 pay_way: this.paytext=='微信'?1:this.paytext=='支付宝'?2:this.paytext=='余额'?3:''
-            });
-            this.axios.post(this.API + "api/Trusteeship/saveNoHardware", postData)
+            };
+            this.axios.post("api/Trusteeship/saveNoHardware", postData)
             .then(res => {
                 console.log(res.data, "nosubmit");
                 let resdata = res.data;

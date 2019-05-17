@@ -77,14 +77,16 @@ export default {
     upload(file){
       Toast.loading({ mask: true, message: "加载中...",duration:0 });
       let config = {
-          headers:{'Content-Type':'multipart/form-data'}
+          headers:{
+              post:{'Content-Type':'multipart/form-data'}
+          }
       }
       let formData = new FormData()
       formData.append('file',file)
       formData.append('users_id',JSON.parse(window.localStorage.getItem("userinfo")).users_id)
 
       this.axios
-        .post(this.API + "api/Lease_Order/modifyHeadPicture",formData,config)
+        .post("api/Lease_Order/modifyHeadPicture",formData,config)
         .then(res => {
           console.log(res.data, "headimg");
           let resdata = res.data;
@@ -105,11 +107,11 @@ export default {
 
     getheadimg() {
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id||3
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease_Order/getHeadPicture", postData)
+        .post("api/Lease_Order/getHeadPicture", postData)
         .then(res => {
           console.log(res.data, "headimg");
           let resdata = res.data;

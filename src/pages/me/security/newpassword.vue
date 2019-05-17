@@ -28,12 +28,12 @@ export default {
     methods:{
         submit(){
           Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_pwd: this.oldval,
                 new_pwd: this.newval,
                 user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-            })
-            this.axios.post(this.API + "api/Lease/update_pwd",postData)
+            }
+            this.axios.post("api/Lease/update_pwd",postData)
             .then(res => {
                 console.log(res.data, "submit");
                 let resdata = res.data;

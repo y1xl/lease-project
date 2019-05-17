@@ -84,13 +84,13 @@ export default {
       }
 
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
           // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           trust_id: this.$route.params.id,
           time: this.datetext,
           store_id: this.getlocation.store_id
-      });
-      this.axios.post(this.API + "api/Trusteeship/fieldDelivery", postData)
+      };
+      this.axios.post("api/Trusteeship/fieldDelivery", postData)
       .then(res => {
           console.log(res.data, "detail");
           let resdata = res.data;

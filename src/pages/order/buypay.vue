@@ -66,10 +66,10 @@ export default {
             this.$router.go(-1);
         },
         getinfo() {
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-            });
-            this.axios.post(this.API + "api/Buy_Order/GetPayData", postData)
+            };
+            this.axios.post("api/Buy_Order/GetPayData", postData)
             .then(res => {
                 console.log(res.data, "info");
                 let resdata = res.data;
@@ -87,12 +87,12 @@ export default {
             if (this.radio == 1) {
                 // Toast("微信功能未开通");
                 Toast.loading({ mask: true, message: "加载中..." });
-                let postData = this.$qs.stringify({
+                let postData = {
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     buyorder_id: this.$route.params.id,
                     pay_way: this.radio,
-                });
-                this.axios.post(this.API + "api/Buy_Order/GetPay", postData)
+                }
+                this.axios.post("api/Buy_Order/GetPay", postData)
                 .then(res => {
                     console.log(res.data, "wxpay");
                     let resdata = res.data;
@@ -125,12 +125,12 @@ export default {
                     return
                 }
                 Toast.loading({ mask: true, message: "加载中..." });
-                let postData = this.$qs.stringify({
+                let postData = {
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     buyorder_id: this.$route.params.id,
                     pay_way: this.radio,
-                });
-                this.axios.post(this.API + "api/Buy_Order/GetPay", postData)
+                };
+                this.axios.post("api/Buy_Order/GetPay", postData)
                 .then(res => {
                     console.log(res.data, "alipay");
                     window.sessionStorage.removeItem("wxbuypaySession");
@@ -151,12 +151,12 @@ export default {
             }
             if (this.radio == 3) {
                 Toast.loading({ mask: true, message: "加载中..." });
-                let postData = this.$qs.stringify({
+                let postData = {
                     users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                     buyorder_id: this.$route.params.id,
                     pay_way: this.radio,
-                });
-                this.axios.post(this.API + "api/Buy_Order/GetPay", postData)
+                };
+                this.axios.post("api/Buy_Order/GetPay", postData)
                 .then(res => {
                     console.log(res.data, "submit");
                     let resdata = res.data;

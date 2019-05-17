@@ -59,12 +59,12 @@ export default {
             }
 
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 order_id: this.$route.params.id,
                 time: this.datetext,
                 express_no: this.numval
-            });
-            this.axios.post(this.API + "api/Lease_Order/surrender", postData)
+            };
+            this.axios.post("api/Lease_Order/surrender", postData)
             .then(res => {
             console.log(res.data, "express");
             let resdata = res.data;
@@ -83,10 +83,10 @@ export default {
         },
 
         getdefaultshop(){
-            let postData = this.$qs.stringify({
+            let postData = {
                 order_id: this.$route.params.id
-            })
-            this.axios.post(this.API + "api/Lease_Order/getStore",postData)
+            }
+            this.axios.post("api/Lease_Order/getStore",postData)
             .then(res => {
                 console.log(res.data, "shop")
                 let resdata = res.data

@@ -101,12 +101,6 @@ export default {
             codeimg:'',
         }
     },
-    beforeCreate(){
-        Dialog.close()
-        if(!window.localStorage.getItem("userinfo")){
-        this.$router.replace({ path: "/login" })
-        }
-    },
     created(){
         this.isFirstEnter = true;
         this.getlist()
@@ -120,13 +114,13 @@ export default {
 
         getlist(){
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 status:this.active
-            });
-            this.axios.post(this.API + "api/Buy_Order/LeaseQuery", postData)
+            };
+            this.axios.post("api/Buy_Order/LeaseQuery", postData)
             .then(res => {
-                console.log(res.data, "list");
+                console.log(res.data, "buylist");
                 let resdata = res.data;
                 if (resdata.code == 200) {
                     Toast.clear()
@@ -173,11 +167,11 @@ export default {
         //确认收货
         onConfirmGoods(id){
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 buyorder_id:id,
-            });
-            this.axios.post(this.API + "api/Buy_Order/confirmReceipt", postData)
+            };
+            this.axios.post("api/Buy_Order/confirmReceipt", postData)
             .then(res => {
                 console.log(res.data, "onConfirmGoods");
                 let resdata = res.data;
@@ -196,10 +190,10 @@ export default {
                 this.showcode = false
             }else{
                 Toast.loading({ mask: true,message: '加载中...'})
-                let postData = this.$qs.stringify({
+                let postData = {
                     buyorder_id:id
-                });
-                this.axios.post(this.API + "api/Buy_Order/createCode", postData)
+                };
+                this.axios.post("api/Buy_Order/createCode", postData)
                 .then(res => {
                 console.log(res.data, "code");
                 let resdata = res.data;
@@ -217,12 +211,12 @@ export default {
         //取消订单
         cancelOrder(id){
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             buyorder_id:id,
             withouTreason: this.canceltext[this.radio].text
-            });
-            this.axios.post(this.API + "api/Buy_Order/cancelOrder", postData)
+            };
+            this.axios.post("api/Buy_Order/cancelOrder", postData)
             .then(res => {
             console.log(res.data, "cancelOrder");
             let resdata = res.data;
@@ -239,6 +233,9 @@ export default {
     },
     activated() {
         Dialog.close()
+        if(this.isFirstEnter){
+        
+        }else
         if(!this.$route.meta.isBack || this.isFirstEnter){
             this.active=0
             this.radio= 0

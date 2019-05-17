@@ -261,13 +261,13 @@ export default {
         Toast('不能为小于0');
         return;
       }
-      let postData = this.$qs.stringify({
+      let postData ={
         goods_id: this.$route.query.id,
         rent_num: this.weekval,
         unt: this.weektext == "天" ? "1" : "2"
-      });
+      };
       this.axios
-        .post(this.API + "api/Order/GetHirePrice", postData)
+        .post("api/Order/GetHirePrice", postData)
         .then(res => {
           console.log(res.data, "weekval");
           let resdata = res.data;
@@ -531,10 +531,10 @@ export default {
     },
 
     getdefaultaddress() {
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-      });
-      this.axios.post(this.API + "api/Lease/ads_select", postData).then(res => {
+      };
+      this.axios.post("api/Lease/ads_select", postData).then(res => {
         console.log(res.data, "address");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -551,16 +551,16 @@ export default {
     },
     //页面数据
     getotherprice() {
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         goods_id: this.$route.query.id || "",
         sku: this.$route.query.guige
           ? decodeURI(this.$route.query.guige)
           : "",
         cart_id: this.$route.query.cartid || ""
-      })
+      }
       this.axios
-        .post(this.API + "api/Order/GetGoodsDetail", postData)
+        .post("api/Order/GetGoodsDetail", postData)
         .then(res => {
           console.log(res.data, "getotherprice");
           let resdata = res.data;
@@ -591,16 +591,16 @@ export default {
     },
     //运费
     getfreight() {
-      let postData = this.$qs.stringify({
+      let postData = {
         type: this.typenum,
         ads_id: this.getaddress.ads_id,
         goods_id: this.$route.query.id,
         sku: this.guiges||'',
         time: this.expectdate||'',
         order_type:1
-      })
+      }
       this.axios
-        .post(this.API + "api/Order/ExpressPrice", postData)
+        .post("api/Order/ExpressPrice", postData)
         .then(res => {
           console.log(res.data, "freight");
           let resdata = res.data;
@@ -626,13 +626,13 @@ export default {
         return;
       }
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         goods_id: this.$route.query.id,
         money:this.rented
-      });
+      };
       this.axios
-        .post(this.API + "api/Order/GetUserCoupons", postData)
+        .post("api/Order/GetUserCoupons", postData)
         .then(res => {
           console.log(res.data, "couponslist");
           let resdata = res.data;
@@ -705,7 +705,7 @@ export default {
             return
           }
           
-          var postData = this.$qs.stringify({
+          var postData = {
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
             goods_id: this.$route.query.id,
@@ -727,7 +727,7 @@ export default {
             coupons_id: this.couponid,
             order_type:1,
             giver_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-          });
+          };
         }
         if (this.typenum == 1) {
           if(this.getaddress == ""){
@@ -747,7 +747,7 @@ export default {
             return
           }
  
-          var postData = this.$qs.stringify({
+          var postData = {
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
             goods_id: this.$route.query.id,
@@ -769,7 +769,7 @@ export default {
             coupons_id: this.couponid,
             order_type:1,
             giver_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-          });
+          };
         }
         if (this.typenum == 2) {
           if(this.getaddress == ""){
@@ -808,7 +808,7 @@ export default {
             }
           }
 
-          var postData = this.$qs.stringify({
+          var postData = {
             unt: this.weektext == "天" ? 1 : 2,
             rent_num: this.weekval,
             goods_id: this.$route.query.id,
@@ -830,7 +830,7 @@ export default {
             coupons_id: this.couponid,
             order_type:1,
             giver_id:  JSON.parse(window.localStorage.getItem("userinfo")).users_id
-          });
+          };
         }
         //是否实名认证
         this.isrealname(postData)
@@ -841,7 +841,7 @@ export default {
 
     face(postData){
       Toast.loading({ mask: true, message: "加载中...",duration:0 });
-      this.axios.post(this.API + "api/Order/AddOrder", postData).then(res => {
+      this.axios.post("api/Order/AddOrder", postData).then(res => {
         console.log(res.data, "order");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -860,11 +860,11 @@ export default {
 
     isrealname(postDataOrder) {
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/user_price", postData)
+        .post("api/Lease/user_price", postData)
         .then(res => {
           console.log(res.data, "user_price");
           let resdata = res.data;
@@ -898,7 +898,13 @@ export default {
   },
 
   activated() {
-     if(!this.$route.meta.isBack || this.isFirstEnter){
+    if (!window.localStorage.getItem("userinfo")) {
+            this.showlogin = true
+    }else
+    if(this.isFirstEnter){
+        
+      }else
+     if(!this.$route.meta.isBack){
         this.goodid = this.$route.query.id
         this.goodsimg =''
         this.typenum = 0
@@ -936,10 +942,6 @@ export default {
         this.getotherprice()
         this.getdefaultaddress()
 
-        if (!window.localStorage.getItem("userinfo")) {
-            this.showlogin = true
-            return
-        }
         if (this.$route.query.data) {
             let data = JSON.parse(decodeURI(this.$route.query.data))
             this.typenum = data.typenum
@@ -947,12 +949,9 @@ export default {
             this.getdate = data.date
             this.expectdate = data.date
         }
-     }else{
-       if (!window.localStorage.getItem("userinfo")) {
-            this.showlogin = true
-            return
-        }
-       let friendbuySession = JSON.parse(window.sessionStorage.getItem("friendbuySession"));
+     }
+
+     let friendbuySession = JSON.parse(window.sessionStorage.getItem("friendbuySession"));
         if (friendbuySession) {
           this.getlocation = friendbuySession.getlocation;
           this.getdate = friendbuySession.getdate;
@@ -961,7 +960,7 @@ export default {
           this.people = friendbuySession.getpeople;
           this.getaddress = friendbuySession.getaddress;
         }
-     }
+
      this.$route.meta.isBack=false
      this.isFirstEnter=false;
   }

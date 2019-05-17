@@ -52,6 +52,7 @@ export default {
     };
   },
   created() {
+    // console.log('isFirstEnter')
     this.isFirstEnter = true;
     this.gethender();
   },
@@ -60,7 +61,7 @@ export default {
       this.$router.push({ path: "/ProductDetail/" + id });
     },
     gethender() {
-      this.axios.post(this.API + "api/Lease/hender_img").then(res => {
+      this.axios.post("api/Lease/hender_img").then(res => {
         console.log(res.data, "gethender");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -72,12 +73,12 @@ export default {
     },
     onLoad() {
       let nowPageNum = ++this.page;
-      let postData = this.$qs.stringify({
+      let postData = {
         scene_id: this.$route.params.id,
         page: nowPageNum
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/Scene_goods", postData)
+        .post("api/Lease/Scene_goods", postData)
         .then(res => {
           console.log(res.data, "Scene_goods");
 
@@ -103,7 +104,11 @@ export default {
     }
   },
   activated() {
-     if(!this.$route.meta.isBack || this.isFirstEnter){
+      if(this.isFirstEnter){
+        
+      }else
+     if(!this.$route.meta.isBack){
+      //  console.log('isBack')
         this.gethender();
         this.goodslist=[]
         this.loading= false

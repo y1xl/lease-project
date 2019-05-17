@@ -324,7 +324,7 @@ export default {
       this.$router.replace({ path: "/login" });
     },
     gettel() {
-      this.axios.post(this.API + "api/Order/GetServiceTel").then(res => {
+      this.axios.post("api/Order/GetServiceTel").then(res => {
         console.log(res.data, "tel");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -357,10 +357,10 @@ export default {
         });
     },
     getactivity(){
-      let postData = this.$qs.stringify({
+      let postData = {
             goods_id:this.$route.params.id
-        })
-      this.axios.post(this.API + "api/Order/GetGoodsActivity",postData)
+        }
+      this.axios.post("api/Order/GetGoodsActivity",postData)
       .then(res => {
         console.log(res.data, "activity")
         let resdata = res.data
@@ -373,10 +373,10 @@ export default {
     },
     getdetail(){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
             goods_id:this.$route.params.id
-        })
-      this.axios.post(this.API + "api/Lease/Goods_Detail",postData)
+        }
+      this.axios.post("api/Lease/Goods_Detail",postData)
       .then(res => {
         console.log(res.data, "Goods_Detail")
         let resdata = res.data
@@ -396,10 +396,10 @@ export default {
       });
     },
     getguige(){
-      let postData = this.$qs.stringify({
+      let postData = {
             goods_id:this.$route.params.id
-        })
-      this.axios.post(this.API + "api/Lease/Goods_spec",postData)
+        }
+      this.axios.post("api/Lease/Goods_spec",postData)
       .then(res => {
         console.log(res.data, "getguige")
         let resdata = res.data
@@ -564,15 +564,15 @@ export default {
       }
 
       if(this.speclist.length==0){
-        let postData = this.$qs.stringify({
+        let postData = {
             gd_id:this.$route.params.id,
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             cart_num:1,
             cart_price:this.detail.hire_price.price,
             attr_ids: attr_ids.length==0 ? '' : attr_ids.join(','),
             attr_names: attr_names.length==0 ? '' : attr_names.join(','),
-        })
-        this.axios.post(this.API + "api/Lease/Add_cart",postData)
+        }
+        this.axios.post("api/Lease/Add_cart",postData)
         .then(res => {
           console.log(res.data, "addcart")
           let resdata = res.data
@@ -586,15 +586,15 @@ export default {
       }
       if(arr.length == this.speclist.length){
 
-        let postData = this.$qs.stringify({
+        let postData = {
             gd_id:this.$route.params.id,
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             cart_num:1,
             cart_price:this.detail.hire_price.price,
             attr_ids: attr_ids.length==0 ? '' : attr_ids.join(','),
             attr_names: attr_names.length==0 ? '' : attr_names.join(','),
-        })
-        this.axios.post(this.API + "api/Lease/Add_cart",postData)
+        }
+        this.axios.post("api/Lease/Add_cart",postData)
         .then(res => {
           console.log(res.data, "addcart")
           let resdata = res.data
@@ -611,10 +611,10 @@ export default {
     },
 
     getshare(){
-      let postData = this.$qs.stringify({
+      let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        })
-        this.axios.post(this.API + "api/Generalize/Waste_figure",postData)
+        }
+        this.axios.post("api/Generalize/Waste_figure",postData)
         .then(res => {
           console.log(res.data, "getshare")
           let resdata = res.data

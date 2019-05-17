@@ -91,11 +91,6 @@ export default {
       ind: 0,
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
   mounted(){
     this.getdata()
   },
@@ -112,12 +107,12 @@ export default {
 
     getdata(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         state: this.ind+1
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/user_coupons", postData)
+        .post("api/Lease/user_coupons", postData)
         .then(res => {
           console.log(res.data, "couponslist");
           let resdata = res.data;
@@ -137,11 +132,11 @@ export default {
     },
     getcoupon(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/get_coupons", postData)
+        .post("api/Lease/get_coupons", postData)
         .then(res => {
           console.log(res.data, "getcouponslist");
           let resdata = res.data;
@@ -160,13 +155,13 @@ export default {
     receive(item){
       if(item.is_activity==0){
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
           user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           coupons_id: item.coupons_id,
           activity_id: 0
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/Receive_coupon", postData)
+          .post("api/Lease/Receive_coupon", postData)
           .then(res => {
             console.log(res.data, "getcoupons");
             let resdata = res.data;
@@ -184,13 +179,13 @@ export default {
           });
       }else{
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
           user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           activity_id: item.activity_id,
           coupons_id:item.coupons_id
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/Receive_coupon", postData)
+          .post("api/Lease/Receive_coupon", postData)
           .then(res => {
             console.log(res.data, "getcoupons");
             let resdata = res.data;

@@ -75,11 +75,11 @@ export default {
       let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
       if (userinfo) {
         Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: userinfo.users_id
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/user_price", postData)
+          .post("api/Lease/user_price", postData)
           .then(res => {
             console.log(res.data, "user_price");
             let resdata = res.data;
@@ -98,10 +98,10 @@ export default {
 
     getgo() {
       Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        });
-        this.axios.post(this.API + "api/Order/GetCHISUrl", postData)
+        };
+        this.axios.post("api/Order/GetCHISUrl", postData)
         .then(res => {
             console.log(res.data, "goschool");
             let resdata = res.data;

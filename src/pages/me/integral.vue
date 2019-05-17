@@ -45,21 +45,16 @@ export default {
       list:[]
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
   mounted(){
     this.getinfo()
   },
   methods: {
     getinfo() {
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        });
-        this.axios.post(this.API + "api/Order/GetUserScore", postData)
+        };
+        this.axios.post("api/Order/GetUserScore", postData)
         .then(res => {
             console.log(res.data, "info");
             let resdata = res.data;
@@ -79,12 +74,12 @@ export default {
 
     onLoad() {
       let nowPageNum = ++this.page;
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
         page: nowPageNum
-      });
+      };
       this.axios
-        .post(this.API + "api/Order/GetUserScoreList", postData)
+        .post("api/Order/GetUserScoreList", postData)
         .then(res => {
           console.log(res.data, "GetUserScoreList");
 

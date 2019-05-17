@@ -30,12 +30,12 @@ export default {
       }
 
       Toast.loading({ mask: true, message: "加载中..." })
-      let postData = this.$qs.stringify({
+      let postData = {
             users_phone:this.$route.params.phone,
             users_pwd: this.value,
             wakeup: window.sessionStorage.getItem("wakeup")||''
-        })
-      this.axios.post(this.API + "api/Lease/New_pwd",postData)
+        }
+      this.axios.post("api/Lease/New_pwd",postData)
       .then(res => {
         console.log(res.data, "npwlogin");
         let resdata = res.data;

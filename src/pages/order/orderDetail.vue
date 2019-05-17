@@ -475,11 +475,11 @@ export default {
     },
     getdata(){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id:this.$route.params.id,
-      })
-      this.axios.post(this.API + "api/Lease_Order/orderDetails",postData)
+      }
+      this.axios.post("api/Lease_Order/orderDetails",postData)
       .then(res => {
           console.log(res.data, "data")
           let resdata = res.data
@@ -518,10 +518,10 @@ export default {
     //售后详情
     getSalesData(){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
           order_id:this.$route.params.id,
-      })
-      this.axios.post(this.API + "api/Lease_Order/AfterDetails",postData)
+      }
+      this.axios.post("api/Lease_Order/AfterDetails",postData)
       .then(res => {
           console.log(res.data, "getSalesData")
           let resdata = res.data
@@ -540,10 +540,10 @@ export default {
     },
         //物流
     queryLogistics(){
-      let postData = this.$qs.stringify({
+      let postData = {
           order_id: this.data.order_id,
-        });
-        this.axios.post(this.API + "api/Lease_Order/queryLogistics", postData)
+        };
+        this.axios.post("api/Lease_Order/queryLogistics", postData)
         .then(res => {
           console.log(res.data, "queryLogistics");
           let resdata = res.data;
@@ -559,10 +559,10 @@ export default {
     },
     //退租物流
     queryLogisticsBack(){
-      let postData = this.$qs.stringify({
+      let postData = {
           order_id: this.data.order_id,
-        });
-        this.axios.post(this.API + "api/Lease_Order/querySurrenderExpress", postData)
+        };
+        this.axios.post("api/Lease_Order/querySurrenderExpress", postData)
         .then(res => {
           console.log(res.data, "queryLogisticsBack");
           let resdata = res.data;
@@ -589,11 +589,11 @@ export default {
     //确认收货
     onConfirmGoods(id){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id:id,
-        });
-        this.axios.post(this.API + "api/Lease_Order/confirmReceipt", postData)
+        };
+        this.axios.post("api/Lease_Order/confirmReceipt", postData)
         .then(res => {
           console.log(res.data, "onConfirmGoods");
           let resdata = res.data;
@@ -610,11 +610,11 @@ export default {
     //确认售后
     onConfirmsales(id){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
           // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id:id,
-        });
-        this.axios.post(this.API + "api/Lease_Order/afterSalesConfirmation", postData)
+        };
+        this.axios.post("api/Lease_Order/afterSalesConfirmation", postData)
         .then(res => {
           console.log(res.data, "onConfirmsales");
           let resdata = res.data;
@@ -631,11 +631,11 @@ export default {
     //删除
     del(id){
       Toast.loading({ mask: true,message: '加载中...'})
-      let postData = this.$qs.stringify({
+      let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id:id,
-        });
-        this.axios.post(this.API + "api/Lease_Order/delOrder", postData)
+        };
+        this.axios.post("api/Lease_Order/delOrder", postData)
         .then(res => {
           console.log(res.data, "del");
           let resdata = res.data;
@@ -656,12 +656,12 @@ export default {
           this.showcode = false
       }else{
         Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           order_id:id,
           way: type
-        });
-        this.axios.post(this.API + "api/Lease_Order/pickupCode", postData)
+        };
+        this.axios.post("api/Lease_Order/pickupCode", postData)
         .then(res => {
           console.log(res.data, "code");
           let resdata = res.data;

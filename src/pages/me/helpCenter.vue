@@ -25,7 +25,7 @@ export default {
   },
   methods:{
     getdata() {
-      this.axios.post(this.API + "api/Lease/help").then(res => {
+      this.axios.post("api/Lease/help").then(res => {
         console.log(res.data, "help");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -36,7 +36,7 @@ export default {
       });
     },
     gettel() {
-      this.axios.post(this.API + "api/Order/GetServiceTel").then(res => {
+      this.axios.post("api/Order/GetServiceTel").then(res => {
         console.log(res.data, "tel");
         let resdata = res.data;
         if (resdata.code == 200) {

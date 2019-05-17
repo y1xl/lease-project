@@ -76,7 +76,7 @@ export default {
   methods: {
     getdata(){
       Toast.loading({ mask: true,message: '加载中...'})
-        this.axios.post(this.API + "api/Order/GetBank")
+        this.axios.post("api/Order/GetBank")
         .then(res => {
           console.log(res.data, "data");
           let resdata = res.data;
@@ -103,10 +103,10 @@ export default {
         return;
       }
 
-      let postData = this.$qs.stringify({
+      let postData = {
               users_phone:this.phoneval
-          })
-      this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+          }
+      this.axios.post("api/Lease/Forget_PassWord",postData)
       .then(res => {
           console.log(res.data, "sendcode");
           let resdata = res.data;
@@ -148,7 +148,7 @@ export default {
       }
       
       Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           open_bank:this.text.bank_name,
           bank_code: this.cardnum,
@@ -156,8 +156,8 @@ export default {
           IDcrad: this.idcard,
           phone: this.phoneval,
           yzm: this.yzcode
-        });
-        this.axios.post(this.API + "api/Order/AddUserBank", postData)
+        };
+        this.axios.post("api/Order/AddUserBank", postData)
         .then(res => {
           console.log(res.data, "submit");
           let resdata = res.data;

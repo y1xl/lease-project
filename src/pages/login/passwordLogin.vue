@@ -39,12 +39,12 @@ export default {
       }
 
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_phone: this.phoneval,
         users_pwd: this.pwval,
         wakeup: window.sessionStorage.getItem("wakeup")||''
-      });
-      this.axios.post(this.API + "api/Lease/Lease_Sign", postData).then(res => {
+      };
+      this.axios.post("api/Lease/Lease_Sign", postData).then(res => {
         console.log(res.data, "pwlogin");
         let resdata = res.data;
         if (resdata.code == 200) {

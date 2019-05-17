@@ -116,10 +116,10 @@ export default {
         this.$router.push({ path: url });
     },
     getinfo() {
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        });
-        this.axios.post(this.API + "api/Buy_Order/GetPayData", postData)
+        }
+        this.axios.post("api/Buy_Order/GetPayData", postData)
         .then(res => {
             console.log(res.data, "info");
             let resdata = res.data;
@@ -134,10 +134,10 @@ export default {
         });
     },
     getdefaultaddress(){
-        let postData = this.$qs.stringify({
+        let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        })
-        this.axios.post(this.API + "api/Lease/ads_select",postData)
+        }
+        this.axios.post("api/Lease/ads_select",postData)
         .then(res => {
             console.log(res.data, "address")
             let resdata = res.data
@@ -154,11 +154,11 @@ export default {
         });
     },
     getfreight(){
-      let postData = this.$qs.stringify({
+      let postData = {
           ads_id: this.getaddress.ads_id,
           host_number: this.$route.params.number
-      })
-      this.axios.post(this.API + "api/Trusteeship/getCarriage",postData)
+      }
+      this.axios.post("api/Trusteeship/getCarriage",postData)
       .then(res => {
           console.log(res.data, "getfreight")
           let resdata = res.data
@@ -177,7 +177,7 @@ export default {
         return
       }
       Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
             carriage: this.freight,
             pay_way: this.radio,
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -186,10 +186,10 @@ export default {
             time: this.datetext,
             money: this.freight,
             store_id: this.store_id
-        })
+        }
 
       if(this.radio==1){
-        this.axios.post(this.API + "api/Trusteeship/cancelTrust", postData)
+        this.axios.post("api/Trusteeship/cancelTrust", postData)
         .then(res => {
           console.log(res.data, "wxpay");
           let resdata = res.data;
@@ -216,7 +216,7 @@ export default {
             });
             return
         }
-        this.axios.post(this.API + "api/Trusteeship/cancelTrust", postData)
+        this.axios.post("api/Trusteeship/cancelTrust", postData)
         .then(res => {
             console.log(res.data, "alipay");
             window.sessionStorage.removeItem("wxpayhcSession");
@@ -236,7 +236,7 @@ export default {
         });
       }
       if(this.radio==3){
-        this.axios.post(this.API + "api/Trusteeship/cancelTrust", postData)
+        this.axios.post("api/Trusteeship/cancelTrust", postData)
         .then(res => {
           console.log(res.data, "submit");
           let resdata = res.data;

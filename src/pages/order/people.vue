@@ -169,11 +169,11 @@ export default {
           return;
         }
 
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           users_name: this.nameval
-        });
-        this.axios.post(this.API + "api/Order/EditUserName", postData)
+        };
+        this.axios.post("api/Order/EditUserName", postData)
         .then(res => {
           console.log(res.data, "改名");
           let resdata = res.data;

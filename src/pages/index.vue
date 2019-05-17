@@ -190,20 +190,11 @@ export default {
       size: 14
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-      return
-    }
-  },
   created() {
     // this.getLocation();
     this.getnav();
   },
   mounted(){
-    if (!window.localStorage.getItem("userinfo")) {
-      return
-    }
     this.getindexlist();
     this.getbanner();
   },
@@ -248,11 +239,11 @@ export default {
       if (i == 0) {
       } else {
         Toast.loading({ mask: true, message: "加载中..." });
-        let postData = this.$qs.stringify({
+        let postData = {
           cate_id: this.navlist[i - 1].cate_id
-        });
+        };
         this.axios
-          .post(this.API + "api/Lease/cate_goods", postData)
+          .post("api/Lease/cate_goods", postData)
           .then(res => {
             console.log(res.data, "goodslist");
             let resdata = res.data;
@@ -269,7 +260,7 @@ export default {
     },
 
     getbanner() {
-      this.axios.post(this.API + "api/Lease/Rotation_chart").then(res => {
+      this.axios.post("api/Lease/Rotation_chart").then(res => {
         console.log(res.data, "getbanner");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -280,7 +271,7 @@ export default {
       });
     },
     getnav() {
-      this.axios.post(this.API + "api/Lease/cate_select").then(res => {
+      this.axios.post("api/Lease/cate_select").then(res => {
         console.log(res.data, "getnav");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -292,7 +283,7 @@ export default {
     },
     getindexlist() {
       Toast.loading({ mask: true, message: "加载中..." });
-      this.axios.post(this.API + "api/Lease/goods_select").then(res => {
+      this.axios.post("api/Lease/goods_select").then(res => {
         console.log(res.data, "getindexlist");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -305,12 +296,12 @@ export default {
       });
     },
     getNearShop(lat, lng) {
-      let postData = this.$qs.stringify({
+      let postData = {
         lat: lat,
         lng: lng
-      });
+      };
       this.axios
-        .post(this.API + "api/Lease/Nearby_store", postData)
+        .post("api/Lease/Nearby_store", postData)
         .then(res => {
           console.log(res.data, "Nearby_store");
           let resdata = res.data;

@@ -44,7 +44,7 @@ export default {
     methods:{
         getad(){
             Toast.loading({ mask: true,message: '加载中...'})
-            this.axios.post(this.API + "api/Redpacket/getRedpacket").then(res => {
+            this.axios.post("api/Redpacket/getRedpacket").then(res => {
                 console.log(res.data, "ad");
                 let resdata = res.data;
                 if (resdata.code == 200) {
@@ -63,10 +63,10 @@ export default {
             });
         },
         getpeople(title){
-            let postData = this.$qs.stringify({
+            let postData = {
                 activity_title: title
-            });
-            this.axios.post(this.API + "api/Redpacket/countUsers",postData)
+            };
+            this.axios.post("api/Redpacket/countUsers",postData)
             .then(res => {
                 console.log(res.data, "people");
                 let resdata = res.data;
@@ -80,11 +80,11 @@ export default {
 
         friend(){
             Toast.loading({ mask: true,message: '加载中...'})
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: this.$route.query.friendid||'',
                 friend_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
-            });
-            this.axios.post(this.API + "api/Redpacket/friendHelp",postData)
+            };
+            this.axios.post("api/Redpacket/friendHelp",postData)
             .then(res => {
                 console.log(res.data, "friend");
                 let resdata = res.data;

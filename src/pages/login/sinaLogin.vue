@@ -34,11 +34,11 @@ export default {
         //{ "code": "02a8c4adda20473a0c8dfed94e966925" }
         getsina(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 code: this.$route.query.code
-            });
-            this.axios.post(this.API + "api/Order/weibo",postData).then(res => {
+            };
+            this.axios.post("api/Order/weibo",postData).then(res => {
                 console.log(res.data, "getali");
                 let resdata = res.data;
                 if (resdata.code == 200) {
@@ -70,10 +70,10 @@ export default {
                 Toast("手机号格式不正确");
                 return;
             }
-            let postData = this.$qs.stringify({
+            let postData = {
                     users_phone:this.phoneval
-                })
-            this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+                }
+            this.axios.post("api/Lease/Forget_PassWord",postData)
             .then(res => {
                 console.log(res.data, "sendcode");
                 let resdata = res.data;
@@ -106,13 +106,13 @@ export default {
             }
 
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 type: 3,
                 phone: this.phoneval,
                 yzm: this.codeval,
                 user_auth_id: this.id ,
-            });
-            this.axios.post(this.API + "api/Order/ThreeLogin", postData).then(res => {
+            };
+            this.axios.post("api/Order/ThreeLogin", postData).then(res => {
                 console.log(res.data, "sinalogin");
                 let resdata = res.data;
                 if (resdata.code == 200) {

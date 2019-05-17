@@ -36,10 +36,10 @@ export default {
                 return;
             }
 
-            let postData = this.$qs.stringify({
+            let postData = {
                     users_phone:this.phoneval
-                })
-            this.axios.post(this.API + "api/Lease/Forget_PassWord",postData)
+                }
+            this.axios.post("api/Lease/Forget_PassWord",postData)
             .then(res => {
                 console.log(res.data, "sendcode");
                 let resdata = res.data;
@@ -77,14 +77,14 @@ export default {
             }
             
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 users_phone: this.phoneval,
                 idcard_number: this.idcardval,
                 yzm: this.codeval
-            });
+            };
             this.axios
-            .post(this.API + "api/Order/UntyingOCR", postData)
+            .post("api/Order/UntyingOCR", postData)
             .then(res => {
                 console.log(res.data, "submit");
                 let resdata = res.data;

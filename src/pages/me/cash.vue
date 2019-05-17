@@ -54,10 +54,10 @@ export default {
   methods: {
     getinfo(){
       Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        });
-        this.axios.post(this.API + "api/Order/GetCash", postData)
+        };
+        this.axios.post("api/Order/GetCash", postData)
         .then(res => {
           console.log(res.data, "info");
           let resdata = res.data;
@@ -88,12 +88,12 @@ export default {
       }
 
       Toast.loading({ mask: true,message: '加载中...'})
-        let postData = this.$qs.stringify({
+        let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           user_bank_id: this.bankcard.user_bank_id,
           money: this.money
-        });
-        this.axios.post(this.API + "api/Order/AddCash", postData)
+        };
+        this.axios.post("api/Order/AddCash", postData)
         .then(res => {
           console.log(res.data, "submit");
           let resdata = res.data;

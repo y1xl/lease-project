@@ -16,10 +16,10 @@ export default {
     methods:{
         getcontent(){
             Toast.loading({ mask: true, message: "加载中..." });
-            let postData = this.$qs.stringify({
+            let postData = {
                 title: this.$route.params.title
-            });
-            this.axios.post(this.API + "api/Order/Agreement", postData).then(res => {
+            };
+            this.axios.post("api/Order/Agreement", postData).then(res => {
                 Toast.clear();
                 // console.log(res.data, "content");
                 let resdata = res.data;

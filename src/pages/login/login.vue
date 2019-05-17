@@ -101,12 +101,12 @@ export default {
 
     goali(){
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         users_id:'',
         auth_code: '',
         state: ''
-      });
-      this.axios.post(this.API + "api/Order/aliLogin",postData).then(res => {
+      };
+      this.axios.post("api/Order/aliLogin",postData).then(res => {
         console.log(res.data, "getaliToken");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -132,7 +132,7 @@ export default {
     },
     gosina(){
       Toast.loading({ mask: true, message: "加载中..." });
-      this.axios.post(this.API + "api/Order/Getweibo").then(res => {
+      this.axios.post("api/Order/Getweibo").then(res => {
         console.log(res.data, "gosina");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -155,32 +155,32 @@ export default {
           Toast('网络出错')
       });
     },
-    // gowx(){
-    //   Toast.loading({ mask: true, message: "加载中..." });
-    //   this.axios.post(this.API + "api/Order/GetCodeUrl").then(res => {
-    //     console.log(res.data, "gowx");
-    //     let resdata = res.data;
-    //     if (resdata.code == 200) {
-    //       Toast.clear();
+    gowx(){
+      Toast.loading({ mask: true, message: "加载中..." });
+      this.axios.post("api/Order/GetCodeUrl").then(res => {
+        console.log(res.data, "gowx");
+        let resdata = res.data;
+        if (resdata.code == 200) {
+          Toast.clear();
 
-    //       Dialog.confirm({
-    //           message: '是否进行微信授权'
-    //         }).then(() => {
-    //           // window.location.href = `${resdata.data}`
-    //           window.location.href = ''
-    //         }).catch(() => {
-    //           // on cancel
-    //         });
-    //     } else {
-    //       Toast.clear();
-    //       Toast(resdata.message);
-    //     }
-    //   })
-    //   .catch(error => {
-    //       Toast.clear();
-    //       Toast('网络出错')
-    //   });
-    // },
+          Dialog.confirm({
+              message: '是否进行微信授权'
+            }).then(() => {
+              // window.location.href = `${resdata.data}`
+
+            }).catch(() => {
+              // on cancel
+            });
+        } else {
+          Toast.clear();
+          Toast(resdata.message);
+        }
+      })
+      .catch(error => {
+          Toast.clear();
+          Toast('网络出错')
+      });
+    },
 
   }
 };

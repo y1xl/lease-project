@@ -38,14 +38,14 @@ export default {
     getdata(){
       Toast.loading({ mask: true, message: "加载中..." });
       let newdate = new Date()
-      let postData = this.$qs.stringify({
+      let postData = {
           type: this.$route.query.type == 0 ? 3 : this.$route.query.type == 1 ? 1 : 2,
           ads_id: this.$route.query.ads_id,
           goods_id: this.$route.query.goods_id,
           sku: this.$route.query.sku,
           month: `${newdate.getFullYear()}/${newdate.getMonth() + 1}/${newdate.getDate()}`
-      });
-      this.axios.post(this.API + "api/Order/displayDate", postData)
+      };
+      this.axios.post("api/Order/displayDate", postData)
       .then(res => {
           console.log(res.data, "data");
           let resdata = res.data;
@@ -62,14 +62,14 @@ export default {
       if(this.$route.params.type=='buy'||this.$route.params.type=='expectdateTobuy'||this.$route.params.type=='friendbuy'||this.$route.params.type=='expectdateTofriendbuy'){
         Toast.loading({ mask: true, message: "加载中..." });
         let newdate = new Date()
-        let postData = this.$qs.stringify({
+        let postData = {
             type: this.$route.query.type == 0 ? 3 : this.$route.query.type == 1 ? 1 : 2,
             ads_id: this.$route.query.ads_id,
             goods_id: this.$route.query.goods_id,
             sku: this.$route.query.sku,
             month: date
-        });
-        this.axios.post(this.API + "api/Order/displayDate", postData)
+        };
+        this.axios.post("api/Order/displayDate", postData)
         .then(res => {
             console.log(res.data, "data");
             let resdata = res.data;

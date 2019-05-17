@@ -45,11 +45,6 @@ export default {
       value: "",
     };
   },
-  beforeCreate(){
-    if (!window.localStorage.getItem("userinfo")) {
-      this.$router.replace({ path: "/login" });
-    }
-  },
   created() {
     this.isFirstEnter = true;
     this.getlist();
@@ -61,11 +56,11 @@ export default {
         return
       }
       Toast.loading({ mask: true, message: "加载中..." });
-      let postData = this.$qs.stringify({
+      let postData = {
         keyword: this.value
-      });
+      };
       this.axios
-        .post(this.API + "api/Trusteeship/searchStore", postData)
+        .post("api/Trusteeship/searchStore", postData)
         .then(res => {
           console.log(res.data, "onSearch");
           let resdata = res.data;
@@ -73,7 +68,7 @@ export default {
             if (resdata.data.length == 0) {
               Toast.clear();
               Toast({
-                message: " 没有匹配的产品",
+                message: "没有匹配的产品",
               });
               this.list = []
             } else {
@@ -89,7 +84,7 @@ export default {
     },
     getlist() {
       Toast.loading({ mask: true, message: "加载中..." });
-      this.axios.post(this.API + "api/Lease/store_select").then(res => {
+      this.axios.post("api/Lease/store_select").then(res => {
         console.log(res.data, "list");
         let resdata = res.data;
         if (resdata.code == 200) {
@@ -103,7 +98,10 @@ export default {
     }
   },
   activated(){
-    if(!this.$route.meta.isBack || this.isFirstEnter){
+    if(this.isFirstEnter){
+        
+      }else
+    if(!this.$route.meta.isBack){
         this.list = []
         this.value = ""
         this.getlist()
