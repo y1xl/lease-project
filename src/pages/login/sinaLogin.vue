@@ -35,7 +35,6 @@ export default {
         getsina(){
             Toast.loading({ mask: true, message: "加载中..." });
             let postData = {
-                // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 code: this.$route.query.code
             };
             this.axios.post("api/Order/weibo",postData).then(res => {

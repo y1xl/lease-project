@@ -10,7 +10,7 @@ import filter from './utils/filter'
 Vue.use(require('vue-wechat-title'))
 
 import axios from "axios"
-import axiosPlugin from './server'
+import axiosPlugin from './http'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 

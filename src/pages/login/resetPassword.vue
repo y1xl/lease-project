@@ -20,6 +20,7 @@ export default {
     return {
       value: "",
       phone: this.$route.params.phone,
+      redirectUri: this.$route.query.redirectUri?this.$route.query.redirectUri:false
     };
   },
   methods: {
@@ -43,14 +44,12 @@ export default {
           Toast.clear();
           window.localStorage.setItem("userinfo",JSON.stringify(resdata.data))
           
-          if(window.sessionStorage.getItem("rpfriend")){
-            window.sessionStorage.removeItem("rpfriend");
-            this.$router.replace({ path: "/rpfriend" });
-          }
-          else{
-            window.sessionStorage.removeItem("wakeup");
+          window.sessionStorage.removeItem("wakeup");
+          if(this.redirectUri){
+            this.$router.push({ path: this.redirectUri });
+          }else{
             this.$router.replace({ path: "/" });
-          }
+          } 
         } else {
           Toast.clear();
           Toast(resdata.message);

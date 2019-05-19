@@ -10,7 +10,7 @@
           <input v-model.trim="pwval" placeholder="请输入密码" input-align="center" type="password">
         </div>
         <div class="text-r forget">
-          <router-link to="/forgetPassword">忘记密码</router-link>
+          <router-link :to="redirectUri?`/forgetPassword?redirectUri=${redirectUri}`:'/forgetPassword'" >忘记密码</router-link>
         </div>
         <div
           class="btn text-c"
@@ -28,7 +28,8 @@ export default {
   data() {
     return {
       phoneval: "",
-      pwval: ""
+      pwval: "",
+      redirectUri: this.$route.query.redirectUri?this.$route.query.redirectUri:false
     };
   },
   methods: {
@@ -51,14 +52,12 @@ export default {
           Toast.clear();
           window.localStorage.setItem("userinfo", JSON.stringify(resdata.data));
 
-          if(window.sessionStorage.getItem("rpfriend")){
-            window.sessionStorage.removeItem("rpfriend");
-            this.$router.replace({ path: "/rpfriend" });
-          }
-          else{
-            window.sessionStorage.removeItem("wakeup");
+          window.sessionStorage.removeItem("wakeup");
+          if(this.redirectUri){
+            this.$router.push({ path: this.redirectUri });
+          }else{
             this.$router.replace({ path: "/" });
-          }
+          }   
         } else {
           Toast.clear();
           Toast(resdata.message);

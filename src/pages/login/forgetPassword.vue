@@ -33,7 +33,8 @@ export default {
       codeval: "",
       content: "获取验证码",
       totalTime: 59, //倒计时
-      canClick: true
+      canClick: true,
+      redirectUri: this.$route.query.redirectUri?this.$route.query.redirectUri:false
     };
   },
   methods: {
@@ -93,7 +94,11 @@ export default {
         console.log(res.data, "next");
         let resdata = res.data;
         if (resdata.code == 200) {
-          this.$router.replace({ path: "/resetPassword/" + this.phoneval });
+          if(this.redirectUri){
+            this.$router.replace({ path: `/resetPassword/${this.phoneval}?redirectUri=${this.redirectUri}` });
+          }else{
+            this.$router.replace({ path: "/resetPassword/" + this.phoneval });
+          }
         } else {
           Toast(resdata.message);
         }

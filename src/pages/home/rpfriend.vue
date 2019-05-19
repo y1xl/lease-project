@@ -33,8 +33,7 @@ export default {
             Dialog.alert({
                 message: '请先登录'
             }).then((e) => {
-                // this.$router.replace({ path: "/login?rpfriend=1" })
-                window.location.href = window.location.origin + "#/login?rpfriend=1"
+                window.location.href = window.location.origin + "#/login?rpfriend=1&redirectUri=" + this.$route.fullPath
             });
         }
     },

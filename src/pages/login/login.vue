@@ -35,7 +35,8 @@ export default {
   data() {
     return {
       newPhone: "",
-      isother:true
+      isother:true,
+      redirectUri: this.$route.query.redirectUri?this.$route.query.redirectUri:false
     };
   },
   beforeCreate(){
@@ -54,11 +55,6 @@ export default {
         let url = `${location.origin}#/login?wakeup=${shareId}`  
         window.location.href = url
     }
-
-    if(this.$route.query.rpfriend){
-      window.sessionStorage.setItem("rpfriend",1);
-      this.isother = false
-    }
   },
   created(){
     if(this.$route.query.wakeup){
@@ -69,6 +65,9 @@ export default {
       this.isother = false
     }
     if(this.$route.query.code){
+      this.isother = false
+    }
+    if(this.$route.query.rpfriend){
       this.isother = false
     }
   },
@@ -85,18 +84,34 @@ export default {
         return;
       }
       if(this.$route.query.token){
-        this.$router.push({ path: `/inputCode/${this.newPhone}?token=${this.$route.query.token||''}` });
+        if(this.redirectUri){
+          this.$router.push({ path: `/inputCode/${this.newPhone}?token=${this.$route.query.token||''}&redirectUri=${this.redirectUri}` });
+        }else{
+          this.$router.push({ path: `/inputCode/${this.newPhone}?token=${this.$route.query.token||''}` });
+        }
       }
       if(this.$route.query.code){
-        this.$router.push({ path: `/inputCode/${this.newPhone}?code=${this.$route.query.code||''}` });
+        if(this.redirectUri){
+          this.$router.push({ path: `/inputCode/${this.newPhone}?code=${this.$route.query.code||''}&redirectUri=${this.redirectUri}` });
+        }else{
+          this.$router.push({ path: `/inputCode/${this.newPhone}?code=${this.$route.query.code||''}` });
+        }
       }else{
-        this.$router.push({ path: `/inputCode/${this.newPhone}` });
+        if(this.redirectUri){
+          this.$router.push({ path: `/inputCode/${this.newPhone}?redirectUri=${this.redirectUri}` });
+        }else{
+          this.$router.push({ path: `/inputCode/${this.newPhone}` });
+        }
       }
       
     },
     //密码登录
     password() {
-      this.$router.push({ path: "/passwordLogin" });
+      if(this.redirectUri){
+        this.$router.push({ path: "/passwordLogin?redirectUri=" + this.redirectUri });
+      }else{
+        this.$router.push({ path: "/passwordLogin" });
+      }
     },
 
     goali(){

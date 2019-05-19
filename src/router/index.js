@@ -112,7 +112,10 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       next({
-        path: "/login"
+        path: "/login",
+        query: {
+          redirectUri: to.fullPath
+        }
       });
     }
   } else {
