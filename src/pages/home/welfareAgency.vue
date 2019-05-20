@@ -314,6 +314,9 @@ export default {
         }
       }
     },
+  },
+  beforeDestroy(){
+    Dialog.close()
   }
 };
 </script>

@@ -10,7 +10,6 @@ const HostDetail =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pa
 const HostCancel =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pages/hosting/myhosting/hostCancel')
 const PlatformDeli =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pages/hosting/myhosting/platformDeli')
 const PostDeli =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pages/hosting/myhosting/postDeli')
-const SceneDeli =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pages/hosting/myhosting/sceneDeli')
 const HostingDetail =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pages/hosting/myhosting/hostingDetail')
 const HostingExpress =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pages/hosting/myhosting/hostingExpress')
 const Nearshop =  () => import(/* webpackChunkName: 'myhosting-group' */ '@/pages/hosting/myhosting/nearshop')
@@ -27,7 +26,6 @@ export default [
     { path: '/trusteeship', component: Trusteeship, meta: { title: '我的托管', keepAlive: true, isBack: false, requireLogin: true } },
     { path: '/hostDetail/:id', component: HostDetail, meta: { title: '审核详情', requireLogin: true } },
     { path: '/hostCancel/:id/:number', component: HostCancel, meta: { title: '取消托管' } },
-    { path: '/sceneDeli/:id', component: SceneDeli, meta: { title: '现场交付' } },
     { path: '/platformDeli/:id', component: PlatformDeli, meta: { title: '平台配送' } },
     { path: '/postDeli/:id', component: PostDeli, meta: { title: '快递交付' } },
     { path: '/hostingDetail/:id', component: HostingDetail, meta: { title: '托管详情', requireLogin: true } },

@@ -5,6 +5,7 @@ import App from './App'
 import './style/reset.css'
 import './style/common.css'
 import router from './router'
+import store from './store'
 import filter from './utils/filter'
 
 Vue.use(require('vue-wechat-title'))
@@ -18,10 +19,8 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 Vue.use(Vant);
 
-import { Dialog } from 'vant';
+import { Dialog,Lazyload } from 'vant';
 Vue.use(Dialog);
-
-import { Lazyload } from 'vant';
 Vue.use(Lazyload,{lazyComponent:true});
 
 import VueAMap from 'vue-amap';
@@ -41,6 +40,7 @@ VueAMap.initAMapApiLoader({
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App />'
 })

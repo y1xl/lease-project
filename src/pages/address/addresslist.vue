@@ -36,6 +36,7 @@
 
 <script>
 import { Dialog, Toast } from "vant";
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -47,6 +48,7 @@ export default {
     this.getlist();
   },
   methods: {
+    ...mapActions('myhosting', ['setgetaddress']),
     // 删除
     isdel(i,id,e){
       // console.log(i,id,e)
@@ -146,25 +148,8 @@ export default {
           JSON.stringify(hostCancelSession)
         );
       }
-      if (this.$route.params.type == "postDeli") {
-        let postDeliSession = JSON.parse(
-          window.sessionStorage.getItem("postDeliSession")
-        );
-        postDeliSession.getaddress = this.list[val];
-        window.sessionStorage.setItem(
-          "postDeliSession",
-          JSON.stringify(postDeliSession)
-        );
-      }
-      if (this.$route.params.type == "platformDeli") {
-        let platformDeliSession = JSON.parse(
-          window.sessionStorage.getItem("platformDeliSession")
-        );
-        platformDeliSession.getaddress = this.list[val];
-        window.sessionStorage.setItem(
-          "platformDeliSession",
-          JSON.stringify(platformDeliSession)
-        );
+      if (this.$route.params.type == "platformDeli"||this.$route.params.type == "postDeli") {
+        this.setgetaddress(this.list[val])
       }
       if (this.$route.params.type == "prebuy") {
         let prebuySession = JSON.parse(

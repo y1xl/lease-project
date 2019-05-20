@@ -24,7 +24,7 @@
     </div>
 
     <div
-        class="flex-jc-between pd-15 bgc flex-align-items"
+        class="flex-jc-between pd-15 bgc flex-align-items border-b"
         @click="go('/addresslist/platformDeli')"
       >
         <div>
@@ -59,46 +59,29 @@
 
 <script>
 import { Toast,Dialog } from 'vant';
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
       isshow: false,
-      datetext: "",
+      datetext: this.$store.state.myhosting.datetext,
       timequantumarr: [],
-      timequantum: "",
-      getaddress:'',
-      getlocation:''
+      timequantum: this.$store.state.myhosting.timequantum,
+      getaddress:this.$store.state.myhosting.getaddress,
+      getlocation:this.$store.state.myhosting.getlocation
     };
   },
   created() {
-    let platformDeliSession = JSON.parse(
-      window.sessionStorage.getItem("platformDeliSession")
-    );
-    if (platformDeliSession) {
-      this.datetext = platformDeliSession.date;
-      this.timequantum = platformDeliSession.timequantum;
-      this.getaddress = platformDeliSession.getaddress;
-      this.getlocation = platformDeliSession.getlocation;
-    }else{
+    if(this.getaddress == ''){
       this.getdefaultaddress()
     }
-
   },
   mounted(){
     this.gettimequantumarr()
   },
   methods: {
+    ...mapActions('myhosting', ['settimequantum']),
     go(url) {
-      let platformDeliSession = {
-        date: this.datetext,
-        timequantum: this.timequantum,
-        getaddress: this.getaddress,
-        getlocation: this.getlocation
-      };
-      window.sessionStorage.setItem(
-        "platformDeliSession",
-        JSON.stringify(platformDeliSession)
-      );
       this.$router.push({ path: url });
     },
 
@@ -139,8 +122,9 @@ export default {
     },
 
     onConfirm(value, index) {
-      console.log(`当前值：${value}, 当前索引：${index}`);
+      // console.log(`当前值：${value}, 当前索引：${index}`);
       this.timequantum = value;
+      this.settimequantum(value)
       this.isshow = false;
     },
 
@@ -152,7 +136,6 @@ export default {
 
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = {
-          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           trust_id: this.$route.params.id,
           year: this.datetext,
           time: this.timequantum,

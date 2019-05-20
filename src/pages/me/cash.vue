@@ -43,12 +43,11 @@ export default {
   },
   created(){
     this.getinfo()
-    let bankcardSession = window.sessionStorage.getItem("bankcardSession")
-    if(bankcardSession){
-      let bankcards = JSON.parse(bankcardSession)
-      bankcards.bank_code.slice(-4)
-      bankcards.bank_code = bankcards.bank_code.slice(-4)
-      this.bankcard = bankcards
+
+    let bankcard = this.$store.state.cash.bankcard
+    if(bankcard){
+      bankcard.bank_code = bankcard.bank_code.slice(-4)
+      this.bankcard = bankcard
     }
   },
   methods: {
@@ -87,7 +86,7 @@ export default {
         return
       }
 
-      Toast.loading({ mask: true,message: '加载中...'})
+      Toast.loading({ mask: true,message: '加载中...',duration:0})
         let postData = {
           users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           user_bank_id: this.bankcard.user_bank_id,

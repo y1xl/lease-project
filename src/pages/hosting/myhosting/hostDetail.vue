@@ -115,6 +115,7 @@
 
 <script>
 import { Toast } from "vant";
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -131,6 +132,7 @@ export default {
     this.getdetail()
   },
   methods: {
+    ...mapActions('myhosting', ['allclear']),
     onChange(index) {
       this.current = index;
     },
@@ -138,7 +140,6 @@ export default {
     getdetail(){
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = {
-          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           trust_id: this.$route.params.id
       };
       this.axios.post("api/Trusteeship/trustDetails", postData)
@@ -169,7 +170,6 @@ export default {
       if(this.typenum==0){
         Toast.loading({ mask: true, message: "加载中..." });
         let postData = {
-            // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
             trust_id: id,
         };
         this.axios.post("api/Trusteeship/fieldDelivery", postData)
@@ -191,11 +191,11 @@ export default {
         });
       }
       if(this.typenum==1){
-        window.sessionStorage.removeItem('postDeliSession');
+        this.allclear()
         this.$router.push({ path: "/postDeli/"+id })
       }
       if(this.typenum==2){
-        window.sessionStorage.removeItem('platformDeliSession');
+        this.allclear()
         this.$router.push({ path: "/platformDeli/"+id })
       }
     }

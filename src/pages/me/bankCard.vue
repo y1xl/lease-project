@@ -30,6 +30,8 @@
 
 <script>
 import { Toast } from "vant";
+import { mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -40,6 +42,8 @@ export default {
     this.getlist()
   },
   methods:{
+    ...mapActions('cash', ['setval']),
+
     getlist(){
       Toast.loading({ mask: true,message: '加载中...'})
         let postData = {
@@ -61,10 +65,7 @@ export default {
 
     choose(index){
       let bankcardSession = this.cardlist[index]
-      window.sessionStorage.setItem(
-        "bankcardSession",
-        JSON.stringify(bankcardSession)
-      );
+      this.setval(bankcardSession)
 
       this.$router.go(-1);
     }

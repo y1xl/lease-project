@@ -70,37 +70,25 @@
 
 <script>
 import { Toast,Dialog } from 'vant';
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
       typenum: 0,
-      postnum: "",
-      datetext: "",
+      postnum: this.$store.state.myhosting.postnum,
+      datetext: this.$store.state.myhosting.datetext,
       showtime: false,
-      getaddress: "",
-      getlocation: "",
-      timequantum:'',
+      getaddress: this.$store.state.myhosting.getaddress,
+      getlocation: this.$store.state.myhosting.getlocation,
+      timequantum:this.$store.state.myhosting.timequantum,
       timequantumarr:[]
     };
-  },
-  created() {
-    let postDeliSession = JSON.parse(
-      window.sessionStorage.getItem("postDeliSession")
-    );
-    if (postDeliSession) {
-      this.getlocation = postDeliSession.getlocation;
-      this.datetext = postDeliSession.date;
-      this.timequantum = postDeliSession.timequantum;
-      this.getaddress = postDeliSession.getaddress;
-      this.postnum = postDeliSession.postnum;
-    }else{
-      this.getdefaultaddress()
-    }
   },
    mounted(){
     this.gettimequantumarr()
   },
   methods: {
+    ...mapActions('myhosting', ['settimequantum','setpostnum']),
     getdefaultaddress(){
         let postData = {
             users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
@@ -137,8 +125,9 @@ export default {
         });
     },
     onConfirm(value) {
-      console.log(`当前值：${value}`);
+      // console.log(`当前值：${value}`);
       this.timequantum = value;
+      this.settimequantum(value)
       this.showtime = false;
     },
 
@@ -150,7 +139,6 @@ export default {
 
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = {
-          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           trust_id: this.$route.params.id,
           year: this.datetext,
           time: this.timequantum,
@@ -186,7 +174,6 @@ export default {
 
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = {
-          // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           trust_id: this.$route.params.id,
           express_no: this.postnum
       };
@@ -213,17 +200,7 @@ export default {
     },
 
     go(url) {
-      let postDeliSession = {
-        getlocation: this.getlocation,
-        date: this.datetext,
-        timequantum: this.timequantum,
-        getaddress: this.getaddress,
-        postnum: this.postnum
-      };
-      window.sessionStorage.setItem(
-        "postDeliSession",
-        JSON.stringify(postDeliSession)
-      );
+      this.setpostnum(this.postnum)
       this.$router.push({ path: url });
     }
   }

@@ -17,6 +17,7 @@
 <script>
 import Calendar from "vue-calendar-component";
 import { Toast,Dialog } from "vant";
+import { mapActions } from 'vuex'
 export default {
   components: {
     Calendar
@@ -35,6 +36,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('myhosting', ['setdatetext']),
     getdata(){
       Toast.loading({ mask: true, message: "加载中..." });
       let newdate = new Date()
@@ -155,35 +157,8 @@ export default {
           JSON.stringify(hostCancelSession)
         );
       }
-      if (this.$route.params.type == "platformDeli") {
-        let platformDeliSession = JSON.parse(
-          window.sessionStorage.getItem("platformDeliSession")
-        );
-        platformDeliSession.date = date;
-        window.sessionStorage.setItem(
-          "platformDeliSession",
-          JSON.stringify(platformDeliSession)
-        );
-      }
-      if (this.$route.params.type == "sceneDeli") {
-        let sceneDeliSession = JSON.parse(
-          window.sessionStorage.getItem("sceneDeliSession")
-        );
-        sceneDeliSession.date = date;
-        window.sessionStorage.setItem(
-          "sceneDeliSession",
-          JSON.stringify(sceneDeliSession)
-        );
-      }
-      if (this.$route.params.type == "postDeli") {
-        let postDeliSession = JSON.parse(
-          window.sessionStorage.getItem("postDeliSession")
-        );
-        postDeliSession.date = date;
-        window.sessionStorage.setItem(
-          "postDeliSession",
-          JSON.stringify(postDeliSession)
-        );
+      if (this.$route.params.type == "platformDeli"||this.$route.params.type == "postDeli") {
+        this.setdatetext(date)
       }
       if (this.$route.params.type == "buy") {
         let buySession = JSON.parse(

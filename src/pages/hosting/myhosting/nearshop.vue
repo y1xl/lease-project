@@ -31,6 +31,7 @@
 
 <script>
 import { Toast } from 'vant';
+import { mapActions } from 'vuex'
 export default {
     data(){
         return{
@@ -46,6 +47,7 @@ export default {
       }
     },
     methods:{
+        ...mapActions('myhosting', ['setgetlocation']),
         getLocation() {
             if (window.navigator.geolocation) {
                 window.navigator.geolocation.getCurrentPosition(position => {
@@ -89,35 +91,8 @@ export default {
             });
         },
         submit(){
-            if (this.$route.query.type == "sceneDeli") {
-                let sceneDeliSession = JSON.parse(
-                window.sessionStorage.getItem("sceneDeliSession")
-                );
-                sceneDeliSession.getlocation = this.list[this.radio];
-                window.sessionStorage.setItem(
-                "sceneDeliSession",
-                JSON.stringify(sceneDeliSession)
-                );
-            }
-            if (this.$route.query.type == "postDeli") {
-                let postDeliSession = JSON.parse(
-                window.sessionStorage.getItem("postDeliSession")
-                );
-                postDeliSession.getlocation = this.list[this.radio];
-                window.sessionStorage.setItem(
-                "postDeliSession",
-                JSON.stringify(postDeliSession)
-                );
-            }
-            if (this.$route.query.type == "platformDeli") {
-                let platformDeliSession = JSON.parse(
-                window.sessionStorage.getItem("platformDeliSession")
-                );
-                platformDeliSession.getlocation = this.list[this.radio];
-                window.sessionStorage.setItem(
-                "platformDeliSession",
-                JSON.stringify(platformDeliSession)
-                );
+            if (this.$route.query.type == "platformDeli"||this.$route.query.type == "postDeli") {
+                this.setgetlocation(this.list[this.radio])
             }
             
             this.$router.go(-1);
