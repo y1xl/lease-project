@@ -19,7 +19,8 @@ export default {
 
   methods: {
     logout(){
-      window.localStorage.removeItem("userinfo")
+      // window.localStorage.removeItem("userinfo")
+      this.removeLocal("userinfo")
       this.$router.replace({ path: '/login' })
     }
   }

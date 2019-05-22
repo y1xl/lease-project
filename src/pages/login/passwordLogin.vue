@@ -43,16 +43,18 @@ export default {
       let postData = {
         users_phone: this.phoneval,
         users_pwd: this.pwval,
-        wakeup: window.sessionStorage.getItem("wakeup")||''
+        // wakeup: window.sessionStorage.getItem("wakeup")||''
+        wakeup: this.getSession("wakeup",false)||''
       };
       this.axios.post("api/Lease/Lease_Sign", postData).then(res => {
         console.log(res.data, "pwlogin");
         let resdata = res.data;
         if (resdata.code == 200) {
           Toast.clear();
-          window.localStorage.setItem("userinfo", JSON.stringify(resdata.data));
+          // window.localStorage.setItem("userinfo", JSON.stringify(resdata.data));
+          this.setLocal("userinfo", resdata.data);
 
-          window.sessionStorage.removeItem("wakeup");
+          this.removeSession("wakeup");
           if(this.redirectUri){
             this.$router.push({ path: this.redirectUri });
           }else{

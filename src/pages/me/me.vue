@@ -114,7 +114,7 @@ export default {
     getuser() {
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = {
-        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+        users_id: this.getLocal("userinfo").users_id
       };
       this.axios
         .post("api/Lease/users_detail", postData)
@@ -139,7 +139,7 @@ export default {
     getheadimg() {
       Toast.loading({ mask: true, message: "加载中..." });
       let postData = {
-        users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
+        users_id: this.getLocal("userinfo").users_id
       };
       this.axios
         .post("api/Lease_Order/getHeadPicture", postData)

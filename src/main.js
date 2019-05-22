@@ -34,7 +34,7 @@ VueAMap.initAMapApiLoader({
 
 
 // Vue.prototype.API = ' https://www.newbee-smart.com/'
-
+import storage from './utils/storage'
 
 /* eslint-disable no-new */
 new Vue({
