@@ -110,7 +110,7 @@ export default {
               this.flprolist = []
             } else {
               Toast.clear();
-              this.flprolist = resdata.data;
+              this.flprolist = Object.freeze(resdata.data);
             }
           } else {
             Toast.clear();

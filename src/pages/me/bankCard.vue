@@ -55,7 +55,7 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear()
-            this.cardlist = resdata.data
+            this.cardlist = Object.freeze(resdata.data)
           } else {
             Toast.clear()
             Toast(resdata.message);

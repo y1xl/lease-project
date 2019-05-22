@@ -265,7 +265,7 @@ export default {
                 let resdata = res.data
                 if (resdata.code == 200) {
                     Toast.clear();
-                    this.hosts = resdata.data
+                    this.hosts = Object.freeze(resdata.data)
                 } else {
                     Toast.clear();
                     Toast(resdata.message)

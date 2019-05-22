@@ -240,7 +240,7 @@ export default {
                         this.problems9=[]
                     }
 
-                    this.data = resdata.data
+                    this.data = Object.freeze(resdata.data)
                     this.show = true
                 } else {
                     Toast.clear();

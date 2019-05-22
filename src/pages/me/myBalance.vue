@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       active: 0,
-      navtitle: ["押金", "托管收益", "推广金", "红包", "邀请码"],
+      navtitle: Object.freeze(["押金", "托管收益", "推广金", "红包", "邀请码"]),
       list:[],
       money: 0,
       balance:0
@@ -82,7 +82,7 @@ export default {
           let resdata = res.data;
           if (resdata.code == 200) {
             Toast.clear()
-            this.list = resdata.data.money
+            this.list = Object.freeze(resdata.data.money)
             this.money = resdata.data.users_balance
           } else {
             Toast.clear()

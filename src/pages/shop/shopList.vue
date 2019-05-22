@@ -68,12 +68,12 @@ export default {
             if (resdata.data.length == 0) {
               Toast.clear();
               Toast({
-                message: "没有匹配的产品",
+                message: "没有匹配的门店",
               });
               this.list = []
             } else {
               Toast.clear();
-              this.list = resdata.data;
+              this.list = Object.freeze(resdata.data);
             }
           } else {
             Toast.clear();
@@ -89,7 +89,7 @@ export default {
         let resdata = res.data;
         if (resdata.code == 200) {
           Toast.clear();
-          this.list = resdata.data;
+          this.list = Object.freeze(resdata.data);
         } else {
           Toast.clear();
           Toast(resdata.message);

@@ -82,7 +82,6 @@ export default {
         getdetail(){
             Toast.loading({ mask: true, message: "加载中..." });
             let postData = {
-                // users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
                 trust_id: this.$route.params.id
             };
             this.axios.post("api/Trusteeship/trustDetails", postData)
@@ -115,7 +114,7 @@ export default {
                 let resdata = res.data;
                 if (resdata.code == 200) {
                     Toast.clear();
-                    this.earnings = resdata.data
+                    this.earnings = Object.freeze(resdata.data)
                 } else {
                     Toast.clear();
                     Toast(resdata.message);

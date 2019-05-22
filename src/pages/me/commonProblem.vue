@@ -33,7 +33,7 @@ export default {
         let resdata = res.data;
         if (resdata.code == 200) {
           Toast.clear()
-          this.list = resdata.data
+          this.list = Object.freeze(resdata.data)
         } else {
           Toast.clear()
           Toast(resdata.message);

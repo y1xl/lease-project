@@ -94,7 +94,7 @@ export default {
       //外观成色
       showcolour: false,
       colourtext: "",
-      colourarr: ["全新", "95新","9成新","85新","8成新","7成新"], //全新、95新、9成新、85新、8成新、7成新
+      colourarr: Object.freeze(["全新", "95新","9成新","85新","8成新","7成新"]), //全新、95新、9成新、85新、8成新、7成新
       colourdes: "",
       //功能状况
       showstate: false,

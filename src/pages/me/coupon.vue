@@ -9,7 +9,7 @@
           <div
             class="coupon_box position"
             v-for="(item,i) in couponlist"
-            :key="i"
+            :key="'k'+i"
             v-show="ind ==0||ind==1||ind==2"
           >
             <div>
@@ -42,9 +42,9 @@
           <div
             class="coupon_box position"
             v-for="(item,i) in getcouponlist"
-            :key="'k'+i"
+            :key="i"
             v-show="ind ==3"
-            @click="receive(item)"
+            @click="receive(i,item)"
           >
             <div>
               <img src="../../assets/1.png">
@@ -122,7 +122,7 @@ export default {
               v.end_time = v.end_time.split(" ")[0]
             }
             
-            this.couponlist = resdata.data
+            this.couponlist = Object.freeze(resdata.data)
           } else {
             Toast.clear();
             this.couponlist = []
@@ -152,9 +152,9 @@ export default {
         });
     },
     //领取
-    receive(item){
+    receive(i,item){
       if(item.is_activity==0){
-        Toast.loading({ mask: true, message: "加载中..." });
+        Toast.loading({ mask: true, message: "加载中...",duration:0 });
         let postData = {
           user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           coupons_id: item.coupons_id,
@@ -168,7 +168,7 @@ export default {
             if (resdata.code == 200) {
               Toast.clear()
               Toast('领取成功');
-              this.getcoupon()
+              this.getcouponlist.splice(i, 1)
             } else {
               Toast.clear();
               Toast(resdata.message||'操作失败');
@@ -178,7 +178,7 @@ export default {
               Toast('网络出错')
           });
       }else{
-        Toast.loading({ mask: true, message: "加载中..." });
+        Toast.loading({ mask: true, message: "加载中...",duration:0 });
         let postData = {
           user_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
           activity_id: item.activity_id,
@@ -192,7 +192,7 @@ export default {
             if (resdata.code == 200) {
               Toast.clear()
               Toast('领取成功');
-              this.getcoupon()
+              this.getcouponlist.splice(i, 1)
             } else {
               Toast.clear();
               Toast(resdata.message||'操作失败');

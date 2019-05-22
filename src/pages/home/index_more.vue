@@ -85,7 +85,7 @@ export default {
           let resdata = res.data;
 
           if (resdata.code == 200) {
-            this.goodslist = this.goodslist.concat(resdata.data);
+            this.goodslist.push(...resdata.data)
             // 加载状态结束
             this.loading = false;
             if (resdata.data.length < 10) {
