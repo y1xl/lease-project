@@ -3,8 +3,12 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ],
   dev: {
 
     // Paths
@@ -12,14 +16,14 @@ module.exports = {
     assetsPublicPath: '/',
 
     proxyTable: {
-      '/api': {
-        	// target: 'https://zx-xcx.com',
-        	target: 'https://xcx.chinaname.cn',
-        	changeOrigin: true,
-        	pathRewrite: {
-        		'^/api':''
-        	}
-        }
+      // '/api': {
+      //   	// target: 'https://zx-xcx.com',
+      //   	target: 'https://xcx.chinaname.cn',
+      //   	changeOrigin: true,
+      //   	pathRewrite: {
+      //   		'^/api':''
+      //   	}
+      //   }
     },
     
     // Various Dev Server settings

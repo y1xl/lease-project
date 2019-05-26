@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="nav bgc border-b flex-jc-center">
-            <div :class="{ selected: selected==0 }" @click="nav(0)">租赁单</div>
-            <div :class="{ selected: selected==1 }" @click="nav(1)">租转售</div>
+            <router-link to="/order">租赁单</router-link>
+            <router-link to="/order/buyOrder">租转售</router-link>
         </div>
 
         <keep-alive :max="15">
@@ -15,34 +15,7 @@
 
 <script>
 export default {
-    data(){
-        return{
-            selected: 0
-        }
-    },
-    watch: {
-        $route(to,from){
-            // console.log(to.path)
-            if(to.path){
-                if(to.path=='/order/buyOrder'){
-                    this.selected=1
-                }else{
-                    this.selected=0
-                }
-            }
-        }
-    },
-    methods:{
-        nav(n) {
-            this.selected = n;
-            if(n == 0){
-                this.$router.push({ path: `/order` });
-            }
-            if(n == 1){
-                this.$router.push({ path: `/order/buyOrder` });
-            }
-        },
-    }
+
 }
 </script>
 
@@ -51,14 +24,15 @@ export default {
   height: 42px;
   line-height: 42px;
 }
-.nav > div {
+.nav > a {
   color: #666;
   font-size: 16px;
+  display: block;
 }
-.nav > div:nth-of-type(1) {
+.nav > a:nth-of-type(1) {
   margin-right: 50px;
 }
-.nav .selected {
+.nav a.router-link-exact-active {
   color: #000;
   font-weight: bold;
 }
