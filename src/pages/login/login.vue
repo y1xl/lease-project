@@ -32,6 +32,14 @@
 import { Toast,Dialog } from "vant";
 
 export default {
+  beforeRouteEnter(to, from, next) {
+    if (location.href.includes('token')&&location.href.includes('from')) { // 用是否有shareId 来判断是不是分享出去的链接
+        let url = `${location.origin}#${to.fullPath}`  
+        window.location.href = url
+    }else{
+      next();
+    }
+  },
   data() {
     return {
       newPhone: "",
@@ -40,14 +48,6 @@ export default {
     };
   },
   beforeCreate(){
-    if (location.href.includes('token')&&location.href.includes('from')) { // 用是否有shareId 来判断是不是分享出去的链接
-        let index = location.href.indexOf('token')+5+1
-        let shareId = location.href.slice(index)
-        // console.log(shareId,'shareId')
-        let url = `${location.origin}#/login?token=${shareId}`  
-        window.location.href = url
-    }
-
     if (location.href.includes('wakeup')&&location.href.includes('from')) { 
         let index = location.href.indexOf('wakeup')+6+1
         let shareId = location.href.slice(index)

@@ -82,6 +82,10 @@ export default {
       // if (urlarr.includes(url)) {
       //   return true
       // }
+
+      if(this.$route.meta.title=='404-not found'){
+        return false
+      }
       
       if (url.includes('/login')) {
         return false

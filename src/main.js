@@ -32,7 +32,7 @@ VueAMap.initAMapApiLoader({
   v: '1.4.4'
 });
 
-
+Vue.config.productionTip = false
 // Vue.prototype.API = ' https://www.newbee-smart.com/'
 import storage from './utils/storage'
 
