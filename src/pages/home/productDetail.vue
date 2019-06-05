@@ -209,41 +209,43 @@
       </div>
     </van-popup>
     <!-- 选择规格 -->
-    <div class="model full" v-if="showinfo||showinfocar||showinfofriend">
-      <div class="main bgc">
-        <div class="goods1 flexbox pd-15">
-          <img :src="detail.main_img" alt style="object-fit:contain">
-          <div class="flex-1">
-            <div class="mar-b-10 position title">{{detail.goods_name}}
-              <div class="closeicon" @click="showinfo=false,showinfocar=false,showinfofriend=false">
-                <van-icon name="close"/>
+    <transition name="van-fade">
+      <div class="model full" v-show="showinfo||showinfocar||showinfofriend">
+        <div class="main bgc">
+          <div class="goods1 flexbox pd-15">
+            <img :src="detail.main_img" alt style="object-fit:contain">
+            <div class="flex-1">
+              <div class="mar-b-10 position title">{{detail.goods_name}}
+                <div class="closeicon" @click="showinfo=false,showinfocar=false,showinfofriend=false">
+                  <van-icon name="close"/>
+                </div>
+              </div>
+              <!-- <div class="mar-b-10">
+                <span class="fc-red">¥{{detail.hire_price.price||'-'}}</span><span class="fsz10">/{{detail.hire_price.unt||'-'}}</span>
+              </div> -->
+              <!-- <div class="fsz10 fc-grey">请选择规格属性</div> -->
+            </div>
+          </div>
+          <div class="pd-lr-15">
+            <div v-for="(item,index) in speclist" :key="index">
+              <div class="mar-b-10 fsz12" >{{item.spec_name}}</div>
+              <div class="items mar-b-10" >
+                <div :class="items.checked?'border-blue fc-blue':'border'" v-for="(items,indexs) in item.spec" :key="indexs" @click="onchooseguige(index,indexs)">{{items.attr_name}}</div>
               </div>
             </div>
-            <!-- <div class="mar-b-10">
-              <span class="fc-red">¥{{detail.hire_price.price||'-'}}</span><span class="fsz10">/{{detail.hire_price.unt||'-'}}</span>
-            </div> -->
-            <!-- <div class="fsz10 fc-grey">请选择规格属性</div> -->
           </div>
-        </div>
-        <div class="pd-lr-15">
-          <div v-for="(item,index) in speclist" :key="index">
-            <div class="mar-b-10 fsz12" >{{item.spec_name}}</div>
-            <div class="items mar-b-10" >
-              <div :class="items.checked?'border-blue fc-blue':'border'" v-for="(items,indexs) in item.spec" :key="indexs" @click="onchooseguige(index,indexs)">{{items.attr_name}}</div>
-            </div>
+          <div class="pd-15" v-show="showinfofriend">
+            <div class="gbtn text-c" @click="gofriend">给朋友送礼</div>
           </div>
-        </div>
-        <div class="pd-15" v-show="showinfofriend">
-          <div class="gbtn text-c" @click="gofriend">给朋友送礼</div>
-        </div>
-        <div class="pd-15" v-show="showinfo">
-          <div class="gbtn text-c" @click="gobuy">开始下单</div>
-        </div>
-        <div class="pd-15" v-show="showinfocar">
-          <div class="gbtn text-c" @click="addcart">加入购物车</div>
+          <div class="pd-15" v-show="showinfo">
+            <div class="gbtn text-c" @click="gobuy">开始下单</div>
+          </div>
+          <div class="pd-15" v-show="showinfocar">
+            <div class="gbtn text-c" @click="addcart">加入购物车</div>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
 
     <vueClipboard v-model="iscopy" :text="link"/>
   </div>
