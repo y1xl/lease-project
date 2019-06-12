@@ -1,10 +1,36 @@
 <template>
   <div>
-    <van-search placeholder="请输入搜索关键词" v-model.trim="value" @search="onSearch" show-action>
-      <div slot="action" @click="onSearch">搜索</div>
+    <form action="/">
+    <van-search placeholder="请输入搜索关键词" v-model.trim="value" @search="onSearch" @cancel="onCancel" show-action @focus="onfocus">
+      <!-- <div slot="action" @click="onSearch">搜索</div> -->
     </van-search>
+    </form>
 
-    <div class="shoplist">
+    <div class="shoplist" v-if="issearch">
+      <div v-for="(item,index) in searchlist" :key="index" :title="item">
+        <div class="item">
+          <router-link :to="{path:'/shopDetail',query:{ store_id:item.store_id }}">
+            <div class="flex-jc-between flex-align-items">
+              <div class="shop_title">{{item.store_name}}</div>
+              <van-icon name="arrow"/>
+            </div>
+            <div
+              class="txt f12"
+            >{{(item.store_province||'')+(item.store_city||'')+(item.store_district||'')+(item.store_Address||'')}}</div>
+          </router-link>
+
+          <router-link
+            class="dt text-c"
+            :to="`/map/${item.coordinate}/${item.store_name},${item.store_province+item.store_city+item.store_district}`"
+          >
+            <img class="ck_img" src="../../assets/mddw.png">
+            <span class="txt f12">查看地图</span>
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <div class="shoplist" v-else>
       <div v-for="(item,index) in list" :key="index" :title="item">
         <div class="item">
           <router-link :to="{path:'/shopDetail',query:{ store_id:item.store_id }}">
@@ -27,6 +53,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -42,7 +69,9 @@ export default {
   data() {
     return {
       list: [],
+      searchlist:[],
       value: "",
+      issearch: false
     };
   },
   created() {
@@ -50,6 +79,13 @@ export default {
     this.getlist();
   },
   methods: {
+    onfocus(){
+      this.issearch = true
+    },
+    onCancel(){
+      this.issearch = false
+      this.searchlist=[]
+    },
     onSearch() {
       // console.log(this.value);
       if(this.value==''){
@@ -70,15 +106,15 @@ export default {
               Toast({
                 message: "没有匹配的门店",
               });
-              this.list = []
+              this.searchlist = []
             } else {
               Toast.clear();
-              this.list = Object.freeze(resdata.data);
+              this.searchlist = Object.freeze(resdata.data);
             }
           } else {
             Toast.clear();
             Toast(resdata.message);
-            this.list = []
+            this.searchlist = []
           }
         });
     },
@@ -103,7 +139,9 @@ export default {
       }else
     if(!this.$route.meta.isBack){
         this.list = []
+        this.searchlist=[]
         this.value = ""
+        this.issearch = false
         this.getlist()
      }
      this.$route.meta.isBack=false
