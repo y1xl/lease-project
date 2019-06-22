@@ -32,39 +32,22 @@
 </template>
 <script>
 import { Toast } from 'vant';
+import { balanceMixin } from '../../utils/mixin.js'
+
 export default {
+  mixins: [balanceMixin],
   data() {
     return {
       active: 0,
       navtitle: Object.freeze(["押金", "托管收益", "推广金", "红包", "邀请码"]),
       list:[],
       money: 0,
-      balance:0
     };
   },
   mounted(){
     this.getlist()
-    this.getinfo()
   },
   methods: {
-    getinfo() {
-        let postData = {
-            users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id,
-        };
-        this.axios.post("api/Buy_Order/GetPayData", postData)
-        .then(res => {
-            console.log(res.data, "info");
-            let resdata = res.data;
-            if (resdata.code == 200) {
-                this.balance = resdata.data.users_balance;
-            } else {
-            Toast(resdata.message);
-            }
-        })
-        .catch(error => {
-            Toast('网络出错')
-        });
-    },
     ontag(index, title) {
       console.log(index, title);
       this.active = index;
