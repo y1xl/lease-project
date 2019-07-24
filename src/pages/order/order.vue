@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="nav bgc border-b flex-jc-center">
-            <router-link to="/order">租赁单</router-link>
-            <router-link to="/order/buyOrder">租转售</router-link>
+            <router-link to="/order" replace>租赁单</router-link>
+            <router-link to="/order/buyOrder" replace>租转售</router-link>
         </div>
 
         <keep-alive :max="15">
@@ -12,12 +12,6 @@
         <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title" ></router-view>
     </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
 
 <style scoped>
 .nav {
