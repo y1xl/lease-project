@@ -34,6 +34,7 @@
 
 <script>
 import { Dialog, Toast } from "vant";
+import { addressList } from '@/api'
 export default {
   data() {
     return {
@@ -50,7 +51,7 @@ export default {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
       };
 
-      this.axios.post("api/Lease/ads_select", postData).then(res => {
+      this.axios.post(addressList, postData).then(res => {
         console.log(res.data, "getselect");
         let resdata = res.data;
         if (resdata.code == 200) {

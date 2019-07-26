@@ -1,8 +1,9 @@
 import axios from "axios";
 import qs from "qs";
+import { Notify } from "vant";
 
-// axios.defaults.baseURL = 'https://newbeeadmin.zx-xcx.com/';
-axios.defaults.baseURL = 'https://admin.newbee-smart.com/';
+axios.defaults.baseURL = 'https://newbeeadmin.zx-xcx.com/';
+// axios.defaults.baseURL = 'https://admin.newbee-smart.com/';
 
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
@@ -15,6 +16,10 @@ axios.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     // 对请求错误做些什么
+    let code = error.response.status
+    if (error.response && code === 404) {
+        Notify('请求资源不存在');
+    }
     return Promise.reject(error);
 });
 
@@ -24,5 +29,8 @@ axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     // 对响应错误做点什么
+    if (error.response && code === 500) {
+        Notify('服务器错误,请稍后再试');
+    }
     return Promise.reject(error);
 });

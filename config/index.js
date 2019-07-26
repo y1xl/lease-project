@@ -15,16 +15,15 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 
-    proxyTable: {
-      // '/api': {
-      //   	// target: 'https://zx-xcx.com',
-      //   	target: 'https://xcx.chinaname.cn',
-      //   	changeOrigin: true,
-      //   	pathRewrite: {
-      //   		'^/api':''
-      //   	}
-      //   }
-    },
+    // proxyTable: {
+    //   '/api': {
+    //     	target: 'https://admin.newbee-smart.com/',
+    //     	changeOrigin: true,
+    //     	pathRewrite: {
+    //     		'^/api':''
+    //     	}
+    //     }
+    // },
     
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

@@ -37,6 +37,7 @@
 <script>
 import { Dialog, Toast } from "vant";
 import { mapActions } from 'vuex'
+import { addressList } from '@/api'
 export default {
   data() {
     return {
@@ -86,7 +87,7 @@ export default {
       let postData = {
         users_id: JSON.parse(window.localStorage.getItem("userinfo")).users_id
       };
-      this.axios.post("api/Lease/ads_select", postData).then(res => {
+      this.axios.post(addressList, postData).then(res => {
         Toast.clear();
         console.log(res.data, "list");
         let resdata = res.data;

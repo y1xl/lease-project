@@ -1,0 +1,1 @@
+export const addressList = 'api/Lease/ads_select' // 查询收获地址
